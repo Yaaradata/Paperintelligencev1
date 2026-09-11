@@ -1,0 +1,36 @@
+# Secrets and local env
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+*.swp
+
+# Runtime / local caches (shared_data lives outside this checkout)
+logs/
+*.log
+shared_data/
+
+# Local raw response dumps if ever placed under the repo
+raw/
