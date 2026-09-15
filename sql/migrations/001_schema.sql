@@ -1,13 +1,15 @@
 BEGIN;
 
--- PaperIntelligenceV1 canonical schema.
--- Reads existing research_radar.content_items / paper_metadata; does not duplicate them.
--- Principle: raw evidence, model outputs, adjudication, and current state stay separate.
+-- PaperIntelligenceV1 canonical schema (Phase 2).
+-- Reads research_radar.content_items / paper_metadata; does not duplicate them.
+-- Idempotent. Never applied by agents — human runs this migration.
+-- DROP VIEW IF EXISTS before CREATE VIEW when views are introduced later
+-- (CREATE OR REPLACE VIEW cannot change column sets).
 
 CREATE SCHEMA IF NOT EXISTS paper_intelligence;
 
 -- ---------------------------------------------------------------------------
--- Run provenance (foundational — every enrichment stage links here)
+-- Run provenance
 -- ---------------------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS paper_intelligence.pipeline_runs (
@@ -76,7 +78,7 @@ CREATE INDEX IF NOT EXISTS ix_item_stage_runs_content
     ON paper_intelligence.item_stage_runs (content_item_id, stage_run_id);
 
 -- ---------------------------------------------------------------------------
--- External request observability + raw cache pointers
+-- External / LLM request observability (Urmila implements behind this shape)
 -- ---------------------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS paper_intelligence.external_requests (
@@ -106,7 +108,6 @@ CREATE TABLE IF NOT EXISTS paper_intelligence.external_requests (
 
 CREATE INDEX IF NOT EXISTS ix_external_requests_hash
     ON paper_intelligence.external_requests (provider, request_hash);
-
 CREATE INDEX IF NOT EXISTS ix_external_requests_run
     ON paper_intelligence.external_requests (run_id, provider);
 
@@ -126,7 +127,7 @@ CREATE INDEX IF NOT EXISTS ix_llm_requests_model
     ON paper_intelligence.llm_requests (model, created_at DESC);
 
 -- ---------------------------------------------------------------------------
--- Canonical identity: people + organisations
+-- Identity
 -- ---------------------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS paper_intelligence.people (
@@ -134,7 +135,9 @@ CREATE TABLE IF NOT EXISTS paper_intelligence.people (
     canonical_name       TEXT NOT NULL,
     orcid                TEXT,
     openalex_author_id   TEXT,
-    aliases              TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[],
+    priority             INTEGER NOT NULL DEFAULT 0,
+    is_person_of_interest BOOLEAN NOT NULL DEFAULT FALSE,
+    active               BOOLEAN NOT NULL DEFAULT TRUE,
     metadata             JSONB NOT NULL DEFAULT '{}'::jsonb,
     created_at           TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at           TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -143,7 +146,8 @@ CREATE TABLE IF NOT EXISTS paper_intelligence.people (
 CREATE UNIQUE INDEX IF NOT EXISTS ux_people_orcid
     ON paper_intelligence.people (orcid) WHERE orcid IS NOT NULL;
 CREATE UNIQUE INDEX IF NOT EXISTS ux_people_openalex
-    ON paper_intelligence.people (openalex_author_id) WHERE openalex_author_id IS NOT NULL;
+    ON paper_intelligence.people (openalex_author_id)
+    WHERE openalex_author_id IS NOT NULL;
 
 CREATE TABLE IF NOT EXISTS paper_intelligence.organisations (
     id                       BIGSERIAL PRIMARY KEY,
@@ -184,10 +188,6 @@ CREATE TABLE IF NOT EXISTS paper_intelligence.organisation_aliases (
 CREATE INDEX IF NOT EXISTS ix_organisation_aliases_alias
     ON paper_intelligence.organisation_aliases (lower(alias));
 
--- ---------------------------------------------------------------------------
--- Paper-author occurrence + affiliations (evidence preserved)
--- ---------------------------------------------------------------------------
-
 CREATE TABLE IF NOT EXISTS paper_intelligence.paper_authors (
     id                   BIGSERIAL PRIMARY KEY,
     content_item_id      BIGINT NOT NULL
@@ -205,8 +205,7 @@ CREATE TABLE IF NOT EXISTS paper_intelligence.paper_authors (
 );
 
 CREATE INDEX IF NOT EXISTS ix_paper_authors_person
-    ON paper_intelligence.paper_authors (person_id)
-    WHERE person_id IS NOT NULL;
+    ON paper_intelligence.paper_authors (person_id) WHERE person_id IS NOT NULL;
 CREATE INDEX IF NOT EXISTS ix_paper_authors_normalized
     ON paper_intelligence.paper_authors (lower(normalized_name));
 
@@ -216,11 +215,9 @@ CREATE TABLE IF NOT EXISTS paper_intelligence.papers_people (
         REFERENCES research_radar.content_items(id) ON DELETE CASCADE,
     person_id        BIGINT NOT NULL
         REFERENCES paper_intelligence.people(id) ON DELETE CASCADE,
-    paper_author_id  BIGINT
-        REFERENCES paper_intelligence.paper_authors(id) ON DELETE SET NULL,
+    author_position  INTEGER,
     confidence       NUMERIC(4, 3),
-    run_id           UUID
-        REFERENCES paper_intelligence.pipeline_runs(run_id) ON DELETE SET NULL,
+    evidence_type    TEXT,
     created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UNIQUE (content_item_id, person_id)
 );
@@ -231,6 +228,7 @@ CREATE TABLE IF NOT EXISTS paper_intelligence.paper_author_affiliations (
         REFERENCES research_radar.content_items(id) ON DELETE CASCADE,
     paper_author_id      BIGINT NOT NULL
         REFERENCES paper_intelligence.paper_authors(id) ON DELETE CASCADE,
+    -- NULL = resolved but unlisted (not on watchlist). Never discard.
     organisation_id      BIGINT
         REFERENCES paper_intelligence.organisations(id) ON DELETE SET NULL,
     raw_affiliation      TEXT,
@@ -246,26 +244,27 @@ CREATE TABLE IF NOT EXISTS paper_intelligence.paper_author_affiliations (
     created_at           TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS ix_paper_author_affiliations_content
+CREATE INDEX IF NOT EXISTS ix_paa_content
     ON paper_intelligence.paper_author_affiliations (content_item_id);
-CREATE INDEX IF NOT EXISTS ix_paper_author_affiliations_org
+CREATE INDEX IF NOT EXISTS ix_paa_org
     ON paper_intelligence.paper_author_affiliations (organisation_id)
     WHERE organisation_id IS NOT NULL;
-CREATE INDEX IF NOT EXISTS ix_paper_author_affiliations_author
+CREATE INDEX IF NOT EXISTS ix_paa_author
     ON paper_intelligence.paper_author_affiliations (paper_author_id);
 
 -- ---------------------------------------------------------------------------
--- Audience / domain enrichment (append-only) + current state
+-- Classification / scoring — append-only
 -- ---------------------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS paper_intelligence.paper_classification_results (
     id               BIGSERIAL PRIMARY KEY,
     content_item_id  BIGINT NOT NULL
         REFERENCES research_radar.content_items(id) ON DELETE CASCADE,
-    task_type        TEXT NOT NULL,
-    audience         TEXT,
-    domain           TEXT,
-    subdomain        TEXT,
+    task_type        TEXT NOT NULL
+        CHECK (task_type IN (
+            'screen', 'audience', 'domain', 'subdomain',
+            'application_domain', 'quality'
+        )),
     result_json      JSONB NOT NULL DEFAULT '{}'::jsonb,
     method           TEXT NOT NULL
         CHECK (method IN ('deterministic', 'llm', 'adjudicated', 'manual')),
@@ -280,9 +279,9 @@ CREATE TABLE IF NOT EXISTS paper_intelligence.paper_classification_results (
     created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS ix_paper_classification_results_content
+CREATE INDEX IF NOT EXISTS ix_pcr_content
     ON paper_intelligence.paper_classification_results (content_item_id, created_at DESC);
-CREATE INDEX IF NOT EXISTS ix_paper_classification_results_task
+CREATE INDEX IF NOT EXISTS ix_pcr_task
     ON paper_intelligence.paper_classification_results (task_type, method);
 
 CREATE TABLE IF NOT EXISTS paper_intelligence.paper_intelligence_current (
@@ -291,8 +290,11 @@ CREATE TABLE IF NOT EXISTS paper_intelligence.paper_intelligence_current (
     domain                        TEXT,
     subdomains                    JSONB NOT NULL DEFAULT '[]'::jsonb,
     audiences                     JSONB NOT NULL DEFAULT '[]'::jsonb,
+    application_domains           JSONB NOT NULL DEFAULT '[]'::jsonb,
     domain_confidence             NUMERIC(4, 3),
     audience_confidence           NUMERIC(4, 3),
+    screen_score                  NUMERIC(4, 1),
+    quality_score                 NUMERIC(4, 1),
     author_resolution_status      TEXT,
     affiliation_resolution_status TEXT,
     updated_at                    TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -303,12 +305,10 @@ CREATE TABLE IF NOT EXISTS paper_intelligence.paper_intelligence_current (
 -- ---------------------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS paper_intelligence.golden_sets (
-    golden_set_id    BIGSERIAL PRIMARY KEY,
+    id               BIGSERIAL PRIMARY KEY,
     name             TEXT NOT NULL UNIQUE,
-    task_type        TEXT NOT NULL,
     version          TEXT NOT NULL,
-    description      TEXT,
-    item_count       INTEGER NOT NULL DEFAULT 0,
+    task_type        TEXT NOT NULL,
     created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UNIQUE (task_type, version)
 );
@@ -316,65 +316,55 @@ CREATE TABLE IF NOT EXISTS paper_intelligence.golden_sets (
 CREATE TABLE IF NOT EXISTS paper_intelligence.golden_set_items (
     id               BIGSERIAL PRIMARY KEY,
     golden_set_id    BIGINT NOT NULL
-        REFERENCES paper_intelligence.golden_sets(golden_set_id) ON DELETE CASCADE,
+        REFERENCES paper_intelligence.golden_sets(id) ON DELETE CASCADE,
     content_item_id  BIGINT NOT NULL
         REFERENCES research_radar.content_items(id) ON DELETE CASCADE,
-    metadata         JSONB NOT NULL DEFAULT '{}'::jsonb,
     UNIQUE (golden_set_id, content_item_id)
 );
 
 CREATE TABLE IF NOT EXISTS paper_intelligence.golden_labels (
-    id               BIGSERIAL PRIMARY KEY,
-    golden_set_id    BIGINT NOT NULL
-        REFERENCES paper_intelligence.golden_sets(golden_set_id) ON DELETE CASCADE,
-    content_item_id  BIGINT NOT NULL
+    id                BIGSERIAL PRIMARY KEY,
+    golden_set_id     BIGINT NOT NULL
+        REFERENCES paper_intelligence.golden_sets(id) ON DELETE CASCADE,
+    content_item_id   BIGINT NOT NULL
         REFERENCES research_radar.content_items(id) ON DELETE CASCADE,
-    label_json       JSONB NOT NULL DEFAULT '{}'::jsonb,
+    task_type         TEXT NOT NULL,
+    label_json        JSONB NOT NULL DEFAULT '{}'::jsonb,
     gold_label_source TEXT NOT NULL
         CHECK (gold_label_source IN ('manual', 'llm_adjudicated')),
-    labelled_by      TEXT,
-    notes            TEXT,
-    created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    UNIQUE (golden_set_id, content_item_id)
+    labeller          TEXT,
+    created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE (golden_set_id, content_item_id, task_type)
 );
 
 CREATE TABLE IF NOT EXISTS paper_intelligence.evaluation_runs (
-    evaluation_run_id UUID PRIMARY KEY,
+    id                UUID PRIMARY KEY,
     golden_set_id     BIGINT NOT NULL
-        REFERENCES paper_intelligence.golden_sets(golden_set_id) ON DELETE CASCADE,
+        REFERENCES paper_intelligence.golden_sets(id) ON DELETE CASCADE,
     pipeline_run_id   UUID
         REFERENCES paper_intelligence.pipeline_runs(run_id) ON DELETE SET NULL,
-    task_type         TEXT NOT NULL,
-    code_commit_sha   TEXT,
     stage_version     TEXT,
     prompt_version    TEXT,
     policy_version    TEXT,
-    started_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    ended_at          TIMESTAMPTZ,
-    status            TEXT NOT NULL DEFAULT 'running'
-        CHECK (status IN ('running', 'succeeded', 'failed')),
-    summary_json      JSONB NOT NULL DEFAULT '{}'::jsonb,
-    created_by        TEXT
+    code_commit_sha   TEXT,
+    created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS paper_intelligence.evaluation_results (
     id                  BIGSERIAL PRIMARY KEY,
     evaluation_run_id   UUID NOT NULL
-        REFERENCES paper_intelligence.evaluation_runs(evaluation_run_id) ON DELETE CASCADE,
+        REFERENCES paper_intelligence.evaluation_runs(id) ON DELETE CASCADE,
     content_item_id     BIGINT NOT NULL
         REFERENCES research_radar.content_items(id) ON DELETE CASCADE,
-    gold_label_source   TEXT NOT NULL
-        CHECK (gold_label_source IN ('manual', 'llm_adjudicated')),
-    gold_json           JSONB NOT NULL DEFAULT '{}'::jsonb,
+    task_type           TEXT NOT NULL,
     predicted_json      JSONB NOT NULL DEFAULT '{}'::jsonb,
-    match               BOOLEAN,
-    regression          BOOLEAN NOT NULL DEFAULT FALSE,
-    metrics_json        JSONB NOT NULL DEFAULT '{}'::jsonb,
-    notes               TEXT,
-    UNIQUE (evaluation_run_id, content_item_id)
+    gold_json           JSONB NOT NULL DEFAULT '{}'::jsonb,
+    is_match            BOOLEAN,
+    error_class         TEXT,
+    UNIQUE (evaluation_run_id, content_item_id, task_type)
 );
 
 CREATE INDEX IF NOT EXISTS ix_evaluation_results_run
-    ON paper_intelligence.evaluation_results (evaluation_run_id, match);
+    ON paper_intelligence.evaluation_results (evaluation_run_id, is_match);
 
 COMMIT;

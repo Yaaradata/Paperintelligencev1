@@ -1,25 +1,31 @@
 # Data model — PaperIntelligenceV1
 
-Schema: `paper_intelligence`. Foreign keys to `research_radar.content_items`. Do not duplicate `content_items` or `paper_metadata`.
+Schema: `paper_intelligence`. FKs to `research_radar.content_items`. Do not duplicate `content_items` or `paper_metadata`.
+
+DDL: `sql/migrations/001_schema.sql` (**agents do not apply**).
 
 ## Identity and affiliation
 
-- `paper_authors` — occurrence per paper; identity fields nullable until resolved
-- `people` — canonical person
-- `organisations` — canonical org
-- `organisation_aliases` — name/domain/abbreviation/historical_name
-- `paper_author_affiliations` — **append-only** evidence; `organisation_id` nullable by design (unlisted)
-- `papers_people` — paper ↔ person link
+| Table | Notes |
+|---|---|
+| `paper_authors` | `(content_item_id, author_position)` unique; identity fields nullable |
+| `people` | `priority`, `is_person_of_interest`, `active`, `metadata` |
+| `organisations` | ROR/OpenAlex ids unique when present |
+| `organisation_aliases` | `alias_type ∈ {name,domain,abbreviation,historical_name}` |
+| `paper_author_affiliations` | Append-only; **`organisation_id` NULL = unlisted, keep raw** |
+| `papers_people` | `author_position`, `confidence`, `evidence_type` |
 
 ## Classification and scoring (append-only)
 
-`paper_classification_results.task_type` ∈ `screen`, `audience`, `domain`, `subdomain`, `application_domain`, `quality`.
+`paper_classification_results.task_type ∈`:
 
-One classify call writes multiple rows sharing `run_id` / `prompt_version` / `stage_version`.
+`screen` · `audience` · `domain` · `subdomain` · `application_domain` · `quality`
+
+Payload in `result_json`. One classify call → multiple rows sharing `run_id` / `prompt_version` / `stage_version`.
 
 ## Canonical current
 
-`paper_intelligence_current` — derived only. Includes domain, subdomains, audiences, application_domains, screen_score, quality_score, resolution statuses.
+`paper_intelligence_current`: domain, subdomains, audiences, application_domains, confidences, `screen_score`, `quality_score`, resolution statuses. **Derived only.**
 
 ## Run tracking
 
@@ -27,16 +33,50 @@ One classify call writes multiple rows sharing `run_id` / `prompt_version` / `st
 
 ## Golden and evaluation
 
-`golden_sets`, `golden_set_items`, `golden_labels` (`gold_label_source` required), `evaluation_runs`, `evaluation_results`. Score `manual` and `llm_adjudicated` separately.
+| Table | Critical fields |
+|---|---|
+| `golden_sets` | `name`, `version`, `task_type` |
+| `golden_set_items` | set ↔ content_item |
+| `golden_labels` | `task_type`, `label_json`, **`gold_label_source`**, `labeller` |
+| `evaluation_runs` | versions + `code_commit_sha` |
+| `evaluation_results` | `predicted_json`, `gold_json`, `is_match`, `error_class` |
 
-## Interfaces Urmila implements (shape only — Phase 2 will freeze columns)
+Score `manual` and `llm_adjudicated` separately in reports.
+
+## Interfaces Urmila implements behind
 
 ### `external_requests`
 
-Intent: one row per external HTTP/API attempt (arxiv, openalex, ror, openrouter) with `request_hash`, timing, `cache_hit`, `response_path`, `response_sha256`, errors, optional links to run/stage/content.
+| Column | Purpose |
+|---|---|
+| `request_id` UUID PK | |
+| `run_id` / `stage_run_id` / `content_item_id` | nullable links |
+| `provider` | `arxiv` \| `openalex` \| `ror` \| `openrouter` |
+| `endpoint` | |
+| `request_hash` | deterministic cache key |
+| `started_at` / `ended_at` / `duration_ms` | |
+| `http_status` / `success` / `cache_hit` | |
+| `response_path` / `response_sha256` | raw JSON.gz pointer |
+| `error_type` / `error_message` | |
+| `created_at` | |
 
 ### `llm_requests`
 
-Intent: OpenRouter economics linked to an `external_requests` row — `model`, `prompt_version`, token counts, `estimated_cost`.
+| Column | Purpose |
+|---|---|
+| `llm_request_id` UUID PK | |
+| `request_id` | FK → `external_requests` |
+| `model` / `prompt_version` | |
+| `input_tokens` / `output_tokens` / `estimated_cost` | |
+| `created_at` | |
 
-> Column-precise DDL lands in Phase 2 migration + this doc update (S-005).
+### Python stubs
+
+```python
+ror.resolve_affiliation(raw: str) -> RorResponse
+openalex.get_work(identifier: str) -> OpenAlexWork
+arxiv.get_paper(arxiv_id: str) -> ArxivResponse
+openrouter.complete(request: LLMRequest) -> LLMResponse
+```
+
+Clients return structured data only. Stages decide meaning.

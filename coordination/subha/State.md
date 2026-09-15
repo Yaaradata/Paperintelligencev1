@@ -8,7 +8,7 @@ Architecture docs · migrations (write-only) · stage contracts · normalize/scr
 
 ## Current cycle
 
-**Phase 1 — Scaffold and documents.** No production pipeline code.
+**Phase 2 — Schema and interfaces.** Contract + migration written; not applied. Next: merge to `main`, then `normalize_authors`.
 
 ## Cycle checklist
 
@@ -38,10 +38,10 @@ Then read `/Context.md` → `/State.md` → `coordination/subha/State.md` → `c
 
 | Interface | Status |
 |---|---|
-| `external_requests` / `llm_requests` column contract in `docs/data_model.md` | Pending Phase 2 |
-| `Stage` / `StageResult` / `Evidence` / `RunContext` | Pending Phase 2 |
-| `ror.resolve_affiliation` / `openalex.get_work` / `openrouter.complete` stubs | Pending Phase 2 |
-| Schema commit on `main` for rebase | Pending Phase 2 merge |
+| `external_requests` / `llm_requests` column contract in `docs/data_model.md` | Done on `dev/subha` |
+| `Stage` / `StageResult` / `Evidence` / `RunContext` | Done |
+| `ror.resolve_affiliation` / `openalex.get_work` / `openrouter.complete` stubs | Done |
+| Schema commit on `main` for rebase | Pending merge |
 
 ## Decisions made
 

@@ -1,19 +1,17 @@
 # State — PaperIntelligenceV1
 
-**Updated:** 2026-09-15 (Phase 1 scaffold)
+**Updated:** 2026-09-15 (Phase 2 schema + interfaces)
 
 ## Where the project is
 
-Repository initialised with folder scaffold, versioned prompts/policies, coordination docs, and Cursor agent/rule configuration. **No pipeline stage code yet.**
+Phase 1 scaffold committed. Phase 2 delivers revised `001_schema.sql`, stage contract, and typed external stubs on `dev/subha`. **Still no stage runtime code. Migrations not applied.**
 
 Fixed sequence:
 
-1. Architecture / scaffold documents (this phase)
-2. Schema + interface contract commit (unblocks Urmila)
+1. ~~Architecture / scaffold documents~~ done
+2. Schema + interface contract (this commit) — then land on `main`
 3. Both worktrees rebase onto that commit
 4. Parallel Engineer work begins
-
-Neither Engineer makes substantial pipeline changes before the schema/interface commit lands.
 
 ## What exists
 
@@ -21,18 +19,18 @@ Neither Engineer makes substantial pipeline changes before the schema/interface 
 |---|---|
 | arXiv OAI-PMH ingestion | Exists (Research Radar) — **not rebuilt** |
 | `content_items` / `paper_metadata` | Exists — **not duplicated** |
-| Audience/domain enrichment | Exists ad-hoc upstream — **refactor into classify stage**, do not rewrite from scratch blindly |
-| Screen / quality stages | Not created |
-| Affiliation resolution (PI schema) | Not created |
-| Adjudication + current state writer | Not created |
-| External cache / observability (Urmila) | Not created |
-| Golden loaders / evaluate_golden | Not created |
-| `paper_intelligence` schema migration | Draft `001_schema.sql` present — **will be revised in Phase 2** to match this brief; **not applied** |
+| Audience/domain enrichment | Exists ad-hoc upstream — **refactor into classify stage** |
+| Docs / prompts / policies / agents | Created (Phase 1) |
+| Stage contract + client stubs | Created (Phase 2) |
+| `001_schema.sql` | Phase 2 revised — **written, not applied** |
+| Screen / classify / quality / affiliation stages | Not created |
+| External cache / observability implementations | Not created (Urmila) |
+| Golden loaders / evaluate_golden | Stub only |
 
 ## Open decisions (need human)
 
 1. Final canonical column types / CHECK constraints for new tables after Phase 2 delta review
-2. Exact `StageResult` / `Evidence` / `RunContext` field set (Architect proposes in Phase 2)
+2. ~~`StageResult` / `Evidence` / `RunContext`~~ proposed in `common/stage.py` — human confirm before post-interface schema churn
 3. `subdomain`: confirm multi-label (`subdomains` jsonb) vs single
 4. Adjudication precedence when LLM and deterministic evidence conflict
 5. Production values for `SCREEN_MIN_AI_RELEVANCE` (default 5.0) and `GATE_PERCENTILE` (default 15)
@@ -50,11 +48,10 @@ Neither Engineer makes substantial pipeline changes before the schema/interface 
 
 ## Blocked
 
-Nothing — Phase 1 documentation in progress; Phase 2 schema next.
+Waiting on human to: review schema · apply DDL · merge/rebase contract onto `main` for Urmila.
 
 ## Next cycle
 
-1. Commit Phase 1 scaffold
-2. Architect architecture delta + Phase 2 schema/interfaces
-3. Land schema+contract on `main` (or merge path), Urmila rebases
-4. Vertical slice starting at `normalize_authors`
+1. Merge Phase 2 to `main`; Urmila rebases `dev/urmila`
+2. Vertical slice: `normalize_authors` (S-006 / P-004)
+3. Then screen → classify → …
