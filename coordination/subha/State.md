@@ -8,7 +8,7 @@ Architecture docs · migrations (write-only) · stage contracts · normalize/scr
 
 ## Current cycle
 
-**Phase 2 — Schema and interfaces.** Contract + migration written; not applied. Next: merge to `main`, then `normalize_authors`.
+**Phase 3.1 — `normalize_authors`.** Engineer implementation complete on `dev/subha`; awaiting Verifier (S-006 / P-004).
 
 ## Cycle checklist
 
@@ -41,7 +41,7 @@ Then read `/Context.md` → `/State.md` → `coordination/subha/State.md` → `c
 | `external_requests` / `llm_requests` column contract in `docs/data_model.md` | Done on `dev/subha` |
 | `Stage` / `StageResult` / `Evidence` / `RunContext` | Done |
 | `ror.resolve_affiliation` / `openalex.get_work` / `openrouter.complete` stubs | Done |
-| Schema commit on `main` for rebase | Pending merge |
+| Schema commit on `main` for rebase | Done (`15a104e`); schema applied on RDS |
 
 ## Decisions made
 

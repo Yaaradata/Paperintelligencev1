@@ -1,17 +1,17 @@
 # State — PaperIntelligenceV1
 
-**Updated:** 2026-09-15 (Phase 2 schema + interfaces)
+**Updated:** 2026-09-15 (Phase 3.1 normalize_authors implemented — awaiting Verifier)
 
 ## Where the project is
 
-Phase 1 scaffold committed. Phase 2 delivers revised `001_schema.sql`, stage contract, and typed external stubs on `dev/subha`. **Still no stage runtime code. Migrations not applied.**
+Phases 1–2 landed on `main`; `001_schema.sql` **applied on RDS** by human. Phase 3.1 `normalize_authors` implemented on `dev/subha` (Engineer). **Not Verifier-closed yet.**
 
 Fixed sequence:
 
 1. ~~Architecture / scaffold documents~~ done
-2. Schema + interface contract (this commit) — then land on `main`
-3. Both worktrees rebase onto that commit
-4. Parallel Engineer work begins
+2. ~~Schema + interface contract on `main`~~ done
+3. ~~Worktrees rebased~~ done
+4. Vertical slice in progress — next after Verifier: `screen`
 
 ## What exists
 
@@ -19,11 +19,11 @@ Fixed sequence:
 |---|---|
 | arXiv OAI-PMH ingestion | Exists (Research Radar) — **not rebuilt** |
 | `content_items` / `paper_metadata` | Exists — **not duplicated** |
-| Audience/domain enrichment | Exists ad-hoc upstream — **refactor into classify stage** |
 | Docs / prompts / policies / agents | Created (Phase 1) |
 | Stage contract + client stubs | Created (Phase 2) |
-| `001_schema.sql` | Phase 2 revised — **written, not applied** |
-| Screen / classify / quality / affiliation stages | Not created |
+| `paper_intelligence` schema on RDS | **Applied** (18 tables) |
+| `normalize_authors` | Implemented (`v001`) — Verifier pending |
+| Screen / classify / quality / affiliation | Not created |
 | External cache / observability implementations | Not created (Urmila) |
 | Golden loaders / evaluate_golden | Stub only |
 
@@ -48,10 +48,10 @@ Fixed sequence:
 
 ## Blocked
 
-Waiting on human to: review schema · apply DDL · merge/rebase contract onto `main` for Urmila.
+Nothing for normalize. Verifier should falsify S-006 / P-004 before starting `screen`.
 
 ## Next cycle
 
-1. Merge Phase 2 to `main`; Urmila rebases `dev/urmila`
-2. Vertical slice: `normalize_authors` (S-006 / P-004)
-3. Then screen → classify → …
+1. Verifier on `normalize_authors`
+2. Implement `screen` (P-005 / S-007)
+3. Then classify → quality ∥ affiliation → adjudication
