@@ -1,0 +1,11 @@
+# Watchlist / priority organisations seed reference.
+# Canonical org rows live in paper_intelligence.organisations after resolution.
+# Unlisted resolved orgs are stored with organisation_id NULL — never discarded.
+
+watchlist: []
+# Example entry (do not invent production data here):
+# - canonical_name: Example Lab
+#   ror_id: null
+#   domains: []
+#   priority: 5
+#   is_org_of_interest: true

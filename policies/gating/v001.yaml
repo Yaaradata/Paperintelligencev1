@@ -1,0 +1,29 @@
+policy_version: v001
+policy_name: gating
+
+screen:
+  # Gate applied in code after honest scoring. Failing papers are retained.
+  min_ai_relevance: 5.0
+  dimensions:
+    - ai_relevance
+    - technical_significance
+    - apparent_novelty
+    - evidence_strength
+  score_scale:
+    min: 0.0
+    max: 10.0
+    increment: 0.5
+
+quality_selection:
+  # Top GATE_PERCENTILE of screen survivors ranked on mean of:
+  # technical_significance, apparent_novelty, evidence_strength
+  # (ai_relevance excluded — near-constant post-gate).
+  gate_percentile: 15
+  rank_dimensions:
+    - technical_significance
+    - apparent_novelty
+    - evidence_strength
+
+notes: |
+  Score every dimension honestly. Do not collapse non-relevance dimensions
+  when a paper is off-topic — the gate is code, not the model.

@@ -1,0 +1,30 @@
+policy_version: v001
+policy_name: affiliation_resolution
+
+# Evidence precedence (highest first). Never use author current employer
+# as paper affiliation without paper-specific evidence.
+precedence:
+  - explicit_paper_affiliation
+  - strong_deterministic  # email domain, known alias
+  - ror_canonical_match
+  - openalex_paper_specific
+  - author_profile_secondary  # enrichment only
+
+grounding:
+  # Organisation name must appear literally in supplied evidence.
+  # Do NOT require the model's evidence sentence to be a literal substring.
+  require_literal_org_name_in_evidence: true
+  require_literal_evidence_sentence: false
+
+outcomes:
+  no_evidence_supplied: distinct from review_required
+  review_required: evidence exists but is ambiguous
+  unresolved_preferred_over_wrong: true
+
+storage:
+  # Resolved but not on watchlist → organisation_id NULL, raw name kept.
+  allow_null_organisation_id: true
+  never_discard_unlisted: true
+
+false_positive_org_attribution:
+  weight: heavier_than_unresolved_author

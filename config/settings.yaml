@@ -1,0 +1,30 @@
+# PaperIntelligenceV1 runtime settings (non-secret).
+# Secrets come from environment / .env — never commit them here.
+
+pipeline_name: paper_intelligence_v1
+schema: paper_intelligence
+
+models:
+  screen: "${SCREEN_MODEL:glm-5.3-flash}"
+  classify: "${CLASSIFY_MODEL:glm-5.3-flash}"
+  quality: "${QUALITY_MODEL}"
+
+reasoning:
+  screen: false
+  classify: false
+  quality: true
+
+batch_sizes:
+  screen: 15
+  classify: 15
+  quality: 5
+
+gating:
+  # Overridden by env SCREEN_MIN_AI_RELEVANCE / GATE_PERCENTILE when set.
+  screen_min_ai_relevance: 5.0
+  gate_percentile: 15
+
+paths:
+  prompts: prompts
+  policies: policies
+  raw_cache: ../../shared_data/raw

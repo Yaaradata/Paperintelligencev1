@@ -1,0 +1,53 @@
+---
+description: PaperIntelligenceV1 architecture invariants and agent workflow
+alwaysApply: true
+---
+
+# PaperIntelligenceV1
+
+Repository: `~/Paperintelligencev1/repo` · Prefer worktree `worktrees/subha` on `dev/subha` for Subha-owned work.
+
+## Stage diagram
+
+```
+normalize_authors → screen → GATE(ai_relevance) → classify
+                                      ├→ quality (top GATE_PERCENTILE)
+                                      └→ affiliation
+                                           ↓
+                                      adjudication → paper_intelligence_current
+```
+
+Ingestion / `content_items` / `paper_metadata` are **existing** — do not rebuild or modify.
+
+## Invariants
+
+- Evidence never overwritten (append-only); current state is derived
+- Four layers: raw · model outputs · adjudicated · canonical current
+- Unknown beats wrong org; `organisation_id` may be NULL for unlisted
+- Store paper→author→org→evidence, never bare paper→org
+- External clients return data only; stages decide meaning
+- Independent stage/prompt/policy versions; no global pipeline version
+- Stages idempotent and independently rerunnable
+- Paid stages require `--from`/`--until`; print scope before work
+- Prompts/policies are versioned files — never edit an existing version in place
+
+## Constraints
+
+- OpenRouter only · RDS Postgres schema `paper_intelligence`
+- No agent frameworks in runtime · no alternate architecture folders
+- Agents write migrations but **do not apply DDL**
+- Do not mark own work complete — Verifier only
+- Agent sequence never parallel: Architect → Scout → Engineer → Verifier → fix → commit
+
+## Development cycle
+
+Start: `git status && git fetch origin && git rebase origin/main`, then read Context → State → stream State → stream Backlog.  
+End: tests → golden when applicable → update backlog/state → commit code+MD together → push.
+
+## Boundary with Urmila
+
+Subha owns canonical semantics and enrichment policy. Urmila owns cache, client implementations, observability, golden loaders/eval behind Subha interfaces. Coordinate interface changes via State.md — do not silently change contracts.
+
+## M1
+
+**200+200 Golden Replayable** — every golden paper must be fully provenance-traceable and comparable to labels (manual vs llm_adjudicated scored separately).
