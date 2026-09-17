@@ -27,7 +27,19 @@ RECORD_CS = """
       <id>2601.00099</id>
       <created>2026-01-05</created>
       <updated>2026-01-06</updated>
-      <authors><author><keyname>Smith</keyname><forenames>Ada</forenames></author></authors>
+      <authors>
+        <author>
+          <keyname>Smith</keyname>
+          <forenames>Ada</forenames>
+          <affiliation>Amazon</affiliation>
+        </author>
+        <author>
+          <keyname>Jones</keyname>
+          <forenames>Bob</forenames>
+          <affiliation>Stanford University</affiliation>
+          <affiliation>Google DeepMind</affiliation>
+        </author>
+      </authors>
       <title>An Example AI Paper</title>
       <categories>cs.AI cs.LG</categories>
       <abstract>  Example   abstract. </abstract>
@@ -74,12 +86,26 @@ def test_parse_record_keeps_created_for_published_at():
     rec = ingest.parse_record(_first_record(RECORD_CS))
     assert rec["deleted"] is False
     assert rec["arxiv_id"] == "2601.00099"
-    assert rec["authors"] == ["Ada Smith"]
+    assert rec["authors"] == ["Ada Smith", "Bob Jones"]
+    assert rec["authors_structured"][0]["affiliation"] == "Amazon"
+    assert rec["authors_structured"][1]["affiliations"] == [
+        "Stanford University",
+        "Google DeepMind",
+    ]
     assert rec["categories"] == ["cs.AI", "cs.LG"]
     item = ingest.record_to_item(rec)
     assert item["published_at"] == parse_iso_datetime("2026-01-05")
     assert item["canonical_url"] == "https://arxiv.org/abs/2601.00099"
     assert item["source"] == "arxiv_oai"
+    assert item["raw_metadata"]["authors_structured"][0]["name"] == "Ada Smith"
+    from paper_intelligence.ingest.repository import affiliation_lines_from_structured
+
+    lines = affiliation_lines_from_structured(rec["authors_structured"])
+    assert lines == [
+        "Affiliation: Amazon",
+        "Affiliation: Stanford University",
+        "Affiliation: Google DeepMind",
+    ]
 
 
 def test_parse_deleted_and_category_filter():

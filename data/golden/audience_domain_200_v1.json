@@ -1,0 +1,3732 @@
+{
+  "name": "audience_domain_200_v1",
+  "version": "v1",
+  "task_type": "audience_domain",
+  "description": "200-paper Research Radar tagging_eval_sample_200 (llm_adjudicated via gpt-5.6-sol) plus 30-paper human golden labels from eval-full-audience-domain.xlsx (manual overlays/additions; updated=1, added=29).",
+  "items": [
+    {
+      "content_item_id": 39,
+      "arxiv_id": null,
+      "title": "HiFi-KPI: A Dataset for Hierarchical KPI Extraction from Earnings Filings",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "financial_services",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The released dataset and lite set give teams a practical way to test financial KPI extraction, and the 0.440 structured-extraction F1 shows a clear gap for LLM deployments."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 3365,
+      "arxiv_id": "2603.00188",
+      "title": "ST-Lite: Training-Free KV Cache Compression with Spatio-Trajectory Guidance for Long-Horizon GUI Agents",
+      "canonical_url": "https://arxiv.org/abs/2603.00188",
+      "label_json": {
+        "audiences": [],
+        "domain": "ML Systems and Efficiency",
+        "subdomains": [
+          "Efficient Inference"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 3489,
+      "arxiv_id": "2608.23181",
+      "title": "CyberFactory: Scaling Cyber Security Capabilities with Instances from the Wild",
+      "canonical_url": "https://arxiv.org/abs/2608.23181",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "AI-Generated Content Detection"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 3651,
+      "arxiv_id": null,
+      "title": "Do Sheaf Neural Networks Use Holonomy? A Measure--Intervene--Control Study",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "This is a careful causal study of one mechanism in sheaf networks, but even its own controls do not show that holonomy drives the task result."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 4308,
+      "arxiv_id": null,
+      "title": "Enabling Memory-efficient Im2win Convolution with Multi-precision Support on GPU CUDA and Tensor Cores",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The CUDA and tensor-core implementation reports concrete speed and memory gains over cuDNN and cuBLAS, which is useful to engineers optimizing CNN inference."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 9925,
+      "arxiv_id": "2601.04736",
+      "title": "Towards Multi-modal Multi-turn Safety: From Agentic Interaction to Strategic Alignment",
+      "canonical_url": "https://arxiv.org/abs/2601.04736",
+      "label_json": {
+        "audiences": [],
+        "domain": "Multimodal Learning",
+        "subdomains": [
+          "Multimodal Foundation Models",
+          "Vision-Language Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 13654,
+      "arxiv_id": "2601.13989",
+      "title": "Linearized subspace refinement framework to expose hidden accuracy in trained neural networks",
+      "canonical_url": "https://arxiv.org/abs/2601.13989",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Optimization Theory"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 13950,
+      "arxiv_id": "2601.14603",
+      "title": "Variance-Adaptive Muon: Pre-Orthogonalization Variance Modulation for Efficient Language Model Pretraining",
+      "canonical_url": "https://arxiv.org/abs/2601.14603",
+      "label_json": {
+        "audiences": [],
+        "domain": "ML Systems and Efficiency",
+        "subdomains": [
+          "Efficient Inference",
+          "Optimization Theory"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 16240,
+      "arxiv_id": null,
+      "title": "VoxPrivacy: A Benchmark for Evaluating Interactional Privacy of Speech Language Models",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The benchmark exposes a real multi-user privacy failure in speech models, tests nine systems on synthetic and human speech, and includes training data for mitigation."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 22425,
+      "arxiv_id": "2602.06504",
+      "title": "MultiGraspNet: A Multitask 3D Vision Model for Multi-gripper Robotic Grasping",
+      "canonical_url": "https://arxiv.org/abs/2602.06504",
+      "label_json": {
+        "audiences": [],
+        "domain": "Robotics",
+        "subdomains": [
+          "Robot Manipulation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 25684,
+      "arxiv_id": "2602.14028",
+      "title": "GRRM: Group Relative Reward Modeling for Machine Translation",
+      "canonical_url": "https://arxiv.org/abs/2602.14028",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Machine Translation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 29763,
+      "arxiv_id": "2602.22453",
+      "title": "Bridging Latent Reasoning and Target-Language Generation via Retrieval-Transition Heads",
+      "canonical_url": "https://arxiv.org/abs/2602.22453",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Question Answering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 34530,
+      "arxiv_id": "2504.01547",
+      "title": "Semi-Supervised Biomedical Image Segmentation via Diffusion Models and Teacher-Student Co-Training",
+      "canonical_url": "https://arxiv.org/abs/2504.01547",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Segmentation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 36051,
+      "arxiv_id": "2603.12440",
+      "title": "KernelFoundry: Hardware-aware evolutionary GPU kernel optimization",
+      "canonical_url": "https://arxiv.org/abs/2603.12440",
+      "label_json": {
+        "audiences": [],
+        "domain": "ML Systems and Efficiency",
+        "subdomains": [
+          "Efficient Inference",
+          "Hardware-Aware ML"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 38211,
+      "arxiv_id": "2512.15662",
+      "title": "Stepwise Think-Critique: Interleaved Reasoning and Self-Critique in a Single LLM",
+      "canonical_url": "https://arxiv.org/abs/2512.15662",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Question Answering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 38221,
+      "arxiv_id": "2601.10029",
+      "title": "PaperScout: An Autonomous Agent for Academic Paper Search with Process-Aware Sequence-Level Policy Optimization",
+      "canonical_url": "https://arxiv.org/abs/2601.10029",
+      "label_json": {
+        "audiences": [],
+        "domain": "Human-AI Interaction",
+        "subdomains": [
+          "Agents and Tool Use"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 45207,
+      "arxiv_id": "2603.29093",
+      "title": "APEX-EM: Non-Parametric Online Learning for Autonomous Agents via Structured Procedural-Episodic Experience Replay",
+      "canonical_url": "https://arxiv.org/abs/2603.29093",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Dialogue Systems"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 61677,
+      "arxiv_id": "2605.08028",
+      "title": "Observation-Aligned Two-Stage Domain Decomposition for Physics-Informed Traffic State Estimation with Sparse Fixed Sensors",
+      "canonical_url": "https://arxiv.org/abs/2605.08028",
+      "label_json": {
+        "audiences": [],
+        "domain": "ML Systems and Efficiency",
+        "subdomains": [
+          "Hardware-Aware ML"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 67096,
+      "arxiv_id": "2605.16879",
+      "title": "Towards Generalized Image Manipulation Localization via Score-based Model",
+      "canonical_url": "https://arxiv.org/abs/2605.16879",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Segmentation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 67557,
+      "arxiv_id": "2604.01658",
+      "title": "CORAL: Towards Autonomous Multi-Agent Evolution for Open-Ended Discovery",
+      "canonical_url": "https://arxiv.org/abs/2604.01658",
+      "label_json": {
+        "audiences": [],
+        "domain": "Reinforcement Learning",
+        "subdomains": [
+          "Multi-Agent Reinforcement Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 68394,
+      "arxiv_id": "2512.08237",
+      "title": "Fast-BEV++: Fast by Algorithm, Deployable by Design",
+      "canonical_url": "https://arxiv.org/abs/2512.08237",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "3D Vision and Reconstruction",
+          "Object Detection"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 69660,
+      "arxiv_id": "2601.22365",
+      "title": "Towards Solving the Gilbert-Pollak Conjecture via Large Language Models",
+      "canonical_url": "https://arxiv.org/abs/2601.22365",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Optimization Theory"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 69938,
+      "arxiv_id": "2602.10009",
+      "title": "Discovering High Level Patterns from Simulation Traces",
+      "canonical_url": "https://arxiv.org/abs/2602.10009",
+      "label_json": {
+        "audiences": [],
+        "domain": "Human-AI Interaction",
+        "subdomains": [
+          "Agents and Tool Use"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 70409,
+      "arxiv_id": null,
+      "title": "Deja Vu in Plots: Leveraging Cross-Session Evidence with Retrieval-Augmented LLMs for Live Streaming Risk Assessment",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The paper shows a deployable moderation pattern: use cross-session evidence and LLM supervision to train a lightweight real-time risk detector, with offline and online validation."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 73114,
+      "arxiv_id": "2510.05291",
+      "title": "Camellia: Benchmarking Cultural Biases in LLMs for Asian Languages",
+      "canonical_url": "https://arxiv.org/abs/2510.05291",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Sentiment Analysis"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 74292,
+      "arxiv_id": "2603.27518",
+      "title": "Over-Refusal and Representation Subspaces: A Mechanistic Analysis of Task-Conditioned Refusal in Aligned LLMs",
+      "canonical_url": "https://arxiv.org/abs/2603.27518",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Alignment and RLHF",
+          "Interpretability"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 75498,
+      "arxiv_id": "2605.30912",
+      "title": "Attend to Evidence: Evidence-Anchored Spatial Attention Supervision for Multimodal RLVR",
+      "canonical_url": "https://arxiv.org/abs/2605.30912",
+      "label_json": {
+        "audiences": [],
+        "domain": "Multimodal Learning",
+        "subdomains": [
+          "Vision-Language Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 77283,
+      "arxiv_id": "2606.02010",
+      "title": "PlanarBench: Evaluating LLM Spatial Reasoning via Planar Graph Drawing",
+      "canonical_url": "https://arxiv.org/abs/2606.02010",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Question Answering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 78712,
+      "arxiv_id": "2603.09493",
+      "title": "Guided Prompt Evolution for Vision-Language Models Adaptation",
+      "canonical_url": "https://arxiv.org/abs/2603.09493",
+      "label_json": {
+        "audiences": [],
+        "domain": "Multimodal Learning",
+        "subdomains": [
+          "Vision-Language Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 80582,
+      "arxiv_id": "2507.15736",
+      "title": "IDRBench: Understanding the Capability of Large Language Models on Interdisciplinary Research",
+      "canonical_url": "https://arxiv.org/abs/2507.15736",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Question Answering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 80742,
+      "arxiv_id": "2605.26236",
+      "title": "DuoGesture: Motion-Grounded Semantic Conditioning and Biomechanical Beat Priors for Co-Speech Gesture Generation",
+      "canonical_url": "https://arxiv.org/abs/2605.26236",
+      "label_json": {
+        "audiences": [],
+        "domain": "Multimodal Learning",
+        "subdomains": [
+          "Vision-Language Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 83090,
+      "arxiv_id": "2606.09435",
+      "title": "MUDIDI: A Two-Stage Framework for Multilingual Dictionary Digitization with Language Models",
+      "canonical_url": "https://arxiv.org/abs/2606.09435",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Named Entity Recognition",
+          "Text Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 83725,
+      "arxiv_id": "2606.10581",
+      "title": "ParaBridge: Bridging Paralinguistic Perception and Dialogue Behavior in Speech Language Models",
+      "canonical_url": "https://arxiv.org/abs/2606.10581",
+      "label_json": {
+        "audiences": [],
+        "domain": "Speech and Audio",
+        "subdomains": [
+          "Automatic Speech Recognition"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 87315,
+      "arxiv_id": "2606.17506",
+      "title": "Evaluating Second-Order Bias of LLMs Through Epistemic Entitlement",
+      "canonical_url": "https://arxiv.org/abs/2606.17506",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Sentiment Analysis"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 88820,
+      "arxiv_id": "2605.20382",
+      "title": "Do as I Say, Not as I Do: Instruction-Induction Conflict in LLMs",
+      "canonical_url": "https://arxiv.org/abs/2605.20382",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Dialogue Systems"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 90172,
+      "arxiv_id": "2606.23382",
+      "title": "Energy-Based Transformers as Predictors of Reading Difficulty",
+      "canonical_url": "https://arxiv.org/abs/2606.23382",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Text Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 90393,
+      "arxiv_id": "2511.18037",
+      "title": "Hybrid Event Frame Sensors: Modeling, Calibration, and Simulation",
+      "canonical_url": "https://arxiv.org/abs/2511.18037",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "3D Vision and Reconstruction"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 95976,
+      "arxiv_id": "2607.01469",
+      "title": "Accuracy and Cost Claims Do Not Survive Re-Execution in Agentic VideoQA",
+      "canonical_url": "https://arxiv.org/abs/2607.01469",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Video Understanding",
+          "Visual Question Answering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 100541,
+      "arxiv_id": null,
+      "title": "Gauge dependence and structured-output corruption in sign-branched repetition penalties: measurements across models, inference stacks, and alternative repetition controls",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "A commonly used inference setting cut valid schema-conforming JSON from 97% to 23%, and the paper identifies a normalization-based fix available in current tooling."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 102015,
+      "arxiv_id": "2607.15600",
+      "title": "Geometric Distillation from Rectified Stereo: Leveraging Epipolar Cues for Monocular Depth",
+      "canonical_url": "https://arxiv.org/abs/2607.15600",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "3D Vision and Reconstruction"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 103114,
+      "arxiv_id": "2607.18114",
+      "title": "How Does Alignment Tuning Shape Representations of Sycophancy and Related Cue-Induced Biases in LLMs?",
+      "canonical_url": "https://arxiv.org/abs/2607.18114",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Alignment and RLHF"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 103145,
+      "arxiv_id": "2508.06374",
+      "title": "Evaluating Style-Personalized Text Generation: Challenges and Directions",
+      "canonical_url": "https://arxiv.org/abs/2508.06374",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Text Summarization"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 103635,
+      "arxiv_id": "2607.19128",
+      "title": "One Model, Many Graphs: Learning over Attributed Graphs across Heterogeneous Modalities with Vision-Language Models",
+      "canonical_url": "https://arxiv.org/abs/2607.19128",
+      "label_json": {
+        "audiences": [],
+        "domain": "Multimodal Learning",
+        "subdomains": [
+          "Vision-Language Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 103681,
+      "arxiv_id": "2607.19332",
+      "title": "ROMS-IMLE: A Minimalist Approach to Competitive Single-Step Generative Modelling",
+      "canonical_url": "https://arxiv.org/abs/2607.19332",
+      "label_json": {
+        "audiences": [],
+        "domain": "Generative Modelling",
+        "subdomains": [
+          "Autoregressive Generation",
+          "Diffusion Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 107364,
+      "arxiv_id": "2607.26724",
+      "title": "UrbanDS: A Graph-Guided LLM Multi-Agent System for Data-Intensive Urban Tasks",
+      "canonical_url": "https://arxiv.org/abs/2607.26724",
+      "label_json": {
+        "audiences": [],
+        "domain": "Human-AI Interaction",
+        "subdomains": [
+          "Agents and Tool Use"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 109275,
+      "arxiv_id": null,
+      "title": "Deep Learning CNN and Recurrence Analysis for Alpha Gamma EEG Biomarkers in Fragile X Syndrome",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "healthcare_life_sciences",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The work targets a narrow clinical biomarker problem and claims improvement without reporting enough result detail in the abstract to judge readiness or practical value."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 110022,
+      "arxiv_id": null,
+      "title": "Cultural Awareness is Represented but Not Decoded: Tracing Mythological Knowledge across 18 Open-Source LLMs",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "Across 18 open models, cultural knowledge is present internally but often lost at decoding, and prompt language changes the failure pattern\u2014useful evidence for multilingual evaluation."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 110291,
+      "arxiv_id": null,
+      "title": "VeriTrace: Human-Like Temporal Exploration Completes Agentic Action Space",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "manufacturing_industrial",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "Giving the agent control over signals, time windows, and iteration improved Verilog debugging to 100% Pass@1 on the stated benchmark, offering a concrete agent-tool design lesson."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 110513,
+      "arxiv_id": "2603.01243",
+      "title": "Suffix-Constrained Greedy Search Algorithms for Causal Language Models",
+      "canonical_url": "https://arxiv.org/abs/2603.01243",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Text Summarization"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 111021,
+      "arxiv_id": null,
+      "title": "LLMs Struggle to Measure What Distinguishes Students of Different Proficiency Levels: A Study of Item Discrimination in Reading Comprehension Assessment",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "education",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "Forty-two models failed to reproduce human item discrimination reliably, warning education teams not to treat LLM-generated responses as substitutes for student psychometrics."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 111820,
+      "arxiv_id": null,
+      "title": "DishSeg24k: A Large-Scale Benchmark for Food Segmentation with Stochastic Expert Decoding",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The 24,096-image benchmark and released model target a genuine long-tail segmentation problem and provide measurable gains that computer-vision teams can reproduce."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 112278,
+      "arxiv_id": null,
+      "title": "Beyond Top-K: Replacing Black-Box Retrieval with Interpretable Agentic Operations",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "For table-heavy financial and regulatory documents, the study measures why chunk-and-embed retrieval loses units and years, then tests a replayable search alternative with much higher accuracy."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 112520,
+      "arxiv_id": null,
+      "title": "Optimized Certainty Equivalent Risk Minimization Using Samples: Algorithms, Convergence Rates, and Applications",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The abstract is primarily a theoretical optimization treatment; its broad finance and ML applications do not translate into an immediate deployment or engineering decision."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 112939,
+      "arxiv_id": null,
+      "title": "Digital Fragmentation and Generative AI Use Across 103 Million Application Events",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The 103-million-event study connects generative-AI use with a more focused period of application activity, giving workplace leaders evidence about AI and digital fragmentation."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 113462,
+      "arxiv_id": null,
+      "title": "360CityArena: A Realistic Virtual Urban Navigation Benchmark for Embodied Agents",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The benchmark reveals a large human-to-model gap in realistic city navigation and supplies 175 human-built tasks for evaluating embodied agents."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 113598,
+      "arxiv_id": null,
+      "title": "Is CLIP Cross-Eyed? Revealing and Mitigating Center Bias in the CLIP Family",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The paper identifies an off-centre object failure in CLIP and offers training-free mitigations through visual prompting and attention redistribution."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 114272,
+      "arxiv_id": null,
+      "title": "Off-Axis, On Purpose: Where a Transformer Computes Concepts and Why it Does So",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The findings are about internal representation geometry in a small transformer, with no clear evaluation, product, or deployment change for a general newsletter reader."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 115248,
+      "arxiv_id": null,
+      "title": "Distillation of Foundation Models for Time-dependent PDEs",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "scientific_research",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The distillation method makes PDE foundation models several orders smaller and more than ten times faster while matching or beating the teacher on the tested benchmarks."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 115939,
+      "arxiv_id": "2608.13456",
+      "title": "A Unifying Perspective on Causal World Models: From Observations to Representations to Structure",
+      "canonical_url": "https://arxiv.org/abs/2608.13456",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Causal Inference",
+          "Representation Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 116858,
+      "arxiv_id": null,
+      "title": "Unaccountable Delegation, Fading Skills: Mapping the Risks of Workplace AI Agents",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The worker-validated taxonomy turns 2,078 job tasks into concrete agent-risk scenarios and separates risks created by automation from those created by augmentation."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 117526,
+      "arxiv_id": null,
+      "title": "Detector-Augmented SAMURAI for Long-Duration Drone Tracking",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The detector-augmented tracker materially improves long-duration drone tracking, especially after exit and re-entry, with substantial success-rate and false-negative gains."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 117723,
+      "arxiv_id": null,
+      "title": "DSPrompt: Dynamic Soft Prompt Defense Against M-RAG Corruption",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The defense reduces multimodal RAG poisoning while adding under 1% parameters and no per-query optimization, making the security trade-off relevant to deployed retrieval systems."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 117869,
+      "arxiv_id": null,
+      "title": "Solving nonconvex Hamilton--Jacobi--Isaacs equations with PINN-based policy iteration",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "scientific_research",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "This is a specialized numerical method for Hamilton\u2013Jacobi\u2013Isaacs equations; the abstract does not give a broadly reusable AI engineering or organizational lesson."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 117985,
+      "arxiv_id": "2606.23671",
+      "title": "Can LLMs Reliably Self-Report Adversarial Prefills, and How?",
+      "canonical_url": "https://arxiv.org/abs/2606.23671",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Adversarial Robustness",
+          "Interpretability"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 120434,
+      "arxiv_id": "2606.04390",
+      "title": "Shortcomings and capacities of real-constrained neural networks in complex spaces",
+      "canonical_url": "https://arxiv.org/abs/2606.04390",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Generalization and Learning Theory"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 123320,
+      "arxiv_id": "2608.27226",
+      "title": "DINOcular: Self-Supervised Visuospatial Representations",
+      "canonical_url": "https://arxiv.org/abs/2608.27226",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "3D Vision and Reconstruction"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 132571,
+      "arxiv_id": "2506.22343",
+      "title": "Optimal Estimation of Watermark Proportions in Hybrid AI-Human Texts",
+      "canonical_url": "https://arxiv.org/abs/2506.22343",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "AI-Generated Content Detection"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 132646,
+      "arxiv_id": "2512.02337",
+      "title": "SpecPV: Improving Self-Speculative Decoding for Long-Context Generation via Partial Verification",
+      "canonical_url": "https://arxiv.org/abs/2512.02337",
+      "label_json": {
+        "audiences": [],
+        "domain": "ML Systems and Efficiency",
+        "subdomains": [
+          "Efficient Inference"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 132707,
+      "arxiv_id": "2603.08814",
+      "title": "Scale-Plan: Scalable Language-Enabled Task Planning for Heterogeneous Multi-Robot Teams",
+      "canonical_url": "https://arxiv.org/abs/2603.08814",
+      "label_json": {
+        "audiences": [],
+        "domain": "Robotics",
+        "subdomains": [
+          "Multi-Agent Reinforcement Learning",
+          "Robot Navigation and SLAM"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 132711,
+      "arxiv_id": "2603.12824",
+      "title": "NanoVDR: Distilling a 2B Vision-Language Retriever into a 70M Text-Only Encoder for Visual Document Retrieval",
+      "canonical_url": "https://arxiv.org/abs/2603.12824",
+      "label_json": {
+        "audiences": [],
+        "domain": "Information Retrieval",
+        "subdomains": [
+          "Dense Retrieval",
+          "RAG"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 132785,
+      "arxiv_id": "2605.22878",
+      "title": "SciAtlas: A Computable Atlas of Science for Knowledge-Grounded AI Research",
+      "canonical_url": "https://arxiv.org/abs/2605.22878",
+      "label_json": {
+        "audiences": [],
+        "domain": "Information Retrieval",
+        "subdomains": [
+          "Knowledge Graphs",
+          "RAG"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 132828,
+      "arxiv_id": "2606.07524",
+      "title": "ABLE: Representing and Mapping LLMs via Attribution-Based Large-model Embedding",
+      "canonical_url": "https://arxiv.org/abs/2606.07524",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Benchmarking and Evaluation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133005,
+      "arxiv_id": "2608.23172",
+      "title": "CaRGo-T: Causal Reasoning Graph-of-Thought improves Multimodal Humor Comprehension",
+      "canonical_url": "https://arxiv.org/abs/2608.23172",
+      "label_json": {
+        "audiences": [],
+        "domain": "Multimodal Learning",
+        "subdomains": [
+          "Vision-Language Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133041,
+      "arxiv_id": "2608.26956",
+      "title": "RubricRM: Generative Reward Modeling via Dynamic Rubrics for Image Generation and Editing",
+      "canonical_url": "https://arxiv.org/abs/2608.26956",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133047,
+      "arxiv_id": "2608.28592",
+      "title": "A collective capability boundary in frontier large language models on guideline-conformant and case-specific oncology decision-making",
+      "canonical_url": "https://arxiv.org/abs/2608.28592",
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "healthcare_life_sciences",
+        "subdomains": [
+          "Question Answering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133063,
+      "arxiv_id": "2608.28609",
+      "title": "Parametric Multimodal User Memory: Storing What Captions Cannot Carry",
+      "canonical_url": "https://arxiv.org/abs/2608.28609",
+      "label_json": {
+        "audiences": [],
+        "domain": "Multimodal Learning",
+        "subdomains": [
+          "Multimodal Foundation Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133078,
+      "arxiv_id": "2608.28624",
+      "title": "MA-RAG: Multi-Agent Retrieval-Augmented Generation for Query-Driven Summarization of Longitudinal Parkinson's Disease Assessments",
+      "canonical_url": "https://arxiv.org/abs/2608.28624",
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "healthcare_life_sciences",
+        "subdomains": [
+          "Question Answering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133098,
+      "arxiv_id": "2608.28646",
+      "title": "BiasMix-Finance: Post-Generation KYC Guardrails for LLM Portfolio Advice",
+      "canonical_url": "https://arxiv.org/abs/2608.28646",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Dialogue Systems"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133112,
+      "arxiv_id": "2608.28664",
+      "title": "The Potential of Haptic Foundation Models",
+      "canonical_url": "https://arxiv.org/abs/2608.28664",
+      "label_json": {
+        "audiences": [],
+        "domain": "Robotics",
+        "subdomains": [
+          "Human-Robot Interaction"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133134,
+      "arxiv_id": "2608.28691",
+      "title": "Defending Wearable VLMs Against Private Attribute Inference",
+      "canonical_url": "https://arxiv.org/abs/2608.28691",
+      "label_json": {
+        "audiences": [],
+        "domain": "Multimodal Learning",
+        "subdomains": [
+          "Vision-Language Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133173,
+      "arxiv_id": "2608.28773",
+      "title": "Medical Foundation Model Features as Perceptual Loss for Brain MRI Contrast Dose Simulation",
+      "canonical_url": "https://arxiv.org/abs/2608.28773",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133220,
+      "arxiv_id": "2608.28874",
+      "title": "MWIR-4-Plastic: The Identification of Complex End-of-Life Industrial Plastic using Mid-wave Infrared Hyperspectral Imaging and Machine Learning",
+      "canonical_url": "https://arxiv.org/abs/2608.28874",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133260,
+      "arxiv_id": "2608.28948",
+      "title": "From the Loss Landscape to Diverse Feature Learning in Neural Networks",
+      "canonical_url": "https://arxiv.org/abs/2608.28948",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Optimization Theory"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133299,
+      "arxiv_id": "2608.29016",
+      "title": "Towards Fully Automated Medical Imaging Code Generation via Validation-based Context Engineering",
+      "canonical_url": "https://arxiv.org/abs/2608.29016",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Segmentation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133314,
+      "arxiv_id": "2608.29038",
+      "title": "sRGB Real Noise Modeling via Noise-Aware Sampling with Normalizing Flows",
+      "canonical_url": "https://arxiv.org/abs/2608.29038",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133525,
+      "arxiv_id": "2608.29420",
+      "title": "One Capability or Many? Testing the Economic Validity of Frontier AI Evaluation",
+      "canonical_url": "https://arxiv.org/abs/2608.29420",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Benchmarking and Evaluation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133537,
+      "arxiv_id": "2608.29448",
+      "title": "SS-ESOAP: Self-Scaled Adaptive Preconditioning for Physics-Informed Learning",
+      "canonical_url": "https://arxiv.org/abs/2608.29448",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Optimization Theory"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133543,
+      "arxiv_id": "2608.29458",
+      "title": "Reference-Grafting Matches Fine-Tuning at Eliciting Sandbagged Capabilities",
+      "canonical_url": "https://arxiv.org/abs/2608.29458",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Alignment and RLHF",
+          "Interpretability"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133788,
+      "arxiv_id": "2608.29959",
+      "title": "Generative vs. Encoder Models for Multilingual NER: A Comprehensive Empirical Study on Naamapadam",
+      "canonical_url": "https://arxiv.org/abs/2608.29959",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Named Entity Recognition"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133836,
+      "arxiv_id": "2410.01432",
+      "title": "Adaptive teachers for amortized samplers",
+      "canonical_url": "https://arxiv.org/abs/2410.01432",
+      "label_json": {
+        "audiences": [],
+        "domain": "Reinforcement Learning",
+        "subdomains": [
+          "Deep Reinforcement Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 133934,
+      "arxiv_id": "2512.07019",
+      "title": "Latency-Response Theory Model: Evaluating Large Language Models via Response Accuracy and Chain-of-Thought Length",
+      "canonical_url": "https://arxiv.org/abs/2512.07019",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Benchmarking and Evaluation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 134005,
+      "arxiv_id": "2602.06181",
+      "title": "Investigating Social Bias Changes in Quantized Language Models",
+      "canonical_url": "https://arxiv.org/abs/2602.06181",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Fairness and Bias"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 134085,
+      "arxiv_id": "2604.23443",
+      "title": "Revisiting Greedy Decoding for Visual Question Answering: A Calibration Perspective",
+      "canonical_url": "https://arxiv.org/abs/2604.23443",
+      "label_json": {
+        "audiences": [],
+        "domain": "Multimodal Learning",
+        "subdomains": [
+          "Vision-Language Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 134151,
+      "arxiv_id": "2606.01442",
+      "title": "The Value of Spike Timing: A Leakage-Resistant Benchmark of SNN Design Choices for Network Intrusion Detection",
+      "canonical_url": "https://arxiv.org/abs/2606.01442",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Adversarial Robustness"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 134168,
+      "arxiv_id": "2606.06159",
+      "title": "ITP-STDP: A Hardware-Efficient Intrinsic-Timing Power-of-Two Synaptic Learning Engine for On-Chip SNNs",
+      "canonical_url": "https://arxiv.org/abs/2606.06159",
+      "label_json": {
+        "audiences": [],
+        "domain": "ML Systems and Efficiency",
+        "subdomains": [
+          "Hardware-Aware ML",
+          "Model Compression"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 134522,
+      "arxiv_id": "2608.30283",
+      "title": "BCPPO: Bachelier-Inspired Constrained Proximal Policy Optimization for Tail-Risk-Aware Safe Reinforcement Learning",
+      "canonical_url": "https://arxiv.org/abs/2608.30283",
+      "label_json": {
+        "audiences": [],
+        "domain": "Reinforcement Learning",
+        "subdomains": [
+          "Deep Reinforcement Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 134551,
+      "arxiv_id": "2608.30328",
+      "title": "Learning PDE Time-Stepping with Neural Cellular Automata",
+      "canonical_url": "https://arxiv.org/abs/2608.30328",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Representation Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 134782,
+      "arxiv_id": "2608.30788",
+      "title": "Model reduction of port-Hamiltonian systems via neural networks",
+      "canonical_url": "https://arxiv.org/abs/2608.30788",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Representation Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135021,
+      "arxiv_id": "2609.00057",
+      "title": "ValueGraph: Value-Signal Guided Graph Pre-training for Contextualized User Representation",
+      "canonical_url": "https://arxiv.org/abs/2609.00057",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Sentiment Analysis",
+          "Text Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135032,
+      "arxiv_id": "2609.00069",
+      "title": "Auditing Harness Tampering in Self-Improving Agents",
+      "canonical_url": "https://arxiv.org/abs/2609.00069",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Interpretability"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135081,
+      "arxiv_id": "2609.00211",
+      "title": "AI Should Not Only Be Helpful. It Should Be Contingent. Artificial Intimacy, Sycophancy, and the Future of Social Learning",
+      "canonical_url": "https://arxiv.org/abs/2609.00211",
+      "label_json": {
+        "audiences": [],
+        "domain": "Human-AI Interaction",
+        "subdomains": [
+          "Human-in-the-Loop Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135089,
+      "arxiv_id": null,
+      "title": "Bridging Lexical Divergence: LLM-Assisted, Cost-Efficient, Zero-shot Scientific Entity Linking",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "scientific_research",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "Selective alias generation and ontology filtering reduce LLM cost and noise for scientific entity linking, with results across five benchmarks and released evaluation data."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 135102,
+      "arxiv_id": "2012.01194",
+      "title": "Deep learning based numerical approximation algorithms for stochastic partial differential equations",
+      "canonical_url": "https://arxiv.org/abs/2012.01194",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Optimization Theory"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135196,
+      "arxiv_id": null,
+      "title": "Advantage Weighted Matching: Aligning RL with Pretraining in Diffusion Models",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The method aligns diffusion RL with the pretraining objective and reports up to 34\u00d7 faster optimization without reducing generation quality."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 135303,
+      "arxiv_id": "2603.12665",
+      "title": "TacVLA: Contact-Aware Tactile Fusion for Robust Vision-Language-Action Manipulation",
+      "canonical_url": "https://arxiv.org/abs/2603.12665",
+      "label_json": {
+        "audiences": [],
+        "domain": "Robotics",
+        "subdomains": [
+          "Robot Manipulation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135450,
+      "arxiv_id": "2607.04092",
+      "title": "SEDCoT: Enhancing LLM-Based COBOL Code Translation via Symbolic Execution and Delta Debugging",
+      "canonical_url": "https://arxiv.org/abs/2607.04092",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Machine Translation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135536,
+      "arxiv_id": "2608.27394",
+      "title": "RATIO: A Benchmark for Retrieval Across Typed Ideation Operations in Scientific Literature",
+      "canonical_url": "https://arxiv.org/abs/2608.27394",
+      "label_json": {
+        "audiences": [],
+        "domain": "Information Retrieval",
+        "subdomains": [
+          "Dense Retrieval"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135572,
+      "arxiv_id": "2608.30303",
+      "title": "Lazy Grounding: Attacking Search Agents with Factual Evidence",
+      "canonical_url": "https://arxiv.org/abs/2608.30303",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Question Answering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135582,
+      "arxiv_id": "2608.30731",
+      "title": "Calibrating Small Language Models for Claim Check-Worthiness Detection",
+      "canonical_url": "https://arxiv.org/abs/2608.30731",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Text Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135606,
+      "arxiv_id": "2609.00296",
+      "title": "Toward Workflow-Aware Benchmarking for Healthcare NLP Agents",
+      "canonical_url": "https://arxiv.org/abs/2609.00296",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Dialogue Systems"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135618,
+      "arxiv_id": "2609.00325",
+      "title": "Latent Mechanisms of Language Control in Multilingual Language Models",
+      "canonical_url": "https://arxiv.org/abs/2609.00325",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Dialogue Systems"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135634,
+      "arxiv_id": "2609.00355",
+      "title": "Vision Is Not Overhead: One-Pass Block Drafting for Lossless Speculative Decoding in Vision-Language Models",
+      "canonical_url": "https://arxiv.org/abs/2609.00355",
+      "label_json": {
+        "audiences": [],
+        "domain": "Multimodal Learning",
+        "subdomains": [
+          "Vision-Language Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135828,
+      "arxiv_id": "2609.00689",
+      "title": "SCoNE: Selective Context-aware Neuron Editing for Robust Retrieval-Augmented Generation",
+      "canonical_url": "https://arxiv.org/abs/2609.00689",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Question Answering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135831,
+      "arxiv_id": "2609.00700",
+      "title": "Value Over Language Model: Detecting Original Contribution in Writing",
+      "canonical_url": "https://arxiv.org/abs/2609.00700",
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [
+          "AI-Generated Content Detection"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135838,
+      "arxiv_id": "2609.00710",
+      "title": "Prediction-Assisted Pricing and Admission for LLM APIs with Stochastic Token Consumption",
+      "canonical_url": "https://arxiv.org/abs/2609.00710",
+      "label_json": {
+        "audiences": [],
+        "domain": "ML Systems and Efficiency",
+        "subdomains": [
+          "Model Serving and Deployment"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135877,
+      "arxiv_id": "2609.00776",
+      "title": "Solaris: Towards Interfaces That Are Generated, Not Coded",
+      "canonical_url": "https://arxiv.org/abs/2609.00776",
+      "label_json": {
+        "audiences": [],
+        "domain": "Generative Modelling",
+        "subdomains": [
+          "Autoregressive Generation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135885,
+      "arxiv_id": "2609.00789",
+      "title": "Subspace Levenberg Marquardt Algorithms in Training Neural Networks",
+      "canonical_url": "https://arxiv.org/abs/2609.00789",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Optimization Theory"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135921,
+      "arxiv_id": "2609.00845",
+      "title": "Towards Generalizable Visually Grounded Exploration of Household Devices",
+      "canonical_url": "https://arxiv.org/abs/2609.00845",
+      "label_json": {
+        "audiences": [],
+        "domain": "Multimodal Learning",
+        "subdomains": [
+          "Embodied AI",
+          "Vision-Language Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135928,
+      "arxiv_id": "2609.00858",
+      "title": "Verifiable Disaster Storylines and Causal Knowledge Graphs: A Citation-Grounded Pipeline from Heterogeneous Humanitarian Sources",
+      "canonical_url": "https://arxiv.org/abs/2609.00858",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Question Answering",
+          "Text Summarization"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135930,
+      "arxiv_id": "2609.00862",
+      "title": "Training-Free Inpainting Across Domains with a Frozen Text-to-Image Diffusion Model",
+      "canonical_url": "https://arxiv.org/abs/2609.00862",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Segmentation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135949,
+      "arxiv_id": "2609.00892",
+      "title": "CARE: Contrastive Anchor-based Rubric Evolution for Large Language Model Post-Training",
+      "canonical_url": "https://arxiv.org/abs/2609.00892",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Alignment and RLHF"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135953,
+      "arxiv_id": "2609.00898",
+      "title": "Vision-Language-Guided Pseudo-Labels for Unsupervised Domain Adaptation in Semantic Segmentation for Waste Sorting",
+      "canonical_url": "https://arxiv.org/abs/2609.00898",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Segmentation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135965,
+      "arxiv_id": "2609.00920",
+      "title": "VerNav: Verifier-First Low-Latency Vision-and-Language Navigation",
+      "canonical_url": "https://arxiv.org/abs/2609.00920",
+      "label_json": {
+        "audiences": [],
+        "domain": "Robotics",
+        "subdomains": [
+          "Robot Navigation and SLAM"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 135990,
+      "arxiv_id": "2609.00981",
+      "title": "Prior-Guided Implicit Neural Representations for Single-Subject Diffusion MRI Super-Resolution",
+      "canonical_url": "https://arxiv.org/abs/2609.00981",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "3D Vision and Reconstruction",
+          "Image Segmentation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136025,
+      "arxiv_id": "2609.01046",
+      "title": "HiveTraceGuard-Pro: A Compact Generative Guardrail for Prompt Injection, Jailbreaks, and Adversarial Obfuscation",
+      "canonical_url": "https://arxiv.org/abs/2609.01046",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Adversarial Robustness"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136034,
+      "arxiv_id": "2609.01060",
+      "title": "Lightweight Interpretable RGB-Guided Hyperspectral Super-Resolution under Real Cross-resolution Misalignment",
+      "canonical_url": "https://arxiv.org/abs/2609.01060",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Segmentation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136052,
+      "arxiv_id": "2609.01095",
+      "title": "Reliable LLM-Generated Programs for High-Energy Physics Experiments through Graph-Grounded Software Knowledge",
+      "canonical_url": "https://arxiv.org/abs/2609.01095",
+      "label_json": {
+        "audiences": [],
+        "domain": "Human-AI Interaction",
+        "subdomains": [
+          "AI-Assisted Programming"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136072,
+      "arxiv_id": "2609.01135",
+      "title": "Overfitting Mitigation via Singular Value Decomposition in Minimum Bayes Risk Decoding",
+      "canonical_url": "https://arxiv.org/abs/2609.01135",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Text Summarization"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136097,
+      "arxiv_id": "2609.01194",
+      "title": "Births are difficult to predict even with rich survey and full-population register data",
+      "canonical_url": "https://arxiv.org/abs/2609.01194",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Benchmarking and Evaluation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136102,
+      "arxiv_id": "2609.01209",
+      "title": "Autonomous discovery of new structure-plausibility laws for explainable and rapid crystal diagnosis and screening",
+      "canonical_url": "https://arxiv.org/abs/2609.01209",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Benchmarking and Evaluation",
+          "Causal Inference"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136116,
+      "arxiv_id": "2609.01236",
+      "title": "Continuous Autonomous Refactoring: A Research Roadmap for AI-Driven Code Quality Maintenance",
+      "canonical_url": "https://arxiv.org/abs/2609.01236",
+      "label_json": {
+        "audiences": [],
+        "domain": "Human-AI Interaction",
+        "subdomains": [
+          "AI-Assisted Programming"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136136,
+      "arxiv_id": "2609.01279",
+      "title": "Some Emotions Run Deeper: Layer-wise Probing and Causal Intervention in Large Language Models",
+      "canonical_url": "https://arxiv.org/abs/2609.01279",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Sentiment Analysis"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136143,
+      "arxiv_id": "2609.01289",
+      "title": "Agentic Multimodal Models for Environmental Hyperspectral Unmixing",
+      "canonical_url": "https://arxiv.org/abs/2609.01289",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "3D Vision and Reconstruction"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136144,
+      "arxiv_id": "2609.01292",
+      "title": "Relational Task Generation Language: A Declarative Specification Framework for Relational Deep Learning",
+      "canonical_url": "https://arxiv.org/abs/2609.01292",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Benchmarking and Evaluation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136176,
+      "arxiv_id": null,
+      "title": "Separating Syntax from Language: A Mechanistic Account of Translation in Multilingual LLMs",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The causal analysis of syntax and surface language is interesting model science, but the abstract does not lead to a concrete deployment or engineering action."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 136177,
+      "arxiv_id": null,
+      "title": "PopPert: Population-level Joint-Distribution Modeling for Single-Cell Perturbation Prediction",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "healthcare_life_sciences",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The method is valuable for single-cell perturbation research, but it is too domain-specific and gives no deployment or product implication beyond benchmark performance."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 136188,
+      "arxiv_id": "2609.01383",
+      "title": "InSight: A Benchmark for Agentic Claim Verification in Interactive Visualizations",
+      "canonical_url": "https://arxiv.org/abs/2609.01383",
+      "label_json": {
+        "audiences": [],
+        "domain": "Multimodal Learning",
+        "subdomains": [
+          "Vision-Language Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136202,
+      "arxiv_id": "2609.01417",
+      "title": "Predicting Subsurface Abnormalities Growth using Physics-Informed Neural Networks",
+      "canonical_url": "https://arxiv.org/abs/2609.01417",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Representation Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136211,
+      "arxiv_id": null,
+      "title": "Citing Less Critically: LLMs Reshape the Rhetoric and Reach of Scientific Citation",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "product"
+        ],
+        "domain": "scientific_research",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "Across more than 63,000 citation contexts, LLM-assisted writing was less critical and favored popular, older work, a useful governance warning for scientific publishing workflows."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 136220,
+      "arxiv_id": "2609.01453",
+      "title": "Does Imitation Learning Preserve Temporal Robustness in Dexterous Manipulation? An Expert-Learner Comparison Across Task Execution Speeds",
+      "canonical_url": "https://arxiv.org/abs/2609.01453",
+      "label_json": {
+        "audiences": [],
+        "domain": "Robotics",
+        "subdomains": [
+          "Robot Manipulation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136226,
+      "arxiv_id": "2609.01466",
+      "title": "Parsing the Stream: A Live Trace Model for Long-Horizon Agents and Their Observers",
+      "canonical_url": "https://arxiv.org/abs/2609.01466",
+      "label_json": {
+        "audiences": [],
+        "domain": "Human-AI Interaction",
+        "subdomains": [
+          "Agents and Tool Use"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136245,
+      "arxiv_id": "2609.01516",
+      "title": "DualDiff3D: Dual Structure-Appearance Diffusion Priors for Reliability-Enhanced 3D Gaussian Splatting",
+      "canonical_url": "https://arxiv.org/abs/2609.01516",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "3D Vision and Reconstruction"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136264,
+      "arxiv_id": "2609.01556",
+      "title": "Retrieved but not ranked: surface-form bias in structural retrieval, from mathematics to agent trajectories",
+      "canonical_url": "https://arxiv.org/abs/2609.01556",
+      "label_json": {
+        "audiences": [],
+        "domain": "Information Retrieval",
+        "subdomains": [
+          "Dense Retrieval"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136265,
+      "arxiv_id": "2609.01558",
+      "title": "Gradient-Update Mismatch: Rethinking Conflict-Free Training of Physics-Informed Neural Networks",
+      "canonical_url": "https://arxiv.org/abs/2609.01558",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Optimization Theory"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136272,
+      "arxiv_id": "2609.01573",
+      "title": "Scaling Near-Optimal SFT-RL Annotation Budget Allocation from Small to Large LLMs",
+      "canonical_url": "https://arxiv.org/abs/2609.01573",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136277,
+      "arxiv_id": "2609.01582",
+      "title": "SpatialGuard: Harness-Guided Verifiable Spatial Reasoning for Text-to-Image Generation",
+      "canonical_url": "https://arxiv.org/abs/2609.01582",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136286,
+      "arxiv_id": "2609.01598",
+      "title": "UI-VISA: U-Net Initialized Vascular Image Segmentation Architecture",
+      "canonical_url": "https://arxiv.org/abs/2609.01598",
+      "label_json": {
+        "audiences": [],
+        "domain": "healthcare_life_sciences",
+        "subdomains": [
+          "Image Segmentation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136369,
+      "arxiv_id": "2609.01693",
+      "title": "Public-Sharing Labels and Verbatim Field Egress in an MCP-to-A2A Agent Configuration: A Controlled Multi-Model Study",
+      "canonical_url": "https://arxiv.org/abs/2609.01693",
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The controlled 480-trial study shows that a PUBLIC label can increase verbatim data egress in an MCP-to-A2A workflow, with strong model dependence that deployment teams should test."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 136380,
+      "arxiv_id": "2609.01736",
+      "title": "Harness Engineering in LLM Tool Use via Agent-Native Reusable Tool Primitives",
+      "canonical_url": "https://arxiv.org/abs/2609.01736",
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [
+          "Agents and Tool Use"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136436,
+      "arxiv_id": "2501.18143",
+      "title": "Double-Bounded Nonlinear Optimal Transport for Size Constrained Min Cut Clusterin",
+      "canonical_url": "https://arxiv.org/abs/2501.18143",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Optimization Theory"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136445,
+      "arxiv_id": "2503.22411",
+      "title": "Elite political incivility is rising across democracies",
+      "canonical_url": "https://arxiv.org/abs/2503.22411",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Sentiment Analysis"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136468,
+      "arxiv_id": "2507.21815",
+      "title": "HarmReduction: Benchmarking LLMs in Harm Reduction Information Provision to Support People Who Use Drugs",
+      "canonical_url": "https://arxiv.org/abs/2507.21815",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Question Answering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136512,
+      "arxiv_id": "2511.23120",
+      "title": "Freeze, Diffuse, Decode: Task-Aware Adaptation of Transformer Embeddings for Antimicrobial Peptide Design",
+      "canonical_url": "https://arxiv.org/abs/2511.23120",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Representation Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136550,
+      "arxiv_id": "2602.04165",
+      "title": "PoC-Gym: Towards More Reliable LLM-Assisted Proof-of-Concept Exploit Generation",
+      "canonical_url": "https://arxiv.org/abs/2602.04165",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Adversarial Robustness"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136553,
+      "arxiv_id": "2602.05863",
+      "title": "Constrained Group Relative Policy Optimization",
+      "canonical_url": "https://arxiv.org/abs/2602.05863",
+      "label_json": {
+        "audiences": [],
+        "domain": "Reinforcement Learning",
+        "subdomains": [
+          "Deep Reinforcement Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136689,
+      "arxiv_id": "2607.02325",
+      "title": "Personality Without Persons? A Psychometric Critique of Big Five Testing in Large Language Models",
+      "canonical_url": "https://arxiv.org/abs/2607.02325",
+      "label_json": {
+        "audiences": [],
+        "domain": "Human-AI Interaction",
+        "subdomains": [
+          "Explainable AI"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136778,
+      "arxiv_id": "2608.29270",
+      "title": "SHADOWBENCH: Toward Reliable Automatic Evaluation of Semantic Alignment in Autoformalization",
+      "canonical_url": "https://arxiv.org/abs/2608.29270",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Question Answering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136782,
+      "arxiv_id": "2608.29652",
+      "title": "ICEGR: An Intent-Coherent End-to-End Generative Retrieval Framework for E-commerce Search",
+      "canonical_url": "https://arxiv.org/abs/2608.29652",
+      "label_json": {
+        "audiences": [],
+        "domain": "Information Retrieval",
+        "subdomains": [
+          "Dense Retrieval",
+          "Search Ranking"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136790,
+      "arxiv_id": "2608.30968",
+      "title": "CogEvol: Towards Efficient and Reliable Learning Environment Generation",
+      "canonical_url": "https://arxiv.org/abs/2608.30968",
+      "label_json": {
+        "audiences": [],
+        "domain": "Human-AI Interaction",
+        "subdomains": [
+          "Agents and Tool Use"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136811,
+      "arxiv_id": "2609.01180",
+      "title": "A Novel Space-Time Coding Architecture for Rydberg Atomic Quantum Receiver-Based Systems",
+      "canonical_url": "https://arxiv.org/abs/2609.01180",
+      "label_json": {
+        "audiences": [],
+        "domain": "Other",
+        "subdomains": [],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136835,
+      "arxiv_id": "2609.01794",
+      "title": "Disentangling Statistical Preemption from Entrenchment in Language Models' Avoidance of Overgeneralization",
+      "canonical_url": "https://arxiv.org/abs/2609.01794",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Natural Language Inference"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136873,
+      "arxiv_id": "2609.01871",
+      "title": "Latent unified smooth Hamiltonians for excited state chemistry",
+      "canonical_url": "https://arxiv.org/abs/2609.01871",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Representation Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136879,
+      "arxiv_id": "2609.01886",
+      "title": "SignMatch: Matching Dictionary Signs to Continuous Sign Language Video",
+      "canonical_url": "https://arxiv.org/abs/2609.01886",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Video Understanding"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136890,
+      "arxiv_id": "2609.01913",
+      "title": "MERGED: Multimodal Entity Resolution via Generated Expert Reasoning Distillation",
+      "canonical_url": "https://arxiv.org/abs/2609.01913",
+      "label_json": {
+        "audiences": [],
+        "domain": "Information Retrieval",
+        "subdomains": [
+          "Dense Retrieval"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136948,
+      "arxiv_id": "2609.02027",
+      "title": "Multi-Turn LLM Conversations under the Least-Recently-Used Policy: Mean-Field Asymptotics and Hit Ratio Approximation",
+      "canonical_url": "https://arxiv.org/abs/2609.02027",
+      "label_json": {
+        "audiences": [],
+        "domain": "ML Systems and Efficiency",
+        "subdomains": [
+          "Model Serving and Deployment"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136960,
+      "arxiv_id": "2609.02054",
+      "title": "A Tri-Agent Framework for Evaluating and Aligning Question Clarification Capabilities of Large Language Models",
+      "canonical_url": "https://arxiv.org/abs/2609.02054",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Dialogue Systems"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 136995,
+      "arxiv_id": "2609.02111",
+      "title": "Disease Burden over Skin Tone: Decomposing the Dermatology-AI Generalization Gap",
+      "canonical_url": "https://arxiv.org/abs/2609.02111",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137028,
+      "arxiv_id": "2609.02172",
+      "title": "Breadth Beats Depth: Improving GCG-Based Jailbreak Optimization with Breadth-Oriented Suffix Search",
+      "canonical_url": "https://arxiv.org/abs/2609.02172",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Adversarial Robustness"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137051,
+      "arxiv_id": "2609.02216",
+      "title": "PEARL: Path-Entity Aligned Relational Learning with Contextual Subgraphs for Inductive Knowledge Graph Completion",
+      "canonical_url": "https://arxiv.org/abs/2609.02216",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Knowledge Graphs"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137081,
+      "arxiv_id": "2609.02268",
+      "title": "Retrosynthesis of Synthetic Media for Explainable AI Provenance Forensics",
+      "canonical_url": "https://arxiv.org/abs/2609.02268",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Interpretability"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137083,
+      "arxiv_id": "2609.02272",
+      "title": "PaperCompiler: Faithful Paper-to-Code Generation via Repository-Level Specification Compilation",
+      "canonical_url": "https://arxiv.org/abs/2609.02272",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "AI-Generated Content Detection"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137135,
+      "arxiv_id": "2609.02377",
+      "title": "ProSR: Semantic-Prototype-Guided Discrete Modeling for Physically Consistent SAR Super-Resolution",
+      "canonical_url": "https://arxiv.org/abs/2609.02377",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Segmentation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137175,
+      "arxiv_id": "2609.02462",
+      "title": "VIPS: Vehicle-Infrastructure Cooperative Planning Benchmark via Pseudo-Simulation",
+      "canonical_url": "https://arxiv.org/abs/2609.02462",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Object Detection",
+          "Video Understanding"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137195,
+      "arxiv_id": "2609.02504",
+      "title": "SR-Edit: Region-Aware Image Editing via Self-Refinement",
+      "canonical_url": "https://arxiv.org/abs/2609.02504",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Segmentation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137221,
+      "arxiv_id": "2609.02566",
+      "title": "Online Reinforcement Learning in the Met Office Unified Model through Distributed Model-Agent Coupling",
+      "canonical_url": "https://arxiv.org/abs/2609.02566",
+      "label_json": {
+        "audiences": [],
+        "domain": "Reinforcement Learning",
+        "subdomains": [
+          "Deep Reinforcement Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137240,
+      "arxiv_id": "2609.02623",
+      "title": "Scalable Direction-Following TTS via Voice Impression-Guided Pseudo Triplet Construction",
+      "canonical_url": "https://arxiv.org/abs/2609.02623",
+      "label_json": {
+        "audiences": [],
+        "domain": "Speech and Audio",
+        "subdomains": [
+          "Text-to-Speech Synthesis"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137241,
+      "arxiv_id": "2609.02624",
+      "title": "Automated Vulnerability Injection in Smart Contracts Using Large Language Models",
+      "canonical_url": "https://arxiv.org/abs/2609.02624",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Adversarial Robustness"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137275,
+      "arxiv_id": "2609.02697",
+      "title": "Generating Medical Image Counterfactuals using Causal Explanations",
+      "canonical_url": "https://arxiv.org/abs/2609.02697",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Classification",
+          "Interpretability"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137297,
+      "arxiv_id": "2609.02748",
+      "title": "Balancing Frequencies and Pixels in Flow Matching",
+      "canonical_url": "https://arxiv.org/abs/2609.02748",
+      "label_json": {
+        "audiences": [],
+        "domain": "Generative Modelling",
+        "subdomains": [
+          "Diffusion Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137320,
+      "arxiv_id": "2609.02805",
+      "title": "Large Language Models (LLMs) for Telecom Root Cause Analysis (RCA): A Structured Reasoning Framework for Evidence-Grounded Diagnosis",
+      "canonical_url": "https://arxiv.org/abs/2609.02805",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Question Answering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137333,
+      "arxiv_id": null,
+      "title": "RoGe: Novel View Synthesis via End-to-End Implicit Reconstruction and Generation",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The end-to-end design removes the lossy explicit 3D bridge and improves sparse-view video synthesis and temporal consistency over reconstruction and generation baselines."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 137334,
+      "arxiv_id": "2609.02849",
+      "title": "Post-Training Language Models for Gold-Medal Performance in Coding Competitions",
+      "canonical_url": "https://arxiv.org/abs/2609.02849",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Question Answering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137356,
+      "arxiv_id": "2310.20096",
+      "title": "Data Market Design through Deep Learning",
+      "canonical_url": "https://arxiv.org/abs/2310.20096",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Optimization Theory"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137406,
+      "arxiv_id": "2604.16359",
+      "title": "LLM4Log: A Systematic Review of Large Language Model-based Log Analysis",
+      "canonical_url": "https://arxiv.org/abs/2604.16359",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Text Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137474,
+      "arxiv_id": "2608.30068",
+      "title": "TAKE 85: Testing Audiovisual filmmaKer's intEnt across 85 Hours of Film",
+      "canonical_url": "https://arxiv.org/abs/2608.30068",
+      "label_json": {
+        "audiences": [],
+        "domain": "Multimodal Learning",
+        "subdomains": [
+          "Vision-Language Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137476,
+      "arxiv_id": "2608.31002",
+      "title": "DARP: A Calibrated Dual-Arm RGB-D-IR Dataset for Multi-View Robotic Perception",
+      "canonical_url": "https://arxiv.org/abs/2608.31002",
+      "label_json": {
+        "audiences": [],
+        "domain": "Robotics",
+        "subdomains": [
+          "Robot Manipulation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137485,
+      "arxiv_id": null,
+      "title": "A Mathematical Theory of Reusable Neural Bases for Network Compression",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The compression idea is potentially useful, but the abstract gives no concrete model sizes, compression ratios, memory savings, or benchmark numbers to support a newsletter claim."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 137510,
+      "arxiv_id": "2609.02928",
+      "title": "Towards Scaling Reinforcement Learning to Massive Populations: Learning Mean-Field Representations",
+      "canonical_url": "https://arxiv.org/abs/2609.02928",
+      "label_json": {
+        "audiences": [],
+        "domain": "Reinforcement Learning",
+        "subdomains": [
+          "Multi-Agent Reinforcement Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137531,
+      "arxiv_id": "2609.02971",
+      "title": "Privacy Leakage in Federated Learning: Gradient-Based Client Identity Inference and Defenses for Inertial Sensing in Vehicular Edge Networks",
+      "canonical_url": "https://arxiv.org/abs/2609.02971",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Privacy-Preserving Machine Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137555,
+      "arxiv_id": "2609.03047",
+      "title": "SHELF: A Synthetic Harness for Multi-Task Bibliographic Benchmarking",
+      "canonical_url": "https://arxiv.org/abs/2609.03047",
+      "label_json": {
+        "audiences": [],
+        "domain": "Information Retrieval",
+        "subdomains": [
+          "Benchmarking and Evaluation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137569,
+      "arxiv_id": "2609.03080",
+      "title": "Exemplar: Classical Priors Complement Frozen Features for Few-Shot Microscopy Segmentation at Native Resolution",
+      "canonical_url": "https://arxiv.org/abs/2609.03080",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Segmentation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137603,
+      "arxiv_id": "2609.03151",
+      "title": "BASP: Communication-Efficient Batch-Aware Sequence Parallelism for LLM Training",
+      "canonical_url": "https://arxiv.org/abs/2609.03151",
+      "label_json": {
+        "audiences": [],
+        "domain": "ML Systems and Efficiency",
+        "subdomains": [
+          "Distributed Training",
+          "Efficient Inference"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137640,
+      "arxiv_id": "2609.03225",
+      "title": "Long-Horizon Consistent and Interaction-Aware World Models for Multi-Style End-to-End Driving",
+      "canonical_url": "https://arxiv.org/abs/2609.03225",
+      "label_json": {
+        "audiences": [],
+        "domain": "Robotics",
+        "subdomains": [
+          "Robot Navigation and SLAM"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137674,
+      "arxiv_id": "2609.03291",
+      "title": "Constructing the Field of Philanthropic and Nonprofit Studies: Evidence from Citation Networks",
+      "canonical_url": "https://arxiv.org/abs/2609.03291",
+      "label_json": {
+        "audiences": [],
+        "domain": "Other",
+        "subdomains": [],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137736,
+      "arxiv_id": "2506.08693",
+      "title": "Recognition Without Mitigation: Ethical Frameworks in Autonomous Offensive-LLM Agent Research",
+      "canonical_url": "https://arxiv.org/abs/2506.08693",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Adversarial Robustness",
+          "AI Governance and Policy"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137770,
+      "arxiv_id": "2511.02657",
+      "title": "A Nesterov-Accelerated Byzantine-Robust Federated Learning",
+      "canonical_url": "https://arxiv.org/abs/2511.02657",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Federated Learning",
+          "Optimization Theory"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137781,
+      "arxiv_id": "2512.09108",
+      "title": "Evolving Excellence: Automated Optimization of LLM-based Agents",
+      "canonical_url": "https://arxiv.org/abs/2512.09108",
+      "label_json": {
+        "audiences": [],
+        "domain": "Human-AI Interaction",
+        "subdomains": [
+          "Agents and Tool Use"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137839,
+      "arxiv_id": "2604.00945",
+      "title": "A Visionary Look at Vibe Researching",
+      "canonical_url": "https://arxiv.org/abs/2604.00945",
+      "label_json": {
+        "audiences": [],
+        "domain": "Human-AI Interaction",
+        "subdomains": [
+          "Agents and Tool Use",
+          "Human-in-the-Loop Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 137879,
+      "arxiv_id": "2605.31343",
+      "title": "Learning Terrain-Aware Whole-Body Control for Perceptive Legged Loco-Manipulation",
+      "canonical_url": "https://arxiv.org/abs/2605.31343",
+      "label_json": {
+        "audiences": [],
+        "domain": "Robotics",
+        "subdomains": [
+          "Robot Manipulation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138002,
+      "arxiv_id": "2609.03369",
+      "title": "HypRQ-VAE: Hyperbolic Item Indexing for Long-Tail-Aware Generative Recommender Systems",
+      "canonical_url": "https://arxiv.org/abs/2609.03369",
+      "label_json": {
+        "audiences": [],
+        "domain": "Information Retrieval",
+        "subdomains": [
+          "Recommender Systems"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138005,
+      "arxiv_id": "2609.03377",
+      "title": "SimpleDesign: A Joint Model for Protein Sequence and Structure Codesign",
+      "canonical_url": "https://arxiv.org/abs/2609.03377",
+      "label_json": {
+        "audiences": [],
+        "domain": "Generative Modelling",
+        "subdomains": [
+          "Synthetic Data Generation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138015,
+      "arxiv_id": "2609.03395",
+      "title": "TabScope: Question-Adaptive Scope Selection for Table Question Answering",
+      "canonical_url": "https://arxiv.org/abs/2609.03395",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Question Answering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138017,
+      "arxiv_id": "2609.03402",
+      "title": "A Prompt-Engineering Approach to Develop Scalable, Flexible, and Real-Time Hybrid Micro-Level Personalization in a General Purpose AI Teaching Assistant",
+      "canonical_url": "https://arxiv.org/abs/2609.03402",
+      "label_json": {
+        "audiences": [],
+        "domain": "Human-AI Interaction",
+        "subdomains": [
+          "Human-in-the-Loop Learning",
+          "Prompt Engineering"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138025,
+      "arxiv_id": "2609.03416",
+      "title": "Dude: A Dual-Detection Multi-Agent System for Paper-Code Discrepancy Detection",
+      "canonical_url": "https://arxiv.org/abs/2609.03416",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "AI-Generated Content Detection"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138026,
+      "arxiv_id": "2609.03420",
+      "title": "Privacy, Robustness, and Fairness Trade-offs in Federated Intrusion Detection: Geometric Indistinguishability at the Aggregation Interface",
+      "canonical_url": "https://arxiv.org/abs/2609.03420",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Fairness and Bias",
+          "Privacy-Preserving Machine Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138035,
+      "arxiv_id": "2609.03436",
+      "title": "It's the Problem, Not the Path: Budget and Difficulty Confounds in LLM Reasoning Trajectories",
+      "canonical_url": "https://arxiv.org/abs/2609.03436",
+      "label_json": {
+        "audiences": [],
+        "domain": "Machine Learning Theory",
+        "subdomains": [
+          "Generalization and Learning Theory"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138119,
+      "arxiv_id": "2609.03595",
+      "title": "How Far Can Synthetic Data Take Thai OCR?",
+      "canonical_url": "https://arxiv.org/abs/2609.03595",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138126,
+      "arxiv_id": "2609.03604",
+      "title": "On the Interaction Between Model Compression and Test-Time Adaptation",
+      "canonical_url": "https://arxiv.org/abs/2609.03604",
+      "label_json": {
+        "audiences": [],
+        "domain": "ML Systems and Efficiency",
+        "subdomains": [
+          "Model Compression"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138133,
+      "arxiv_id": "2609.03622",
+      "title": "Test-time adaptation for speech enhancement with an autoregressive speech prior",
+      "canonical_url": "https://arxiv.org/abs/2609.03622",
+      "label_json": {
+        "audiences": [],
+        "domain": "Speech and Audio",
+        "subdomains": [
+          "Automatic Speech Recognition"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138146,
+      "arxiv_id": "2609.03645",
+      "title": "Calibration of neural viscoelastic models via full-field data",
+      "canonical_url": "https://arxiv.org/abs/2609.03645",
+      "label_json": {
+        "audiences": [],
+        "domain": "ML Systems and Efficiency",
+        "subdomains": [
+          "Hardware-Aware ML"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138148,
+      "arxiv_id": "2609.03654",
+      "title": "Enhancing Financial Question Answering: A Novel Benchmark Dataset of Banks' financial statements",
+      "canonical_url": "https://arxiv.org/abs/2609.03654",
+      "label_json": {
+        "audiences": [],
+        "domain": "Information Retrieval",
+        "subdomains": [
+          "Dense Retrieval",
+          "RAG"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138151,
+      "arxiv_id": "2609.03659",
+      "title": "Security and Privacy in the Musical Metaverse: Threat Analysis and Design Implications",
+      "canonical_url": "https://arxiv.org/abs/2609.03659",
+      "label_json": {
+        "audiences": [],
+        "domain": "Other",
+        "subdomains": [],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138174,
+      "arxiv_id": "2609.03689",
+      "title": "Semantic-Aware Subgraph State Space Model for WSI Classification in Histopathology",
+      "canonical_url": "https://arxiv.org/abs/2609.03689",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138198,
+      "arxiv_id": "2609.03735",
+      "title": "TokenComSR: Task-Sensitivity-Guided Token Communication for Wireless Image Super-Resolution",
+      "canonical_url": "https://arxiv.org/abs/2609.03735",
+      "label_json": {
+        "audiences": [],
+        "domain": "ML Systems and Efficiency",
+        "subdomains": [
+          "Efficient Inference",
+          "Hardware-Aware ML"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138203,
+      "arxiv_id": "2609.03749",
+      "title": "Rent-a-RAG: Embedding-Space Watermarks for Auditing Third-Party RAG",
+      "canonical_url": "https://arxiv.org/abs/2609.03749",
+      "label_json": {
+        "audiences": [],
+        "domain": "Information Retrieval",
+        "subdomains": [
+          "RAG"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138225,
+      "arxiv_id": "2609.03796",
+      "title": "LLaDA-Image: Building Strong Image Generators with Fully Open Training Recipes",
+      "canonical_url": "https://arxiv.org/abs/2609.03796",
+      "label_json": {
+        "audiences": [],
+        "domain": "Generative Modelling",
+        "subdomains": [
+          "Diffusion Models"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138238,
+      "arxiv_id": "2609.03814",
+      "title": "Evaluating Criterion-Conditioned Behaviour of Large Language Models in Content Moderation",
+      "canonical_url": "https://arxiv.org/abs/2609.03814",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "Text Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138247,
+      "arxiv_id": "2609.03829",
+      "title": "The impact of phase information for few-shot fine-grained image classification",
+      "canonical_url": "https://arxiv.org/abs/2609.03829",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138267,
+      "arxiv_id": "2609.03884",
+      "title": "A Blind Trust, the Bloody Thrust: When Attacker-Controlled Hook Updates Steer AI Agent Harnesses towards Malicious Behaviors",
+      "canonical_url": "https://arxiv.org/abs/2609.03884",
+      "label_json": {
+        "audiences": [],
+        "domain": "AI Safety and Alignment",
+        "subdomains": [
+          "Adversarial Robustness"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138274,
+      "arxiv_id": "2609.03894",
+      "title": "CROCODIL: Cross-Model Code Editing with LLMs",
+      "canonical_url": "https://arxiv.org/abs/2609.03894",
+      "label_json": {
+        "audiences": [],
+        "domain": "Natural Language Processing",
+        "subdomains": [
+          "AI-Generated Content Detection"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138287,
+      "arxiv_id": "2609.03917",
+      "title": "From Misconceptions to Evidence: What Science Teachers Make Visible When Co-Designing Agentic Learning Apps",
+      "canonical_url": "https://arxiv.org/abs/2609.03917",
+      "label_json": {
+        "audiences": [],
+        "domain": "Human-AI Interaction",
+        "subdomains": [
+          "Explainable AI",
+          "Human-in-the-Loop Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138301,
+      "arxiv_id": "2609.03940",
+      "title": "Masked Autoregressive Speech Enhancement with Continuous Neural Audio Codec Representations",
+      "canonical_url": "https://arxiv.org/abs/2609.03940",
+      "label_json": {
+        "audiences": [],
+        "domain": "Speech and Audio",
+        "subdomains": [
+          "Automatic Speech Recognition"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138302,
+      "arxiv_id": "2609.03941",
+      "title": "Headroom-Drift Replay: A Primitive for Principled Replay Control in GRPO",
+      "canonical_url": "https://arxiv.org/abs/2609.03941",
+      "label_json": {
+        "audiences": [],
+        "domain": "Reinforcement Learning",
+        "subdomains": [
+          "Deep Reinforcement Learning",
+          "Offline Reinforcement Learning"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138304,
+      "arxiv_id": "2609.03949",
+      "title": "VestigeKV: The NoPE-MLA KV Cache Carries Its Own Eviction Signal in a Vestigial Branch",
+      "canonical_url": "https://arxiv.org/abs/2609.03949",
+      "label_json": {
+        "audiences": [],
+        "domain": "ML Systems and Efficiency",
+        "subdomains": [
+          "Efficient Inference",
+          "Model Compression"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138310,
+      "arxiv_id": "2609.03966",
+      "title": "Interface-Induced Trajectory Censoring",
+      "canonical_url": "https://arxiv.org/abs/2609.03966",
+      "label_json": {
+        "audiences": [],
+        "domain": "Human-AI Interaction",
+        "subdomains": [
+          "Agents and Tool Use"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138320,
+      "arxiv_id": "2609.03985",
+      "title": "IchthyoNoma: Nomenclature and Context Sensitivity of Zero-Shot Biological Vision--Language Models for Bangladeshi Freshwater Fish Recognition",
+      "canonical_url": "https://arxiv.org/abs/2609.03985",
+      "label_json": {
+        "audiences": [],
+        "domain": "Computer Vision",
+        "subdomains": [
+          "Image Classification"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138355,
+      "arxiv_id": "2609.04066",
+      "title": "Subspace Inference Enables Efficient Active Reward Learning from Preferences",
+      "canonical_url": "https://arxiv.org/abs/2609.04066",
+      "label_json": {
+        "audiences": [],
+        "domain": "Reinforcement Learning",
+        "subdomains": [
+          "Offline Reinforcement Learning",
+          "Reward Modelling"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138407,
+      "arxiv_id": "2609.04193",
+      "title": "GIFT: Guided Intermediate Feature Training via Action-Oriented Structural Supervision for Robotic Manipulation",
+      "canonical_url": "https://arxiv.org/abs/2609.04193",
+      "label_json": {
+        "audiences": [],
+        "domain": "Robotics",
+        "subdomains": [
+          "Robot Manipulation"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    },
+    {
+      "content_item_id": 138501,
+      "arxiv_id": "2608.29521",
+      "title": "Online Gate-Driven Flow Control in Resin Transfer Moulding Using a Neural-Network Surrogate",
+      "canonical_url": "https://arxiv.org/abs/2608.29521",
+      "label_json": {
+        "audiences": [],
+        "domain": "ML Systems and Efficiency",
+        "subdomains": [
+          "Hardware-Aware ML"
+        ],
+        "application_domains": []
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "anthropic/claude-haiku-4.5"
+    }
+  ]
+}

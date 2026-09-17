@@ -2,8 +2,9 @@
 """Orchestrate the PaperIntelligence pipeline and write top-N reports.
 
 Order:
-  ingest → relevance → normalize_authors → screen → audience_domain → quality
-  → affiliation → adjudication → tech/business/audience reports
+  ingest → relevance → normalize_authors → screen → affiliation_fast
+  → audience_domain → quality → affiliation_deep → hf_signals
+  → adjudication → tech/business/audience reports
 
 Example:
   python3 scripts/run_pipeline.py \\
@@ -32,13 +33,20 @@ DEFAULT_STAGES = (
     "relevance",
     "normalize_authors",
     "screen",
+    "affiliation_fast",
     "audience_domain",
     "quality",
-    "affiliation",
+    "affiliation_deep",
     "hf_signals",
     "adjudication",
     "reports",
 )
+
+# Backward-compatible alias: "affiliation" means deep enrichment.
+STAGE_ALIASES = {
+    "affiliation": "affiliation_deep",
+    "classify": "audience_domain",
+}
 
 
 def _run_stage_cli(args: argparse.Namespace, stage: str) -> int:
@@ -72,50 +80,70 @@ def _run_stage_cli(args: argparse.Namespace, stage: str) -> int:
     return int(completed.returncode)
 
 
-def _run_affiliation(args: argparse.Namespace) -> int:
-    """Affiliation over quality-scored papers in the window (arXiv HTML + ROR + OpenAlex)."""
+def _screen_survivor_ids(conn, date_from: str, date_until: str) -> list[int]:
+    from paper_intelligence.db.results import latest_screen_scores
+
+    return sorted(
+        {
+            int(row["content_item_id"])
+            for row in latest_screen_scores(conn, date_from=date_from, date_until=date_until)
+            if ((row["result_json"] or {}).get("gate") or {}).get("passed")
+        }
+    )
+
+
+def _quality_ids(conn, date_from: str, date_until: str) -> list[int]:
+    with conn.cursor() as cur:
+        cur.execute(
+            """
+            SELECT DISTINCT q.content_item_id
+            FROM paper_intelligence.paper_classification_results q
+            JOIN research_radar.content_items ci ON ci.id = q.content_item_id
+            WHERE q.task_type = 'quality'
+              AND ci.published_at >= %s::timestamptz
+              AND ci.published_at < (%s::timestamptz + interval '1 day')
+            ORDER BY q.content_item_id
+            """,
+            (date_from, date_until),
+        )
+        return [int(r["content_item_id"]) for r in cur.fetchall()]
+
+
+def _run_affiliation(args: argparse.Namespace, *, mode: str) -> int:
+    """Run affiliation_fast (pre-quality) or affiliation_deep (post-quality)."""
     if args.dry_run:
-        print("affiliation dry-run: skip live ROR/OpenAlex/arXiv HTML", flush=True)
+        print(f"affiliation_{mode} dry-run: skip live lookups", flush=True)
         return 0
 
     from paper_intelligence.author_affiliation import run_window
     from paper_intelligence.db import connect
 
-    print("\n=== pipeline stage: affiliation ===", flush=True)
+    label = f"affiliation_{mode}"
+    print(f"\n=== pipeline stage: {label} ===", flush=True)
     with connect() as conn:
-        with conn.cursor() as cur:
-            cur.execute(
-                """
-                SELECT DISTINCT q.content_item_id
-                FROM paper_intelligence.paper_classification_results q
-                JOIN research_radar.content_items ci ON ci.id = q.content_item_id
-                WHERE q.task_type = 'quality'
-                  AND ci.published_at >= %s::timestamptz
-                  AND ci.published_at < (%s::timestamptz + interval '1 day')
-                ORDER BY q.content_item_id
-                """,
-                (args.date_from, args.date_until),
-            )
-            ids = [int(r["content_item_id"]) for r in cur.fetchall()]
-            if args.limit:
-                ids = ids[: args.limit]
+        if mode == "fast":
+            ids = _screen_survivor_ids(conn, args.date_from, args.date_until)
+        else:
+            ids = _quality_ids(conn, args.date_from, args.date_until)
+        if args.limit:
+            ids = ids[: args.limit]
 
-    print(f"affiliation candidates={len(ids)}", flush=True)
+    print(f"{label} candidates={len(ids)}", flush=True)
     if not ids:
-        print("affiliation: nothing to do", flush=True)
+        print(f"{label}: nothing to do", flush=True)
         return 0
 
-    # Inclusive end date for the helper (it treats the second arg as exclusive day
-    # when using the window selector; content_item_ids bypass that).
     summary = run_window(
         args.date_from,
         args.date_until,
         content_item_ids=ids,
-        allow_ror=True,
-        allow_openalex=True,
+        allow_ror=(mode == "deep"),
+        allow_openalex=(mode == "deep"),
+        mode=mode,
+        dry_run=False,
     )
     print(
-        f"affiliation: items={summary.get('items')} "
+        f"{label}: items={summary.get('items')} "
         f"by_outcome={summary.get('by_outcome')} "
         f"rows_written={summary.get('rows_written')}",
         flush=True,
@@ -194,17 +222,14 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
-    stages = [s.strip() for s in args.stages.split(",") if s.strip()]
-    stages = ["audience_domain" if s == "classify" else s for s in stages]
+    stages = [STAGE_ALIASES.get(s.strip(), s.strip()) for s in args.stages.split(",") if s.strip()]
     unknown = [s for s in stages if s not in DEFAULT_STAGES]
     if unknown:
         print(f"unknown stages: {unknown}", file=sys.stderr)
         return 2
 
     if args.from_stage:
-        from_stage = (
-            "audience_domain" if args.from_stage == "classify" else args.from_stage
-        )
+        from_stage = STAGE_ALIASES.get(args.from_stage, args.from_stage)
         if from_stage not in stages:
             print(f"--from-stage {args.from_stage} not in --stages", file=sys.stderr)
             return 2
@@ -221,8 +246,10 @@ def main(argv: list[str] | None = None) -> int:
 
     failures: list[str] = []
     for stage in stages:
-        if stage == "affiliation":
-            code = _run_affiliation(args)
+        if stage == "affiliation_fast":
+            code = _run_affiliation(args, mode="fast")
+        elif stage == "affiliation_deep":
+            code = _run_affiliation(args, mode="deep")
         elif stage == "reports":
             code = _run_reports(args)
         else:

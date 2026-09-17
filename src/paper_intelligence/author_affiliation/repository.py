@@ -10,10 +10,12 @@ FETCH_PAPER_SQL = """
 SELECT
     ci.id            AS content_item_id,
     ci.title         AS title,
+    ci.raw_metadata  AS raw_metadata,
     pm.doi           AS doi,
     pm.arxiv_id      AS arxiv_id,
     pm.affiliation_text  AS affiliation_text,
-    pm.extracted_emails  AS extracted_emails
+    pm.extracted_emails  AS extracted_emails,
+    pm.enrichment_metadata AS enrichment_metadata
 FROM research_radar.content_items ci
 LEFT JOIN research_radar.paper_metadata pm ON pm.content_id = ci.id
 WHERE ci.id = %s

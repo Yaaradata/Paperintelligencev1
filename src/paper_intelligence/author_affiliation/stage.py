@@ -39,13 +39,18 @@ from paper_intelligence.organisation_resolution import (
 )
 
 STAGE_NAME = "affiliation"
-STAGE_VERSION = "v001"
+STAGE_NAME_FAST = "affiliation_fast"
+STAGE_NAME_DEEP = "affiliation_deep"
+STAGE_VERSION = "v002"
+STAGE_VERSION_FAST = "v001"
+STAGE_VERSION_DEEP = "v001"
 
 EVIDENCE_EXPLICIT = "explicit_paper_affiliation"
 EVIDENCE_EMAIL = "email_domain"
 EVIDENCE_ROR = "ror_canonical_match"
 EVIDENCE_OPENALEX = "openalex_paper_specific"
 EVIDENCE_PROFILE = "author_profile_secondary"
+EVIDENCE_OAI = "oai_author_affiliation"
 
 SCOPE_AUTHOR = "author_specific"
 SCOPE_PAPER = "paper_level_unassigned"
@@ -61,6 +66,50 @@ ROR_MAX_LOOKUPS = int(os.getenv("PI_ROR_MAX_LOOKUPS", "3"))
 # Beyond this, a paper-level affiliation string says nothing useful about any
 # individual author, so we record it as ambiguous instead of fanning it out.
 MAX_AUTHORS_FOR_PAPER_LEVEL = int(os.getenv("PI_AFFILIATION_MAX_FANOUT", "50"))
+
+
+def _authors_structured_from_paper(paper: dict[str, Any]) -> list[dict[str, Any]]:
+    """Prefer OAI structured authors from enrichment_metadata, else raw_metadata."""
+    enrichment = paper.get("enrichment_metadata") or {}
+    if isinstance(enrichment, str):
+        enrichment = {}
+    oai = enrichment.get("oai_ingest") if isinstance(enrichment, dict) else None
+    if isinstance(oai, dict) and oai.get("authors_structured"):
+        return list(oai["authors_structured"])
+    raw = paper.get("raw_metadata") or {}
+    if isinstance(raw, dict) and raw.get("authors_structured"):
+        return list(raw["authors_structured"])
+    return []
+
+
+def _merge_oai_affiliation_lines(
+    affiliation_text: Any, authors_structured: list[dict[str, Any]]
+) -> list[str]:
+    """Combine existing affiliation_text with OAI per-author affiliations."""
+    lines: list[str] = []
+    seen: set[str] = set()
+
+    def _add(value: str) -> None:
+        text = " ".join(value.split())
+        if not text:
+            return
+        key = text.casefold()
+        if key in seen:
+            return
+        seen.add(key)
+        lines.append(text if text.lower().startswith("affiliation") else f"Affiliation: {text}")
+
+    if isinstance(affiliation_text, list):
+        for entry in affiliation_text:
+            if entry is not None:
+                _add(str(entry))
+    elif isinstance(affiliation_text, str) and affiliation_text.strip():
+        _add(affiliation_text)
+
+    for author in authors_structured:
+        for aff in author.get("affiliations") or []:
+            _add(str(aff))
+    return lines
 
 
 @dataclass
@@ -111,11 +160,26 @@ class AffiliationStage:
         allow_ror: bool = True,
         allow_openalex: bool = True,
         enable_author_profile: bool = False,
+        mode: str = "deep",
     ) -> None:
+        if mode not in {"fast", "deep"}:
+            raise ValueError(f"affiliation mode must be 'fast' or 'deep', got {mode!r}")
         self._conn = conn
         self._policy_version = resolve_policy_version(policy_version)
-        self._allow_ror = allow_ror
-        self._allow_openalex = allow_openalex
+        self._mode = mode
+        # FAST: OAI + local alias/domain only. DEEP: HTML fallback + ROR + OpenAlex.
+        if mode == "fast":
+            self.stage_name = STAGE_NAME_FAST
+            self.stage_version = STAGE_VERSION_FAST
+            self._allow_ror = False
+            self._allow_openalex = False
+            self._allow_html = False
+        else:
+            self.stage_name = STAGE_NAME_DEEP
+            self.stage_version = STAGE_VERSION_DEEP
+            self._allow_ror = allow_ror
+            self._allow_openalex = allow_openalex
+            self._allow_html = True
         # Tier 5 is enrichment only and is off by default: an author profile
         # must never stand in for the paper's own affiliation.
         self._enable_author_profile = enable_author_profile
@@ -152,13 +216,19 @@ class AffiliationStage:
     def _process(self, conn: Any, content_item_id: int, run_context: RunContext) -> StageResult:
         paper = repository.fetch_paper(conn, content_item_id)
         authors = repository.list_paper_authors(conn, content_item_id)
-
-        evidence = extraction.extract(
-            paper.get("affiliation_text"), paper.get("extracted_emails")
+        authors_structured = _authors_structured_from_paper(paper)
+        affiliation_lines = _merge_oai_affiliation_lines(
+            paper.get("affiliation_text"), authors_structured
         )
+
+        evidence = extraction.extract(affiliation_lines, paper.get("extracted_emails"))
         doi = openalex_client.normalize_doi(paper.get("doi"))
         arxiv_id = (paper.get("arxiv_id") or "").strip() or None
-        affiliation_source = "paper_metadata.affiliation_text"
+        affiliation_source = (
+            "oai.authors_structured+paper_metadata.affiliation_text"
+            if authors_structured
+            else "paper_metadata.affiliation_text"
+        )
         email_source = "paper_metadata.extracted_emails"
 
         if not authors:
@@ -172,9 +242,8 @@ class AffiliationStage:
                 run_context=run_context,
             )
 
-        # OAI ingest usually leaves affiliation_text empty. Pull the HTML page
-        # when local evidence is missing — that is where arXiv puts institutions.
-        if evidence.is_empty and arxiv_id:
+        # DEEP only: when local/OAI evidence is empty, pull arXiv HTML footnotes.
+        if evidence.is_empty and self._allow_html and arxiv_id:
             page = arxiv_html_client.fetch_affiliations(
                 arxiv_id,
                 conn=conn,
@@ -191,14 +260,18 @@ class AffiliationStage:
             if not doi:
                 doi = openalex_client.normalize_doi(f"10.48550/arxiv.{arxiv_id}")
 
-        if evidence.is_empty and not doi:
+        if evidence.is_empty and not (doi and self._allow_openalex):
             return self._result(
                 "unresolved",
                 content_item_id,
                 OUTCOME_NO_EVIDENCE,
                 reason="no_affiliation_text_no_emails_no_doi",
                 run_context=run_context,
-                data={"author_count": len(authors), "arxiv_id": arxiv_id},
+                data={
+                    "author_count": len(authors),
+                    "arxiv_id": arxiv_id,
+                    "mode": self._mode,
+                },
             )
 
         ctx = _Context(

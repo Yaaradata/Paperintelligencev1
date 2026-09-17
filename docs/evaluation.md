@@ -1,36 +1,32 @@
 # Evaluation — PaperIntelligenceV1
 
-## Golden sets
+## Golden sets (in repo)
 
-| Name | Size | Composition |
-|---|---|---|
-| `GOLDEN_AUDIENCE_DOMAIN_V1` | 200 | 170 llm_adjudicated + 30 manual |
-| `GOLDEN_AUTHOR_AFFILIATION_V1` | 200 | 170 llm_adjudicated + 30 manual |
+| File | Task | Size | Composition |
+|---|---|---|---|
+| `data/golden/audience_domain_200_v1.json` | audience_domain | ~229 | 200 llm_adjudicated tagging sample + 30 manual human labels |
+| `data/golden/audience_domain_human_30_v1.json` | audience_domain | 30 | manual only (`version=v1-human`) |
+| `data/golden/author_affiliation_200_v1.json` | author_affiliation | 200 | llm_adjudicated (sol preferred) |
 
-Never merge label sources when scoring.
+Never merge label sources when scoring — metrics are split by `gold_label_source`.
 
-## Runner (Phase 4)
-
-```bash
-python scripts/evaluate_golden.py \
-  --task audience_domain \
-  --golden-version v1
-```
+## Load + evaluate
 
 ```bash
-python scripts/evaluate_golden.py \
-  --task author_affiliation \
-  --golden-version v1
+python3 scripts/load_golden.py --file data/golden/audience_domain_200_v1.json
+python3 scripts/load_golden.py --file data/golden/audience_domain_human_30_v1.json
+python3 scripts/load_golden.py --file data/golden/author_affiliation_200_v1.json
+
+python3 scripts/evaluate_golden.py --task audience_domain --golden-version v1
+python3 scripts/evaluate_golden.py --task author_affiliation --golden-version v1
 ```
 
 ## Required report fields
 
-- Previous vs candidate accuracy (split by `gold_label_source`)
-- Resolved count delta
-- Regressions listed by paper
-- Unresolved rate
-- False-positive organisation attribution (affiliation task; heavier weight than unresolved)
+- Accuracy split by `gold_label_source` (`manual` vs `llm_adjudicated`)
+- Missing-prediction count
+- For affiliation: any-org overlap rate and exact org-set rate
 
-## M1 bar
+## HF validation
 
-For every golden paper, provenance + comparison questions in `Context.md` must be answerable.
+See `docs/hf_validation.md` (observational; does not change `final_score`).

@@ -379,9 +379,9 @@ def _run_paid(args: argparse.Namespace) -> int:
         if args.content_item_id is not None:
             ids = [args.content_item_id]
         elif args.stage == "quality":
-            from paper_intelligence.quality import select_top_slice
+            from paper_intelligence.quality import select_quality_candidates
 
-            ids = select_top_slice(
+            ids = select_quality_candidates(
                 conn,
                 date_from=args.date_from,
                 date_until=args.date_until,
@@ -390,10 +390,18 @@ def _run_paid(args: argparse.Namespace) -> int:
             if not args.reprocess:
                 from paper_intelligence.db import ids_with_result
 
-                done = ids_with_result(conn, ids, "quality")
+                done = ids_with_result(
+                    conn,
+                    ids,
+                    "quality",
+                    stage_version=module.STAGE_VERSION,
+                    prompt_version=module.PROMPT_VERSION,
+                    policy_version=module.POLICY_VERSION,
+                    model=model,
+                )
                 ids = [i for i in ids if i not in done]
         elif args.stage == "audience_domain":
-            ids = _audience_domain_candidates(conn, args)
+            ids = _audience_domain_candidates(conn, args, module=module, model=model)
         else:
             ids = select_window_candidates(
                 conn,
@@ -402,6 +410,10 @@ def _run_paid(args: argparse.Namespace) -> int:
                 stage_task_type=task_type,
                 limit=args.limit,
                 skip_done=not args.reprocess,
+                stage_version=module.STAGE_VERSION,
+                prompt_version=module.PROMPT_VERSION,
+                policy_version=module.POLICY_VERSION,
+                model=model,
             )
 
         if args.limit:
@@ -479,7 +491,9 @@ def _run_paid(args: argparse.Namespace) -> int:
         return 0 if stats.papers_failed == 0 else 1
 
 
-def _audience_domain_candidates(conn, args: argparse.Namespace) -> list[int]:
+def _audience_domain_candidates(
+    conn, args: argparse.Namespace, *, module=None, model: str | None = None
+) -> list[int]:
     """Screen survivors that still need audience/domain classification."""
     from paper_intelligence.db import latest_screen_scores, select_window_candidates
 
@@ -496,6 +510,10 @@ def _audience_domain_candidates(conn, args: argparse.Namespace) -> list[int]:
         date_until=args.date_until,
         stage_task_type="domain",
         skip_done=not args.reprocess,
+        stage_version=getattr(module, "STAGE_VERSION", None),
+        prompt_version=getattr(module, "PROMPT_VERSION", None),
+        policy_version=getattr(module, "POLICY_VERSION", None),
+        model=model,
     )
     return [i for i in pending if i in survivors]
 

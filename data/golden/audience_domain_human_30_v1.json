@@ -1,0 +1,511 @@
+{
+  "name": "audience_domain_human_30_v1",
+  "version": "v1-human",
+  "task_type": "audience_domain",
+  "description": "30-paper human-labelled audience/domain set from eval-full-audience-domain.xlsx",
+  "items": [
+    {
+      "content_item_id": 39,
+      "arxiv_id": null,
+      "title": "HiFi-KPI: A Dataset for Hierarchical KPI Extraction from Earnings Filings",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "financial_services",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The released dataset and lite set give teams a practical way to test financial KPI extraction, and the 0.440 structured-extraction F1 shows a clear gap for LLM deployments."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 3651,
+      "arxiv_id": null,
+      "title": "Do Sheaf Neural Networks Use Holonomy? A Measure--Intervene--Control Study",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "This is a careful causal study of one mechanism in sheaf networks, but even its own controls do not show that holonomy drives the task result."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 4308,
+      "arxiv_id": null,
+      "title": "Enabling Memory-efficient Im2win Convolution with Multi-precision Support on GPU CUDA and Tensor Cores",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The CUDA and tensor-core implementation reports concrete speed and memory gains over cuDNN and cuBLAS, which is useful to engineers optimizing CNN inference."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 16240,
+      "arxiv_id": null,
+      "title": "VoxPrivacy: A Benchmark for Evaluating Interactional Privacy of Speech Language Models",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The benchmark exposes a real multi-user privacy failure in speech models, tests nine systems on synthetic and human speech, and includes training data for mitigation."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 70409,
+      "arxiv_id": null,
+      "title": "Deja Vu in Plots: Leveraging Cross-Session Evidence with Retrieval-Augmented LLMs for Live Streaming Risk Assessment",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The paper shows a deployable moderation pattern: use cross-session evidence and LLM supervision to train a lightweight real-time risk detector, with offline and online validation."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 100541,
+      "arxiv_id": null,
+      "title": "Gauge dependence and structured-output corruption in sign-branched repetition penalties: measurements across models, inference stacks, and alternative repetition controls",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "A commonly used inference setting cut valid schema-conforming JSON from 97% to 23%, and the paper identifies a normalization-based fix available in current tooling."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 109275,
+      "arxiv_id": null,
+      "title": "Deep Learning CNN and Recurrence Analysis for Alpha Gamma EEG Biomarkers in Fragile X Syndrome",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "healthcare_life_sciences",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The work targets a narrow clinical biomarker problem and claims improvement without reporting enough result detail in the abstract to judge readiness or practical value."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 110022,
+      "arxiv_id": null,
+      "title": "Cultural Awareness is Represented but Not Decoded: Tracing Mythological Knowledge across 18 Open-Source LLMs",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "Across 18 open models, cultural knowledge is present internally but often lost at decoding, and prompt language changes the failure pattern\u2014useful evidence for multilingual evaluation."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 110291,
+      "arxiv_id": null,
+      "title": "VeriTrace: Human-Like Temporal Exploration Completes Agentic Action Space",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "manufacturing_industrial",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "Giving the agent control over signals, time windows, and iteration improved Verilog debugging to 100% Pass@1 on the stated benchmark, offering a concrete agent-tool design lesson."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 111021,
+      "arxiv_id": null,
+      "title": "LLMs Struggle to Measure What Distinguishes Students of Different Proficiency Levels: A Study of Item Discrimination in Reading Comprehension Assessment",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "education",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "Forty-two models failed to reproduce human item discrimination reliably, warning education teams not to treat LLM-generated responses as substitutes for student psychometrics."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 111820,
+      "arxiv_id": null,
+      "title": "DishSeg24k: A Large-Scale Benchmark for Food Segmentation with Stochastic Expert Decoding",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The 24,096-image benchmark and released model target a genuine long-tail segmentation problem and provide measurable gains that computer-vision teams can reproduce."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 112278,
+      "arxiv_id": null,
+      "title": "Beyond Top-K: Replacing Black-Box Retrieval with Interpretable Agentic Operations",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "For table-heavy financial and regulatory documents, the study measures why chunk-and-embed retrieval loses units and years, then tests a replayable search alternative with much higher accuracy."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 112520,
+      "arxiv_id": null,
+      "title": "Optimized Certainty Equivalent Risk Minimization Using Samples: Algorithms, Convergence Rates, and Applications",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The abstract is primarily a theoretical optimization treatment; its broad finance and ML applications do not translate into an immediate deployment or engineering decision."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 112939,
+      "arxiv_id": null,
+      "title": "Digital Fragmentation and Generative AI Use Across 103 Million Application Events",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The 103-million-event study connects generative-AI use with a more focused period of application activity, giving workplace leaders evidence about AI and digital fragmentation."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 113462,
+      "arxiv_id": null,
+      "title": "360CityArena: A Realistic Virtual Urban Navigation Benchmark for Embodied Agents",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The benchmark reveals a large human-to-model gap in realistic city navigation and supplies 175 human-built tasks for evaluating embodied agents."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 113598,
+      "arxiv_id": null,
+      "title": "Is CLIP Cross-Eyed? Revealing and Mitigating Center Bias in the CLIP Family",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The paper identifies an off-centre object failure in CLIP and offers training-free mitigations through visual prompting and attention redistribution."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 114272,
+      "arxiv_id": null,
+      "title": "Off-Axis, On Purpose: Where a Transformer Computes Concepts and Why it Does So",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The findings are about internal representation geometry in a small transformer, with no clear evaluation, product, or deployment change for a general newsletter reader."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 115248,
+      "arxiv_id": null,
+      "title": "Distillation of Foundation Models for Time-dependent PDEs",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "scientific_research",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The distillation method makes PDE foundation models several orders smaller and more than ten times faster while matching or beating the teacher on the tested benchmarks."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 116858,
+      "arxiv_id": null,
+      "title": "Unaccountable Delegation, Fading Skills: Mapping the Risks of Workplace AI Agents",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The worker-validated taxonomy turns 2,078 job tasks into concrete agent-risk scenarios and separates risks created by automation from those created by augmentation."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 117526,
+      "arxiv_id": null,
+      "title": "Detector-Augmented SAMURAI for Long-Duration Drone Tracking",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The detector-augmented tracker materially improves long-duration drone tracking, especially after exit and re-entry, with substantial success-rate and false-negative gains."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 117723,
+      "arxiv_id": null,
+      "title": "DSPrompt: Dynamic Soft Prompt Defense Against M-RAG Corruption",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The defense reduces multimodal RAG poisoning while adding under 1% parameters and no per-query optimization, making the security trade-off relevant to deployed retrieval systems."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 117869,
+      "arxiv_id": null,
+      "title": "Solving nonconvex Hamilton--Jacobi--Isaacs equations with PINN-based policy iteration",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "scientific_research",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "This is a specialized numerical method for Hamilton\u2013Jacobi\u2013Isaacs equations; the abstract does not give a broadly reusable AI engineering or organizational lesson."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 135089,
+      "arxiv_id": null,
+      "title": "Bridging Lexical Divergence: LLM-Assisted, Cost-Efficient, Zero-shot Scientific Entity Linking",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "scientific_research",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "Selective alias generation and ontology filtering reduce LLM cost and noise for scientific entity linking, with results across five benchmarks and released evaluation data."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 135196,
+      "arxiv_id": null,
+      "title": "Advantage Weighted Matching: Aligning RL with Pretraining in Diffusion Models",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The method aligns diffusion RL with the pretraining objective and reports up to 34\u00d7 faster optimization without reducing generation quality."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 136176,
+      "arxiv_id": null,
+      "title": "Separating Syntax from Language: A Mechanistic Account of Translation in Multilingual LLMs",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The causal analysis of syntax and surface language is interesting model science, but the abstract does not lead to a concrete deployment or engineering action."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 136177,
+      "arxiv_id": null,
+      "title": "PopPert: Population-level Joint-Distribution Modeling for Single-Cell Perturbation Prediction",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "healthcare_life_sciences",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The method is valuable for single-cell perturbation research, but it is too domain-specific and gives no deployment or product implication beyond benchmark performance."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 136211,
+      "arxiv_id": null,
+      "title": "Citing Less Critically: LLMs Reshape the Rhetoric and Reach of Scientific Citation",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "product"
+        ],
+        "domain": "scientific_research",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "Across more than 63,000 citation contexts, LLM-assisted writing was less critical and favored popular, older work, a useful governance warning for scientific publishing workflows."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 136369,
+      "arxiv_id": "2609.01693",
+      "title": "Public-Sharing Labels and Verbatim Field Egress in an MCP-to-A2A Agent Configuration: A Controlled Multi-Model Study",
+      "canonical_url": "https://arxiv.org/abs/2609.01693",
+      "label_json": {
+        "audiences": [
+          "tech",
+          "product"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The controlled 480-trial study shows that a PUBLIC label can increase verbatim data egress in an MCP-to-A2A workflow, with strong model dependence that deployment teams should test."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 137333,
+      "arxiv_id": null,
+      "title": "RoGe: Novel View Synthesis via End-to-End Implicit Reconstruction and Generation",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [
+          "tech"
+        ],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The end-to-end design removes the lossy explicit 3D bridge and improves sparse-view video synthesis and temporal consistency over reconstruction and generation baselines."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    },
+    {
+      "content_item_id": 137485,
+      "arxiv_id": null,
+      "title": "A Mathematical Theory of Reusable Neural Bases for Network Compression",
+      "canonical_url": null,
+      "label_json": {
+        "audiences": [],
+        "domain": "general_method",
+        "subdomains": [],
+        "application_domains": [],
+        "notes": "The compression idea is potentially useful, but the abstract gives no concrete model sizes, compression ratios, memory savings, or benchmark numbers to support a newsletter claim."
+      },
+      "gold_label_source": "manual",
+      "labeller": "human"
+    }
+  ]
+}

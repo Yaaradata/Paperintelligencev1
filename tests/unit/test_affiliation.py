@@ -197,6 +197,8 @@ def make_paper(**overrides: Any) -> dict[str, Any]:
         "arxiv_id": "2608.00001",
         "affiliation_text": [],
         "extracted_emails": [],
+        "raw_metadata": {},
+        "enrichment_metadata": {},
     }
     paper.update(overrides)
     return paper
@@ -228,6 +230,14 @@ def no_network(monkeypatch: pytest.MonkeyPatch) -> None:
 
     monkeypatch.setattr(ror.requests, "get", explode)
     monkeypatch.setattr(openalex.requests, "get", explode)
+    monkeypatch.setattr(
+        "paper_intelligence.author_affiliation.stage.arxiv_html_client.fetch_affiliations",
+        lambda *a, **k: type(
+            "Page",
+            (),
+            {"error": "disabled_in_tests", "affiliations": [], "emails": [], "evidence_url": None},
+        )(),
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -270,6 +280,63 @@ def test_no_evidence_supplied_when_nothing_to_work_with() -> None:
     assert result.status == "unresolved"
     assert result.data["outcome"] == OUTCOME_NO_EVIDENCE
     assert db.affiliations == []
+
+
+def test_fast_mode_uses_oai_structured_affiliation_without_html(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """FAST affiliation resolves local/OAI evidence and never calls HTML/ROR/OpenAlex."""
+    html_calls: list[str] = []
+
+    def mark_html(*args: Any, **kwargs: Any) -> Any:
+        html_calls.append("called")
+        raise AssertionError("FAST mode must not fetch arXiv HTML")
+
+    monkeypatch.setattr(
+        "paper_intelligence.author_affiliation.stage.arxiv_html_client.fetch_affiliations",
+        mark_html,
+    )
+    monkeypatch.setattr(
+        "paper_intelligence.author_affiliation.stage.load_watchlist",
+        lambda: type(
+            "W",
+            (),
+            {
+                "match": lambda *a, **k: None,
+                "entries": [],
+            },
+        )(),
+    )
+
+    db = FakeDB(
+        paper=make_paper(
+            affiliation_text=[],
+            enrichment_metadata={
+                "oai_ingest": {
+                    "authors_structured": [
+                        {
+                            "position": 1,
+                            "name": "Ada Lovelace",
+                            "affiliations": ["Stanford University"],
+                        }
+                    ]
+                }
+            },
+        ),
+        authors=make_authors("Ada Lovelace"),
+    )
+    stanford = db.add_organisation(
+        "Stanford University", priority=8, is_org_of_interest=True
+    )
+    db.aliases.append(
+        {"organisation_id": stanford, "alias": "Stanford University", "alias_type": "name"}
+    )
+
+    result = AffiliationStage(db, mode="fast").process(1, RUN)
+    assert html_calls == []
+    assert result.status == "success"
+    assert result.data["outcome"] == OUTCOME_RESOLVED
+    assert any(row["organisation_id"] == stanford for row in db.affiliations)
 
 
 def test_review_required_is_distinct_from_no_evidence_supplied() -> None:

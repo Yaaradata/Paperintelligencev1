@@ -16,7 +16,7 @@ from paper_intelligence.adjudication.org_score import organisation_score
 from paper_intelligence.quality.stage import composite_score
 
 STAGE_NAME = "adjudication"
-STAGE_VERSION = "v001"
+STAGE_VERSION = "v002"
 POLICY_VERSION = "v001"
 
 # Screen and quality disagreeing by this much is a review signal, not an error.
@@ -57,9 +57,9 @@ INSERT INTO paper_intelligence.paper_intelligence_current
      domain_confidence, audience_confidence, screen_score, quality_score,
      organisation_score, org_boost, person_boost, final_score,
      top_organisation_id, author_resolution_status, affiliation_resolution_status,
-     adjudication_json, run_id, updated_at)
+     quality_status, adjudication_json, run_id, updated_at)
 VALUES (%s, %s, %s::jsonb, %s::jsonb, %s::jsonb, %s, %s, %s, %s, %s, %s, %s, %s,
-        %s, %s, %s, %s::jsonb, %s, NOW())
+        %s, %s, %s, %s, %s::jsonb, %s, NOW())
 ON CONFLICT (content_item_id) DO UPDATE SET
     domain = EXCLUDED.domain,
     subdomains = EXCLUDED.subdomains,
@@ -76,6 +76,7 @@ ON CONFLICT (content_item_id) DO UPDATE SET
     top_organisation_id = EXCLUDED.top_organisation_id,
     author_resolution_status = EXCLUDED.author_resolution_status,
     affiliation_resolution_status = EXCLUDED.affiliation_resolution_status,
+    quality_status = EXCLUDED.quality_status,
     adjudication_json = EXCLUDED.adjudication_json,
     run_id = EXCLUDED.run_id,
     updated_at = NOW()
@@ -174,6 +175,16 @@ def run_window(
             else ("unresolved" if affiliations.get(content_id) else "no_evidence_supplied")
         )
 
+        gate_passed = bool((screen.get("gate") or {}).get("passed")) if screen else False
+        if quality_score is not None:
+            quality_status = "scored"
+        elif gate_passed:
+            quality_status = "not_selected"
+        elif screen:
+            quality_status = "skipped"
+        else:
+            quality_status = "skipped"
+
         rows.append(
             (
                 content_id,
@@ -192,11 +203,13 @@ def run_window(
                 org["organisation_id"],
                 "resolved" if author_counts.get(content_id) else "no_authors",
                 affiliation_status,
+                quality_status,
                 json.dumps(
                     {
                         "screen_dimensions": {k: screen.get(k) for k in SCREEN_DIMENSIONS},
                         "screen_gate": screen.get("gate"),
                         "quality_present": bool(quality),
+                        "quality_status": quality_status,
                         "screen_quality_disagreement": disagreement,
                         "organisation": org,
                         "author_count": author_counts.get(content_id, 0),

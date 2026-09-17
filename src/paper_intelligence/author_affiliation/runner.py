@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any
 
-from paper_intelligence.author_affiliation.stage import STAGE_NAME, STAGE_VERSION, AffiliationStage
+from paper_intelligence.author_affiliation.stage import STAGE_NAME, AffiliationStage
 from paper_intelligence.author_affiliation.policy import DEFAULT_POLICY_VERSION, policy_version
 from paper_intelligence.common import RunContext
 from paper_intelligence.db import connect
@@ -63,6 +63,7 @@ def run_window(
     dry_run: bool = False,
     allow_ror: bool = True,
     allow_openalex: bool = True,
+    mode: str = "deep",
     created_by: str | None = None,
 ) -> dict[str, Any]:
     """Create a pipeline_run + stage_run, process the window, and return a summary."""
@@ -72,18 +73,30 @@ def run_window(
         item_ids = content_item_ids or select_window(conn, start, end, limit=limit)
         resolved_policy = policy_version(DEFAULT_POLICY_VERSION)
 
+        stage = AffiliationStage(
+            conn,
+            allow_ror=allow_ror,
+            allow_openalex=allow_openalex,
+            mode=mode,
+        )
+
         run_id = start_pipeline_run(
             conn,
-            pipeline_name=STAGE_NAME,
+            pipeline_name=stage.stage_name,
             trigger_type="manual",
             created_by=created_by,
-            metadata={"start": str(start), "end": str(end), "items": len(item_ids)},
+            metadata={
+                "start": str(start),
+                "end": str(end),
+                "items": len(item_ids),
+                "mode": mode,
+            },
         )
         stage_run_id = start_stage_run(
             conn,
             run_id,
-            stage_name=STAGE_NAME,
-            stage_version=STAGE_VERSION,
+            stage_name=stage.stage_name,
+            stage_version=stage.stage_version,
             policy_version=resolved_policy,
             items_input=len(item_ids),
         )
@@ -95,13 +108,11 @@ def run_window(
             dry_run=dry_run,
         )
 
-        stage = AffiliationStage(
-            conn, allow_ror=allow_ror, allow_openalex=allow_openalex
-        )
         summary: dict[str, Any] = {
             "run_id": run_id,
             "stage_run_id": stage_run_id,
             "policy_version": resolved_policy,
+            "mode": mode,
             "items": len(item_ids),
             "by_status": {},
             "by_outcome": {},
@@ -134,6 +145,7 @@ def run_window(
                 metadata={
                     **{k: v for k, v in result.data.items() if k != "results"},
                     "stage_status": result.status,
+                    "mode": mode,
                 },
                 error_type=result.metadata.get("error_type"),
                 error_message=result.metadata.get("error_message"),

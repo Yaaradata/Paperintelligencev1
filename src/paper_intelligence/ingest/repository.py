@@ -166,10 +166,29 @@ def ensure_paper_metadata_row(conn: Any, content_id: int) -> None:
         )
 
 
+def affiliation_lines_from_structured(authors_structured: list[dict[str, Any]] | None) -> list[str]:
+    """Flatten structured OAI affiliations into paper_metadata.affiliation_text lines."""
+    lines: list[str] = []
+    seen: set[str] = set()
+    for author in authors_structured or []:
+        for aff in author.get("affiliations") or []:
+            text = " ".join(str(aff).split())
+            if not text:
+                continue
+            key = text.casefold()
+            if key in seen:
+                continue
+            seen.add(key)
+            lines.append(f"Affiliation: {text}")
+    return lines
+
+
 def upsert_paper_metadata(conn: Any, content_id: int, rec: dict[str, Any]) -> None:
     """Gap-fill paper_metadata from an OAI record. Never overwrites non-empty fields."""
     arxiv_id = rec["arxiv_id"]
     ensure_paper_metadata_row(conn, content_id)
+    authors_structured = rec.get("authors_structured") or []
+    affiliation_lines = affiliation_lines_from_structured(authors_structured)
     conn.execute(
         """
         UPDATE research_radar.paper_metadata SET
@@ -178,6 +197,11 @@ def upsert_paper_metadata(conn: Any, content_id: int, rec: dict[str, Any]) -> No
             abstract = CASE WHEN COALESCE(abstract, '') = '' THEN %s ELSE abstract END,
             categories = CASE WHEN categories = '[]'::jsonb THEN %s::jsonb ELSE categories END,
             authors_raw = CASE WHEN authors_raw = '[]'::jsonb THEN %s::jsonb ELSE authors_raw END,
+            affiliation_text = CASE
+                WHEN affiliation_text = '[]'::jsonb AND %s::jsonb <> '[]'::jsonb
+                THEN %s::jsonb
+                ELSE affiliation_text
+            END,
             submission_date = COALESCE(submission_date, %s),
             latest_revision_date = COALESCE(latest_revision_date, %s),
             journal_reference = COALESCE(journal_reference, %s),
@@ -194,6 +218,8 @@ def upsert_paper_metadata(conn: Any, content_id: int, rec: dict[str, Any]) -> No
             rec.get("abstract") or "",
             json.dumps(rec.get("categories") or []),
             json.dumps(rec.get("authors") or []),
+            json.dumps(affiliation_lines),
+            json.dumps(affiliation_lines),
             parse_iso_datetime(rec["created"]),
             parse_iso_datetime(rec["updated"]) if rec.get("updated") else None,
             rec.get("journal_ref"),
@@ -206,6 +232,7 @@ def upsert_paper_metadata(conn: Any, content_id: int, rec: dict[str, Any]) -> No
                         "datestamp": rec.get("datestamp"),
                         "set_spec": rec.get("_set_spec"),
                         "via": "paper_intelligence.ingest",
+                        "authors_structured": authors_structured,
                     }
                 }
             ),

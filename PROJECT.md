@@ -10,42 +10,40 @@ Single project source of truth (Context/State/Backlog point here).
 ## Pipeline
 
 ```
-ingest → relevance → normalize → screen → audience_domain → quality
-  → affiliation → hf_signals → adjudication → reports
+ingest → relevance → normalize → screen
+  → affiliation_fast → audience_domain → quality
+  → affiliation_deep → hf_signals → adjudication → reports
 ```
 
-HF is enrichment only (no duplicate papers). **`final_score` is not influenced by HF.**
+Quality stays author/org-blind. FAST affiliation feeds the quality router. HF does **not** affect `final_score`.
 
 ---
 
-## HF validation (complete)
-
-- Field rename: `hf_trending_rank` → `hf_daily_upvote_rank` (migration 004)
-- 30-day window: **2026-08-18 → 2026-09-16**
-- Reports: `docs/hf_validation.md`, `reports/hf_validation_30d.json`, cohort CSVs
-- Script: `scripts/validate_hf_signals.py`
-- Measured recommendation: **no incremental signal** on this window
-  (BOTH avg final_score 7.72 vs OURS_ONLY 7.57; BOTH is only 132 of 1820 high-quality)
-
-Do **not** add HF into `final_score` until a later window replicates a stronger lift.
-
----
-
-## Backlog
+## This cycle (funnel correction) — Done
 
 | ID | Item | Status |
 |---|---|---|
-| S-HF-VAL | 30d overlap + ranking comparison | **Done** |
-| S-AFF-GAP | Affiliation footnote re-pass | Next |
-| S-1DAY | One previous day E2E test | Next |
-| S-OVERNIGHT | 1–2 week historical overnight | After 1-day OK |
+| S-OAI-AFF | OAI `authors_structured` + affiliation capture | **Done** |
+| S-AFF-SPLIT | `affiliation_fast` before quality / `affiliation_deep` after | **Done** |
+| S-Q-ROUTER | Quality = top screen ∪ notable-org ∪ notable-person | **Done** |
+| S-VER-SKIP | Version-aware already-processed checks | **Done** |
+| S-GOLDEN | Load 200+200 (+ human 30) + real `evaluate_golden.py` | **Done** |
+| S-Q-STATUS | `quality_status` on current (`not_selected`/`scored`/`skipped`/`failed`) | **Done** (migration 005) |
+| S-ORG-SEED | Export Org-of-Interest into `config/organisations.yaml` | **Done** (30 orgs) |
+
+### Still open
+
+| ID | Item | Status |
+|---|---|---|
+| S-PEOPLE | Notable people + `person_boost` | P1 next |
+| S-OBS | Parent pipeline run + item_stage_runs everywhere; OAI raw cache | P1 |
+| S-1DAY | One previous day E2E with new funnel | Next after people or in parallel |
 | S-HF-SCORE | Consider HF in final_score | Blocked on stronger evidence |
-| S-GOLDEN / S-PEOPLE / photo-OCR | Deferred / not doing | — |
 
-### Closed
+---
 
-| Item | Note |
-|---|---|
-| HF enrichment stage | Done earlier |
-| `hf_daily_upvote_rank` rename | Done |
-| HF validation reports | Done — see `docs/hf_validation.md` |
+## Notes
+
+- arXiv OAI rarely emits `<affiliation>`; capture is still required when present. FAST also uses existing `paper_metadata.affiliation_text` + local aliases.
+- Golden assets sourced from Research Radar reports; see `data/golden/README.md`.
+- Measured HF validation still recommends **no** HF weight in `final_score` yet.

@@ -1,0 +1,2973 @@
+{
+  "name": "author_affiliation_200_v1",
+  "version": "v1",
+  "task_type": "author_affiliation",
+  "description": "200-paper affiliation set from Research Radar affiliation_200_results_v2.xlsx; labels are llm_adjudicated (sol preferred, glm fallback).",
+  "items": [
+    {
+      "content_item_id": 3365,
+      "title": "ST-Lite: Training-Free KV Cache Compression with Spatio-Trajectory Guidance for Long-Horizon GUI Agents",
+      "canonical_url": "https://arxiv.org/abs/2603.00188",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Tsinghua University",
+          "Zhejiang University",
+          "The Chinese University of Hong Kong"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 3489,
+      "title": "CyberFactory: Scaling Cyber Security Capabilities with Instances from the Wild",
+      "canonical_url": "https://arxiv.org/abs/2608.23181",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Beihang University",
+          "ELLIS",
+          "IQuest Research",
+          "Singapore Management University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 9925,
+      "title": "Towards Multi-modal Multi-turn Safety: From Agentic Interaction to Strategic Alignment",
+      "canonical_url": "https://arxiv.org/abs/2601.04736",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Hong Kong University of Science and Technology",
+          "University College London",
+          "AISpeech",
+          "Beijing Institute of Technology"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 13654,
+      "title": "Linearized subspace refinement framework to expose hidden accuracy in trained neural networks",
+      "canonical_url": "https://arxiv.org/abs/2601.13989",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Institute of AI for Industries, Chinese Academy of Sciences",
+          "Institute of Computing Technology, Chinese Academy of Sciences",
+          "School of Aeronautics, Northwestern Polytechnical University",
+          "International Joint Institute of Artificial Intelligence on Fluid Mechanics, Northwestern Polytechnical University",
+          "National Key Laboratory of Aircraft Configuration Design",
+          "Northwestern Polytechnical University"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 13950,
+      "title": "Variance-Adaptive Muon: Pre-Orthogonalization Variance Modulation for Efficient Language Model Pretraining",
+      "canonical_url": "https://arxiv.org/abs/2601.14603",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Nankai University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 22425,
+      "title": "MultiGraspNet: A Multitask 3D Vision Model for Multi-gripper Robotic Grasping",
+      "canonical_url": "https://arxiv.org/abs/2602.06504",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Politecnico di Torino",
+          "Comau S.p.A.",
+          "Istituto Italiano di Tecnologia"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 25684,
+      "title": "GRRM: Group Relative Reward Modeling for Machine Translation",
+      "canonical_url": "https://arxiv.org/abs/2602.14028",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "National Key Laboratory for Novel Software Technology, Nanjing University",
+          "Singapore University of Technology and Design"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 29763,
+      "title": "Bridging Latent Reasoning and Target-Language Generation via Retrieval-Transition Heads",
+      "canonical_url": "https://arxiv.org/abs/2602.22453",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "New York University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 34530,
+      "title": "Semi-Supervised Biomedical Image Segmentation via Diffusion Models and Teacher-Student Co-Training",
+      "canonical_url": "https://arxiv.org/abs/2504.01547",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Institute of Information Science and Technologies (ISTI-CNR)"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 36051,
+      "title": "KernelFoundry: Hardware-aware evolutionary GPU kernel optimization",
+      "canonical_url": "https://arxiv.org/abs/2603.12440",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Intel Corporation"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 38211,
+      "title": "Stepwise Think-Critique: Interleaved Reasoning and Self-Critique in a Single LLM",
+      "canonical_url": "https://arxiv.org/abs/2512.15662",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Science and Technology of China",
+          "Microsoft Research Asia"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 38221,
+      "title": "PaperScout: An Autonomous Agent for Academic Paper Search with Process-Aware Sequence-Level Policy Optimization",
+      "canonical_url": "https://arxiv.org/abs/2601.10029",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "State Key Lab of Cognitive Intelligence, University of Science and Technology of China"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 45207,
+      "title": "APEX-EM: Non-Parametric Online Learning for Autonomous Agents via Structured Procedural-Episodic Experience Replay",
+      "canonical_url": "https://arxiv.org/abs/2603.29093",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Amazon"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 61677,
+      "title": "Observation-Aligned Two-Stage Domain Decomposition for Physics-Informed Traffic State Estimation with Sparse Fixed Sensors",
+      "canonical_url": "https://arxiv.org/abs/2605.08028",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Purdue University",
+          "Univ Gustave Eiffel",
+          "ENTPE",
+          "LICIT-ECO7"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 67096,
+      "title": "Towards Generalized Image Manipulation Localization via Score-based Model",
+      "canonical_url": "https://arxiv.org/abs/2605.16879",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Sichuan University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 67557,
+      "title": "CORAL: Towards Autonomous Multi-Agent Evolution for Open-Ended Discovery",
+      "canonical_url": "https://arxiv.org/abs/2604.01658",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "MIT",
+          "NUS",
+          "McGill",
+          "Stanford",
+          "SambaNova",
+          "Singapore-MIT Alliance for Research and Technology",
+          "MiniMax",
+          "Meta",
+          "Amazon",
+          "Microsoft"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 68394,
+      "title": "Fast-BEV++: Fast by Algorithm, Deployable by Design",
+      "canonical_url": "https://arxiv.org/abs/2512.08237",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "iMotion Automotive Technology (Suzhou) Co., Ltd",
+          "Fudan University"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 69660,
+      "title": "Towards Solving the Gilbert-Pollak Conjecture via Large Language Models",
+      "canonical_url": "https://arxiv.org/abs/2601.22365",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Peking University",
+          "Carnegie Mellon University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 69938,
+      "title": "Discovering High Level Patterns from Simulation Traces",
+      "canonical_url": "https://arxiv.org/abs/2602.10009",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Edinburgh"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 73114,
+      "title": "Camellia: Benchmarking Cultural Biases in LLMs for Asian Languages",
+      "canonical_url": "https://arxiv.org/abs/2510.05291",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Georgia Institute of Technology",
+          "Samsung R&D Institute Philippines",
+          "Sungkyunkwan University",
+          "Tohoku University",
+          "National University of Singapore",
+          "University of Copenhagen",
+          "Takenote.ai",
+          "University of Michigan",
+          "Indian Institute of Technology Delhi",
+          "Institute of Science Tokyo"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 74292,
+      "title": "Over-Refusal and Representation Subspaces: A Mechanistic Analysis of Task-Conditioned Refusal in Aligned LLMs",
+      "canonical_url": "https://arxiv.org/abs/2603.27518",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Macquarie University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 75498,
+      "title": "Attend to Evidence: Evidence-Anchored Spatial Attention Supervision for Multimodal RLVR",
+      "canonical_url": "https://arxiv.org/abs/2605.30912",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Harbin Institute of Technology",
+          "Zhongguancun Academy",
+          "Nankai University",
+          "Shanghai Jiaotong University",
+          "Zhejiang University",
+          "Harbin Institute of Technology Qingdao Research Institute",
+          "XinZhuAI"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 77283,
+      "title": "PlanarBench: Evaluating LLM Spatial Reasoning via Planar Graph Drawing",
+      "canonical_url": "https://arxiv.org/abs/2606.02010",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 78712,
+      "title": "Guided Prompt Evolution for Vision-Language Models Adaptation",
+      "canonical_url": "https://arxiv.org/abs/2603.09493",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 80582,
+      "title": "IDRBench: Understanding the Capability of Large Language Models on Interdisciplinary Research",
+      "canonical_url": "https://arxiv.org/abs/2507.15736",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Queen's University",
+          "Instituto Federal de Goi\u00e1s",
+          "National Research Council Canada",
+          "Ingenuity Labs Research Institute"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 80742,
+      "title": "DuoGesture: Motion-Grounded Semantic Conditioning and Biomechanical Beat Priors for Co-Speech Gesture Generation",
+      "canonical_url": "https://arxiv.org/abs/2605.26236",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Max Planck Institute for Psycholinguistics",
+          "Radboud University, Nijmegen",
+          "Utrecht University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 83090,
+      "title": "MUDIDI: A Two-Stage Framework for Multilingual Dictionary Digitization with Language Models",
+      "canonical_url": "https://arxiv.org/abs/2606.09435",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "The University of Melbourne"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 83725,
+      "title": "ParaBridge: Bridging Paralinguistic Perception and Dialogue Behavior in Speech Language Models",
+      "canonical_url": "https://arxiv.org/abs/2606.10581",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 87315,
+      "title": "Evaluating Second-Order Bias of LLMs Through Epistemic Entitlement",
+      "canonical_url": "https://arxiv.org/abs/2606.17506",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Toronto",
+          "Vector Institute",
+          "EuroSafeAI",
+          "Max Planck Institute for Intelligent Systems"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 88820,
+      "title": "Do as I Say, Not as I Do: Instruction-Induction Conflict in LLMs",
+      "canonical_url": "https://arxiv.org/abs/2605.20382",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Future Impact Group",
+          "Eleos AI"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 90172,
+      "title": "Energy-Based Transformers as Predictors of Reading Difficulty",
+      "canonical_url": "https://arxiv.org/abs/2606.23382",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Utrecht University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 90393,
+      "title": "Hybrid Event Frame Sensors: Modeling, Calibration, and Simulation",
+      "canonical_url": "https://arxiv.org/abs/2511.18037",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "AI Thrust, HKUST(GZ)",
+          "University of Zurich",
+          "CUHK",
+          "AlpsenTek"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 95976,
+      "title": "Accuracy and Cost Claims Do Not Survive Re-Execution in Agentic VideoQA",
+      "canonical_url": "https://arxiv.org/abs/2607.01469",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Texas A&M University",
+          "Hamad Bin Khalifa University",
+          "Kurban Intelligence Lab"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 102015,
+      "title": "Geometric Distillation from Rectified Stereo: Leveraging Epipolar Cues for Monocular Depth",
+      "canonical_url": "https://arxiv.org/abs/2607.15600",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Michigan State University",
+          "University of North Carolina at Chapel Hill"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 103114,
+      "title": "How Does Alignment Tuning Shape Representations of Sycophancy and Related Cue-Induced Biases in LLMs?",
+      "canonical_url": "https://arxiv.org/abs/2607.18114",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Michigan",
+          "University of Toronto",
+          "Vector Institute",
+          "University of Oxford",
+          "EuroSafeAI",
+          "Max Planck Institute for Intelligent Systems",
+          "ELLIS Institute T\u00fcbingen"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 103145,
+      "title": "Evaluating Style-Personalized Text Generation: Challenges and Directions",
+      "canonical_url": "https://arxiv.org/abs/2508.06374",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Microsoft",
+          "Columbia University",
+          "The University of York"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 103635,
+      "title": "One Model, Many Graphs: Learning over Attributed Graphs across Heterogeneous Modalities with Vision-Language Models",
+      "canonical_url": "https://arxiv.org/abs/2607.19128",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "New York University Shanghai",
+          "New York University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 103681,
+      "title": "ROMS-IMLE: A Minimalist Approach to Competitive Single-Step Generative Modelling",
+      "canonical_url": "https://arxiv.org/abs/2607.19332",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Simon Fraser University",
+          "APEX Lab",
+          "Amii",
+          "CIFAR"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 107364,
+      "title": "UrbanDS: A Graph-Guided LLM Multi-Agent System for Data-Intensive Urban Tasks",
+      "canonical_url": "https://arxiv.org/abs/2607.26724",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Tsinghua University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 110513,
+      "title": "Suffix-Constrained Greedy Search Algorithms for Causal Language Models",
+      "canonical_url": "https://arxiv.org/abs/2603.01243",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Universit\u00e9 Paris-Saclay, CNRS, LISN",
+          "INSA Rennes, IRISA, CNRS, Universit\u00e9 de Rennes"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 115939,
+      "title": "A Unifying Perspective on Causal World Models: From Observations to Representations to Structure",
+      "canonical_url": "https://arxiv.org/abs/2608.13456",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Imperial College London"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 117985,
+      "title": "Can LLMs Reliably Self-Report Adversarial Prefills, and How?",
+      "canonical_url": "https://arxiv.org/abs/2606.23671",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "KAIST",
+          "Graduate School of Data Science",
+          "School of Computing",
+          "School of Digital Humanities and Computational Social Sciences"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 120434,
+      "title": "Shortcomings and capacities of real-constrained neural networks in complex spaces",
+      "canonical_url": "https://arxiv.org/abs/2606.04390",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Purdue University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 123320,
+      "title": "DINOcular: Self-Supervised Visuospatial Representations",
+      "canonical_url": "https://arxiv.org/abs/2608.27226",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Robot Perception and Learning Lab",
+          "University of Bonn",
+          "Lamarr Institute"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 132571,
+      "title": "Optimal Estimation of Watermark Proportions in Hybrid AI-Human Texts",
+      "canonical_url": "https://arxiv.org/abs/2506.22343",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 132646,
+      "title": "SpecPV: Improving Self-Speculative Decoding for Long-Context Generation via Partial Verification",
+      "canonical_url": "https://arxiv.org/abs/2512.02337",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Xi'an Jiaotong University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 132707,
+      "title": "Scale-Plan: Scalable Language-Enabled Task Planning for Heterogeneous Multi-Robot Teams",
+      "canonical_url": "https://arxiv.org/abs/2603.08814",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Honda Research Institute",
+          "Georgia Institute of Technology"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 132711,
+      "title": "NanoVDR: Distilling a 2B Vision-Language Retriever into a 70M Text-Only Encoder for Visual Document Retrieval",
+      "canonical_url": "https://arxiv.org/abs/2603.12824",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Aalto University",
+          "Espoo, Finland"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 132785,
+      "title": "SciAtlas: A Computable Atlas of Science for Knowledge-Grounded AI Research",
+      "canonical_url": "https://arxiv.org/abs/2605.22878",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Zhejiang University",
+          "University College London",
+          "University of Edinburgh",
+          "National University of Singapore"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 132828,
+      "title": "ABLE: Representing and Mapping LLMs via Attribution-Based Large-model Embedding",
+      "canonical_url": "https://arxiv.org/abs/2606.07524",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "The Hong Kong University of Science and Technology (Guangzhou)",
+          "Deep Interdisciplinary Intelligence Lab (DI 2Lab)"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133005,
+      "title": "CaRGo-T: Causal Reasoning Graph-of-Thought improves Multimodal Humor Comprehension",
+      "canonical_url": "https://arxiv.org/abs/2608.23172",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Microsoft Research India",
+          "LinkedIn",
+          "Nutanix",
+          "Indian Institute of Science",
+          "Apple",
+          "Fujitsu Research India",
+          "Indian Institute of Technology Kharagpur"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133041,
+      "title": "RubricRM: Generative Reward Modeling via Dynamic Rubrics for Image Generation and Editing",
+      "canonical_url": "https://arxiv.org/abs/2608.26956",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Peking University",
+          "Alibaba Group",
+          "Alibaba DAMO Academy"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133047,
+      "title": "A collective capability boundary in frontier large language models on guideline-conformant and case-specific oncology decision-making",
+      "canonical_url": "https://arxiv.org/abs/2608.28592",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133063,
+      "title": "Parametric Multimodal User Memory: Storing What Captions Cannot Carry",
+      "canonical_url": "https://arxiv.org/abs/2608.28609",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Pine AI",
+          "University of Washington"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133078,
+      "title": "MA-RAG: Multi-Agent Retrieval-Augmented Generation for Query-Driven Summarization of Longitudinal Parkinson's Disease Assessments",
+      "canonical_url": "https://arxiv.org/abs/2608.28624",
+      "label_json": {
+        "decision": "NO_MATCH",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133098,
+      "title": "BiasMix-Finance: Post-Generation KYC Guardrails for LLM Portfolio Advice",
+      "canonical_url": "https://arxiv.org/abs/2608.28646",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Vizuara"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133112,
+      "title": "The Potential of Haptic Foundation Models",
+      "canonical_url": "https://arxiv.org/abs/2608.28664",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Ottawa",
+          "Dayan Technologies"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133134,
+      "title": "Defending Wearable VLMs Against Private Attribute Inference",
+      "canonical_url": "https://arxiv.org/abs/2608.28691",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Pittsburgh",
+          "North Allegheny Senior High",
+          "Michigan State University",
+          "University of Central Florida"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133173,
+      "title": "Medical Foundation Model Features as Perceptual Loss for Brain MRI Contrast Dose Simulation",
+      "canonical_url": "https://arxiv.org/abs/2608.28773",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Subtle Medical"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133220,
+      "title": "MWIR-4-Plastic: The Identification of Complex End-of-Life Industrial Plastic using Mid-wave Infrared Hyperspectral Imaging and Machine Learning",
+      "canonical_url": "https://arxiv.org/abs/2608.28874",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Helmholtz-Zentrum Dresden-Rossendorf (HZDR) -Helmholtz Institute Freiberg for Resource Technology (HIF), Freiberg, Germany",
+          "University of Antwerp, Antwerp, Belgium",
+          "Remote Sensing and Geoinformatics, Freie Universit\u00e4t Berlin, Berlin, Germany",
+          "Faculty of Electrical and Computer Engineering, University of Iceland, 101 Reykjavik, Iceland",
+          "TU Bergakademie Freiberg, Germany"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133260,
+      "title": "From the Loss Landscape to Diverse Feature Learning in Neural Networks",
+      "canonical_url": "https://arxiv.org/abs/2608.28948",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "TOYOTA TECHNOLOGICAL INSTITUTE AT CHICAGO"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133299,
+      "title": "Towards Fully Automated Medical Imaging Code Generation via Validation-based Context Engineering",
+      "canonical_url": "https://arxiv.org/abs/2608.29016",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Auckland",
+          "Griffith University",
+          "Suzhou Industrial Park Monash Research Institute of Science and Technology",
+          "Beijing Institute of Technology",
+          "National University of Singapore"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133314,
+      "title": "sRGB Real Noise Modeling via Noise-Aware Sampling with Normalizing Flows",
+      "canonical_url": "https://arxiv.org/abs/2608.29038",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133525,
+      "title": "One Capability or Many? Testing the Economic Validity of Frontier AI Evaluation",
+      "canonical_url": "https://arxiv.org/abs/2608.29420",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Oxford"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133537,
+      "title": "SS-ESOAP: Self-Scaled Adaptive Preconditioning for Physics-Informed Learning",
+      "canonical_url": "https://arxiv.org/abs/2608.29448",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "McGill University",
+          "California Institute of Technology",
+          "Aarhus University",
+          "University of Copenhagen"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133543,
+      "title": "Reference-Grafting Matches Fine-Tuning at Eliciting Sandbagged Capabilities",
+      "canonical_url": "https://arxiv.org/abs/2608.29458",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "none"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133788,
+      "title": "Generative vs. Encoder Models for Multilingual NER: A Comprehensive Empirical Study on Naamapadam",
+      "canonical_url": "https://arxiv.org/abs/2608.29959",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Rajiv Gandhi University of Knowledge Technologies, Basar, Telangana, India"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133836,
+      "title": "Adaptive teachers for amortized samplers",
+      "canonical_url": "https://arxiv.org/abs/2410.01432",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Mila",
+          "KAIST",
+          "Recursion",
+          "Universit\u00e9 de Montr\u00e9al",
+          "University of Edinburgh"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 133934,
+      "title": "Latency-Response Theory Model: Evaluating Large Language Models via Response Accuracy and Chain-of-Thought Length",
+      "canonical_url": "https://arxiv.org/abs/2512.07019",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Columbia University",
+          "University of Michigan"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 134005,
+      "title": "Investigating Social Bias Changes in Quantized Language Models",
+      "canonical_url": "https://arxiv.org/abs/2602.06181",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "UC Berkeley & UCSF",
+          "Meta"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 134085,
+      "title": "Revisiting Greedy Decoding for Visual Question Answering: A Calibration Perspective",
+      "canonical_url": "https://arxiv.org/abs/2604.23443",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "ETH Zurich",
+          "MBZUAI",
+          "University of Toronto"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 134151,
+      "title": "The Value of Spike Timing: A Leakage-Resistant Benchmark of SNN Design Choices for Network Intrusion Detection",
+      "canonical_url": "https://arxiv.org/abs/2606.01442",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "The University of Alabama"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 134168,
+      "title": "ITP-STDP: A Hardware-Efficient Intrinsic-Timing Power-of-Two Synaptic Learning Engine for On-Chip SNNs",
+      "canonical_url": "https://arxiv.org/abs/2606.06159",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 134522,
+      "title": "BCPPO: Bachelier-Inspired Constrained Proximal Policy Optimization for Tail-Risk-Aware Safe Reinforcement Learning",
+      "canonical_url": "https://arxiv.org/abs/2608.30283",
+      "label_json": {
+        "decision": "NO_MATCH",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 134551,
+      "title": "Learning PDE Time-Stepping with Neural Cellular Automata",
+      "canonical_url": "https://arxiv.org/abs/2608.30328",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Alberta",
+          "Interdisciplinary Lab for Mathematical Ecology and Epidemiology (ILMEE)",
+          "Department of Mathematical and Statistical Sciences, University of Alberta"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 134782,
+      "title": "Model reduction of port-Hamiltonian systems via neural networks",
+      "canonical_url": "https://arxiv.org/abs/2608.30788",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Twente",
+          "Delft University of Technology"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135021,
+      "title": "ValueGraph: Value-Signal Guided Graph Pre-training for Contextualized User Representation",
+      "canonical_url": "https://arxiv.org/abs/2609.00057",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135032,
+      "title": "Auditing Harness Tampering in Self-Improving Agents",
+      "canonical_url": "https://arxiv.org/abs/2609.00069",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135081,
+      "title": "AI Should Not Only Be Helpful. It Should Be Contingent. Artificial Intimacy, Sycophancy, and the Future of Social Learning",
+      "canonical_url": "https://arxiv.org/abs/2609.00211",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "none"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135102,
+      "title": "Deep learning based numerical approximation algorithms for stochastic partial differential equations",
+      "canonical_url": "https://arxiv.org/abs/2012.01194",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "ETH Zurich",
+          "The Chinese University of Hong Kong, Shenzhen",
+          "University of M\u00fcnster",
+          "Nanyang Technological University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135303,
+      "title": "TacVLA: Contact-Aware Tactile Fusion for Robust Vision-Language-Action Manipulation",
+      "canonical_url": "https://arxiv.org/abs/2603.12665",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Purdue University",
+          "Istituto Italiano di Tecnologia",
+          "Universit\u00e0 di Genova"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135450,
+      "title": "SEDCoT: Enhancing LLM-Based COBOL Code Translation via Symbolic Execution and Delta Debugging",
+      "canonical_url": "https://arxiv.org/abs/2607.04092",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Lugano",
+          "Technical University of Munich",
+          "University of Augsburg"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135536,
+      "title": "RATIO: A Benchmark for Retrieval Across Typed Ideation Operations in Scientific Literature",
+      "canonical_url": "https://arxiv.org/abs/2608.27394",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "The Hebrew University of Jerusalem",
+          "The Allen Institute for AI (AI2)"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135572,
+      "title": "Lazy Grounding: Attacking Search Agents with Factual Evidence",
+      "canonical_url": "https://arxiv.org/abs/2608.30303",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Duke University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135582,
+      "title": "Calibrating Small Language Models for Claim Check-Worthiness Detection",
+      "canonical_url": "https://arxiv.org/abs/2608.30731",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Factiverse AS",
+          "University of Stavanger",
+          "Stockholm University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135606,
+      "title": "Toward Workflow-Aware Benchmarking for Healthcare NLP Agents",
+      "canonical_url": "https://arxiv.org/abs/2609.00296",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Washington University in St. Louis",
+          "Southern Methodist University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135618,
+      "title": "Latent Mechanisms of Language Control in Multilingual Language Models",
+      "canonical_url": "https://arxiv.org/abs/2609.00325",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Princeton University",
+          "Prince Sattam bin Abdulaziz University",
+          "Hamad Bin Khalifa University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135634,
+      "title": "Vision Is Not Overhead: One-Pass Block Drafting for Lossless Speculative Decoding in Vision-Language Models",
+      "canonical_url": "https://arxiv.org/abs/2609.00355",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135828,
+      "title": "SCoNE: Selective Context-aware Neuron Editing for Robust Retrieval-Augmented Generation",
+      "canonical_url": "https://arxiv.org/abs/2609.00689",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Hanyang University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135831,
+      "title": "Value Over Language Model: Detecting Original Contribution in Writing",
+      "canonical_url": "https://arxiv.org/abs/2609.00700",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Cornell University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135838,
+      "title": "Prediction-Assisted Pricing and Admission for LLM APIs with Stochastic Token Consumption",
+      "canonical_url": "https://arxiv.org/abs/2609.00710",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "none"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135877,
+      "title": "Solaris: Towards Interfaces That Are Generated, Not Coded",
+      "canonical_url": "https://arxiv.org/abs/2609.00776",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Runway"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135885,
+      "title": "Subspace Levenberg Marquardt Algorithms in Training Neural Networks",
+      "canonical_url": "https://arxiv.org/abs/2609.00789",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135921,
+      "title": "Towards Generalizable Visually Grounded Exploration of Household Devices",
+      "canonical_url": "https://arxiv.org/abs/2609.00845",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Beijing Institute of Technology",
+          "Harbin Institute of Technology",
+          "Beihang University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135928,
+      "title": "Verifiable Disaster Storylines and Causal Knowledge Graphs: A Citation-Grounded Pipeline from Heterogeneous Humanitarian Sources",
+      "canonical_url": "https://arxiv.org/abs/2609.00858",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "ISI Foundation",
+          "European Commission, Joint Research Centre",
+          "UNICEF"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135930,
+      "title": "Training-Free Inpainting Across Domains with a Frozen Text-to-Image Diffusion Model",
+      "canonical_url": "https://arxiv.org/abs/2609.00862",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "The Chinese University of Hong Kong, Shenzhen"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135949,
+      "title": "CARE: Contrastive Anchor-based Rubric Evolution for Large Language Model Post-Training",
+      "canonical_url": "https://arxiv.org/abs/2609.00892",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Tsinghua University",
+          "Meituan"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135953,
+      "title": "Vision-Language-Guided Pseudo-Labels for Unsupervised Domain Adaptation in Semantic Segmentation for Waste Sorting",
+      "canonical_url": "https://arxiv.org/abs/2609.00898",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "LMU Munich",
+          "Munich Center for Machine Learning (MCML)",
+          "Fraunhofer Institute for Integrated Circuits IIS"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135965,
+      "title": "VerNav: Verifier-First Low-Latency Vision-and-Language Navigation",
+      "canonical_url": "https://arxiv.org/abs/2609.00920",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Electronic Science and Technology of China"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 135990,
+      "title": "Prior-Guided Implicit Neural Representations for Single-Subject Diffusion MRI Super-Resolution",
+      "canonical_url": "https://arxiv.org/abs/2609.00981",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Brigham and Women\u2019s Hospital",
+          "Harvard Medical School",
+          "Technical University of Munich",
+          "University of South Carolina"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136025,
+      "title": "HiveTraceGuard-Pro: A Compact Generative Guardrail for Prompt Injection, Jailbreaks, and Adversarial Obfuscation",
+      "canonical_url": "https://arxiv.org/abs/2609.01046",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136034,
+      "title": "Lightweight Interpretable RGB-Guided Hyperspectral Super-Resolution under Real Cross-resolution Misalignment",
+      "canonical_url": "https://arxiv.org/abs/2609.01060",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Univ. Grenoble Alpes",
+          "CNRS",
+          "Grenoble INP",
+          "GIPSA-Lab",
+          "Institut Universitaire de France"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136052,
+      "title": "Reliable LLM-Generated Programs for High-Energy Physics Experiments through Graph-Grounded Software Knowledge",
+      "canonical_url": "https://arxiv.org/abs/2609.01095",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Institute of High Energy Physics, Chinese Academy of Sciences",
+          "University of Chinese Academy of Sciences"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136072,
+      "title": "Overfitting Mitigation via Singular Value Decomposition in Minimum Bayes Risk Decoding",
+      "canonical_url": "https://arxiv.org/abs/2609.01135",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Nara Institute of Science and Technology (NAIST)",
+          "The University of Tokyo"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136097,
+      "title": "Births are difficult to predict even with rich survey and full-population register data",
+      "canonical_url": "https://arxiv.org/abs/2609.01194",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "none"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136102,
+      "title": "Autonomous discovery of new structure-plausibility laws for explainable and rapid crystal diagnosis and screening",
+      "canonical_url": "https://arxiv.org/abs/2609.01209",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Hong Kong University of Science and Technology",
+          "Department of Chemistry, Hong Kong University of Science and Technology",
+          "IAS Center for AI for Scientific Discoveries, Hong Kong University of Science and Technology",
+          "Department of Chemical and Biological Engineering, Hong Kong University of Science and Technology"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136116,
+      "title": "Continuous Autonomous Refactoring: A Research Roadmap for AI-Driven Code Quality Maintenance",
+      "canonical_url": "https://arxiv.org/abs/2609.01236",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Link\u00f6ping University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136136,
+      "title": "Some Emotions Run Deeper: Layer-wise Probing and Causal Intervention in Large Language Models",
+      "canonical_url": "https://arxiv.org/abs/2609.01279",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Universit\u00e9 Sorbonne Paris Nord, CNRS, Laboratoire d\u2019Informatique de Paris Nord, LIPN",
+          "LORIA, CNRS, Universit\u00e9 de Lorraine"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136143,
+      "title": "Agentic Multimodal Models for Environmental Hyperspectral Unmixing",
+      "canonical_url": "https://arxiv.org/abs/2609.01289",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "ISTI-CNR"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136144,
+      "title": "Relational Task Generation Language: A Declarative Specification Framework for Relational Deep Learning",
+      "canonical_url": "https://arxiv.org/abs/2609.01292",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Czech Technical University in Prague"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136188,
+      "title": "InSight: A Benchmark for Agentic Claim Verification in Interactive Visualizations",
+      "canonical_url": "https://arxiv.org/abs/2609.01383",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "City, University of London",
+          "Imperial College London",
+          "The Alan Turing Institute"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136202,
+      "title": "Predicting Subsurface Abnormalities Growth using Physics-Informed Neural Networks",
+      "canonical_url": "https://arxiv.org/abs/2609.01417",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Turner-Fairbank Highway Research Center",
+          "Nondestructive Evaluation Program and Laboratory"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136220,
+      "title": "Does Imitation Learning Preserve Temporal Robustness in Dexterous Manipulation? An Expert-Learner Comparison Across Task Execution Speeds",
+      "canonical_url": "https://arxiv.org/abs/2609.01453",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Institute for Systems Research, University of Maryland, College Park, MD, U.S.A."
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136226,
+      "title": "Parsing the Stream: A Live Trace Model for Long-Horizon Agents and Their Observers",
+      "canonical_url": "https://arxiv.org/abs/2609.01466",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Salesforce AI Research"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136245,
+      "title": "DualDiff3D: Dual Structure-Appearance Diffusion Priors for Reliability-Enhanced 3D Gaussian Splatting",
+      "canonical_url": "https://arxiv.org/abs/2609.01516",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Peking University",
+          "Pengcheng Laboratory",
+          "Guangdong Provincial Key Laboratory of Ultra High Definition Immersive Media Technology"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136264,
+      "title": "Retrieved but not ranked: surface-form bias in structural retrieval, from mathematics to agent trajectories",
+      "canonical_url": "https://arxiv.org/abs/2609.01556",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "MIT CSAIL Kellis Lab",
+          "MIT CSAIL"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136265,
+      "title": "Gradient-Update Mismatch: Rethinking Conflict-Free Training of Physics-Informed Neural Networks",
+      "canonical_url": "https://arxiv.org/abs/2609.01558",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136272,
+      "title": "Scaling Near-Optimal SFT-RL Annotation Budget Allocation from Small to Large LLMs",
+      "canonical_url": "https://arxiv.org/abs/2609.01573",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "National University of Singapore",
+          "Agency for Science, Technology and Research (A*STAR)",
+          "Singapore-MIT Alliance for Research and Technology Centre",
+          "Massachusetts Institute of Technology"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136277,
+      "title": "SpatialGuard: Harness-Guided Verifiable Spatial Reasoning for Text-to-Image Generation",
+      "canonical_url": "https://arxiv.org/abs/2609.01582",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Fudan University",
+          "Fysics Intelligence Technologies Co., Ltd. (Fysics AI)"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136286,
+      "title": "UI-VISA: U-Net Initialized Vascular Image Segmentation Architecture",
+      "canonical_url": "https://arxiv.org/abs/2609.01598",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of California, Merced"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136369,
+      "title": "Public-Sharing Labels and Verbatim Field Egress in an MCP-to-A2A Agent Configuration: A Controlled Multi-Model Study",
+      "canonical_url": "https://arxiv.org/abs/2609.01693",
+      "label_json": {
+        "decision": "NO_MATCH",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136380,
+      "title": "Harness Engineering in LLM Tool Use via Agent-Native Reusable Tool Primitives",
+      "canonical_url": "https://arxiv.org/abs/2609.01736",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Illinois Urbana-Champaign",
+          "Starc Institute"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136436,
+      "title": "Double-Bounded Nonlinear Optimal Transport for Size Constrained Min Cut Clusterin",
+      "canonical_url": "https://arxiv.org/abs/2501.18143",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Northwestern Polytechnical University",
+          "School of Artificial Intelligence, Optics and Electronics (iOPEN)"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136445,
+      "title": "Elite political incivility is rising across democracies",
+      "canonical_url": "https://arxiv.org/abs/2503.22411",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136468,
+      "title": "HarmReduction: Benchmarking LLMs in Harm Reduction Information Provision to Support People Who Use Drugs",
+      "canonical_url": "https://arxiv.org/abs/2507.21815",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Oxford",
+          "University of Edinburgh",
+          "University of St Andrews",
+          "Nanyang Technological University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136512,
+      "title": "Freeze, Diffuse, Decode: Task-Aware Adaptation of Transformer Embeddings for Antimicrobial Peptide Design",
+      "canonical_url": "https://arxiv.org/abs/2511.23120",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Institute of AI for Health",
+          "Helmholtz Zentrum M\u00fcnchen",
+          "Technical University of Munich",
+          "Mila \u2013 Quebec AI Institute",
+          "Universit\u00e9 de Montr\u00e9al",
+          "Utah State University",
+          "Brigham Young University",
+          "University of Warsaw"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136550,
+      "title": "PoC-Gym: Towards More Reliable LLM-Assisted Proof-of-Concept Exploit Generation",
+      "canonical_url": "https://arxiv.org/abs/2602.04165",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136553,
+      "title": "Constrained Group Relative Policy Optimization",
+      "canonical_url": "https://arxiv.org/abs/2602.05863",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Mila \u2013 Quebec AI Institute",
+          "\u00c9cole Polytechnique de Montr\u00e9al",
+          "Universit\u00e9 de Montr\u00e9al",
+          "Universit\u00e9 de Montr\u00e9al"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136689,
+      "title": "Personality Without Persons? A Psychometric Critique of Big Five Testing in Large Language Models",
+      "canonical_url": "https://arxiv.org/abs/2607.02325",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136778,
+      "title": "SHADOWBENCH: Toward Reliable Automatic Evaluation of Semantic Alignment in Autoformalization",
+      "canonical_url": "https://arxiv.org/abs/2608.29270",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Electronics and Telecommunications Research Institute",
+          "Seoul National University",
+          "Sejong University",
+          "University of Maryland, College Park",
+          "Amazon Web Services"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136782,
+      "title": "ICEGR: An Intent-Coherent End-to-End Generative Retrieval Framework for E-commerce Search",
+      "canonical_url": "https://arxiv.org/abs/2608.29652",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Baidu"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136790,
+      "title": "CogEvol: Towards Efficient and Reliable Learning Environment Generation",
+      "canonical_url": "https://arxiv.org/abs/2608.30968",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "CogEvol Inc.",
+          "Tsinghua University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136811,
+      "title": "A Novel Space-Time Coding Architecture for Rydberg Atomic Quantum Receiver-Based Systems",
+      "canonical_url": "https://arxiv.org/abs/2609.01180",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Nokia Bell Labs"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136835,
+      "title": "Disentangling Statistical Preemption from Entrenchment in Language Models' Avoidance of Overgeneralization",
+      "canonical_url": "https://arxiv.org/abs/2609.01794",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Waterloo",
+          "Vector Institute",
+          "University of Texas at Austin"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136873,
+      "title": "Latent unified smooth Hamiltonians for excited state chemistry",
+      "canonical_url": "https://arxiv.org/abs/2609.01871",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Stanford University",
+          "SLAC National Accelerator Laboratory"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136879,
+      "title": "SignMatch: Matching Dictionary Signs to Continuous Sign Language Video",
+      "canonical_url": "https://arxiv.org/abs/2609.01886",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Oxford",
+          "\u00c9cole des Ponts ParisTech",
+          "Universit\u00e9 Gustave Eiffel",
+          "CNRS",
+          "Institut Polytechnique de Paris"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136890,
+      "title": "MERGED: Multimodal Entity Resolution via Generated Expert Reasoning Distillation",
+      "canonical_url": "https://arxiv.org/abs/2609.01913",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Amazon"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136948,
+      "title": "Multi-Turn LLM Conversations under the Least-Recently-Used Policy: Mean-Field Asymptotics and Hit Ratio Approximation",
+      "canonical_url": "https://arxiv.org/abs/2609.02027",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Northwestern University",
+          "Purdue University",
+          "HKUST"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136960,
+      "title": "A Tri-Agent Framework for Evaluating and Aligning Question Clarification Capabilities of Large Language Models",
+      "canonical_url": "https://arxiv.org/abs/2609.02054",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Amazon"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 136995,
+      "title": "Disease Burden over Skin Tone: Decomposing the Dermatology-AI Generalization Gap",
+      "canonical_url": "https://arxiv.org/abs/2609.02111",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Tribhuvan University",
+          "North Carolina A&T State University",
+          "Aalto University",
+          "Auburn University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137028,
+      "title": "Breadth Beats Depth: Improving GCG-Based Jailbreak Optimization with Breadth-Oriented Suffix Search",
+      "canonical_url": "https://arxiv.org/abs/2609.02172",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Guangdong University of Foreign Studies"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137051,
+      "title": "PEARL: Path-Entity Aligned Relational Learning with Contextual Subgraphs for Inductive Knowledge Graph Completion",
+      "canonical_url": "https://arxiv.org/abs/2609.02216",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Shandong University",
+          "Nanyang Technological University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137081,
+      "title": "Retrosynthesis of Synthetic Media for Explainable AI Provenance Forensics",
+      "canonical_url": "https://arxiv.org/abs/2609.02268",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137083,
+      "title": "PaperCompiler: Faithful Paper-to-Code Generation via Repository-Level Specification Compilation",
+      "canonical_url": "https://arxiv.org/abs/2609.02272",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "none"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137135,
+      "title": "ProSR: Semantic-Prototype-Guided Discrete Modeling for Physically Consistent SAR Super-Resolution",
+      "canonical_url": "https://arxiv.org/abs/2609.02377",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Korea Advanced Institute of Science and Technology"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137175,
+      "title": "VIPS: Vehicle-Infrastructure Cooperative Planning Benchmark via Pseudo-Simulation",
+      "canonical_url": "https://arxiv.org/abs/2609.02462",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "KAIST"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137195,
+      "title": "SR-Edit: Region-Aware Image Editing via Self-Refinement",
+      "canonical_url": "https://arxiv.org/abs/2609.02504",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Tsinghua University, Beijing, China",
+          "Renmin University of China, Beijing, China"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137221,
+      "title": "Online Reinforcement Learning in the Met Office Unified Model through Distributed Model-Agent Coupling",
+      "canonical_url": "https://arxiv.org/abs/2609.02566",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Met Office Hadley Centre",
+          "University of Cambridge"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137240,
+      "title": "Scalable Direction-Following TTS via Voice Impression-Guided Pseudo Triplet Construction",
+      "canonical_url": "https://arxiv.org/abs/2609.02623",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "NTT"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137241,
+      "title": "Automated Vulnerability Injection in Smart Contracts Using Large Language Models",
+      "canonical_url": "https://arxiv.org/abs/2609.02624",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137275,
+      "title": "Generating Medical Image Counterfactuals using Causal Explanations",
+      "canonical_url": "https://arxiv.org/abs/2609.02697",
+      "label_json": {
+        "decision": "NO_MATCH",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137297,
+      "title": "Balancing Frequencies and Pixels in Flow Matching",
+      "canonical_url": "https://arxiv.org/abs/2609.02748",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "none"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137320,
+      "title": "Large Language Models (LLMs) for Telecom Root Cause Analysis (RCA): A Structured Reasoning Framework for Evidence-Grounded Diagnosis",
+      "canonical_url": "https://arxiv.org/abs/2609.02805",
+      "label_json": {
+        "decision": "NO_MATCH",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137334,
+      "title": "Post-Training Language Models for Gold-Medal Performance in Coding Competitions",
+      "canonical_url": "https://arxiv.org/abs/2609.02849",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "none"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137356,
+      "title": "Data Market Design through Deep Learning",
+      "canonical_url": "https://arxiv.org/abs/2310.20096",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Harvard John A. Paulson School of Engineering and Applied Sciences"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137406,
+      "title": "LLM4Log: A Systematic Review of Large Language Model-based Log Analysis",
+      "canonical_url": "https://arxiv.org/abs/2604.16359",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Concordia University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137474,
+      "title": "TAKE 85: Testing Audiovisual filmmaKer's intEnt across 85 Hours of Film",
+      "canonical_url": "https://arxiv.org/abs/2608.30068",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "LIX, Ecole Polytechnique, IP Paris",
+          "New York University",
+          "Ecole nationale sup\u00e9rieure Louis-Lumi\u00e8re",
+          "Stony Brook University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137476,
+      "title": "DARP: A Calibrated Dual-Arm RGB-D-IR Dataset for Multi-View Robotic Perception",
+      "canonical_url": "https://arxiv.org/abs/2608.31002",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "The University of Alabama"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137510,
+      "title": "Towards Scaling Reinforcement Learning to Massive Populations: Learning Mean-Field Representations",
+      "canonical_url": "https://arxiv.org/abs/2609.02928",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "New York University",
+          "ETH Zurich",
+          "Meta Platforms Inc.",
+          "Tel Aviv University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137531,
+      "title": "Privacy Leakage in Federated Learning: Gradient-Based Client Identity Inference and Defenses for Inertial Sensing in Vehicular Edge Networks",
+      "canonical_url": "https://arxiv.org/abs/2609.02971",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Islamic University of Madinah",
+          "King Fahd University of Petroleum and Minerals",
+          "University of the West of England",
+          "Islamic University of Madinah"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137555,
+      "title": "SHELF: A Synthetic Harness for Multi-Task Bibliographic Benchmarking",
+      "canonical_url": "https://arxiv.org/abs/2609.03047",
+      "label_json": {
+        "decision": "NO_MATCH",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137569,
+      "title": "Exemplar: Classical Priors Complement Frozen Features for Few-Shot Microscopy Segmentation at Native Resolution",
+      "canonical_url": "https://arxiv.org/abs/2609.03080",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "The Czech Academy of Sciences, Institute of Information Theory and Automation",
+          "Czech Technical University in Prague, Faculty of Nuclear Sciences and Physical Engineering"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137603,
+      "title": "BASP: Communication-Efficient Batch-Aware Sequence Parallelism for LLM Training",
+      "canonical_url": "https://arxiv.org/abs/2609.03151",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Clemson University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137640,
+      "title": "Long-Horizon Consistent and Interaction-Aware World Models for Multi-Style End-to-End Driving",
+      "canonical_url": "https://arxiv.org/abs/2609.03225",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Harbin Institute of Technology, Shenzhen",
+          "Shanghai Utopilot Technology Co.Ltd."
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137674,
+      "title": "Constructing the Field of Philanthropic and Nonprofit Studies: Evidence from Citation Networks",
+      "canonical_url": "https://arxiv.org/abs/2609.03291",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Rutgers University",
+          "Indiana University",
+          "University of Pennsylvania",
+          "Northwestern University"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137736,
+      "title": "Recognition Without Mitigation: Ethical Frameworks in Autonomous Offensive-LLM Agent Research",
+      "canonical_url": "https://arxiv.org/abs/2506.08693",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "TU Wien"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137770,
+      "title": "A Nesterov-Accelerated Byzantine-Robust Federated Learning",
+      "canonical_url": "https://arxiv.org/abs/2511.02657",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137781,
+      "title": "Evolving Excellence: Automated Optimization of LLM-based Agents",
+      "canonical_url": "https://arxiv.org/abs/2512.09108",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137839,
+      "title": "A Visionary Look at Vibe Researching",
+      "canonical_url": "https://arxiv.org/abs/2604.00945",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Nanyang Technological University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 137879,
+      "title": "Learning Terrain-Aware Whole-Body Control for Perceptive Legged Loco-Manipulation",
+      "canonical_url": "https://arxiv.org/abs/2605.31343",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "The Hong Kong University of Science and Technology (Guangzhou)"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138002,
+      "title": "HypRQ-VAE: Hyperbolic Item Indexing for Long-Tail-Aware Generative Recommender Systems",
+      "canonical_url": "https://arxiv.org/abs/2609.03369",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138005,
+      "title": "SimpleDesign: A Joint Model for Protein Sequence and Structure Codesign",
+      "canonical_url": "https://arxiv.org/abs/2609.03377",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Apple",
+          "Mila"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138015,
+      "title": "TabScope: Question-Adaptive Scope Selection for Table Question Answering",
+      "canonical_url": "https://arxiv.org/abs/2609.03395",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "The University of Melbourne"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138017,
+      "title": "A Prompt-Engineering Approach to Develop Scalable, Flexible, and Real-Time Hybrid Micro-Level Personalization in a General Purpose AI Teaching Assistant",
+      "canonical_url": "https://arxiv.org/abs/2609.03402",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138025,
+      "title": "Dude: A Dual-Detection Multi-Agent System for Paper-Code Discrepancy Detection",
+      "canonical_url": "https://arxiv.org/abs/2609.03416",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "The University of Hong Kong",
+          "Sun Yat-sen University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138026,
+      "title": "Privacy, Robustness, and Fairness Trade-offs in Federated Intrusion Detection: Geometric Indistinguishability at the Aggregation Interface",
+      "canonical_url": "https://arxiv.org/abs/2609.03420",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Bangladesh University of Business and Technology",
+          "Jagannath University",
+          "University of New South Wales"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138035,
+      "title": "It's the Problem, Not the Path: Budget and Difficulty Confounds in LLM Reasoning Trajectories",
+      "canonical_url": "https://arxiv.org/abs/2609.03436",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Johannes Kepler University Linz"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138119,
+      "title": "How Far Can Synthetic Data Take Thai OCR?",
+      "canonical_url": "https://arxiv.org/abs/2609.03595",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "none"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138126,
+      "title": "On the Interaction Between Model Compression and Test-Time Adaptation",
+      "canonical_url": "https://arxiv.org/abs/2609.03604",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Graz University of Technology",
+          "University of Cambridge",
+          "Samsung AI Center-Cambridge",
+          "Complexity Science Hub"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138133,
+      "title": "Test-time adaptation for speech enhancement with an autoregressive speech prior",
+      "canonical_url": "https://arxiv.org/abs/2609.03622",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Hamburg"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138146,
+      "title": "Calibration of neural viscoelastic models via full-field data",
+      "canonical_url": "https://arxiv.org/abs/2609.03645",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "TU Dresden",
+          "Institute of Solid Mechanics"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138148,
+      "title": "Enhancing Financial Question Answering: A Novel Benchmark Dataset of Banks' financial statements",
+      "canonical_url": "https://arxiv.org/abs/2609.03654",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Intesa Sanpaolo Innovation Center",
+          "University of Bologna",
+          "Politecnico di Torino"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138151,
+      "title": "Security and Privacy in the Musical Metaverse: Threat Analysis and Design Implications",
+      "canonical_url": "https://arxiv.org/abs/2609.03659",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Trento",
+          "7bulls.com"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138174,
+      "title": "Semantic-Aware Subgraph State Space Model for WSI Classification in Histopathology",
+      "canonical_url": "https://arxiv.org/abs/2609.03689",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Beihang University",
+          "Peking University",
+          "National College for Excellent Engineers",
+          "School of Biological Science and Medical Engineering",
+          "College of Engineering",
+          "Beijing, P.R.C. 100191",
+          "Beijing, P.R.C. 100871",
+          "xuyan04@gmail.com"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138198,
+      "title": "TokenComSR: Task-Sensitivity-Guided Token Communication for Wireless Image Super-Resolution",
+      "canonical_url": "https://arxiv.org/abs/2609.03735",
+      "label_json": {
+        "decision": "REVIEW_REQUIRED",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138203,
+      "title": "Rent-a-RAG: Embedding-Space Watermarks for Auditing Third-Party RAG",
+      "canonical_url": "https://arxiv.org/abs/2609.03749",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "IMDEA Networks Institute",
+          "Universidad Carlos III de Madrid",
+          "Singapore Management University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138225,
+      "title": "LLaDA-Image: Building Strong Image Generators with Fully Open Training Recipes",
+      "canonical_url": "https://arxiv.org/abs/2609.03796",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "AGI Research Center, Inclusion AI"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138238,
+      "title": "Evaluating Criterion-Conditioned Behaviour of Large Language Models in Content Moderation",
+      "canonical_url": "https://arxiv.org/abs/2609.03814",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Sheffield"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138247,
+      "title": "The impact of phase information for few-shot fine-grained image classification",
+      "canonical_url": "https://arxiv.org/abs/2609.03829",
+      "label_json": {
+        "decision": "NO_MATCH",
+        "organisations": [],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138267,
+      "title": "A Blind Trust, the Bloody Thrust: When Attacker-Controlled Hook Updates Steer AI Agent Harnesses towards Malicious Behaviors",
+      "canonical_url": "https://arxiv.org/abs/2609.03884",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Beijing University of Posts and Telecommunications"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138274,
+      "title": "CROCODIL: Cross-Model Code Editing with LLMs",
+      "canonical_url": "https://arxiv.org/abs/2609.03894",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "The University of Texas at Austin",
+          "Cisco Research"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138287,
+      "title": "From Misconceptions to Evidence: What Science Teachers Make Visible When Co-Designing Agentic Learning Apps",
+      "canonical_url": "https://arxiv.org/abs/2609.03917",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Singapore University of Technology and Design"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138301,
+      "title": "Masked Autoregressive Speech Enhancement with Continuous Neural Audio Codec Representations",
+      "canonical_url": "https://arxiv.org/abs/2609.03940",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Univ. Grenoble Alpes, CNRS, Grenoble-INP, GIPSA-lab"
+        ],
+        "evidence_source": "pdf_fallback"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138302,
+      "title": "Headroom-Drift Replay: A Primitive for Principled Replay Control in GRPO",
+      "canonical_url": "https://arxiv.org/abs/2609.03941",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Sogang University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138304,
+      "title": "VestigeKV: The NoPE-MLA KV Cache Carries Its Own Eviction Signal in a Vestigial Branch",
+      "canonical_url": "https://arxiv.org/abs/2609.03949",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Yotta Labs",
+          "University of Science and Technology of China"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138310,
+      "title": "Interface-Induced Trajectory Censoring",
+      "canonical_url": "https://arxiv.org/abs/2609.03966",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "City University of Hong Kong"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138320,
+      "title": "IchthyoNoma: Nomenclature and Context Sensitivity of Zero-Shot Biological Vision--Language Models for Bangladeshi Freshwater Fish Recognition",
+      "canonical_url": "https://arxiv.org/abs/2609.03985",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "American International University Bangladesh",
+          "United International University",
+          "ELITE Research Lab"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138355,
+      "title": "Subspace Inference Enables Efficient Active Reward Learning from Preferences",
+      "canonical_url": "https://arxiv.org/abs/2609.04066",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "University of Southern California"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138407,
+      "title": "GIFT: Guided Intermediate Feature Training via Action-Oriented Structural Supervision for Robotic Manipulation",
+      "canonical_url": "https://arxiv.org/abs/2609.04193",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Institute of Automation, Chinese Academy of Sciences",
+          "University of Chinese Academy of Sciences",
+          "National University of Singapore",
+          "Tsinghua University",
+          "Fudan University"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    },
+    {
+      "content_item_id": 138501,
+      "title": "Online Gate-Driven Flow Control in Resin Transfer Moulding Using a Neural-Network Surrogate",
+      "canonical_url": "https://arxiv.org/abs/2608.29521",
+      "label_json": {
+        "decision": "MATCHED",
+        "organisations": [
+          "Department of Engineering Science, University of Auckland, Auckland, New Zealand",
+          "Center for Composite Materials, University of Delaware, Newark, DE, USA * Corresponding author: nwri968@aucklanduni.ac.nz"
+        ],
+        "evidence_source": "html"
+      },
+      "gold_label_source": "llm_adjudicated",
+      "labeller": "openai/gpt-5.6-sol"
+    }
+  ]
+}

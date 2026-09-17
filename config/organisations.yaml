@@ -1,11 +1,325 @@
-# Watchlist / priority organisations seed reference.
-# Canonical org rows live in paper_intelligence.organisations after resolution.
-# Unlisted resolved orgs are stored with organisation_id NULL — never discarded.
+# Org-of-Interest watchlist seed.
+# Exported from live paper_intelligence.organisations on 2026-09-17.
+# apply_watchlist() uses this to set is_org_of_interest / priority on resolve.
 
-watchlist: []
-# Example entry (do not invent production data here):
-# - canonical_name: Example Lab
-#   ror_id: null
-#   domains: []
-#   priority: 5
-#   is_org_of_interest: true
+watchlist:
+- canonical_name: Amazon
+  priority: 10
+  is_org_of_interest: true
+  organisation_type: big_tech
+  domains:
+  - amazon.com
+  - amazon.science
+  - aws.amazon.com
+  aliases:
+  - Amazon AGI
+  - Amazon Science
+  - Amazon Web Services
+  - AWS
+- canonical_name: Anthropic
+  priority: 10
+  is_org_of_interest: true
+  organisation_type: frontier_ai_lab
+  domains:
+  - anthropic.com
+  aliases:
+  - Anthropic PBC
+- canonical_name: DeepSeek
+  priority: 10
+  is_org_of_interest: true
+  organisation_type: frontier_ai_lab
+  domains:
+  - deepseek.com
+  aliases:
+  - DeepSeek AI
+  - DeepSeek-AI
+- canonical_name: Google DeepMind
+  priority: 10
+  is_org_of_interest: true
+  organisation_type: frontier_ai_lab
+  domains:
+  - deepmind.com
+  - deepmind.google
+  aliases:
+  - DeepMind
+- canonical_name: Meta
+  priority: 10
+  is_org_of_interest: true
+  organisation_type: big_tech
+  domains:
+  - ai.meta.com
+  - fb.com
+  - meta.com
+  aliases:
+  - FAIR
+  - Meta AI
+- canonical_name: Microsoft
+  priority: 10
+  is_org_of_interest: true
+  organisation_type: big_tech
+  domains:
+  - microsoft.com
+  aliases:
+  - Microsoft AI
+  - Microsoft Research
+  - MSR
+- canonical_name: Mistral AI
+  priority: 10
+  is_org_of_interest: true
+  organisation_type: frontier_ai_lab
+  domains:
+  - mistral.ai
+  aliases:
+  - Mistral
+- canonical_name: NVIDIA
+  priority: 10
+  is_org_of_interest: true
+  organisation_type: ai_infrastructure
+  domains:
+  - nvidia.com
+  - research.nvidia.com
+  aliases:
+  - NVIDIA Research
+- canonical_name: OpenAI
+  priority: 10
+  is_org_of_interest: true
+  organisation_type: frontier_ai_lab
+  domains:
+  - openai.com
+  aliases:
+  - OpenAI Research
+- canonical_name: Ai2
+  priority: 8
+  is_org_of_interest: true
+  organisation_type: research_lab
+  domains:
+  - allenai.org
+  aliases:
+  - Allen AI
+  - Allen Institute for AI
+- canonical_name: Apple
+  priority: 8
+  is_org_of_interest: true
+  organisation_type: big_tech
+  domains:
+  - apple.com
+  - machinelearning.apple.com
+  aliases:
+  - Apple Machine Learning Research
+  - Apple ML Research
+- canonical_name: Cohere
+  priority: 8
+  is_org_of_interest: true
+  organisation_type: startup
+  domains:
+  - cohere.com
+  aliases:
+  - Cohere For AI
+  - Cohere Labs
+- canonical_name: Databricks
+  priority: 8
+  is_org_of_interest: true
+  organisation_type: ai_infrastructure
+  domains:
+  - databricks.com
+  aliases:
+  - Databricks AI
+- canonical_name: Hugging Face
+  priority: 8
+  is_org_of_interest: true
+  organisation_type: ai_infrastructure
+  domains:
+  - huggingface.co
+  aliases:
+  - HF
+  - HuggingFace
+- canonical_name: Massachusetts Institute of Technology
+  priority: 8
+  is_org_of_interest: true
+  ror_id: https://ror.org/042nb2s44
+  country_code: US
+  organisation_type: education
+  domains:
+  - csail.mit.edu
+  - mit.edu
+  aliases:
+  - MIT
+  - CSAIL
+  - Instituto Tecnológico de Massachusetts
+  - MIT
+  - MIT CSAIL
+- canonical_name: MLCommons
+  priority: 8
+  is_org_of_interest: true
+  organisation_type: standards_body
+  domains:
+  - mlcommons.org
+  aliases:
+  - MLCommons Association
+  - MLPerf
+- canonical_name: NIST Center for AI Standards and Innovation
+  priority: 8
+  is_org_of_interest: true
+  organisation_type: government
+  domains:
+  - nist.gov
+  aliases:
+  - CAISI
+  - Center for AI Standards and Innovation
+  - National Institute of Standards and Technology
+  - NIST
+- canonical_name: Sakana AI
+  priority: 8
+  is_org_of_interest: true
+  organisation_type: startup
+  domains:
+  - sakana.ai
+  aliases:
+  - Sakana
+- canonical_name: Stanford University
+  priority: 8
+  is_org_of_interest: true
+  ror_id: https://ror.org/00f54p054
+  openalex_id: https://openalex.org/I97018004
+  country_code: US
+  organisation_type: education
+  domains:
+  - cs.stanford.edu
+  - hai.stanford.edu
+  - stanford.edu
+  aliases:
+  - SU
+  - Leland Stanford Junior University
+  - SAIL
+  - Stanford
+  - Stanford AI Lab
+  - Stanford HAI
+  - Universidad Stanford
+- canonical_name: Thinking Machines Lab
+  priority: 8
+  is_org_of_interest: true
+  organisation_type: startup
+  domains:
+  - thinkingmachines.ai
+  aliases:
+  - Thinking Machines
+- canonical_name: UK AI Security Institute
+  priority: 8
+  is_org_of_interest: true
+  organisation_type: government
+  domains:
+  - aisi.gov.uk
+  aliases:
+  - AI Security Institute UK
+  - UK AISI
+- canonical_name: University of California, Berkeley
+  priority: 8
+  is_org_of_interest: true
+  ror_id: https://ror.org/01an7q238
+  country_code: US
+  organisation_type: university
+  domains:
+  - bair.berkeley.edu
+  - berkeley.edu
+  aliases:
+  - UCB
+  - BAIR
+  - Berkeley
+  - Berkeley AI Research
+  - Cal Berkeley
+  - UC Berkeley
+  - Universidad de California en Berkeley
+  - Université de Californie à Berkeley
+  - University of California at Berkeley
+- canonical_name: xAI
+  priority: 8
+  is_org_of_interest: true
+  organisation_type: frontier_ai_lab
+  domains:
+  - x.ai
+  aliases:
+  - SpaceXAI
+- canonical_name: Carnegie Mellon University
+  priority: 6
+  is_org_of_interest: true
+  ror_id: https://ror.org/05x2bcf33
+  openalex_id: https://openalex.org/I74973139
+  country_code: US
+  organisation_type: education
+  domains:
+  - cmu.edu
+  - cs.cmu.edu
+  aliases:
+  - CMU
+  - Carnegie Mellon
+  - CMU
+- canonical_name: IBM Research
+  priority: 6
+  is_org_of_interest: true
+  organisation_type: research_lab
+  domains:
+  - ibm.com
+  - research.ibm.com
+  aliases:
+  - IBM
+- canonical_name: Mila - Quebec Artificial Intelligence Institute
+  priority: 6
+  is_org_of_interest: true
+  ror_id: https://ror.org/05c22rx21
+  country_code: CA
+  organisation_type: facility
+  domains:
+  - mila.quebec
+  aliases:
+  - Institut québécois d’intelligence artificielle
+  - Mila
+  - Mila - Institut québécois d’intelligence artificielle
+  - Mila - Quebec AI Institute
+  - Mila-Quebec AI Institute
+  - Montreal Institute for Learning Algorithms
+  - Quebec AI Institute
+  - Quebec Artificial Intelligence Institute
+- canonical_name: Tsinghua University
+  priority: 6
+  is_org_of_interest: true
+  ror_id: https://ror.org/03cve4549
+  openalex_id: https://openalex.org/I99065089
+  country_code: CN
+  organisation_type: education
+  domains:
+  - air.tsinghua.edu.cn
+  - tsinghua.edu.cn
+  aliases:
+  - THU
+  - AIR Tsinghua
+  - Institute for AI Industry Research
+  - Tsinghua
+  - 清华大学
+- canonical_name: Cerebras
+  priority: 3
+  is_org_of_interest: true
+  organisation_type: ai_infrastructure
+  domains:
+  - cerebras.ai
+  aliases:
+  - Cerebras Systems
+- canonical_name: IEEE Standards Association
+  priority: 3
+  is_org_of_interest: true
+  organisation_type: standards_body
+  domains:
+  - ieee.org
+  - standards.ieee.org
+  aliases:
+  - IEEE
+  - IEEE SA
+- canonical_name: ISO/IEC JTC 1/SC 42
+  priority: 3
+  is_org_of_interest: true
+  organisation_type: standards_body
+  domains:
+  - iso.org
+  aliases:
+  - ISO AI Committee
+  - JTC 1 SC 42
+  - SC 42

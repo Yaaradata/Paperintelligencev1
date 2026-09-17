@@ -116,6 +116,16 @@ def category_matches(categories: list[str], allowed: list[str] | None = None) ->
     return False
 
 
+def _author_affiliations(author_elem: ET.Element) -> list[str]:
+    """OAI may attach zero or more `<affiliation>` children per author."""
+    found: list[str] = []
+    for aff in author_elem.findall("arxiv:affiliation", OAI_NS):
+        text = (aff.text or "").strip()
+        if text:
+            found.append(" ".join(text.split()))
+    return found
+
+
 def parse_record(record_elem: ET.Element) -> dict[str, Any]:
     header = record_elem.find("oai:header", OAI_NS)
     identifier = _text(header, "oai:identifier")
@@ -127,15 +137,34 @@ def parse_record(record_elem: ET.Element) -> dict[str, Any]:
     if arxiv_elem is None:
         return {"identifier": identifier, "datestamp": datestamp, "deleted": True}
 
+    # Backward-compatible name list plus structured author→affiliation mapping.
     authors: list[str] = []
+    authors_structured: list[dict[str, Any]] = []
     authors_elem = arxiv_elem.find("arxiv:authors", OAI_NS)
     if authors_elem is not None:
+        position = 0
         for author in authors_elem.findall("arxiv:author", OAI_NS):
             keyname = _text(author, "arxiv:keyname") or ""
             forenames = _text(author, "arxiv:forenames") or ""
             name = " ".join(part for part in (forenames, keyname) if part)
-            if name:
-                authors.append(name)
+            if not name:
+                continue
+            position += 1
+            affiliations = _author_affiliations(author)
+            authors.append(name)
+            authors_structured.append(
+                {
+                    "position": position,
+                    "name": name,
+                    "keyname": keyname or None,
+                    "forenames": forenames or None,
+                    # Single string when one affiliation; list when several.
+                    "affiliation": affiliations[0] if len(affiliations) == 1 else (
+                        affiliations or None
+                    ),
+                    "affiliations": affiliations,
+                }
+            )
 
     categories_text = _text(arxiv_elem, "arxiv:categories") or ""
     return {
@@ -151,6 +180,7 @@ def parse_record(record_elem: ET.Element) -> dict[str, Any]:
         "doi": _text(arxiv_elem, "arxiv:doi"),
         "journal_ref": _text(arxiv_elem, "arxiv:journal-ref"),
         "authors": authors,
+        "authors_structured": authors_structured,
     }
 
 
@@ -193,6 +223,7 @@ def fetch_window_records(
 
 def record_to_item(rec: dict[str, Any]) -> dict[str, Any]:
     arxiv_id = rec["arxiv_id"]
+    authors_structured = rec.get("authors_structured") or []
     return {
         "source": SOURCE,
         "source_external_id": rec["identifier"],
@@ -213,6 +244,7 @@ def record_to_item(rec: dict[str, Any]) -> dict[str, Any]:
             "updated": rec["updated"],
             "categories": rec["categories"],
             "authors": rec["authors"],
+            "authors_structured": authors_structured,
             "doi": rec["doi"],
             "journal_ref": rec["journal_ref"],
             "title": rec["title"],

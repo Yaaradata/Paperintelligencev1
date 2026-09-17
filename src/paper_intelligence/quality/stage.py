@@ -109,6 +109,92 @@ def select_top_slice(
     return [content_id for _, content_id in ranked[:keep]]
 
 
+def select_notable_org_survivors(
+    conn: Connection,
+    *,
+    date_from: str,
+    date_until: str,
+) -> list[int]:
+    """Screen-passed papers with at least one Org-of-Interest affiliation."""
+    survivors = {
+        int(row["content_item_id"])
+        for row in latest_screen_scores(conn, date_from=date_from, date_until=date_until)
+        if ((row["result_json"] or {}).get("gate") or {}).get("passed")
+    }
+    if not survivors:
+        return []
+    with conn.cursor() as cur:
+        cur.execute(
+            """
+            SELECT DISTINCT a.content_item_id
+            FROM paper_intelligence.paper_author_affiliations a
+            JOIN paper_intelligence.organisations o ON o.id = a.organisation_id
+            WHERE a.content_item_id = ANY(%s)
+              AND o.is_org_of_interest IS TRUE
+              AND o.active IS TRUE
+              AND a.organisation_id IS NOT NULL
+            ORDER BY a.content_item_id
+            """,
+            (list(survivors),),
+        )
+        return [int(row["content_item_id"]) for row in cur.fetchall()]
+
+
+def select_notable_person_survivors(
+    conn: Connection,
+    *,
+    date_from: str,
+    date_until: str,
+) -> list[int]:
+    """Screen-passed papers linked to a Person-of-Interest (empty until people stage)."""
+    survivors = {
+        int(row["content_item_id"])
+        for row in latest_screen_scores(conn, date_from=date_from, date_until=date_until)
+        if ((row["result_json"] or {}).get("gate") or {}).get("passed")
+    }
+    if not survivors:
+        return []
+    with conn.cursor() as cur:
+        cur.execute(
+            """
+            SELECT DISTINCT pp.content_item_id
+            FROM paper_intelligence.papers_people pp
+            JOIN paper_intelligence.people p ON p.id = pp.person_id
+            WHERE pp.content_item_id = ANY(%s)
+              AND p.is_person_of_interest IS TRUE
+              AND p.active IS TRUE
+            ORDER BY pp.content_item_id
+            """,
+            (list(survivors),),
+        )
+        return [int(row["content_item_id"]) for row in cur.fetchall()]
+
+
+def select_quality_candidates(
+    conn: Connection,
+    *,
+    date_from: str,
+    date_until: str,
+    gate_percentile: float = GATE_PERCENTILE,
+) -> list[int]:
+    """Quality router: top screen slice ∪ notable org ∪ notable person."""
+    selected = set(
+        select_top_slice(
+            conn,
+            date_from=date_from,
+            date_until=date_until,
+            gate_percentile=gate_percentile,
+        )
+    )
+    selected.update(
+        select_notable_org_survivors(conn, date_from=date_from, date_until=date_until)
+    )
+    selected.update(
+        select_notable_person_survivors(conn, date_from=date_from, date_until=date_until)
+    )
+    return sorted(selected)
+
+
 def build_user_prompt(papers: Sequence[dict[str, Any]]) -> str:
     blocks = "\n---\n".join(paper_block(p, max_abstract_chars=3000) for p in papers)
     ids = [p["content_item_id"] for p in papers]

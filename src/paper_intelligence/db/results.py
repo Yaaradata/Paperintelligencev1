@@ -44,11 +44,18 @@ def select_window_candidates(
     stage_task_type: str,
     limit: int | None = None,
     skip_done: bool = True,
+    stage_version: str | None = None,
+    prompt_version: str | None = None,
+    policy_version: str | None = None,
+    model: str | None = None,
 ) -> list[int]:
     """Content ids in the published_at window that still need `stage_task_type`.
 
     `date_until` is inclusive of the whole day. Upstream-REJECTED papers are
     excluded so paid stages never spend on them.
+
+    When version fields are provided, "already done" means a result exists for
+    the *current* stage/prompt/policy/model tuple — not merely any prior run.
     """
     clauses = [
         "ci.published_at >= %s::timestamptz",
@@ -58,13 +65,27 @@ def select_window_candidates(
     params: list[Any] = [date_from, date_until, REQUIRED_UPSTREAM_STATUS]
 
     if skip_done:
+        done_clauses = ["r.content_item_id = ci.id", "r.task_type = %s"]
+        done_params: list[Any] = [stage_task_type]
+        if stage_version is not None:
+            done_clauses.append("r.stage_version = %s")
+            done_params.append(stage_version)
+        if prompt_version is not None:
+            done_clauses.append("r.prompt_version = %s")
+            done_params.append(prompt_version)
+        if policy_version is not None:
+            done_clauses.append("r.policy_version = %s")
+            done_params.append(policy_version)
+        if model is not None:
+            done_clauses.append("r.model = %s")
+            done_params.append(model)
         clauses.append(
-            """NOT EXISTS (
+            f"""NOT EXISTS (
                 SELECT 1 FROM paper_intelligence.paper_classification_results r
-                WHERE r.content_item_id = ci.id AND r.task_type = %s
+                WHERE {" AND ".join(done_clauses)}
             )"""
         )
-        params.append(stage_task_type)
+        params.extend(done_params)
 
     sql = f"""
         SELECT ci.id
@@ -97,18 +118,39 @@ def count_window(conn: Connection, *, date_from: str, date_until: str) -> int:
 
 
 def ids_with_result(
-    conn: Connection, content_item_ids: Sequence[int], task_type: str
+    conn: Connection,
+    content_item_ids: Sequence[int],
+    task_type: str,
+    *,
+    stage_version: str | None = None,
+    prompt_version: str | None = None,
+    policy_version: str | None = None,
+    model: str | None = None,
 ) -> set[int]:
     if not content_item_ids:
         return set()
+    clauses = ["task_type = %s", "content_item_id = ANY(%s)"]
+    params: list[Any] = [task_type, list(content_item_ids)]
+    if stage_version is not None:
+        clauses.append("stage_version = %s")
+        params.append(stage_version)
+    if prompt_version is not None:
+        clauses.append("prompt_version = %s")
+        params.append(prompt_version)
+    if policy_version is not None:
+        clauses.append("policy_version = %s")
+        params.append(policy_version)
+    if model is not None:
+        clauses.append("model = %s")
+        params.append(model)
     with conn.cursor() as cur:
         cur.execute(
-            """
+            f"""
             SELECT DISTINCT content_item_id
             FROM paper_intelligence.paper_classification_results
-            WHERE task_type = %s AND content_item_id = ANY(%s)
+            WHERE {" AND ".join(clauses)}
             """,
-            (task_type, list(content_item_ids)),
+            params,
         )
         return {int(row["content_item_id"]) for row in cur.fetchall()}
 
