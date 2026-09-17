@@ -1,0 +1,563 @@
+{
+  "window": {
+    "start": "2026-08-18",
+    "end": "2026-09-16",
+    "inclusive_days": 30
+  },
+  "overlap": {
+    "hf_unique": 657,
+    "our_unique": 22585,
+    "intersection": 575,
+    "hf_to_ours_pct": 87.5,
+    "ours_to_hf_pct": 2.5,
+    "hf_only": 82,
+    "ours_only": 22010
+  },
+  "ranking_method": {
+    "score_field": "final_score",
+    "selection_method": "final_score_is_not_null",
+    "threshold_or_top_n": "High-quality = papers with paper_intelligence_current.final_score IS NOT NULL (already selected by screen gate + quality GATE_PERCENTILE slice + adjudication). No new score threshold invented."
+  },
+  "cohorts": {
+    "BOTH": {
+      "count": 132,
+      "metrics": {
+        "count": 132,
+        "avg_score": 7.72,
+        "median_score": 7.8,
+        "pct_notable_org": 22.7,
+        "pct_notable_person": 0.0,
+        "pct_tech_product_audience": 98.5,
+        "pct_student_audience": 4.5,
+        "domain_distribution": {
+          "natural_language_processing": 28,
+          "evaluation_benchmarking": 18,
+          "multimodal_learning": 16,
+          "alignment_safety": 13,
+          "reinforcement_learning": 10,
+          "robotics_embodied": 9,
+          "computer_vision": 8,
+          "model_compression": 8,
+          "generative_models": 5,
+          "efficient_inference": 5,
+          "systems_infrastructure": 4,
+          "speech_audio": 2,
+          "theory_foundations": 2,
+          "interpretability": 2
+        },
+        "subdomain_distribution": {
+          "language_modeling": 22,
+          "benchmark_design": 16,
+          "eval_methodology": 13,
+          "vision_language": 12,
+          "rlhf": 8,
+          "world_models": 7,
+          "3d_vision": 6,
+          "manipulation": 6,
+          "jailbreak_robustness": 5,
+          "navigation": 4,
+          "distillation": 4,
+          "retrieval": 4,
+          "question_answering": 4,
+          "audio_visual": 4,
+          "content_safety": 4,
+          "preference_alignment": 4,
+          "image_generation": 3,
+          "diffusion": 3,
+          "data_pipelines": 3,
+          "video_understanding": 2
+        },
+        "mean_hf_upvotes": 53.106
+      }
+    },
+    "OURS_ONLY": {
+      "count": 1688,
+      "metrics": {
+        "count": 1688,
+        "avg_score": 7.574,
+        "median_score": 7.6,
+        "pct_notable_org": 13.8,
+        "pct_notable_person": 0.0,
+        "pct_tech_product_audience": 98.3,
+        "pct_student_audience": 11.1,
+        "domain_distribution": {
+          "evaluation_benchmarking": 237,
+          "natural_language_processing": 204,
+          "theory_foundations": 190,
+          "alignment_safety": 172,
+          "robotics_embodied": 147,
+          "computer_vision": 145,
+          "interpretability": 103,
+          "efficient_inference": 93,
+          "reinforcement_learning": 86,
+          "generative_models": 69,
+          "multimodal_learning": 62,
+          "model_compression": 55,
+          "systems_infrastructure": 46,
+          "graph_learning": 30,
+          "speech_audio": 28
+        },
+        "subdomain_distribution": {
+          "eval_methodology": 197,
+          "benchmark_design": 152,
+          "language_modeling": 111,
+          "manipulation": 104,
+          "jailbreak_robustness": 93,
+          "mechanistic_interpretability": 78,
+          "optimization": 67,
+          "3d_vision": 66,
+          "serving": 64,
+          "generalization": 61,
+          "vision_language": 57,
+          "content_safety": 52,
+          "retrieval": 50,
+          "diffusion": 49,
+          "representation_learning": 45,
+          "question_answering": 39,
+          "world_models": 38,
+          "caching": 37,
+          "video_understanding": 37,
+          "navigation": 35
+        },
+        "mean_hf_upvotes": 14.5
+      }
+    },
+    "HF_ONLY": {
+      "count": 443,
+      "metrics": {
+        "count": 443,
+        "avg_score": null,
+        "median_score": null,
+        "pct_notable_org": 3.6,
+        "pct_notable_person": 0.0,
+        "pct_tech_product_audience": 14.0,
+        "pct_student_audience": 0.2,
+        "domain_distribution": {
+          "natural_language_processing": 14,
+          "evaluation_benchmarking": 9,
+          "computer_vision": 8,
+          "robotics_embodied": 8,
+          "generative_models": 5,
+          "reinforcement_learning": 4,
+          "theory_foundations": 3,
+          "multimodal_learning": 2,
+          "interpretability": 2,
+          "speech_audio": 2,
+          "efficient_inference": 2,
+          "alignment_safety": 2,
+          "model_compression": 1
+        },
+        "subdomain_distribution": {
+          "language_modeling": 9,
+          "benchmark_design": 8,
+          "manipulation": 6,
+          "image_generation": 5,
+          "3d_vision": 4,
+          "eval_methodology": 4,
+          "video_understanding": 3,
+          "rlhf": 3,
+          "diffusion": 3,
+          "vision_language": 2,
+          "mechanistic_interpretability": 2,
+          "speech_synthesis": 2,
+          "audio_understanding": 2,
+          "optimization": 2,
+          "world_models": 2,
+          "autoregressive_generation": 2,
+          "multi_agent_rl": 1,
+          "quantization": 1,
+          "navigation": 1,
+          "speculative_decoding": 1
+        },
+        "mean_hf_upvotes": 38.099
+      }
+    }
+  },
+  "run": {
+    "run_id": "5dc5fd0a-b6a7-4237-b379-c96523bc3f58",
+    "stage_name": "hf_validation",
+    "stage_version": "v001",
+    "code_commit_sha": "be8af1b9335a0027c6b9c20380b4bcdb344516bb",
+    "papers_evaluated": 22585,
+    "hf_unique": 657,
+    "high_quality_count": 1820
+  },
+  "generated_at": "2026-09-17T08:28:59.080317+00:00",
+  "findings": [
+    "HF \u2192 our corpus overlap is 87.5% (575/657).",
+    "Our corpus \u2192 HF overlap is 2.5% (575/22585) \u2014 HF is a thin curated slice.",
+    "Cohorts: BOTH=132, OURS_ONLY=1688, HF_ONLY=443.",
+    "Avg final_score BOTH (7.72) vs OURS_ONLY (7.574); delta=0.146.",
+    "BOTH is not materially higher-scoring than OURS_ONLY and is a small share of our high-quality set \u2014 HF adds little ranking lift on this window.",
+    "HF_ONLY=443 papers are featured on HF but lack final_score (mean upvotes=38.099) \u2014 candidates we may be missing if gate/quality coverage is incomplete, not proof HF should boost score."
+  ],
+  "recommendation": "**Recommendation: no incremental signal** \u2014 on this window HF does not improve on our high-quality set enough to warrant a ranking change.",
+  "samples": {
+    "BOTH": [
+      {
+        "arxiv_id": "2609.06966",
+        "title": "MOLE: Detecting Insider Threats in AI Agents",
+        "final_score": "8.9",
+        "hf_upvotes": 19
+      },
+      {
+        "arxiv_id": "2609.05275",
+        "title": "Don't Drop Dropout: Optimizing Layer Sparsity for Efficient LLM Training and Inference",
+        "final_score": "8.9",
+        "hf_upvotes": 23
+      },
+      {
+        "arxiv_id": "2609.12552",
+        "title": "RelateAnything: Real-Time Open-Vocabulary Relation Prediction From Any Inputs",
+        "final_score": "8.7",
+        "hf_upvotes": 3
+      },
+      {
+        "arxiv_id": "2608.23691",
+        "title": "Autonomous Mathematical Discovery in an Open-World Multi-Agent Environment",
+        "final_score": "8.6",
+        "hf_upvotes": 3
+      },
+      {
+        "arxiv_id": "2609.05663",
+        "title": "What LLM Trading Agents Actually Do in Production: A Six-Month, Population-Scale Record from Two Fleets",
+        "final_score": "8.5",
+        "hf_upvotes": 22
+      },
+      {
+        "arxiv_id": "2609.05588",
+        "title": "GE-Act 2.0: Pretraining and Scaling a World-Action Model for Robotic Manipulation",
+        "final_score": "8.4",
+        "hf_upvotes": 59
+      },
+      {
+        "arxiv_id": "2609.04010",
+        "title": "Unlocking Lossless Speedups in LLMs via Discrete Diffusion",
+        "final_score": "8.3",
+        "hf_upvotes": 150
+      },
+      {
+        "arxiv_id": "2608.12564",
+        "title": "Scaling Automatic Research Agents via World Models",
+        "final_score": "8.3",
+        "hf_upvotes": 458
+      },
+      {
+        "arxiv_id": "2609.04304",
+        "title": "Iris: Climbing to the Search Frontier",
+        "final_score": "8.3",
+        "hf_upvotes": 70
+      },
+      {
+        "arxiv_id": "2609.08936",
+        "title": "AuK Technical Report: An Open-Source Foundational Model for Speech Generation and Editing",
+        "final_score": "8.3",
+        "hf_upvotes": 218
+      },
+      {
+        "arxiv_id": "2609.04098",
+        "title": "Why Gated DeltaNet Survives 4-Bit Quantization: NVFP4 W4A4 for the Recurrent Half of a Hybrid 27B LLM",
+        "final_score": "8.3",
+        "hf_upvotes": 83
+      },
+      {
+        "arxiv_id": "2609.13053",
+        "title": "Dynin-Robotics: Omnimodal Unified Diffusion Vision-Language-Action Model",
+        "final_score": "8.3",
+        "hf_upvotes": 6
+      },
+      {
+        "arxiv_id": "2609.01343",
+        "title": "SMELT: Scaling Laws for Compute-Matched MoE Looped Transformers",
+        "final_score": "8.3",
+        "hf_upvotes": 104
+      },
+      {
+        "arxiv_id": "2609.04611",
+        "title": "$\u00cf\u0084^\u00cf\u0084$-Bench: An Environment for End-To-End, Realistic Agent Construction",
+        "final_score": "8.2",
+        "hf_upvotes": 15
+      },
+      {
+        "arxiv_id": "2609.07816",
+        "title": "Kalman Delta Networks: Uncertainty-aware Associative Memory",
+        "final_score": "8.2",
+        "hf_upvotes": 29
+      },
+      {
+        "arxiv_id": "2609.15309",
+        "title": "When Agents Slow Down: Understanding LLM Agents' Test-Time Strategies via Elo-per-token Analysis",
+        "final_score": "8.2",
+        "hf_upvotes": 12
+      },
+      {
+        "arxiv_id": "2609.16204",
+        "title": "Decoy Direction Optimization: A Post-Hoc Defense Against LLM Abliteration",
+        "final_score": "8.2",
+        "hf_upvotes": 2
+      },
+      {
+        "arxiv_id": "2609.06652",
+        "title": "VidaForge: Open Research Infrastructure for Video Pretraining Data Recipes",
+        "final_score": "8.1",
+        "hf_upvotes": 22
+      },
+      {
+        "arxiv_id": "2608.12944",
+        "title": "CardioState-JEPA: Delay-Aware Cross-Modal Learning of a Shared Cardiac Representation",
+        "final_score": "8.1",
+        "hf_upvotes": 2
+      },
+      {
+        "arxiv_id": "2608.29464",
+        "title": "Chain-of-Thought Faithfulness of Reasoning Models Varies with Where and How Preference Cues Are Delivered",
+        "final_score": "8.1",
+        "hf_upvotes": 15
+      }
+    ],
+    "OURS_ONLY": [
+      {
+        "arxiv_id": "2609.06849",
+        "title": "Learning transferable human physiology from two million hours of sleep with SleepFM-2",
+        "final_score": "9.2",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2609.15648",
+        "title": "Scaling Verification of Cryptographic Software with Aeneas, Rust, and Lean",
+        "final_score": "9.1",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2609.04290",
+        "title": "Evidence Integration in Large Language Models",
+        "final_score": "9.1",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2609.14306",
+        "title": "Flattening Every Memory Peak in Long-Context Mixture-of-Experts Training",
+        "final_score": "8.9",
+        "hf_upvotes": 0
+      },
+      {
+        "arxiv_id": "2609.06323",
+        "title": "Water-network decisions share one hydraulic gradient, and it can now be computed exactly",
+        "final_score": "8.9",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2607.23711",
+        "title": "The Intruder Threshold: A Spectral Law for LoRA Fine-Tuning",
+        "final_score": "8.9",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2609.07162",
+        "title": "The Oversight Gap: What LLM Safety Monitors Miss, and Why It Is Not Capability",
+        "final_score": "8.9",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2609.13728",
+        "title": "TyPatch: Transforming Patches into Typestate Rules for Kernel Bug Detection",
+        "final_score": "8.9",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2609.04043",
+        "title": "Extending concurrent separation logic to the hardware level to verify the xv6 OS kernel on RISC-V with AI agents",
+        "final_score": "8.8",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2609.12815",
+        "title": "4D Parallelism Unlocks Exascale Bayesian Neural Networks for High-Fidelity Atmospheric Modeling",
+        "final_score": "8.8",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2609.06934",
+        "title": "The Geometry of Refusal: Why Post-Hoc Safety Is Fragile and Pretraining-Time Safety Persists",
+        "final_score": "8.8",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2506.19960",
+        "title": "An ab initio foundation model of wavefunctions that accurately describes chemical bond breaking",
+        "final_score": "8.7",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2609.11841",
+        "title": "Atlas: Efficient Verifiable Semantic Search",
+        "final_score": "8.7",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2603.20957",
+        "title": "Alignment Whack-a-Mole : Finetuning Activates Verbatim Recall of Copyrighted Books in Large Language Models",
+        "final_score": "8.7",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2609.03715",
+        "title": "MINERVA: How Small Can a Manipulation Policy Be and Still Solve LIBERO?",
+        "final_score": "8.7",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2609.16984",
+        "title": "Nameless Tokenization: A Lossless Tokenizer-Level Defense Against Control-Token Forgery in Open-Weight LLMs",
+        "final_score": "8.7",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2402.01306",
+        "title": "KTO: Model Alignment as Prospect Theoretic Optimization",
+        "final_score": "8.7",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2609.04565",
+        "title": "Extremely Sparse Supervision Incentivizes Reasoning Ability",
+        "final_score": "8.7",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2609.08690",
+        "title": "Hyperparameter Scaling Laws Across MoE Sparsity",
+        "final_score": "8.7",
+        "hf_upvotes": null
+      },
+      {
+        "arxiv_id": "2609.08901",
+        "title": "The BatchNorm Illusion: Diagnosing Normalization Artifacts in Machine Unlearning Evaluation",
+        "final_score": "8.7",
+        "hf_upvotes": null
+      }
+    ],
+    "HF_ONLY": [
+      {
+        "arxiv_id": "2609.11638",
+        "title": "Vidu S2: Real-Time Interactive, Editable, and Spatial Video Generation",
+        "final_score": null,
+        "hf_upvotes": 695
+      },
+      {
+        "arxiv_id": "2609.15818",
+        "title": "Atria Dawn: The Dawn of Agentic Superintelligence",
+        "final_score": null,
+        "hf_upvotes": 428
+      },
+      {
+        "arxiv_id": "2609.08183",
+        "title": "NeoHorse-1: Towards Recursive Self-Improvement via Agentic Post-Training with Routing Harness",
+        "final_score": null,
+        "hf_upvotes": 419
+      },
+      {
+        "arxiv_id": "2609.00111",
+        "title": "Qwen-Drive-1.0: An Initial Step towards a Vision-Language Foundation Model for Autonomous Driving",
+        "final_score": null,
+        "hf_upvotes": 388
+      },
+      {
+        "arxiv_id": "2609.04199",
+        "title": "Compile by Training: Turning Natural-Language Specifications into Local Neural Functions",
+        "final_score": null,
+        "hf_upvotes": 385
+      },
+      {
+        "arxiv_id": "2608.16859",
+        "title": "HarnessEval-W: Agentifying the Evaluation of Visual Worlds",
+        "final_score": null,
+        "hf_upvotes": 341
+      },
+      {
+        "arxiv_id": "2609.10715",
+        "title": "NCP-ArchPreview Technical Report: Moving towards Latent Space Language Models through Next Concept Prediction",
+        "final_score": null,
+        "hf_upvotes": 318
+      },
+      {
+        "arxiv_id": "2609.14858",
+        "title": "Dream-RSI: Recursive Self-Improvement through Evolving Worlds",
+        "final_score": null,
+        "hf_upvotes": 281
+      },
+      {
+        "arxiv_id": "2608.19880",
+        "title": "EnvHarness: Awakening Static Worlds for Agent Learning",
+        "final_score": null,
+        "hf_upvotes": 276
+      },
+      {
+        "arxiv_id": "2608.26105",
+        "title": "VBVR-Pro: A Scalable and Verifiable Suite for Native Visual Reasoning",
+        "final_score": null,
+        "hf_upvotes": 272
+      },
+      {
+        "arxiv_id": "2608.31111",
+        "title": "Aspire: Can Models Self-Evolve from Vague Goals?",
+        "final_score": null,
+        "hf_upvotes": 232
+      },
+      {
+        "arxiv_id": "2608.23283",
+        "title": "Apodex 1.1: Scaling Agentic Intelligence for Complex Work",
+        "final_score": null,
+        "hf_upvotes": 207
+      },
+      {
+        "arxiv_id": "2609.11115",
+        "title": "Benchmark Radar: A Living Database and Search Engine for AI Benchmarks and Evaluation",
+        "final_score": null,
+        "hf_upvotes": 207
+      },
+      {
+        "arxiv_id": "2608.25518",
+        "title": "Agentic Game Development as a Verifiable Trajectory Data Engine for Scaling World Models",
+        "final_score": null,
+        "hf_upvotes": 196
+      },
+      {
+        "arxiv_id": "2609.03430",
+        "title": "Random Attention: Rethinking KV Cache Eviction for Efficient Reasoning",
+        "final_score": null,
+        "hf_upvotes": 186
+      },
+      {
+        "arxiv_id": "2609.00365",
+        "title": "Dr. Claw: An AI Scientist Workspace for Vibe Research",
+        "final_score": null,
+        "hf_upvotes": 183
+      },
+      {
+        "arxiv_id": "2608.26005",
+        "title": "VoiceMem: Streaming Dual-Brain Memory for Real-Time Interaction",
+        "final_score": null,
+        "hf_upvotes": 180
+      },
+      {
+        "arxiv_id": "2608.19583",
+        "title": "VGI-Bench: Probing Visual Intelligence in Video Generation Models",
+        "final_score": null,
+        "hf_upvotes": 179
+      },
+      {
+        "arxiv_id": "2609.14973",
+        "title": "PhysBrain 1.5: From Vision-Language Models to Physical Foundation Models",
+        "final_score": null,
+        "hf_upvotes": 174
+      },
+      {
+        "arxiv_id": "2609.10522",
+        "title": "Show-Harness: Just a VLM Agent Can Play Robots",
+        "final_score": null,
+        "hf_upvotes": 160
+      }
+    ]
+  }
+}

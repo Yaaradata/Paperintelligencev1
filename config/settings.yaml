@@ -6,25 +6,39 @@ schema: paper_intelligence
 
 models:
   screen: "${SCREEN_MODEL:glm-5.3-flash}"
-  classify: "${CLASSIFY_MODEL:glm-5.3-flash}"
+  audience_domain: "${CLASSIFY_MODEL:glm-5.3-flash}"
   quality: "${QUALITY_MODEL}"
 
 reasoning:
   screen: false
-  classify: false
+  audience_domain: false
   quality: true
 
 batch_sizes:
   screen: 15
-  classify: 15
+  audience_domain: 15
   quality: 5
 
 gating:
   # Overridden by env SCREEN_MIN_AI_RELEVANCE / GATE_PERCENTILE when set.
   screen_min_ai_relevance: 5.0
   gate_percentile: 15
+  # Relevance stage (free) uses MIN_AI_RELEVANCE_FOR_ENRICHMENT (default 5.0)
 
 paths:
   prompts: prompts
   policies: policies
   raw_cache: ../../shared_data/raw
+
+ingest:
+  # OAI-PMH; writes research_radar.content_items / paper_metadata (shared RDS).
+  oai_sets: ["cs", "stat"]
+  window_days: 7
+  categories_env: ARXIV_BACKFILL_CATEGORIES
+
+s3:
+  # Rejected papers from relevance → jsonl.gz under this prefix.
+  enabled_env: S3_ARCHIVE_ENABLED
+  bucket_env: PAPER_INTELLIGENCE_S3_BUCKET  # falls back to RESEARCH_RADAR_S3_BUCKET
+  prefix_env: PAPER_INTELLIGENCE_S3_PREFIX  # default paper-intelligence
+

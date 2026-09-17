@@ -1,37 +1,28 @@
 # Pipeline — PaperIntelligenceV1
 
+Canonical summary: root **[PROJECT.md](../PROJECT.md)**.
+
 ## Stages
 
-1. **normalize_authors** (free) — 100% of papers
-2. **screen** (paid, cheap, reasoning off) — 100%; gate `ai_relevance >= SCREEN_MIN_AI_RELEVANCE`
-3. **classify** (paid, cheap, reasoning off) — survivors; one call → four task rows
-4. **quality** (paid, reasoning on) — top `GATE_PERCENTILE` of survivors by mean(tech, novelty, evidence)
-5. **affiliation** (paid where external) — screen survivors; OAI first
-6. **adjudication** — resolve competing evidence
-7. **paper_intelligence_current** — derive consumer state
+0. **ingest** (free) — arXiv OAI-PMH → shared `research_radar` tables  
+1. **relevance** (free) — deterministic AI relevance; rejects archived to S3  
+2. **normalize_authors** (free) — `status = RELEVANT` only  
+3. **screen** (paid) — gate `ai_relevance`  
+4. **audience_domain** (paid) — audience / domain / subdomains / application_domain  
+5. **quality** (paid) — top `GATE_PERCENTILE`  
+6. **affiliation** — OAI / HTML footnotes → alias → ROR → OpenAlex  
+7. **hf_signals** (free) — HF Daily Papers enrichment by `arxiv_id` (no new papers)  
+8. **adjudication** — `paper_intelligence_current`  
+9. **reports** — tech / business / audience tops  
 
-## Operational rules
+## S3 rejects
 
-- Paid stages require `--from` / `--until` on `published_at`
-- Print resolved scope and candidate count before work
-- `--dry-run` makes zero API calls and projects cost
-- `--allow-paid` required for live spend
-- End of paid stage: papers, calls, tokens, cost, average per paper
+`S3_ARCHIVE_ENABLED=true` + bucket env →  
+`s3://{bucket}/paper-intelligence/rejected/relevance/.../{run_id}.jsonl.gz`  
+Manifest: `research_radar.s3_archives`.
 
-## Batching
+## CLI notes
 
-| Stage | Batch | Composition |
-|---|---|---|
-| screen | 15 | Random — never grouped by date/category/prior score |
-| classify | 15 | Same |
-| quality | 5 | Top percentile slice |
-
-## Prompts / policies
-
-| Stage | Prompt | Policy |
-|---|---|---|
-| screen | `prompts/screen/v001.md` | `policies/gating/v001.yaml` |
-| classify | `prompts/classify/v001.md` | `policies/classification/v001.yaml` |
-| quality | `prompts/quality/v001.md` | gating percentile |
-| affiliation | — | `policies/affiliation_resolution/v001.yaml` |
-| adjudication | `prompts/adjudication/v001.md` | affiliation + classification policies |
+- `--stage classify` aliases to `audience_domain`
+- Paid stages need `--allow-paid`
+- Downstream paid selection requires `status = RELEVANT`

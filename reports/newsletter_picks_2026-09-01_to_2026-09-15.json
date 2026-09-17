@@ -1,0 +1,25 @@
+{
+  "tech_pick": {
+    "content_item_id": 184890,
+    "title": "MOLE: Detecting Insider Threats in AI Agents",
+    "organisations": "Carnegie Mellon University",
+    "why_this_paper": "This informs whether agent deployments need dedicated activity monitoring rather than relying on model refusals or routine security reviews. Its open benchmark lets engineering and security leaders test monitors under a limited review budget, while the best evaluated monitor still missed nearly half of completed harm.",
+    "action_for_reader": "Ask your AI platform and security teams to run their current monitoring approach against a small MOLE evaluation and report detection rate, review volume, and missed harmful actions.",
+    "talking_point": "Agent refusal is not a security control; monitor what the agent actually does.",
+    "caveat": "MOLE uses a bounded set of simulated services, threats, models, and audit conditions, so results may not transfer directly to production infrastructure.",
+    "runner_up_id": 143079,
+    "why_not_runner_up": "Layer dropout offers attractive cost savings, but it requires control over model training and careful tuning, with evidence currently limited to models up to 8.2 billion parameters and the reported hardware environment."
+  },
+  "product_pick": {
+    "content_item_id": 194758,
+    "title": "A light-touch AI literacy intervention helps protect against AI political persuasion",
+    "organisations": "Carnegie Mellon University",
+    "why_this_paper": "This directly informs when an AI product should warn users that a model may be trying to persuade them or presenting information selectively. A brief warning reduced belief change by roughly half in the experiments without significantly reducing broader trust in generative AI, making disclosure design a measurable product control rather than compliance text alone.",
+    "action_for_reader": "Ask the product and risk teams to draft a short persuasion warning and A/B test it in one advice or recommendation workflow, measuring both user decisions and trust.",
+    "talking_point": "A small warning can reduce AI persuasion without destroying user trust.",
+    "caveat": "The experiments involved Americans and a limited set of political topics; durability, cross-cultural applicability, resistance to optimized persuasion, and effects on real-world behaviour remain uncertain.",
+    "runner_up_id": 42672,
+    "why_not_runner_up": "The copyright-finetuning result has major compliance implications, but its extraction controls, representativeness, reproducibility, and legal interpretation remain less settled.",
+    "editor_warning": ""
+  }
+}

@@ -1,22 +1,3 @@
-# BacklogClosed — PaperIntelligenceV1
+# Moved
 
-Entries are append-only. **Never delete an entry.**
-
-## Entry template
-
-```
-### <ID> — <title>
-- Closed date:
-- Commit SHA:
-- Verified by:
-- What was built:
-- Golden evaluation before → after:
-- Regressions:
-- False-positive organisation attribution before → after:
-- Decisions taken during implementation:
-- Deliberately left out:
-```
-
----
-
-_(no closed items yet)_
+Closed / deferred items are listed in **[PROJECT.md](PROJECT.md)** (§6).

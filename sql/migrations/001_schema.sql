@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS paper_intelligence.external_requests (
     content_item_id  BIGINT
         REFERENCES research_radar.content_items(id) ON DELETE SET NULL,
     provider         TEXT NOT NULL
-        CHECK (provider IN ('arxiv', 'openalex', 'ror', 'openrouter')),
+        CHECK (provider IN ('arxiv', 'openalex', 'ror', 'openrouter', 'huggingface')),
     endpoint         TEXT NOT NULL,
     request_hash     TEXT NOT NULL,
     started_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
