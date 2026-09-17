@@ -179,6 +179,35 @@ class FakeCursor:
             row["id"] = next(self.db._ids)
             self.db.affiliations.append(row)
             self._rows = [{"id": row["id"]}]
+        elif "UPDATE paper_intelligence.paper_author_affiliations" in text:
+            (
+                confidence,
+                run_id,
+                stage_version,
+                policy_version,
+                content_item_id,
+                paper_author_id,
+                organisation_id,
+                etype,
+                evalue,
+                _min_confidence,
+            ) = params
+            for row in self.db.affiliations:
+                if (
+                    row["content_item_id"] == content_item_id
+                    and row["paper_author_id"] == paper_author_id
+                    and row["organisation_id"] == organisation_id
+                    and row["evidence_type"] == etype
+                    and row["evidence_value"] == evalue
+                    and (row.get("confidence") is None or float(row["confidence"]) < float(confidence))
+                ):
+                    row["confidence"] = confidence
+                    if run_id is not None:
+                        row["run_id"] = run_id
+                    row["stage_version"] = stage_version
+                    if policy_version is not None:
+                        row["policy_version"] = policy_version
+            self._rows = []
         else:  # pragma: no cover - guards against silently ignored SQL
             raise AssertionError(f"unexpected SQL in test: {text[:120]}")
 
@@ -741,6 +770,45 @@ def test_email_domain_paper_level_confidence_stays_above_adjudication_floor() ->
     assert all(r["relationship_scope"] == "paper_level_unassigned" for r in rows)
     assert all(float(r["confidence"]) >= 0.75 for r in rows)
     assert all(float(r["confidence"]) >= 0.6 for r in rows)  # adjudication floor
+
+
+def test_reprocess_upgrades_stale_low_confidence() -> None:
+    """v002 re-emit must lift prior multi-author discounts above the 0.6 floor."""
+    db = FakeDB(
+        paper=make_paper(
+            affiliation_text=[],
+            extracted_emails=["lghita@nvidia.com"],
+        ),
+        authors=make_authors("Ada Lovelace", "Grace Hopper"),
+    )
+    nvidia = db.add_organisation("NVIDIA", priority=10, is_org_of_interest=True)
+    db.add_domain(nvidia, "nvidia.com")
+    # Stale v001 rows (0.75 * 0.75 fan-out discount).
+    for author in db.authors:
+        db.affiliations.append(
+            {
+                "id": next(db._ids),
+                "content_item_id": 1,
+                "paper_author_id": author["id"],
+                "organisation_id": nvidia,
+                "raw_affiliation": None,
+                "relationship_scope": "paper_level_unassigned",
+                "evidence_type": EVIDENCE_EMAIL,
+                "evidence_source": "paper_metadata.extracted_emails",
+                "evidence_value": "nvidia.com",
+                "confidence": 0.562,
+                "run_id": RUN.run_id,
+                "stage_version": "v001",
+                "policy_version": "v001",
+            }
+        )
+
+    result = AffiliationStage(db, mode="fast").process(1, RUN)
+    assert result.status == "success"
+    assert result.data["rows_written"] == 0
+    rows = [r for r in db.affiliations if r["organisation_id"] == nvidia]
+    assert rows
+    assert all(float(r["confidence"]) >= 0.75 for r in rows)
 
 
 def test_extraction_drops_authors_and_equal_contribution_noise() -> None:
