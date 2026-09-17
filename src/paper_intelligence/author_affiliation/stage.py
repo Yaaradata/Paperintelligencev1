@@ -42,8 +42,8 @@ STAGE_NAME = "affiliation"
 STAGE_NAME_FAST = "affiliation_fast"
 STAGE_NAME_DEEP = "affiliation_deep"
 STAGE_VERSION = "v002"
-STAGE_VERSION_FAST = "v001"
-STAGE_VERSION_DEEP = "v001"
+STAGE_VERSION_FAST = "v002"
+STAGE_VERSION_DEEP = "v002"
 
 EVIDENCE_EXPLICIT = "explicit_paper_affiliation"
 EVIDENCE_EMAIL = "email_domain"
@@ -381,6 +381,24 @@ class AffiliationStage:
                 if organisation_id is None:
                     organisation_id = find_organisation_by_alias(ctx.conn, candidate)
                 if organisation_id is None:
+                    # Watchlist aliases (e.g. "FAIR at Meta") may not yet be in
+                    # organisation_aliases; resolve via canonical watchlist name.
+                    entry = ctx.watchlist.match(candidate)
+                    if entry is not None:
+                        organisation_id = find_organisation_by_name(
+                            ctx.conn, entry.canonical_name
+                        )
+                        if organisation_id is not None and candidate.casefold() != (
+                            entry.canonical_name or ""
+                        ).casefold():
+                            add_alias(
+                                ctx.conn,
+                                organisation_id,
+                                candidate,
+                                "name",
+                                confidence=1.0,
+                            )
+                if organisation_id is None:
                     continue
                 name = self._canonical_name(ctx, organisation_id) or candidate
                 if not is_grounded(name, line.raw) and not is_grounded(candidate, line.raw):
@@ -673,10 +691,16 @@ class AffiliationStage:
             ctx.tier_counts["skipped_fanout"] = ctx.tier_counts.get("skipped_fanout", 0) + 1
             return
         single = len(ctx.authors) == 1
-        # Multi-author papers get a discount for the unknown author→org mapping.
-        # Kept at 0.75 so strong tiers stay above the 0.6 floor that the
-        # downstream organisation score applies.
-        confidence = base_confidence if single else round(base_confidence * 0.75, 3)
+        # relationship_scope still records author↔org ambiguity on multi-author papers.
+        # confidence answers a different question: "is this organisation represented
+        # on the paper?" — do not discount that merely because fan-out is unassigned.
+        # (Discounting 0.75 * 0.75 pushed email-domain rows to 0.562, below the
+        # adjudication MIN_CONFIDENCE floor, while NVIDIA/@nvidia.com is strong.)
+        confidence = float(base_confidence)
+        if organisation_id is None and not single:
+            # Unresolved raw lines keep a mild ambiguity discount; resolved org
+            # attribution does not.
+            confidence = round(base_confidence * 0.75, 3)
         effective_scope = scope or (SCOPE_AUTHOR if single else SCOPE_PAPER)
         for author in ctx.authors:
             self._emit(

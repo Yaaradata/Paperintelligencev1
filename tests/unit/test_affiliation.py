@@ -718,6 +718,94 @@ def test_rows_always_hang_off_a_paper_author() -> None:
     assert all(row["paper_author_id"] in author_ids for row in db.affiliations)
     # Paper-level evidence with several authors is marked as unassigned.
     assert all(row["relationship_scope"] == "paper_level_unassigned" for row in db.affiliations)
+    # Org-on-paper confidence is not discounted for multi-author fan-out.
+    assert all(float(row["confidence"]) >= 0.85 for row in db.affiliations)
+
+
+def test_email_domain_paper_level_confidence_stays_above_adjudication_floor() -> None:
+    """@nvidia.com means NVIDIA is on the paper even if author mapping is unknown."""
+    db = FakeDB(
+        paper=make_paper(
+            affiliation_text=[],
+            extracted_emails=["lghita@nvidia.com"],
+        ),
+        authors=make_authors("Ada Lovelace", "Grace Hopper", "Edsger Dijkstra"),
+    )
+    nvidia = db.add_organisation("NVIDIA", priority=10, is_org_of_interest=True)
+    db.add_domain(nvidia, "nvidia.com")
+
+    result = AffiliationStage(db, mode="fast").process(1, RUN)
+    assert result.status == "success"
+    rows = [r for r in db.affiliations if r["organisation_id"] == nvidia]
+    assert rows
+    assert all(r["relationship_scope"] == "paper_level_unassigned" for r in rows)
+    assert all(float(r["confidence"]) >= 0.75 for r in rows)
+    assert all(float(r["confidence"]) >= 0.6 for r in rows)  # adjudication floor
+
+
+def test_extraction_drops_authors_and_equal_contribution_noise() -> None:
+    evidence = extraction.extract(
+        [
+            "Authors: Weixiang Sun , Zehong Wang , Hong Huang",
+            "footnotetext: Equal contribution",
+            "∗ Equal Contribution",
+            "Affiliation: Stanford University",
+        ],
+        ["hariharanr@arizona.edusomeshwaran", "ada@stanford.edu"],
+    )
+    raws = [line.raw for line in evidence.lines]
+    assert raws == ["Stanford University"]
+    assert "ada@stanford.edu" in evidence.emails
+    assert all("arizona.edusomeshwaran" not in e for e in evidence.emails)
+
+
+def test_fair_at_meta_resolves_via_watchlist_alias() -> None:
+    """Short labelled lab names without 'university' still resolve through watchlist."""
+    db = FakeDB(
+        paper=make_paper(affiliation_text=["Affiliation: FAIR at Meta"]),
+        authors=make_authors("Ada Lovelace", "Grace Hopper"),
+    )
+    meta = db.add_organisation("Meta", priority=10, is_org_of_interest=True)
+
+    result = AffiliationStage(db, allow_ror=False, allow_openalex=False).process(1, RUN)
+
+    assert result.status == "success"
+    rows = [r for r in db.affiliations if r["organisation_id"] == meta]
+    assert rows
+    assert all(r["relationship_scope"] == "paper_level_unassigned" for r in rows)
+    assert all(float(r["confidence"]) >= 0.85 for r in rows)
+    assert any(a["alias"].casefold() == "fair at meta" for a in db.aliases)
+
+
+def test_fair_prose_does_not_resolve_to_meta() -> None:
+    """Short alias FAIR must not fire on English 'fair comparison'."""
+    assert not is_grounded("FAIR", "We provide a fair comparison of baselines.")
+    assert is_grounded("FAIR", "Affiliation: FAIR")
+    assert is_grounded("FAIR at Meta", "Affiliation: FAIR at Meta")
+
+    db = FakeDB(
+        paper=make_paper(
+            affiliation_text=[
+                "A fair comparison of retrieval methods on the benchmark.",
+                "Affiliation: fair comparison",
+            ]
+        ),
+        authors=make_authors("Ada Lovelace"),
+    )
+    meta = db.add_organisation("Meta", priority=10, is_org_of_interest=True)
+    db.aliases.append(
+        {"organisation_id": meta, "alias": "FAIR", "alias_type": "name"}
+    )
+
+    result = AffiliationStage(db, allow_ror=False, allow_openalex=False).process(1, RUN)
+
+    assert all(r["organisation_id"] != meta for r in db.affiliations)
+    assert result.status in {"unresolved", "success"}
+
+
+def test_unicode_grounding_folds_diacritics() -> None:
+    assert is_grounded("Universitat Trier", "Affiliation: Universität Trier")
+    assert is_grounded("Universität Trier", "Affiliation: Universitat Trier")
 
 
 def test_reprocessing_is_idempotent() -> None:

@@ -52,7 +52,12 @@ watchlist:
   - meta.com
   aliases:
   - FAIR
+  - FAIR at Meta
+  - Meta FAIR
+  - Facebook AI Research
   - Meta AI
+  - Facebook AI
+  - Meta Platforms
 - canonical_name: Microsoft
   priority: 10
   is_org_of_interest: true

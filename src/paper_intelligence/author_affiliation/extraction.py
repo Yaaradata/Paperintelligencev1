@@ -35,13 +35,34 @@ _DROP_LABELS = frozenset(
     }
 )
 _ARXIV_NOISE = re.compile(r"^\[?\s*(submitted|revised|updated|v\d+)\b", re.IGNORECASE)
+# HTML/PDF footnote junk that is not institutional evidence.
+# Include Unicode asterisk ∗ (U+2217) and dagger forms common in PDF extracts.
+_FOOTNOTE_MARKERS = r"[*∗†‡※✦•·∙⋆]+"
+_FOOTNOTE_NOISE = re.compile(
+    r"^(?:"
+    r"footnot(?:e|etext)\b|"
+    rf"{_FOOTNOTE_MARKERS}\s*equal\s+contribution|"
+    r"equal\s+contribution|"
+    rf"{_FOOTNOTE_MARKERS}\s*equal\b|"
+    r"contributed\s+equally|"
+    r"these\s+authors\s+contributed\s+equally"
+    r")",
+    re.IGNORECASE,
+)
+# Author-list lines sometimes arrive without a clean label match.
+_AUTHORS_LINE = re.compile(r"^\s*authors?\s*:", re.IGNORECASE)
 # Acknowledgement prose often names the institution, but is mostly boilerplate.
 # Keep it only when it actually yields an organisation name.
 _CANDIDATES_ONLY_LABELS = frozenset({"thanks", "acknowledgement", "acknowledgements", "acknowledgment", "acknowledgments"})
 _EMAIL = re.compile(r"[\w.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 _DOMAIN_IN_TEXT = re.compile(r"@([A-Za-z0-9.-]+\.[A-Za-z]{2,})")
+# Glued corruption like `hariharanr@arizona.edusomeshwaran` or `a@x.comedub`.
+_GLUED_EMAIL_DOMAIN = re.compile(
+    r"\.(edu|com|org|net|gov|ac)([a-z0-9])",
+    re.IGNORECASE,
+)
 _WS = re.compile(r"\s+")
-_FOOTNOTE = re.compile(r"^[\s\d*†‡§¶#,.;()\[\]-]+")
+_FOOTNOTE = re.compile(r"^[\s\d*∗†‡§¶#,.;()\[\]-]+")
 
 # Tokens that make a comma-separated segment look like a standalone organisation.
 _ORG_TOKENS = (
@@ -274,8 +295,62 @@ def _is_name_like_segment(segment: str) -> bool:
     )
 
 
+def _is_noise_affiliation_line(text: str) -> bool:
+    """True for author-list / equal-contribution / footnote markers, not orgs."""
+    body = (text or "").strip()
+    if not body:
+        return True
+    if _AUTHORS_LINE.match(body):
+        return True
+    if _FOOTNOTE_NOISE.match(body):
+        return True
+    # PDF extracts often prefix footnotes with ∗ / † before the prose.
+    without_markers = _FOOTNOTE.sub("", body).strip()
+    if without_markers and _FOOTNOTE_NOISE.match(without_markers):
+        return True
+    # After stripping a leading label, body may still be pure contribution noise.
+    stripped = _LABEL.sub("", body).strip()
+    if stripped and _FOOTNOTE_NOISE.match(stripped):
+        return True
+    stripped_markers = _FOOTNOTE.sub("", stripped).strip() if stripped else ""
+    if stripped_markers and _FOOTNOTE_NOISE.match(stripped_markers):
+        return True
+    return False
+
+
+def is_corrupt_email(email: str) -> bool:
+    """Conservative guard against HTML/PDF-glued addresses.
+
+    Accepts normal institutional emails. Rejects clear concatenations such as
+    `user@arizona.edusomeshwaran` or locals that start with `.`.
+    """
+    value = (email or "").strip().lower()
+    if not value or value.startswith(".") or value.endswith("."):
+        return True
+    if value.count("@") != 1:
+        return True
+    local, _, domain = value.partition("@")
+    if not local or not domain or "." not in domain:
+        return True
+    if _GLUED_EMAIL_DOMAIN.search(domain):
+        return True
+    # Domain labels must look like DNS labels; reject empties / leading dots.
+    labels = domain.split(".")
+    if any(not label or label.startswith("-") or label.endswith("-") for label in labels):
+        return True
+    tld = labels[-1]
+    if not tld.isalpha() or len(tld) > 24:
+        return True
+    return False
+
+
 def emails_from_text(text: str) -> list[str]:
-    return [match.group(0).lower() for match in _EMAIL.finditer(text or "")]
+    out: list[str] = []
+    for match in _EMAIL.finditer(text or ""):
+        email = match.group(0).lower()
+        if not is_corrupt_email(email) and email not in out:
+            out.append(email)
+    return out
 
 
 def domains_from_text(text: str) -> list[str]:
@@ -283,8 +358,12 @@ def domains_from_text(text: str) -> list[str]:
     out: list[str] = []
     for match in _DOMAIN_IN_TEXT.finditer(text or ""):
         domain = match.group(1).lower().strip(".")
-        if domain and domain not in out:
-            out.append(domain)
+        if not domain or domain in out:
+            continue
+        # Reuse the glued-email guard against `arizona.edusomeshwaran`.
+        if is_corrupt_email(f"x@{domain}"):
+            continue
+        out.append(domain)
     return out
 
 
@@ -325,9 +404,13 @@ def extract(affiliation_text: Any, extracted_emails: Any) -> ExtractedEvidence:
         return bool(found) or seen_domain
 
     for entry in _coerce_strings(affiliation_text):
+        if _is_noise_affiliation_line(entry):
+            continue
         label = _LABEL.match(entry)
         body = _clean(_LABEL.sub("", entry))
         if not body:
+            continue
+        if _is_noise_affiliation_line(body):
             continue
         has_contact = note_contacts(body)
         label_name = (label.group(1).lower() if label else "")
@@ -342,6 +425,14 @@ def extract(affiliation_text: Any, extracted_emails: Any) -> ExtractedEvidence:
             continue
         seen_lines.add(key)
         candidates = organisation_candidates(body)
+        if (
+            not candidates
+            and label_name in {"affiliation", "affiliations", "institution"}
+            and 0 < len(body.split()) <= 6
+        ):
+            # Short labelled lines like "FAIR at Meta" have no university/institute
+            # token but are still the paper's own affiliation string.
+            candidates = [body]
         if not candidates and (has_contact or label_name in _CANDIDATES_ONLY_LABELS):
             # Contact-only lines add nothing beyond their domains, and
             # acknowledgement boilerplate is not affiliation evidence.
