@@ -1,0 +1,59 @@
+{
+  "mode": "shadow_dry_run",
+  "day": {
+    "from": "2026-09-02",
+    "until": "2026-09-02"
+  },
+  "pi_catalog": {
+    "papers_in_day": 927,
+    "relevance_keep": 567,
+    "relevance_reject": 360
+  },
+  "funnel_shadow": {
+    "screen_rows": 567,
+    "screen_passed": 556,
+    "blocked": 11,
+    "quality_selected": 131,
+    "already_scored": 93,
+    "would_need_paid_quality": 38,
+    "estimated_paid_calls": 8,
+    "estimated_cost_usd": 0.288,
+    "by_reason": {
+      "not_selected_below_gate_percentile": 425,
+      "selected_top_slice": 68,
+      "selected_notable_org": 48,
+      "selected_top_slice_and_notable_org": 15,
+      "blocked_screen_gate_failed": 11
+    }
+  },
+  "screen_survivor_compare_radar_window_vs_pi_window": {
+    "old_count": 556,
+    "new_count": 556,
+    "intersection": 556,
+    "old_only_count": 0,
+    "new_only_count": 0,
+    "old_only_sample": [],
+    "new_only_sample": []
+  },
+  "focus_137619": {
+    "exists_as_one_pi_paper": true,
+    "paper_id": 137619,
+    "arxiv_id": "2609.03181",
+    "radar_status": "ENTITY_RESOLVED",
+    "routing": {
+      "content_item_id": 137619,
+      "decision": "not_selected",
+      "reason": "not_selected_below_gate_percentile",
+      "rank_mean": 6.6667,
+      "rank_position": 199,
+      "survivors_in_window": 556,
+      "top_slice_keep": 83,
+      "gate_percentile": 15.0
+    },
+    "enters_router": true,
+    "below_gate_percentile": true,
+    "radar_status_affects_routing": false
+  },
+  "paid_llm_executed": false,
+  "production_cutover": false
+}

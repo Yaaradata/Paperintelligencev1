@@ -1,0 +1,59 @@
+{
+  "window": {
+    "from": "2026-09-02",
+    "until": "2026-09-02"
+  },
+  "readers": {
+    "screen_candidates_needing_work": {
+      "old_count": 0,
+      "new_count": 0,
+      "intersection": 0,
+      "old_only_count": 0,
+      "new_only_count": 0,
+      "old_only_sample": [],
+      "new_only_sample": [],
+      "notes": []
+    },
+    "screen_survivors_gate_passed": {
+      "old_count": 556,
+      "new_count": 556,
+      "intersection": 556,
+      "old_only_count": 0,
+      "new_only_count": 0,
+      "old_only_sample": [],
+      "new_only_sample": []
+    },
+    "quality_selected": {
+      "old_count": 131,
+      "new_count": 131,
+      "intersection": 131,
+      "old_only_count": 0,
+      "new_only_count": 0,
+      "old_only_sample": [],
+      "new_only_sample": []
+    }
+  },
+  "focus_137619": {
+    "pi_paper": {
+      "paper_id": 137619,
+      "arxiv_id": "2609.03181",
+      "title": "Jina-OCR-v1: Efficient Document Parsing with Speculative Decoding and Dense Verifiable Rewards"
+    },
+    "pi_relevance": {
+      "decision": "keep",
+      "reason": "migrated_from_radar_status=ENTITY_RESOLVED"
+    },
+    "quality_routing": {
+      "content_item_id": 137619,
+      "decision": "not_selected",
+      "reason": "not_selected_below_gate_percentile",
+      "rank_mean": 6.6667,
+      "rank_position": 199,
+      "survivors_in_window": 556,
+      "top_slice_keep": 83,
+      "gate_percentile": 15.0
+    }
+  },
+  "production_cutover": false,
+  "note": "Shadow comparison only. Production still uses Radar-backed selectors."
+}

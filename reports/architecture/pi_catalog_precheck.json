@@ -1,0 +1,57 @@
+{
+  "pi_tables_existing": [
+    "evaluation_results",
+    "evaluation_runs",
+    "external_requests",
+    "golden_labels",
+    "golden_set_items",
+    "golden_sets",
+    "item_stage_runs",
+    "llm_requests",
+    "organisation_aliases",
+    "organisations",
+    "paper_author_affiliations",
+    "paper_authors",
+    "paper_classification_results",
+    "paper_hf_signals",
+    "paper_intelligence_current",
+    "papers_people",
+    "people",
+    "pipeline_runs",
+    "stage_runs"
+  ],
+  "referenced_content_item_ids": {
+    "n": 34460,
+    "nd": 34460
+  },
+  "radar_match": {
+    "referenced_ids": 34460,
+    "matched_content_items": 34460,
+    "orphan_no_content_item": 0,
+    "with_paper_metadata": 34460,
+    "content_item_without_metadata": 0,
+    "max_referenced_id": 195610
+  },
+  "max_content_item_id_global": 195657,
+  "metadata_coverage": {
+    "with_arxiv": 34460,
+    "with_doi": 2032
+  },
+  "duplicate_arxiv": {
+    "duplicate_arxiv_groups": 0,
+    "ids_in_dup_groups": "0"
+  },
+  "duplicate_doi": {
+    "duplicate_doi_groups": 0,
+    "ids_in_dup_groups": "0"
+  },
+  "duplicate_arxiv_samples": [],
+  "papers_table_already_exists": false,
+  "id_reuse_decision": {
+    "proposed": "paper_id = legacy_content_item_id",
+    "safe": true,
+    "reason": "All PI-referenced IDs exist in Radar content_items; IDs are unique integers; sequence will be set to MAX+1 after backfill.",
+    "sequence_reset_to": 195611,
+    "safer_sequence_reset_to": 195658
+  }
+}

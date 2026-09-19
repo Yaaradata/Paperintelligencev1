@@ -1,0 +1,74 @@
+{
+  "radar_source_rows_considered": 34460,
+  "pi_papers_inserted": 34460,
+  "orphan_pi_enrichment_ids": [],
+  "orphan_pi_enrichment_count": 0,
+  "papers_without_legacy_radar": 0,
+  "duplicate_arxiv_groups": 0,
+  "duplicate_doi_groups": 0,
+  "missing_metadata": {
+    "missing_published_at": 0,
+    "missing_arxiv": 0,
+    "missing_abstract": 0,
+    "missing_title": 0
+  },
+  "enrichment_join_orphans": {
+    "paper_classification_results": {
+      "orphans": 0,
+      "total": 27599
+    },
+    "paper_intelligence_current": {
+      "orphans": 0,
+      "total": 7756
+    },
+    "paper_authors": {
+      "orphans": 0,
+      "total": 165645
+    },
+    "paper_author_affiliations": {
+      "orphans": 0,
+      "total": 124783
+    },
+    "paper_hf_signals": {
+      "orphans": 0,
+      "total": 580
+    }
+  },
+  "title_arxiv_date_mismatch_samples": [],
+  "identity_map_rows": 70952,
+  "relevance_latest_by_decision": [
+    {
+      "decision": "keep",
+      "n": 20300
+    },
+    {
+      "decision": "reject",
+      "n": 8083
+    }
+  ],
+  "sequence": {
+    "last_value": 195658,
+    "is_called": false
+  },
+  "id_reuse": {
+    "paper_id_equals_legacy": true,
+    "sequence_next_expected": 195658,
+    "sequence_last_value": 195658,
+    "sequence_is_called": false
+  },
+  "focus_137619": {
+    "paper_id": 137619,
+    "legacy_content_item_id": 137619,
+    "arxiv_id": "2609.03181",
+    "title": "Jina-OCR-v1: Efficient Document Parsing with Speculative Decoding and Dense Verifiable Rewards",
+    "published_at": "2026-09-02 00:00:00+00:00",
+    "ingested_at": "2026-09-05 09:57:30.585308+00:00",
+    "source_updated_at": "2026-09-04 00:00:00+00:00"
+  },
+  "targets_met": {
+    "zero_orphan_enrichment": true,
+    "zero_duplicate_arxiv": true,
+    "zero_duplicate_doi": true,
+    "papers_count_matches_refs": true
+  }
+}

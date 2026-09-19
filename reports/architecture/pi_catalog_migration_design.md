@@ -1,7 +1,8 @@
 # PI-Owned Catalog — Migration Design (Phase 3–4)
 
-**Status:** Design only — **do not execute cutover** until reviewed.  
-**Companion audit:** `reports/architecture/pi_independence_audit.md`  
+**Status:** Additive / shadow executed (2026-09-19). **Production cutover not approved.**  
+**Companion:** `reports/architecture/pi_catalog_shadow_stop_report.md`  
+**Audit:** `reports/architecture/pi_independence_audit.md`  
 **Date:** 2026-09-19
 
 ---
