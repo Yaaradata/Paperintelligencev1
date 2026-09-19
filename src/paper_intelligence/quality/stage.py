@@ -3,10 +3,15 @@
 The model never sees authors, affiliations or organisations: the payload is
 title, categories and abstract only. Institutional standing enters later as a
 capped additive boost, after scoring.
+
+Quality *routing* eligibility is based on PI screen results (gate.passed), not
+on research_radar.content_items.status. A screen pass enters the router; it does
+not automatically imply a paid quality score.
 """
 
 from __future__ import annotations
 
+from dataclasses import asdict, dataclass
 from typing import Any, Sequence
 
 from psycopg import Connection
@@ -193,6 +198,177 @@ def select_quality_candidates(
         select_notable_person_survivors(conn, date_from=date_from, date_until=date_until)
     )
     return sorted(selected)
+
+
+@dataclass(frozen=True)
+class QualityRoutingDecision:
+    """Explicit router outcome for one latest PI screen row."""
+
+    content_item_id: int
+    decision: str  # selected | not_selected | blocked
+    reason: str
+    rank_mean: float | None = None
+    rank_position: int | None = None
+    survivors_in_window: int | None = None
+    top_slice_keep: int | None = None
+    gate_percentile: float | None = None
+
+    def as_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+def explain_quality_routing(
+    conn: Connection,
+    *,
+    date_from: str,
+    date_until: str,
+    gate_percentile: float = GATE_PERCENTILE,
+) -> list[QualityRoutingDecision]:
+    """Record a routing decision for every latest PI screen result in the window.
+
+    Decisions:
+    - selected / selected_top_slice | selected_notable_org | selected_notable_person
+    - not_selected / not_selected_below_gate_percentile
+    - blocked / blocked_screen_gate_failed | blocked_missing_rank_dimensions
+
+    Does not call the LLM. Does not mutate scores.
+    """
+    screens = latest_screen_scores(conn, date_from=date_from, date_until=date_until)
+    ranked: list[tuple[float, int]] = []
+    rank_means: dict[int, float] = {}
+    gate_by_id: dict[int, bool] = {}
+    missing_dims: set[int] = set()
+
+    for row in screens:
+        cid = int(row["content_item_id"])
+        result = row["result_json"] or {}
+        passed = bool((result.get("gate") or {}).get("passed"))
+        gate_by_id[cid] = passed
+        if not passed:
+            continue
+        try:
+            mean = sum(float(result[dim]) for dim in RANK_DIMENSIONS) / len(RANK_DIMENSIONS)
+        except (KeyError, TypeError, ValueError):
+            missing_dims.add(cid)
+            continue
+        ranked.append((mean, cid))
+        rank_means[cid] = mean
+
+    ranked.sort(key=lambda pair: (-pair[0], pair[1]))
+    survivors_n = len(ranked)
+    keep_n = max(1, int(round(survivors_n * (gate_percentile / 100.0)))) if survivors_n else 0
+    top_ids = {cid for _, cid in ranked[:keep_n]}
+    position = {cid: i + 1 for i, (_, cid) in enumerate(ranked)}
+
+    notable_org = set(
+        select_notable_org_survivors(conn, date_from=date_from, date_until=date_until)
+    )
+    notable_person = set(
+        select_notable_person_survivors(conn, date_from=date_from, date_until=date_until)
+    )
+
+    decisions: list[QualityRoutingDecision] = []
+    for row in screens:
+        cid = int(row["content_item_id"])
+        if not gate_by_id.get(cid):
+            decisions.append(
+                QualityRoutingDecision(
+                    content_item_id=cid,
+                    decision="blocked",
+                    reason="blocked_screen_gate_failed",
+                    gate_percentile=gate_percentile,
+                )
+            )
+            continue
+        if cid in missing_dims:
+            decisions.append(
+                QualityRoutingDecision(
+                    content_item_id=cid,
+                    decision="blocked",
+                    reason="blocked_missing_rank_dimensions",
+                    gate_percentile=gate_percentile,
+                )
+            )
+            continue
+
+        mean = rank_means.get(cid)
+        pos = position.get(cid)
+        if cid in top_ids:
+            reason = "selected_top_slice"
+            if cid in notable_org:
+                reason = "selected_top_slice_and_notable_org"
+            elif cid in notable_person:
+                reason = "selected_top_slice_and_notable_person"
+            decisions.append(
+                QualityRoutingDecision(
+                    content_item_id=cid,
+                    decision="selected",
+                    reason=reason,
+                    rank_mean=round(mean, 4) if mean is not None else None,
+                    rank_position=pos,
+                    survivors_in_window=survivors_n,
+                    top_slice_keep=keep_n,
+                    gate_percentile=gate_percentile,
+                )
+            )
+        elif cid in notable_org:
+            decisions.append(
+                QualityRoutingDecision(
+                    content_item_id=cid,
+                    decision="selected",
+                    reason="selected_notable_org",
+                    rank_mean=round(mean, 4) if mean is not None else None,
+                    rank_position=pos,
+                    survivors_in_window=survivors_n,
+                    top_slice_keep=keep_n,
+                    gate_percentile=gate_percentile,
+                )
+            )
+        elif cid in notable_person:
+            decisions.append(
+                QualityRoutingDecision(
+                    content_item_id=cid,
+                    decision="selected",
+                    reason="selected_notable_person",
+                    rank_mean=round(mean, 4) if mean is not None else None,
+                    rank_position=pos,
+                    survivors_in_window=survivors_n,
+                    top_slice_keep=keep_n,
+                    gate_percentile=gate_percentile,
+                )
+            )
+        else:
+            decisions.append(
+                QualityRoutingDecision(
+                    content_item_id=cid,
+                    decision="not_selected",
+                    reason="not_selected_below_gate_percentile",
+                    rank_mean=round(mean, 4) if mean is not None else None,
+                    rank_position=pos,
+                    survivors_in_window=survivors_n,
+                    top_slice_keep=keep_n,
+                    gate_percentile=gate_percentile,
+                )
+            )
+    return decisions
+
+
+def quality_selection_reason_map(
+    conn: Connection,
+    *,
+    date_from: str,
+    date_until: str,
+    gate_percentile: float = GATE_PERCENTILE,
+) -> dict[int, QualityRoutingDecision]:
+    return {
+        d.content_item_id: d
+        for d in explain_quality_routing(
+            conn,
+            date_from=date_from,
+            date_until=date_until,
+            gate_percentile=gate_percentile,
+        )
+    }
 
 
 def build_user_prompt(papers: Sequence[dict[str, Any]]) -> str:

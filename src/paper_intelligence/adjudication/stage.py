@@ -13,7 +13,11 @@ from typing import Any
 from psycopg import Connection
 
 from paper_intelligence.adjudication.org_score import organisation_score
-from paper_intelligence.quality.stage import composite_score
+from paper_intelligence.common.config import GATE_PERCENTILE
+from paper_intelligence.quality.stage import (
+    composite_score,
+    quality_selection_reason_map,
+)
 
 STAGE_NAME = "adjudication"
 STAGE_VERSION = "v002"
@@ -129,6 +133,12 @@ def run_window(
         "written": 0,
     }
     rows: list[tuple] = []
+    routing = quality_selection_reason_map(
+        conn,
+        date_from=date_from,
+        date_until=date_until,
+        gate_percentile=GATE_PERCENTILE,
+    )
 
     for content_id, results in by_paper.items():
         stats["papers"] += 1
@@ -176,14 +186,30 @@ def run_window(
         )
 
         gate_passed = bool((screen.get("gate") or {}).get("passed")) if screen else False
+        route = routing.get(content_id)
         if quality_score is not None:
             quality_status = "scored"
+            selection_reason = "scored_quality_result_present"
+        elif route is not None:
+            if route.decision == "selected":
+                # Selected by router but no quality row yet (pending paid run).
+                quality_status = "not_selected"
+                selection_reason = f"pending_quality_score:{route.reason}"
+            elif route.decision == "not_selected":
+                quality_status = "not_selected"
+                selection_reason = route.reason
+            else:
+                quality_status = "skipped"
+                selection_reason = route.reason
         elif gate_passed:
             quality_status = "not_selected"
+            selection_reason = "screen_gate_passed_router_decision_unavailable"
         elif screen:
             quality_status = "skipped"
+            selection_reason = "blocked_or_no_screen_gate_pass"
         else:
             quality_status = "skipped"
+            selection_reason = "no_screen_result"
 
         rows.append(
             (
@@ -210,6 +236,8 @@ def run_window(
                         "screen_gate": screen.get("gate"),
                         "quality_present": bool(quality),
                         "quality_status": quality_status,
+                        "quality_selection_reason": selection_reason,
+                        "quality_routing": route.as_dict() if route is not None else None,
                         "screen_quality_disagreement": disagreement,
                         "organisation": org,
                         "author_count": author_counts.get(content_id, 0),

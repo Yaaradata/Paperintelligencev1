@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
-from paper_intelligence.quality.stage import select_quality_candidates
+from paper_intelligence.quality.stage import (
+    explain_quality_routing,
+    select_quality_candidates,
+)
 
 
 class _FakeCur:
@@ -49,8 +52,8 @@ class _FakeConn:
         return _FakeCur(self)
 
 
-def test_quality_candidates_union_top_slice_and_notable_org(monkeypatch):
-    screens = [
+def _screens_for_router():
+    return [
         {
             "content_item_id": 1,
             "result_json": {
@@ -87,7 +90,22 @@ def test_quality_candidates_union_top_slice_and_notable_org(monkeypatch):
                 "evidence_strength": 10,
             },
         },
+        {
+            # ENTITY_RESOLVED analogue: still present in latest_screen_scores
+            # because router no longer filters Radar status.
+            "content_item_id": 137619,
+            "result_json": {
+                "gate": {"passed": True},
+                "technical_significance": 7.0,
+                "apparent_novelty": 5.5,
+                "evidence_strength": 7.5,
+            },
+        },
     ]
+
+
+def test_quality_candidates_union_top_slice_and_notable_org(monkeypatch):
+    screens = _screens_for_router()[:4]
     conn = _FakeConn(screens, notable_org=[3], notable_person=[])
 
     def fake_latest(conn, *, date_from, date_until):
@@ -102,6 +120,155 @@ def test_quality_candidates_union_top_slice_and_notable_org(monkeypatch):
         conn, date_from="2026-09-01", date_until="2026-09-02", gate_percentile=50
     )
     assert ids == [1, 2, 3]
+
+
+def test_entity_resolved_screen_pass_enters_router_population(monkeypatch):
+    """Case 1+6: PI screen passed + Radar ENTITY_RESOLVED still in router population."""
+    screens = _screens_for_router()
+    conn = _FakeConn(screens, notable_org=[], notable_person=[])
+
+    monkeypatch.setattr(
+        "paper_intelligence.quality.stage.latest_screen_scores",
+        lambda *a, **k: screens,
+    )
+
+    decisions = {
+        d.content_item_id: d
+        for d in explain_quality_routing(
+            conn, date_from="2026-09-02", date_until="2026-09-02", gate_percentile=15
+        )
+    }
+    assert 137619 in decisions
+    assert decisions[137619].decision in {"selected", "not_selected"}
+    assert decisions[137619].reason != "blocked_screen_gate_failed"
+
+
+def test_below_cutoff_gets_explicit_not_selected(monkeypatch):
+    """Case 2: screen passed + below cutoff → not_selected with reason."""
+    screens = _screens_for_router()
+    conn = _FakeConn(screens)
+
+    monkeypatch.setattr(
+        "paper_intelligence.quality.stage.latest_screen_scores",
+        lambda *a, **k: screens,
+    )
+
+    decisions = explain_quality_routing(
+        conn, date_from="2026-09-02", date_until="2026-09-02", gate_percentile=15
+    )
+    by_id = {d.content_item_id: d for d in decisions}
+    # With 4 survivors (1,2,3,137619), keep max(1, round(4*0.15))=1 → only id 1
+    assert by_id[137619].decision == "not_selected"
+    assert by_id[137619].reason == "not_selected_below_gate_percentile"
+    assert by_id[2].decision == "not_selected"
+    assert by_id[3].decision == "not_selected"
+
+
+def test_notable_org_override_selects_below_cutoff(monkeypatch):
+    """Case 3: notable-org override selects below-cutoff survivor."""
+    screens = _screens_for_router()
+    conn = _FakeConn(screens, notable_org=[137619], notable_person=[])
+
+    monkeypatch.setattr(
+        "paper_intelligence.quality.stage.latest_screen_scores",
+        lambda *a, **k: screens,
+    )
+
+    ids = select_quality_candidates(
+        conn, date_from="2026-09-02", date_until="2026-09-02", gate_percentile=15
+    )
+    assert 137619 in ids
+
+    decisions = {
+        d.content_item_id: d
+        for d in explain_quality_routing(
+            conn, date_from="2026-09-02", date_until="2026-09-02", gate_percentile=15
+        )
+    }
+    assert decisions[137619].decision == "selected"
+    assert decisions[137619].reason == "selected_notable_org"
+
+
+def test_screen_failed_blocked_from_quality_routing(monkeypatch):
+    """Case 4: screen gate failed → blocked."""
+    screens = _screens_for_router()
+    conn = _FakeConn(screens)
+
+    monkeypatch.setattr(
+        "paper_intelligence.quality.stage.latest_screen_scores",
+        lambda *a, **k: screens,
+    )
+
+    ids = select_quality_candidates(
+        conn, date_from="2026-09-02", date_until="2026-09-02", gate_percentile=50
+    )
+    assert 4 not in ids
+
+    decisions = {
+        d.content_item_id: d
+        for d in explain_quality_routing(
+            conn, date_from="2026-09-02", date_until="2026-09-02", gate_percentile=50
+        )
+    }
+    assert decisions[4].decision == "blocked"
+    assert decisions[4].reason == "blocked_screen_gate_failed"
+
+
+def test_stale_missing_rank_dimensions_blocked(monkeypatch):
+    """Case 5: incomplete screen JSON → blocked_missing_rank_dimensions."""
+    screens = [
+        {
+            "content_item_id": 99,
+            "result_json": {
+                "gate": {"passed": True},
+                "technical_significance": 8,
+                # missing apparent_novelty / evidence_strength
+            },
+        }
+    ]
+    conn = _FakeConn(screens)
+    monkeypatch.setattr(
+        "paper_intelligence.quality.stage.latest_screen_scores",
+        lambda *a, **k: screens,
+    )
+    decisions = explain_quality_routing(
+        conn, date_from="2026-09-02", date_until="2026-09-02", gate_percentile=15
+    )
+    assert decisions[0].decision == "blocked"
+    assert decisions[0].reason == "blocked_missing_rank_dimensions"
+    assert select_quality_candidates(
+        conn, date_from="2026-09-02", date_until="2026-09-02", gate_percentile=15
+    ) == []
+
+
+def test_latest_screen_scores_sql_has_no_status_filter():
+    """Case 6: Radar status must not appear in latest_screen_scores SQL."""
+    from paper_intelligence.db import results as results_mod
+
+    captured = {}
+
+    class Cur:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return None
+
+        def execute(self, sql, params):
+            captured["sql"] = " ".join(sql.split())
+            captured["params"] = list(params)
+
+        def fetchall(self):
+            return []
+
+    class Conn:
+        def cursor(self):
+            return Cur()
+
+    results_mod.latest_screen_scores(Conn(), date_from="2026-09-01", date_until="2026-09-02")
+    assert "ci.status" not in captured["sql"]
+    assert "RELEVANT" not in captured["params"]
+    assert captured["params"] == ["2026-09-01", "2026-09-02"]
 
 
 def test_version_aware_skip_sql_includes_versions():
@@ -142,10 +309,12 @@ def test_version_aware_skip_sql_includes_versions():
     assert "r.prompt_version = %s" in captured["sql"]
     assert "r.policy_version = %s" in captured["sql"]
     assert "r.model = %s" in captured["sql"]
-    assert captured["params"] == [
-        "2026-09-01",
-        "2026-09-02",
-        "RELEVANT",
+    assert "ci.status = ANY(%s)" in captured["sql"]
+    assert captured["params"][0] == "2026-09-01"
+    assert captured["params"][1] == "2026-09-02"
+    assert "ENTITY_RESOLVED" in captured["params"][2]
+    assert "RELEVANT" in captured["params"][2]
+    assert captured["params"][3:] == [
         "domain",
         "v002",
         "v003",

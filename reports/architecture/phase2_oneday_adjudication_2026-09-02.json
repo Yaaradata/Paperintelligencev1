@@ -1,0 +1,22 @@
+{
+  "day": "2026-09-02",
+  "run_id": "53959ba5-25a3-4e12-b949-5e630f290ead",
+  "focus_id": 137619,
+  "focus_screen_score_before": 6.7,
+  "focus_screen_score_after": 6.7,
+  "focus_screen_score_unchanged": true,
+  "quality_selection_reason": "not_selected_below_gate_percentile",
+  "quality_routing_reason": "not_selected_below_gate_percentile",
+  "quality_status": "not_selected",
+  "historical_score_mismatches": 0,
+  "mismatch_sample": [],
+  "rows_before": 567,
+  "rows_after": 567,
+  "adjudication_stats": {
+    "papers": 567,
+    "with_quality": 163,
+    "with_org": 328,
+    "disagreements": 0,
+    "written": 567
+  }
+}

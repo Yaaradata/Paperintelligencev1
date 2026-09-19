@@ -546,6 +546,8 @@ def _run_normalize(args: argparse.Namespace) -> int:
     if args.content_item_id is not None:
         ids = [args.content_item_id]
     else:
+        from paper_intelligence.db.results import PI_ELIGIBLE_STATUSES
+
         with connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -553,11 +555,16 @@ def _run_normalize(args: argparse.Namespace) -> int:
                     SELECT id FROM research_radar.content_items
                     WHERE published_at >= %s::timestamptz
                       AND published_at < (%s::timestamptz + interval '1 day')
-                      AND status = 'RELEVANT'
+                      AND status = ANY(%s)
                     ORDER BY id
                     LIMIT %s
                     """,
-                    (args.date_from, args.date_until, args.limit if args.limit is not None else 100_000),
+                    (
+                        args.date_from,
+                        args.date_until,
+                        list(PI_ELIGIBLE_STATUSES),
+                        args.limit if args.limit is not None else 100_000,
+                    ),
                 )
                 ids = [int(r["id"]) for r in cur.fetchall()]
 

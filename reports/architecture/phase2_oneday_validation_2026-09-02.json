@@ -1,0 +1,86 @@
+{
+  "day": "2026-09-02",
+  "pi_only_quality_eligibility": {
+    "latest_screen_scores_includes_non_relevant": true,
+    "screen_rows_by_radar_status": {
+      "SCORED": 1,
+      "ENTITY_RESOLVED": 555,
+      "RELEVANT": 11
+    },
+    "non_relevant_screen_rows": 556,
+    "entity_resolved_screen_rows": 555,
+    "PI_ELIGIBLE_STATUSES_used_by_quality_router": false,
+    "PI_ELIGIBLE_STATUSES_scope": "screen/audience/normalize candidate pools only",
+    "quality_entry_criterion": "latest PI screen result with gate.passed",
+    "PI_ELIGIBLE_STATUSES": [
+      "RELEVANT",
+      "ENRICHED",
+      "ENTITY_RESOLVED",
+      "SCORED",
+      "CANDIDATE"
+    ]
+  },
+  "funnel": {
+    "screen_rows_latest": 567,
+    "screen_passed_enter_router": 556,
+    "blocked": 11,
+    "not_selected": 425,
+    "selected_routed_candidates": 131,
+    "already_scored_current_versions": 93,
+    "newly_selected_need_paid": 38,
+    "by_reason": {
+      "not_selected_below_gate_percentile": 425,
+      "selected_top_slice": 68,
+      "selected_notable_org": 48,
+      "selected_top_slice_and_notable_org": 15,
+      "blocked_screen_gate_failed": 11
+    },
+    "failures_blocked": 11,
+    "estimated_paid_calls": 8,
+    "estimated_cost_usd": 0.288
+  },
+  "paper_137619": {
+    "radar_status": "ENTITY_RESOLVED",
+    "A_enters_router_independent_of_radar_status": true,
+    "original_screen_mean_from_pi_result": 6.7,
+    "current_table_screen_score": 6.7,
+    "decision": "not_selected",
+    "reason": "not_selected_below_gate_percentile",
+    "rank_mean": 6.6667,
+    "rank_position": 199,
+    "survivors_in_window": 556,
+    "top_slice_keep": 83,
+    "forced_into_normal_selection": false,
+    "editorial_nomination": {
+      "targets": [
+        {
+          "content_item_id": 137619,
+          "arxiv_id": "2609.03181",
+          "title": "Jina-OCR-v1: Efficient Document Parsing with Speculative Decoding and Dense Verifiable Rewards",
+          "status": "ENTITY_RESOLVED",
+          "published_at": "2026-09-02 00:00:00+00:00",
+          "screen_gate_passed": true,
+          "screen_rank_mean": 6.6667,
+          "already_quality_scored": false,
+          "exclusion_reason": "outside quality router on 2026-09-02 (top 15.0% \u222a notable-org/person); screen_rank_mean=6.666666666666667"
+        }
+      ],
+      "to_score": [
+        137619
+      ],
+      "skipped_ids": [],
+      "can_score_via_editorial_route": true,
+      "dry_run_projected_cost_usd": 0.0079,
+      "uses_standard_quality_rubric": true
+    },
+    "adjudication_dry_run_predicted_quality_selection_reason": "not_selected_below_gate_percentile",
+    "adjudication_window_dry_run_stats": {
+      "papers": 567,
+      "with_quality": 163,
+      "with_org": 328,
+      "disagreements": 0,
+      "written": 0
+    },
+    "note": "Adjudication not written. One-day live adjudication deferred until reason prediction verified here."
+  }
+}

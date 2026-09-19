@@ -15,14 +15,14 @@ ingest → relevance → normalize_authors → screen
 
 0. **ingest** (free) — arXiv OAI-PMH → shared `research_radar` tables; stores `authors_structured` when OAI provides affiliations  
 1. **relevance** (free) — deterministic AI relevance; rejects archived to S3  
-2. **normalize_authors** (free) — `status = RELEVANT` only  
+2. **normalize_authors** (free) — PI-eligible Radar statuses until PI catalog owns authors  
 3. **screen** (paid) — gate `ai_relevance`  
 4. **affiliation_fast** (free) — OAI / existing `affiliation_text` + alias/domain; **no HTML/ROR/OpenAlex**  
 5. **audience_domain** (paid) — audience / domain / subdomains / application_domain  
-6. **quality** (paid) — router: top `GATE_PERCENTILE` ∪ Org-of-Interest ∪ Person-of-Interest; scoring stays author/org-blind  
+6. **quality** (paid) — router on **PI screen survivors** (not Radar `status`): top `GATE_PERCENTILE` ∪ Org-of-Interest ∪ Person-of-Interest; scoring stays author/org-blind  
 7. **affiliation_deep** (free) — HTML footnotes → ROR → OpenAlex  
 8. **hf_signals** (free) — HF Daily Papers enrichment by `arxiv_id` (no new papers)  
-9. **adjudication** — `paper_intelligence_current` including explicit `quality_status`  
+9. **adjudication** — `paper_intelligence_current` including explicit `quality_status` + `quality_selection_reason`  
 10. **reports** — tech / business / audience tops  
 
 ## Version-aware skips
@@ -40,4 +40,4 @@ Manifest: `research_radar.s3_archives`.
 - `--stage classify` aliases to `audience_domain`
 - Pipeline alias `affiliation` → `affiliation_deep`
 - Paid stages need `--allow-paid`
-- Downstream paid selection requires `status = RELEVANT`
+- Quality routing eligibility is PI screen `gate.passed` (Radar `content_items.status` is not a quality-router filter; see `reports/architecture/pi_independence_audit.md`)

@@ -7,9 +7,25 @@ from typing import Any, Iterable, Sequence
 
 from psycopg import Connection
 
-# Papers already filtered by the upstream relevance stage are excluded here:
-# 'REJECTED' items never enter a paid PaperIntelligence stage. Prefer RELEVANT.
+# Radar statuses that must never enter paid PI stages.
 EXCLUDED_UPSTREAM_STATUSES = ("REJECTED",)
+
+# Temporary compatibility set for *non-quality* paid/free candidate pools
+# (screen, audience_domain, normalize) while identity still lives on Radar
+# content_items. This MUST NOT be used by the quality router.
+#
+# Quality routing eligibility is PI screen ``gate.passed`` only
+# (see ``latest_screen_scores`` / ``explain_quality_routing``).
+# Do not reintroduce Radar status filters into quality selection.
+PI_ELIGIBLE_STATUSES = (
+    "RELEVANT",
+    "ENRICHED",
+    "ENTITY_RESOLVED",
+    "SCORED",
+    "CANDIDATE",
+)
+
+# Deprecated alias for older call sites. Do not use for quality routing.
 REQUIRED_UPSTREAM_STATUS = "RELEVANT"
 
 PAPER_FIELDS_SQL = """
@@ -51,8 +67,12 @@ def select_window_candidates(
 ) -> list[int]:
     """Content ids in the published_at window that still need `stage_task_type`.
 
-    `date_until` is inclusive of the whole day. Upstream-REJECTED papers are
-    excluded so paid stages never spend on them.
+    `date_until` is inclusive of the whole day.
+
+    Eligibility uses ``PI_ELIGIBLE_STATUSES`` (not exact ``RELEVANT``) so Radar
+    advancing a paper to ``ENTITY_RESOLVED`` / ``SCORED`` does not remove it from
+    PI paid-stage pools. ``REJECTED`` / ``INGESTED`` remain excluded here until
+    PI owns a first-class relevance result store.
 
     When version fields are provided, "already done" means a result exists for
     the *current* stage/prompt/policy/model tuple — not merely any prior run.
@@ -60,9 +80,9 @@ def select_window_candidates(
     clauses = [
         "ci.published_at >= %s::timestamptz",
         "ci.published_at < (%s::timestamptz + interval '1 day')",
-        "ci.status = %s",
+        "ci.status = ANY(%s)",
     ]
-    params: list[Any] = [date_from, date_until, REQUIRED_UPSTREAM_STATUS]
+    params: list[Any] = [date_from, date_until, list(PI_ELIGIBLE_STATUSES)]
 
     if skip_done:
         done_clauses = ["r.content_item_id = ci.id", "r.task_type = %s"]
@@ -110,9 +130,9 @@ def count_window(conn: Connection, *, date_from: str, date_until: str) -> int:
             FROM research_radar.content_items ci
             WHERE ci.published_at >= %s::timestamptz
               AND ci.published_at < (%s::timestamptz + interval '1 day')
-              AND ci.status = %s
+              AND ci.status = ANY(%s)
             """,
-            (date_from, date_until, REQUIRED_UPSTREAM_STATUS),
+            (date_from, date_until, list(PI_ELIGIBLE_STATUSES)),
         )
         return int(cur.fetchone()["n"])
 
@@ -192,22 +212,31 @@ def insert_classification_results(
 def latest_screen_scores(
     conn: Connection, *, date_from: str, date_until: str
 ) -> list[dict[str, Any]]:
-    """Most recent screen row per paper in the window."""
+    """Most recent PI screen row per paper in the published_at window.
+
+    Eligibility for quality routing is determined by the PI screen gate in
+    ``result_json``, not by ``research_radar.content_items.status``. The join to
+    ``content_items`` is only for the published_at window (identity still shared
+    until the PI catalog migration).
+    """
     with conn.cursor() as cur:
         cur.execute(
             """
             SELECT DISTINCT ON (r.content_item_id)
                 r.content_item_id,
                 r.result_json,
-                r.created_at
+                r.created_at,
+                r.stage_version,
+                r.prompt_version,
+                r.policy_version,
+                r.model
             FROM paper_intelligence.paper_classification_results r
             JOIN research_radar.content_items ci ON ci.id = r.content_item_id
             WHERE r.task_type = 'screen'
-              AND ci.status = %s
               AND ci.published_at >= %s::timestamptz
               AND ci.published_at < (%s::timestamptz + interval '1 day')
             ORDER BY r.content_item_id, r.created_at DESC
             """,
-            (REQUIRED_UPSTREAM_STATUS, date_from, date_until),
+            (date_from, date_until),
         )
         return list(cur.fetchall())
