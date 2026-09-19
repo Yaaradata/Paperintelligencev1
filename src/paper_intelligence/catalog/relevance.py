@@ -50,6 +50,44 @@ def current_relevance(
     return latest_relevance_decision(conn, [paper_id]).get(int(paper_id))
 
 
+def insert_relevance_result(
+    conn: Connection,
+    *,
+    paper_id: int,
+    decision: str,
+    score: float | None,
+    reason: str | None,
+    method: str = "deterministic",
+    stage_version: str | None = None,
+    prompt_version: str | None = None,
+    policy_version: str | None = None,
+    model: str | None = None,
+    run_id: str | None = None,
+) -> None:
+    """Append-only native PI relevance decision."""
+    with conn.cursor() as cur:
+        cur.execute(
+            """
+            INSERT INTO paper_intelligence.paper_relevance_results
+              (paper_id, decision, score, reason, method,
+               stage_version, prompt_version, policy_version, model, run_id)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """,
+            (
+                int(paper_id),
+                decision,
+                score,
+                reason,
+                method,
+                stage_version,
+                prompt_version,
+                policy_version,
+                model,
+                run_id,
+            ),
+        )
+
+
 def papers_with_latest_decision(
     conn: Connection,
     *,

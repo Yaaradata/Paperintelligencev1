@@ -12,6 +12,8 @@ import re
 from typing import Any
 
 from paper_intelligence.cache.s3_archive import archive_rejected, build_rejected_record
+from paper_intelligence.catalog.relevance import insert_relevance_result
+from paper_intelligence.common.config import PI_WRITE_RADAR_COMPAT
 from paper_intelligence.db import connect
 
 log = logging.getLogger("paper_intelligence.relevance")
@@ -160,20 +162,54 @@ def _store_relevance(
 
 
 def _set_status(conn: Any, content_id: int, status: str) -> None:
-    conn.execute(
-        "UPDATE research_radar.content_items SET status=%s, modified_at=NOW() WHERE id=%s",
-        (status, content_id),
-    )
+    """Best-effort Radar compatibility write. Must not gate PI success."""
+    if not PI_WRITE_RADAR_COMPAT:
+        return
+    try:
+        conn.execute(
+            "UPDATE research_radar.content_items SET status=%s, modified_at=NOW() WHERE id=%s",
+            (status, content_id),
+        )
+    except Exception:  # noqa: BLE001
+        log.exception("Radar compat status write failed id=%s status=%s", content_id, status)
 
 
 def _set_relevance_version(conn: Any, content_id: int, version: str) -> None:
-    conn.execute(
-        """
-        UPDATE research_radar.content_items
-        SET relevance_version=%s, modified_at=NOW()
-        WHERE id=%s
-        """,
-        (version, content_id),
+    if not PI_WRITE_RADAR_COMPAT:
+        return
+    try:
+        conn.execute(
+            """
+            UPDATE research_radar.content_items
+            SET relevance_version=%s, modified_at=NOW()
+            WHERE id=%s
+            """,
+            (version, content_id),
+        )
+    except Exception:  # noqa: BLE001
+        log.exception("Radar compat relevance_version write failed id=%s", content_id)
+
+
+def _write_pi_relevance(
+    conn: Any,
+    *,
+    paper_id: int,
+    decision: str,
+    score: float,
+    reason: str,
+    run_id: str | None,
+) -> None:
+    """Authoritative PI relevance append. Raises on failure."""
+    insert_relevance_result(
+        conn,
+        paper_id=paper_id,
+        decision=decision,
+        score=score,
+        reason=reason,
+        method="deterministic",
+        stage_version=STAGE_VERSION,
+        policy_version="v001",
+        run_id=run_id,
     )
 
 
@@ -257,9 +293,17 @@ def run_window(
                     row["title"], row.get("summary") or "", cats, row["source_type"]
                 )
                 _store_relevance(conn, row["id"], score, primary, secondary, reason)
-                _set_status(conn, row["id"], "RELEVANCE_CHECKED")
-                _set_relevance_version(conn, row["id"], RELEVANCE_VERSION)
                 if score < MIN_AI_RELEVANCE:
+                    _write_pi_relevance(
+                        conn,
+                        paper_id=int(row["id"]),
+                        decision="reject",
+                        score=score,
+                        reason=reason or "low_ai_relevance",
+                        run_id=run_id,
+                    )
+                    _set_status(conn, row["id"], "RELEVANCE_CHECKED")
+                    _set_relevance_version(conn, row["id"], RELEVANCE_VERSION)
                     reject_records.append(
                         build_rejected_record(
                             content_id=row["id"],
@@ -277,6 +321,16 @@ def run_window(
                     reject_ids.append(int(row["id"]))
                     rejected += 1
                 else:
+                    _write_pi_relevance(
+                        conn,
+                        paper_id=int(row["id"]),
+                        decision="keep",
+                        score=score,
+                        reason=reason or "deterministic_keep",
+                        run_id=run_id,
+                    )
+                    _set_status(conn, row["id"], "RELEVANCE_CHECKED")
+                    _set_relevance_version(conn, row["id"], RELEVANCE_VERSION)
                     _set_status(conn, row["id"], "RELEVANT")
                     kept += 1
             except Exception as exc:  # noqa: BLE001

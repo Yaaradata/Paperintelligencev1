@@ -30,6 +30,14 @@ STAGE_CONCURRENCY = int(os.getenv("PI_STAGE_CONCURRENCY", "6"))
 
 QUALITY_REASONING_EFFORT = os.getenv("QUALITY_REASONING_EFFORT", "medium")
 
+# Catalog cutover flags (default OFF until canary approved).
+def _env_flag(name: str, default: str = "0") -> bool:
+    return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "on"}
+
+
+PI_USE_PAPERS_CATALOG = _env_flag("PI_USE_PAPERS_CATALOG", "0")
+PI_WRITE_RADAR_COMPAT = _env_flag("PI_WRITE_RADAR_COMPAT", "1")
+
 # Per-model OpenRouter prices, USD per million tokens. Override per model with
 # PI_PRICE_<SLUG>_IN / _OUT where SLUG upper-cases the model id and replaces
 # non-alphanumerics with underscores.

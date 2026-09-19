@@ -546,27 +546,40 @@ def _run_normalize(args: argparse.Namespace) -> int:
     if args.content_item_id is not None:
         ids = [args.content_item_id]
     else:
+        from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
         from paper_intelligence.db.results import PI_ELIGIBLE_STATUSES
 
         with connect() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    SELECT id FROM research_radar.content_items
-                    WHERE published_at >= %s::timestamptz
-                      AND published_at < (%s::timestamptz + interval '1 day')
-                      AND status = ANY(%s)
-                    ORDER BY id
-                    LIMIT %s
-                    """,
-                    (
-                        args.date_from,
-                        args.date_until,
-                        list(PI_ELIGIBLE_STATUSES),
-                        args.limit if args.limit is not None else 100_000,
-                    ),
+            if PI_USE_PAPERS_CATALOG:
+                from paper_intelligence.catalog.relevance import papers_with_latest_decision
+
+                ids = papers_with_latest_decision(
+                    conn,
+                    date_from=args.date_from,
+                    date_until=args.date_until,
+                    decision="keep",
                 )
-                ids = [int(r["id"]) for r in cur.fetchall()]
+                if args.limit is not None:
+                    ids = ids[: int(args.limit)]
+            else:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        SELECT id FROM research_radar.content_items
+                        WHERE published_at >= %s::timestamptz
+                          AND published_at < (%s::timestamptz + interval '1 day')
+                          AND status = ANY(%s)
+                        ORDER BY id
+                        LIMIT %s
+                        """,
+                        (
+                            args.date_from,
+                            args.date_until,
+                            list(PI_ELIGIBLE_STATUSES),
+                            args.limit if args.limit is not None else 100_000,
+                        ),
+                    )
+                    ids = [int(r["id"]) for r in cur.fetchall()]
 
     # Date-window runs should cover the full window unless --limit is set.
     # The old default of 100 silently truncated multi-day backfills.

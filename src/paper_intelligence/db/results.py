@@ -7,16 +7,13 @@ from typing import Any, Iterable, Sequence
 
 from psycopg import Connection
 
-# Radar statuses that must never enter paid PI stages.
+from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
+
+# Radar statuses that must never enter paid PI stages (legacy rollback path only).
 EXCLUDED_UPSTREAM_STATUSES = ("REJECTED",)
 
-# Temporary compatibility set for *non-quality* paid/free candidate pools
-# (screen, audience_domain, normalize) while identity still lives on Radar
-# content_items. This MUST NOT be used by the quality router.
-#
-# Quality routing eligibility is PI screen ``gate.passed`` only
-# (see ``latest_screen_scores`` / ``explain_quality_routing``).
-# Do not reintroduce Radar status filters into quality selection.
+# Legacy Radar-backed eligibility ONLY when PI_USE_PAPERS_CATALOG=0.
+# Must NOT be used by the PI-catalog eligibility path.
 PI_ELIGIBLE_STATUSES = (
     "RELEVANT",
     "ENRICHED",
@@ -25,10 +22,9 @@ PI_ELIGIBLE_STATUSES = (
     "CANDIDATE",
 )
 
-# Deprecated alias for older call sites. Do not use for quality routing.
 REQUIRED_UPSTREAM_STATUS = "RELEVANT"
 
-PAPER_FIELDS_SQL = """
+PAPER_FIELDS_SQL_RADAR = """
 SELECT
     ci.id AS content_item_id,
     ci.title,
@@ -45,10 +41,23 @@ WHERE ci.id = ANY(%s)
 ORDER BY ci.id
 """
 
+PAPER_FIELDS_SQL_PI = """
+SELECT
+    p.paper_id AS content_item_id,
+    p.title,
+    COALESCE(p.abstract, p.summary, '') AS abstract,
+    COALESCE(p.categories, '[]'::jsonb) AS categories,
+    p.published_at
+FROM paper_intelligence.papers p
+WHERE p.paper_id = ANY(%s)
+ORDER BY p.paper_id
+"""
+
 
 def fetch_papers(conn: Connection, content_item_ids: Sequence[int]) -> list[dict[str, Any]]:
+    sql = PAPER_FIELDS_SQL_PI if PI_USE_PAPERS_CATALOG else PAPER_FIELDS_SQL_RADAR
     with conn.cursor() as cur:
-        cur.execute(PAPER_FIELDS_SQL, (list(content_item_ids),))
+        cur.execute(sql, (list(content_item_ids),))
         return list(cur.fetchall())
 
 
@@ -67,16 +76,25 @@ def select_window_candidates(
 ) -> list[int]:
     """Content ids in the published_at window that still need `stage_task_type`.
 
-    `date_until` is inclusive of the whole day.
-
-    Eligibility uses ``PI_ELIGIBLE_STATUSES`` (not exact ``RELEVANT``) so Radar
-    advancing a paper to ``ENTITY_RESOLVED`` / ``SCORED`` does not remove it from
-    PI paid-stage pools. ``REJECTED`` / ``INGESTED`` remain excluded here until
-    PI owns a first-class relevance result store.
-
-    When version fields are provided, "already done" means a result exists for
-    the *current* stage/prompt/policy/model tuple — not merely any prior run.
+    When ``PI_USE_PAPERS_CATALOG`` is on: PI relevance keep (no Radar status).
+    When off: legacy ``PI_ELIGIBLE_STATUSES`` on Radar content_items.
     """
+    if PI_USE_PAPERS_CATALOG:
+        from paper_intelligence.catalog.shadow import select_window_candidates_pi
+
+        return select_window_candidates_pi(
+            conn,
+            date_from=date_from,
+            date_until=date_until,
+            stage_task_type=stage_task_type,
+            limit=limit,
+            skip_done=skip_done,
+            stage_version=stage_version,
+            prompt_version=prompt_version,
+            policy_version=policy_version,
+            model=model,
+        )
+
     clauses = [
         "ci.published_at >= %s::timestamptz",
         "ci.published_at < (%s::timestamptz + interval '1 day')",
@@ -123,6 +141,11 @@ def select_window_candidates(
 
 
 def count_window(conn: Connection, *, date_from: str, date_until: str) -> int:
+    if PI_USE_PAPERS_CATALOG:
+        from paper_intelligence.catalog.shadow import count_window_pi
+
+        return count_window_pi(conn, date_from=date_from, date_until=date_until)
+
     with conn.cursor() as cur:
         cur.execute(
             """
@@ -214,11 +237,14 @@ def latest_screen_scores(
 ) -> list[dict[str, Any]]:
     """Most recent PI screen row per paper in the published_at window.
 
-    Eligibility for quality routing is determined by the PI screen gate in
-    ``result_json``, not by ``research_radar.content_items.status``. The join to
-    ``content_items`` is only for the published_at window (identity still shared
-    until the PI catalog migration).
+    Quality routing uses PI screen ``gate.passed`` only — never Radar status.
+    Date window comes from PI papers when catalog flag is on, else Radar items.
     """
+    if PI_USE_PAPERS_CATALOG:
+        from paper_intelligence.catalog.shadow import latest_screen_scores_pi
+
+        return latest_screen_scores_pi(conn, date_from=date_from, date_until=date_until)
+
     with conn.cursor() as cur:
         cur.execute(
             """

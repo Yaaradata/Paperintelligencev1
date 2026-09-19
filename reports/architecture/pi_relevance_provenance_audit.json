@@ -1,0 +1,303 @@
+{
+  "total_migrated_rows": 28383,
+  "methods_before": [
+    {
+      "method": "migrated",
+      "stage_version": "v001",
+      "policy_version": "v001",
+      "prompt_version": null,
+      "model": null,
+      "n": 28383
+    }
+  ],
+  "methods_after_relabel": [
+    {
+      "method": "migrated_legacy_state",
+      "n": 28383
+    }
+  ],
+  "rows_relabeled_to_migrated_legacy_state": 28383,
+  "mapping": {
+    "A_keep_statuses": [
+      "RELEVANT",
+      "ENRICHED",
+      "ENTITY_RESOLVED",
+      "SCORED",
+      "CANDIDATE"
+    ],
+    "B_reject_statuses": [
+      "REJECTED"
+    ],
+    "C_ENTITY_RESOLVED_mapped_to_keep": true,
+    "D_justification": "ENTITY_RESOLVED is a Radar post-relevance lifecycle status meaning entities were resolved after the paper already passed Radar/PI relevance. It is not a reject. Mapping to keep preserves eligibility for papers that Radar advanced past RELEVANT (the Phase-2 coupling failure mode).",
+    "by_radar_status_and_decision": [
+      {
+        "radar_status": "ENTITY_RESOLVED",
+        "decision": "keep",
+        "n": 13959
+      },
+      {
+        "radar_status": "REJECTED",
+        "decision": "reject",
+        "n": 8083
+      },
+      {
+        "radar_status": "RELEVANT",
+        "decision": "keep",
+        "n": 5107
+      },
+      {
+        "radar_status": "SCORED",
+        "decision": "keep",
+        "n": 990
+      },
+      {
+        "radar_status": "CANDIDATE",
+        "decision": "keep",
+        "n": 242
+      },
+      {
+        "radar_status": "ENRICHED",
+        "decision": "keep",
+        "n": 2
+      }
+    ]
+  },
+  "screen_join_by_decision": [
+    {
+      "decision": "keep",
+      "n": 20300,
+      "with_screen": 7756,
+      "screen_gate_passed": 7548,
+      "screen_gate_failed": 208,
+      "no_screen": 12544
+    },
+    {
+      "decision": "reject",
+      "n": 8083,
+      "with_screen": 0,
+      "screen_gate_passed": 0,
+      "screen_gate_failed": 0,
+      "no_screen": 8083
+    }
+  ],
+  "contradictions": {
+    "E_keep_with_screen_gate_failed_count": 208,
+    "E_samples": [
+      {
+        "paper_id": 1581,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=SCORED",
+        "gate_passed": false,
+        "radar_status": "SCORED"
+      },
+      {
+        "paper_id": 3795,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 4427,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 8344,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=RELEVANT",
+        "gate_passed": false,
+        "radar_status": "RELEVANT"
+      },
+      {
+        "paper_id": 31652,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=RELEVANT",
+        "gate_passed": false,
+        "radar_status": "RELEVANT"
+      },
+      {
+        "paper_id": 35818,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=RELEVANT",
+        "gate_passed": false,
+        "radar_status": "RELEVANT"
+      },
+      {
+        "paper_id": 39066,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=RELEVANT",
+        "gate_passed": false,
+        "radar_status": "RELEVANT"
+      },
+      {
+        "paper_id": 44957,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=RELEVANT",
+        "gate_passed": false,
+        "radar_status": "RELEVANT"
+      },
+      {
+        "paper_id": 55971,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 67038,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=RELEVANT",
+        "gate_passed": false,
+        "radar_status": "RELEVANT"
+      },
+      {
+        "paper_id": 88242,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=RELEVANT",
+        "gate_passed": false,
+        "radar_status": "RELEVANT"
+      },
+      {
+        "paper_id": 92440,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=RELEVANT",
+        "gate_passed": false,
+        "radar_status": "RELEVANT"
+      },
+      {
+        "paper_id": 93406,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=RELEVANT",
+        "gate_passed": false,
+        "radar_status": "RELEVANT"
+      },
+      {
+        "paper_id": 99691,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=RELEVANT",
+        "gate_passed": false,
+        "radar_status": "RELEVANT"
+      },
+      {
+        "paper_id": 104179,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 121004,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 122537,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 122850,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 126636,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 132754,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 134323,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 135151,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 135253,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 135332,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 135514,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 135753,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 135947,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 136018,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 136066,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      },
+      {
+        "paper_id": 136093,
+        "decision": "keep",
+        "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+        "gate_passed": false,
+        "radar_status": "ENTITY_RESOLVED"
+      }
+    ],
+    "F_reject_with_screen_gate_passed_count": 0,
+    "F_samples": [],
+    "notes": "Screen gate failed after relevance keep is NOT a relevance contradiction: screen is a later paid AI-relevance gate. Reject + screen pass would be a true contradiction if present."
+  },
+  "stop_for_contradictions": false
+}

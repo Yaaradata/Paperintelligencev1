@@ -9,7 +9,9 @@ from paper_intelligence.catalog.relevance import (
     RELEVANCE_KEEP_STATUSES,
     RELEVANCE_REJECT_STATUSES,
     current_relevance,
+    insert_relevance_result,
     latest_relevance_decision,
+    papers_with_latest_decision,
 )
 
 __all__ = [
@@ -20,5 +22,7 @@ __all__ = [
     "RELEVANCE_KEEP_STATUSES",
     "RELEVANCE_REJECT_STATUSES",
     "current_relevance",
+    "insert_relevance_result",
     "latest_relevance_decision",
+    "papers_with_latest_decision",
 ]

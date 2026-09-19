@@ -1,0 +1,64 @@
+{
+  "day": "2026-09-02",
+  "flags": {
+    "PI_USE_PAPERS_CATALOG": true,
+    "PI_WRITE_RADAR_COMPAT": true
+  },
+  "paid_quality_executed": false,
+  "focus_137619": {
+    "resolved_from_pi_catalog": true,
+    "relevance": {
+      "paper_id": 137619,
+      "decision": "keep",
+      "score": 5.2,
+      "reason": "migrated_from_radar_status=ENTITY_RESOLVED",
+      "method": "migrated_legacy_state",
+      "stage_version": "v001",
+      "policy_version": "v001",
+      "created_at": "2026-09-19 11:35:15.054611+00:00",
+      "relevance_id": 20182
+    },
+    "screen_present": true,
+    "routing": {
+      "content_item_id": 137619,
+      "decision": "not_selected",
+      "reason": "not_selected_below_gate_percentile",
+      "rank_mean": 6.6667,
+      "rank_position": 199,
+      "survivors_in_window": 556,
+      "top_slice_keep": 83,
+      "gate_percentile": 15.0
+    },
+    "selected_for_quality": false,
+    "affiliation_title": "Jina-OCR-v1: Efficient Document Parsing with Speculative Decoding and Dense Verifiable Rewards",
+    "affiliation_arxiv": "2609.03181",
+    "arxiv_unique_count": 1,
+    "normalize_arxiv_v2_same": true
+  },
+  "checks": {
+    "one_canonical_paper": true,
+    "relevance_keep": true,
+    "enters_router": true,
+    "below_gate": true,
+    "orphan_screen_rows": 0,
+    "radar_mutation_independent": true
+  },
+  "radar_mutation_results": {
+    "RELEVANT": {
+      "in_screen_relevance_pool": true,
+      "quality_decision": "not_selected",
+      "quality_reason": "not_selected_below_gate_percentile"
+    },
+    "ENTITY_RESOLVED": {
+      "in_screen_relevance_pool": true,
+      "quality_decision": "not_selected",
+      "quality_reason": "not_selected_below_gate_percentile"
+    },
+    "SCORED": {
+      "in_screen_relevance_pool": true,
+      "quality_decision": "not_selected",
+      "quality_reason": "not_selected_below_gate_percentile"
+    }
+  },
+  "radar_status_restored": "ENTITY_RESOLVED"
+}

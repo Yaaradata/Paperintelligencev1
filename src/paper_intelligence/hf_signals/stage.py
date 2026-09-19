@@ -208,7 +208,30 @@ def collect_daily_index(
 def _lookup_content_items(conn: Any, arxiv_ids: list[str]) -> dict[str, int]:
     if not arxiv_ids:
         return {}
+    from paper_intelligence.catalog.normalize import normalize_arxiv_id
+    from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
+
     with conn.cursor() as cur:
+        if PI_USE_PAPERS_CATALOG:
+            norms = [normalize_arxiv_id(a) for a in arxiv_ids]
+            norms = [a for a in norms if a]
+            cur.execute(
+                """
+                SELECT arxiv_id, paper_id AS content_id
+                FROM paper_intelligence.papers
+                WHERE arxiv_id = ANY(%s)
+                """,
+                (norms,),
+            )
+            # Map both normalized and original request ids when possible
+            by_norm = {str(r["arxiv_id"]): int(r["content_id"]) for r in cur.fetchall()}
+            out: dict[str, int] = {}
+            for raw in arxiv_ids:
+                n = normalize_arxiv_id(raw)
+                if n and n in by_norm:
+                    out[str(raw)] = by_norm[n]
+                    out[n] = by_norm[n]
+            return out
         cur.execute(
             """
             SELECT pm.arxiv_id, pm.content_id
@@ -245,17 +268,31 @@ def run_window(
         # Restrict to papers whose arXiv publish date is in the requested window
         # (still allow featured_date later via lag fetch above).
         with conn.cursor() as cur:
-            cur.execute(
-                """
-                SELECT pm.arxiv_id, pm.content_id
-                FROM research_radar.paper_metadata pm
-                JOIN research_radar.content_items ci ON ci.id = pm.content_id
-                WHERE pm.arxiv_id IS NOT NULL
-                  AND ci.published_at >= %s::timestamptz
-                  AND ci.published_at < (%s::timestamptz + interval '1 day')
-                """,
-                (d0.isoformat(), d1.isoformat()),
-            )
+            from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
+
+            if PI_USE_PAPERS_CATALOG:
+                cur.execute(
+                    """
+                    SELECT arxiv_id, paper_id AS content_id
+                    FROM paper_intelligence.papers
+                    WHERE arxiv_id IS NOT NULL
+                      AND published_at >= %s::timestamptz
+                      AND published_at < (%s::timestamptz + interval '1 day')
+                    """,
+                    (d0.isoformat(), d1.isoformat()),
+                )
+            else:
+                cur.execute(
+                    """
+                    SELECT pm.arxiv_id, pm.content_id
+                    FROM research_radar.paper_metadata pm
+                    JOIN research_radar.content_items ci ON ci.id = pm.content_id
+                    WHERE pm.arxiv_id IS NOT NULL
+                      AND ci.published_at >= %s::timestamptz
+                      AND ci.published_at < (%s::timestamptz + interval '1 day')
+                    """,
+                    (d0.isoformat(), d1.isoformat()),
+                )
             window_papers = {
                 str(r["arxiv_id"]): int(r["content_id"])
                 for r in cur.fetchall()

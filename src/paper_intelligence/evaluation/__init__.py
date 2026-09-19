@@ -1,1 +1,1 @@
-"""Evaluation utilities (HF validation and future golden harness)."""
+"""Evaluation utilities (HF validation, golden harness, org coverage)."""

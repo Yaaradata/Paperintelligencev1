@@ -239,7 +239,7 @@ def backfill(conn, *, apply: bool) -> dict:
                         INSERT INTO paper_intelligence.paper_relevance_results
                           (paper_id, decision, score, reason, method,
                            stage_version, policy_version)
-                        VALUES (%s, %s, %s, %s, 'migrated', 'v001', 'v001')
+                        VALUES (%s, %s, %s, %s, 'migrated_legacy_state', 'v001', 'v001')
                         """,
                         (legacy_id, decision, score, reason),
                     )

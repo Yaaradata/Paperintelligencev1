@@ -6,7 +6,9 @@ from typing import Any
 
 from psycopg import Connection
 
-FETCH_PAPER_SQL = """
+from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
+
+FETCH_PAPER_SQL_RADAR = """
 SELECT
     ci.id            AS content_item_id,
     ci.title         AS title,
@@ -19,6 +21,20 @@ SELECT
 FROM research_radar.content_items ci
 LEFT JOIN research_radar.paper_metadata pm ON pm.content_id = ci.id
 WHERE ci.id = %s
+"""
+
+FETCH_PAPER_SQL_PI = """
+SELECT
+    p.paper_id       AS content_item_id,
+    p.title          AS title,
+    p.raw_metadata   AS raw_metadata,
+    p.doi            AS doi,
+    p.arxiv_id       AS arxiv_id,
+    p.affiliation_text AS affiliation_text,
+    p.extracted_emails AS extracted_emails,
+    COALESCE(p.raw_metadata->'enrichment_metadata', '{}'::jsonb) AS enrichment_metadata
+FROM paper_intelligence.papers p
+WHERE p.paper_id = %s
 """
 
 LIST_AUTHORS_SQL = """
@@ -57,7 +73,10 @@ WHERE content_item_id = %s
 
 def fetch_paper(conn: Connection, content_item_id: int) -> dict[str, Any]:
     with conn.cursor() as cur:
-        cur.execute(FETCH_PAPER_SQL, (content_item_id,))
+        cur.execute(
+            FETCH_PAPER_SQL_PI if PI_USE_PAPERS_CATALOG else FETCH_PAPER_SQL_RADAR,
+            (content_item_id,),
+        )
         row = cur.fetchone()
     if row is None:
         raise LookupError(f"content_item_id={content_item_id} not found")

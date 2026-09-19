@@ -13,7 +13,7 @@ from typing import Any
 from psycopg import Connection
 
 from paper_intelligence.adjudication.org_score import organisation_score
-from paper_intelligence.common.config import GATE_PERCENTILE
+from paper_intelligence.common.config import GATE_PERCENTILE, PI_USE_PAPERS_CATALOG
 from paper_intelligence.quality.stage import (
     composite_score,
     quality_selection_reason_map,
@@ -36,6 +36,16 @@ WHERE ci.published_at >= %s::timestamptz
 ORDER BY r.content_item_id, r.task_type, r.created_at DESC
 """
 
+LATEST_RESULTS_SQL_PI = """
+SELECT DISTINCT ON (r.content_item_id, r.task_type)
+    r.content_item_id, r.task_type, r.result_json, r.confidence
+FROM paper_intelligence.paper_classification_results r
+JOIN paper_intelligence.papers p ON p.paper_id = r.content_item_id
+WHERE p.published_at >= %s::timestamptz
+  AND p.published_at < (%s::timestamptz + interval '1 day')
+ORDER BY r.content_item_id, r.task_type, r.created_at DESC
+"""
+
 AFFILIATION_SQL = """
 SELECT a.content_item_id, a.organisation_id, a.evidence_type, a.confidence,
        o.canonical_name, o.priority, o.is_org_of_interest
@@ -46,12 +56,31 @@ WHERE ci.published_at >= %s::timestamptz
   AND ci.published_at < (%s::timestamptz + interval '1 day')
 """
 
+AFFILIATION_SQL_PI = """
+SELECT a.content_item_id, a.organisation_id, a.evidence_type, a.confidence,
+       o.canonical_name, o.priority, o.is_org_of_interest
+FROM paper_intelligence.paper_author_affiliations a
+LEFT JOIN paper_intelligence.organisations o ON o.id = a.organisation_id
+JOIN paper_intelligence.papers p ON p.paper_id = a.content_item_id
+WHERE p.published_at >= %s::timestamptz
+  AND p.published_at < (%s::timestamptz + interval '1 day')
+"""
+
 AUTHOR_COUNT_SQL = """
 SELECT pa.content_item_id, COUNT(*) AS n
 FROM paper_intelligence.paper_authors pa
 JOIN research_radar.content_items ci ON ci.id = pa.content_item_id
 WHERE ci.published_at >= %s::timestamptz
   AND ci.published_at < (%s::timestamptz + interval '1 day')
+GROUP BY pa.content_item_id
+"""
+
+AUTHOR_COUNT_SQL_PI = """
+SELECT pa.content_item_id, COUNT(*) AS n
+FROM paper_intelligence.paper_authors pa
+JOIN paper_intelligence.papers p ON p.paper_id = pa.content_item_id
+WHERE p.published_at >= %s::timestamptz
+  AND p.published_at < (%s::timestamptz + interval '1 day')
 GROUP BY pa.content_item_id
 """
 
@@ -107,9 +136,13 @@ def run_window(
     dry_run: bool = False,
 ) -> dict[str, int]:
     """Rebuild current state for every paper in the window that has any result."""
+    results_sql = LATEST_RESULTS_SQL_PI if PI_USE_PAPERS_CATALOG else LATEST_RESULTS_SQL
+    aff_sql = AFFILIATION_SQL_PI if PI_USE_PAPERS_CATALOG else AFFILIATION_SQL
+    author_sql = AUTHOR_COUNT_SQL_PI if PI_USE_PAPERS_CATALOG else AUTHOR_COUNT_SQL
+
     by_paper: dict[int, dict[str, Any]] = {}
     with conn.cursor() as cur:
-        cur.execute(LATEST_RESULTS_SQL, (date_from, date_until))
+        cur.execute(results_sql, (date_from, date_until))
         for row in cur.fetchall():
             entry = by_paper.setdefault(int(row["content_item_id"]), {})
             entry[row["task_type"]] = {
@@ -118,11 +151,11 @@ def run_window(
             }
 
         affiliations: dict[int, list[dict[str, Any]]] = {}
-        cur.execute(AFFILIATION_SQL, (date_from, date_until))
+        cur.execute(aff_sql, (date_from, date_until))
         for row in cur.fetchall():
             affiliations.setdefault(int(row["content_item_id"]), []).append(dict(row))
 
-        cur.execute(AUTHOR_COUNT_SQL, (date_from, date_until))
+        cur.execute(author_sql, (date_from, date_until))
         author_counts = {int(r["content_item_id"]): int(r["n"]) for r in cur.fetchall()}
 
     stats = {
