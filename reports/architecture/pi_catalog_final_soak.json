@@ -1,0 +1,601 @@
+{
+  "env": {
+    "PI_USE_PAPERS_CATALOG": 1,
+    "PI_WRITE_RADAR_COMPAT": 1,
+    "code_defaults_unchanged": true
+  },
+  "days": [
+    {
+      "date_from": "2026-09-10",
+      "date_until": "2026-09-10",
+      "comparisons": [
+        {
+          "metric": "catalog_window",
+          "old_count": 996,
+          "new_count": 996,
+          "intersection": 996,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "relevance_keep",
+          "old_count": 497,
+          "new_count": 497,
+          "intersection": 497,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "screen_candidates",
+          "old_count": 497,
+          "new_count": 497,
+          "intersection": 497,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "screen_survivors",
+          "old_count": 474,
+          "new_count": 474,
+          "intersection": 474,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "audience_candidates",
+          "old_count": 497,
+          "new_count": 497,
+          "intersection": 497,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "normalize_candidates",
+          "old_count": 497,
+          "new_count": 497,
+          "intersection": 497,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "quality_scored",
+          "old_count": 115,
+          "new_count": 115,
+          "intersection": 115,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "hf_signals",
+          "old_count": 24,
+          "new_count": 24,
+          "intersection": 24,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "affiliation_rows",
+          "old_count": 386,
+          "new_count": 386,
+          "intersection": 386,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "adjudication_current",
+          "old_count": 487,
+          "new_count": 487,
+          "intersection": 487,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "relevance_reject_pi",
+          "old_count": null,
+          "new_count": 292,
+          "intersection": null,
+          "old_only": null,
+          "new_only": null,
+          "difference_reason": "informational PI reject count",
+          "classification": "match"
+        }
+      ],
+      "unexplained": 0
+    },
+    {
+      "date_from": "2026-09-02",
+      "date_until": "2026-09-02",
+      "comparisons": [
+        {
+          "metric": "catalog_window",
+          "old_count": 936,
+          "new_count": 936,
+          "intersection": 936,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "relevance_keep",
+          "old_count": 567,
+          "new_count": 567,
+          "intersection": 567,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "screen_candidates",
+          "old_count": 567,
+          "new_count": 567,
+          "intersection": 567,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "screen_survivors",
+          "old_count": 556,
+          "new_count": 556,
+          "intersection": 556,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "audience_candidates",
+          "old_count": 567,
+          "new_count": 567,
+          "intersection": 567,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "normalize_candidates",
+          "old_count": 567,
+          "new_count": 567,
+          "intersection": 567,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "quality_scored",
+          "old_count": 163,
+          "new_count": 163,
+          "intersection": 163,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "hf_signals",
+          "old_count": 26,
+          "new_count": 26,
+          "intersection": 26,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "affiliation_rows",
+          "old_count": 449,
+          "new_count": 449,
+          "intersection": 449,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "adjudication_current",
+          "old_count": 567,
+          "new_count": 567,
+          "intersection": 567,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "relevance_reject_pi",
+          "old_count": null,
+          "new_count": 360,
+          "intersection": null,
+          "old_only": null,
+          "new_only": null,
+          "difference_reason": "informational PI reject count",
+          "classification": "match"
+        }
+      ],
+      "unexplained": 0
+    },
+    {
+      "date_from": "2026-08-15",
+      "date_until": "2026-08-15",
+      "comparisons": [
+        {
+          "metric": "catalog_window",
+          "old_count": 402,
+          "new_count": 402,
+          "intersection": 402,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "relevance_keep",
+          "old_count": 213,
+          "new_count": 213,
+          "intersection": 213,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "screen_candidates",
+          "old_count": 213,
+          "new_count": 213,
+          "intersection": 213,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "screen_survivors",
+          "old_count": 0,
+          "new_count": 0,
+          "intersection": 0,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "audience_candidates",
+          "old_count": 213,
+          "new_count": 213,
+          "intersection": 213,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "normalize_candidates",
+          "old_count": 213,
+          "new_count": 213,
+          "intersection": 213,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "quality_scored",
+          "old_count": 0,
+          "new_count": 0,
+          "intersection": 0,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "hf_signals",
+          "old_count": 0,
+          "new_count": 0,
+          "intersection": 0,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "affiliation_rows",
+          "old_count": 0,
+          "new_count": 0,
+          "intersection": 0,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "adjudication_current",
+          "old_count": 0,
+          "new_count": 0,
+          "intersection": 0,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "relevance_reject_pi",
+          "old_count": null,
+          "new_count": 72,
+          "intersection": null,
+          "old_only": null,
+          "new_only": null,
+          "difference_reason": "informational PI reject count",
+          "classification": "match"
+        }
+      ],
+      "unexplained": 0
+    }
+  ],
+  "windows": [
+    {
+      "date_from": "2026-09-09",
+      "date_until": "2026-09-15",
+      "comparisons": [
+        {
+          "metric": "catalog_window",
+          "old_count": 5645,
+          "new_count": 5645,
+          "intersection": 5645,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "relevance_keep",
+          "old_count": 3427,
+          "new_count": 3427,
+          "intersection": 3427,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "screen_candidates",
+          "old_count": 3427,
+          "new_count": 3427,
+          "intersection": 3427,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "screen_survivors",
+          "old_count": 3286,
+          "new_count": 3286,
+          "intersection": 3286,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "audience_candidates",
+          "old_count": 3427,
+          "new_count": 3427,
+          "intersection": 3427,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "normalize_candidates",
+          "old_count": 3427,
+          "new_count": 3427,
+          "intersection": 3427,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "quality_scored",
+          "old_count": 795,
+          "new_count": 795,
+          "intersection": 795,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "hf_signals",
+          "old_count": 124,
+          "new_count": 124,
+          "intersection": 124,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "affiliation_rows",
+          "old_count": 2742,
+          "new_count": 2742,
+          "intersection": 2742,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "adjudication_current",
+          "old_count": 3384,
+          "new_count": 3384,
+          "intersection": 3384,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "relevance_reject_pi",
+          "old_count": null,
+          "new_count": 1988,
+          "intersection": null,
+          "old_only": null,
+          "new_only": null,
+          "difference_reason": "informational PI reject count",
+          "classification": "match"
+        }
+      ],
+      "unexplained": 0,
+      "label": "7d"
+    },
+    {
+      "date_from": "2026-09-01",
+      "date_until": "2026-09-15",
+      "comparisons": [
+        {
+          "metric": "catalog_window",
+          "old_count": 12149,
+          "new_count": 12149,
+          "intersection": 12149,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "relevance_keep",
+          "old_count": 7548,
+          "new_count": 7548,
+          "intersection": 7548,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "screen_candidates",
+          "old_count": 7548,
+          "new_count": 7548,
+          "intersection": 7548,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "screen_survivors",
+          "old_count": 7300,
+          "new_count": 7300,
+          "intersection": 7300,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "audience_candidates",
+          "old_count": 7548,
+          "new_count": 7548,
+          "intersection": 7548,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "normalize_candidates",
+          "old_count": 7548,
+          "new_count": 7548,
+          "intersection": 7548,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "quality_scored",
+          "old_count": 1820,
+          "new_count": 1820,
+          "intersection": 1820,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "hf_signals",
+          "old_count": 313,
+          "new_count": 313,
+          "intersection": 313,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "affiliation_rows",
+          "old_count": 6040,
+          "new_count": 6040,
+          "intersection": 6040,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "adjudication_current",
+          "old_count": 7505,
+          "new_count": 7505,
+          "intersection": 7505,
+          "old_only": 0,
+          "new_only": 0,
+          "difference_reason": "match",
+          "classification": "match"
+        },
+        {
+          "metric": "relevance_reject_pi",
+          "old_count": null,
+          "new_count": 4306,
+          "intersection": null,
+          "old_only": null,
+          "new_only": null,
+          "difference_reason": "informational PI reject count",
+          "classification": "match"
+        }
+      ],
+      "unexplained": 0,
+      "label": "15d"
+    }
+  ],
+  "paid_calls_executed": 0,
+  "unexplained_differences": 0,
+  "passed": true
+}

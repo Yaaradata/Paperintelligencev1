@@ -1,0 +1,17 @@
+{
+  "fake_arxiv": "8888.59536",
+  "checks": {
+    "pi_write_first_new": true,
+    "radar_compat_failure_swallowed": true,
+    "pi_retained_after_radar_failure": true,
+    "version_rediscovery_same_id": true,
+    "no_duplicate_arxiv": true,
+    "visible_to_relevance_selector": true,
+    "radar_complete_pi_absent": true,
+    "pi_checkpoint_controls_resume": true,
+    "radar_does_not_control_pi_resume": true
+  },
+  "paper_id": 195659,
+  "passed": true,
+  "paid_calls_executed": 0
+}

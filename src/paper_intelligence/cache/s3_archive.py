@@ -1,8 +1,8 @@
 """S3 archive for relevance-rejected papers (jsonl.gz).
 
-Best-effort: failures log and continue. Uses the same RDS manifest table as
-Research Radar (`research_radar.s3_archives`) so both pipelines share one
-index of archived rejects.
+Writes PI-owned ``paper_intelligence.archive_records`` first when available.
+Also best-effort dual-writes ``research_radar.s3_archives`` while
+``PI_WRITE_RADAR_COMPAT`` remains enabled.
 """
 
 from __future__ import annotations
@@ -62,7 +62,45 @@ def _upload_file(local_path: Path, bucket: str, key: str) -> None:
         )
 
 
-def _write_manifest(
+def _write_manifest_pi(
+    conn: Any,
+    *,
+    run_id: str,
+    kind: str,
+    stage: str,
+    bucket: str,
+    key: str,
+    record_count: int,
+    bytes_written: int,
+) -> None:
+    """Authoritative PI archive index (table may be absent pre-migration 007)."""
+    conn.execute(
+        """
+        INSERT INTO paper_intelligence.archive_records (
+            run_id, archive_kind, stage_name, s3_bucket, s3_key, s3_uri,
+            record_count, bytes_written, metadata
+        ) VALUES (
+            %s, %s, %s, %s, %s, %s, %s, %s, '{}'::jsonb
+        )
+        ON CONFLICT (s3_bucket, s3_key) DO UPDATE SET
+            record_count = EXCLUDED.record_count,
+            bytes_written = EXCLUDED.bytes_written,
+            created_at = NOW()
+        """,
+        (
+            str(run_id) if run_id and run_id != "00000000-0000-0000-0000-000000000000" else None,
+            kind,
+            stage,
+            bucket,
+            key,
+            f"s3://{bucket}/{key}",
+            record_count,
+            bytes_written,
+        ),
+    )
+
+
+def _write_manifest_radar(
     conn: Any,
     *,
     run_id: str,
@@ -85,6 +123,56 @@ def _write_manifest(
         """,
         (str(run_id), kind, stage, bucket, key, record_count, bytes_written),
     )
+
+
+def _write_manifest(
+    conn: Any,
+    *,
+    run_id: str,
+    kind: str,
+    stage: str,
+    bucket: str,
+    key: str,
+    record_count: int,
+    bytes_written: int,
+) -> None:
+    from paper_intelligence.common.config import PI_WRITE_RADAR_COMPAT
+
+    try:
+        _write_manifest_pi(
+            conn,
+            run_id=run_id,
+            kind=kind,
+            stage=stage,
+            bucket=bucket,
+            key=key,
+            record_count=record_count,
+            bytes_written=bytes_written,
+        )
+    except Exception:  # noqa: BLE001
+        log.exception(
+            "PI archive_records write failed (migration 007 may be pending); "
+            "continuing with Radar compat if enabled"
+        )
+        try:
+            conn.rollback()
+        except Exception:  # noqa: BLE001
+            pass
+
+    if PI_WRITE_RADAR_COMPAT:
+        try:
+            _write_manifest_radar(
+                conn,
+                run_id=run_id,
+                kind=kind,
+                stage=stage,
+                bucket=bucket,
+                key=key,
+                record_count=record_count,
+                bytes_written=bytes_written,
+            )
+        except Exception:  # noqa: BLE001
+            log.exception("Radar s3_archives compat write failed")
 
 
 def build_rejected_record(

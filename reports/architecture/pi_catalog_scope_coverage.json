@@ -1,0 +1,112 @@
+{
+  "sep02_nine_papers": {
+    "classification": "valid_arxiv_awaiting_pi_processing",
+    "explanation": "All 9 were arxiv_oai INGESTED papers with valid cs.*/stat.* categories. They were absent because the initial PI catalog backfill only included papers referenced by PI enrichment tables (REFS_SQL). These 9 never received PI enrichment, so they were out of that backfill set \u2014 not intentionally out of PI ingest scope.",
+    "ids": [
+      192167,
+      192168,
+      192169,
+      192170,
+      192171,
+      192172,
+      192173,
+      192174,
+      192175
+    ],
+    "after_backfill_radar_only": 0,
+    "after_backfill_counts": {
+      "radar": 936,
+      "pi": 936,
+      "radar_only": 0
+    }
+  },
+  "scope": {
+    "definition": "All research_radar arxiv_oai papers with published_at in [2026-06-01, 2026-09-21]",
+    "horizon": {
+      "radar_arxiv_oai": 59937,
+      "pi": 64069,
+      "radar_only": 0
+    },
+    "backfilled_this_phase": 29609,
+    "note_first_pass": "29607 inserted + 2 DOI-collision retries; 604 skipped (txn); second pass inserted 604"
+  },
+  "validation": {
+    "duplicate_canonical_arxiv": 0,
+    "duplicate_doi": 0,
+    "orphan_enrichment": {
+      "orphan_classification": 0,
+      "orphan_current": 0
+    },
+    "papers_total": {
+      "n": 64069
+    }
+  },
+  "no_relevance_backlog": {
+    "sep_1_15": {
+      "papers_no_relevance": 295,
+      "radar_ingested": 295,
+      "radar_rejected": 0,
+      "radar_keepish": 0
+    },
+    "aug_1_31": {
+      "papers_no_relevance": 6110,
+      "radar_ingested": 6110,
+      "radar_rejected": 0,
+      "radar_keepish": 0
+    },
+    "jan_1_present": {
+      "papers_no_relevance": 35613,
+      "radar_ingested": 35613,
+      "radar_rejected": 0,
+      "radar_keepish": 0
+    },
+    "horizon_jun_sep21": {
+      "papers_no_relevance": 35613,
+      "radar_ingested": 35613,
+      "radar_rejected": 0,
+      "radar_keepish": 0
+    }
+  },
+  "no_relevance_by_day_sep1_15": [
+    {
+      "day": "2026-09-01",
+      "no_relevance": 4
+    },
+    {
+      "day": "2026-09-02",
+      "no_relevance": 9
+    },
+    {
+      "day": "2026-09-03",
+      "no_relevance": 6
+    },
+    {
+      "day": "2026-09-04",
+      "no_relevance": 7
+    },
+    {
+      "day": "2026-09-05",
+      "no_relevance": 3
+    },
+    {
+      "day": "2026-09-06",
+      "no_relevance": 9
+    },
+    {
+      "day": "2026-09-07",
+      "no_relevance": 13
+    },
+    {
+      "day": "2026-09-08",
+      "no_relevance": 14
+    },
+    {
+      "day": "2026-09-09",
+      "no_relevance": 23
+    },
+    {
+      "day": "2026-09-10",
+      "no_relevance": 207
+    }
+  ]
+}
