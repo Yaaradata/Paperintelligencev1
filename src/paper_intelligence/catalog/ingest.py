@@ -179,9 +179,9 @@ def upsert_paper_from_oai(
                 UPDATE paper_intelligence.papers SET
                     arxiv_id = COALESCE(%s, arxiv_id),
                     arxiv_version = CASE
-                        WHEN %s IS NULL THEN arxiv_version
-                        WHEN arxiv_version IS NULL THEN %s
-                        WHEN %s > arxiv_version THEN %s
+                        WHEN %s::integer IS NULL THEN arxiv_version
+                        WHEN arxiv_version IS NULL THEN %s::integer
+                        WHEN %s::integer > arxiv_version THEN %s::integer
                         ELSE arxiv_version
                     END,
                     doi = COALESCE(%s, doi),
@@ -260,7 +260,7 @@ def upsert_paper_from_oai(
                     categories, authors_raw, authors_structured, affiliation_text,
                     published_at, source_updated_at, raw_metadata
                 ) VALUES (
-                    %s, %s, %s, %s, %s,
+                    %s, %s::integer, %s, %s, %s,
                     %s, %s, %s, %s, %s,
                     %s::jsonb, %s::jsonb, %s::jsonb, %s::jsonb,
                     %s, %s, %s::jsonb
