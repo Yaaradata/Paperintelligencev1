@@ -46,6 +46,7 @@ PI_WRITE_RADAR_COMPAT = _env_flag("PI_WRITE_RADAR_COMPAT", "0")
 # non-alphanumerics with underscores.
 _DEFAULT_PRICES: dict[str, tuple[float, float]] = {
     "z-ai/glm-5.3-flash": (0.15, 0.50),
+    "z-ai/glm-4.6": (0.15, 0.50),
     "openai/gpt-5.6-sol": (1.25, 10.00),
 }
 

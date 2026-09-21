@@ -1,0 +1,500 @@
+{
+  "generated_at": "2026-09-21T07:46:59.417429+00:00",
+  "window": {
+    "from": "2026-09-01",
+    "until": "2026-09-15"
+  },
+  "coverage": {
+    "window_papers": 12149,
+    "html_papers": 5448,
+    "openalex_papers": 128,
+    "both_papers": 45,
+    "openalex_only": 83,
+    "html_only": 5403
+  },
+  "paper_level_agreement": {
+    "comparable_papers": 12,
+    "exact_org_set": 6,
+    "partial_overlap": 4,
+    "disjoint": 2,
+    "pct_exact": "50.0",
+    "pct_any_overlap": "83.3"
+  },
+  "author_level_agreement": {
+    "author_pairs": 74,
+    "exact_match": 22,
+    "any_overlap": 37,
+    "no_overlap": 37,
+    "pct_exact": "29.7",
+    "pct_overlap": "50.0"
+  },
+  "paper_disagreements": [
+    {
+      "paper_id": 12036,
+      "arxiv_id": "2510.20721",
+      "pub": "2026-09-03",
+      "title": "User Perceptions vs. Proxy LLM Judges: Privacy and Helpfulness in LLM ",
+      "html_orgs": [
+        "Carnegie Mellon University"
+      ],
+      "openalex_orgs": [
+        "Carnegie Mellon University",
+        "Fujitsu (China)",
+        "Fujitsu (Japan)",
+        "Fujitsu (United States)"
+      ],
+      "agreement": "partial"
+    },
+    {
+      "paper_id": 132759,
+      "arxiv_id": "2604.24622",
+      "pub": "2026-09-04",
+      "title": "CF-VLA: Efficient Coarse-to-Fine Action Generation for Vision-Language",
+      "html_orgs": [
+        "Southern University of Science and Technology",
+        "Tsinghua University",
+        "University of Chinese Academy of Sciences"
+      ],
+      "openalex_orgs": [
+        "Nova Management (United States)",
+        "Southern University of Science and Technology",
+        "University of Science and Technology of China",
+        "Xi'an Jiaotong University"
+      ],
+      "agreement": "partial"
+    },
+    {
+      "paper_id": 135191,
+      "arxiv_id": "2509.06285",
+      "pub": "2026-09-10",
+      "title": "DCReg: Decoupled Characterization for Efficient Degenerate LiDAR Regis",
+      "html_orgs": [
+        "Hong Kong University of Science and Technology",
+        "University of Science and Technology Beijing"
+      ],
+      "openalex_orgs": [
+        "Aerospace Institute (Germany)",
+        "Hong Kong University of Science and Technology",
+        "National University of Defense Technology",
+        "University of Science and Technology Beijing",
+        "University of Toronto"
+      ],
+      "agreement": "partial"
+    },
+    {
+      "paper_id": 188127,
+      "arxiv_id": "2609.11486",
+      "pub": "2026-09-10",
+      "title": "FreeFlow: A Bias-free Hierarchical Transformer for Optical Flow Estima",
+      "html_orgs": [
+        "Lomonosov Moscow State University"
+      ],
+      "openalex_orgs": [
+        "Lomonosov Moscow State University",
+        "Moscow State University"
+      ],
+      "agreement": "partial"
+    },
+    {
+      "paper_id": 12243,
+      "arxiv_id": "2601.10511",
+      "pub": "2026-09-15",
+      "title": "Scalable Algorithms for Approximate DNF Model Counting",
+      "html_orgs": [
+        "National Security Authority"
+      ],
+      "openalex_orgs": [
+        "National Security Agency",
+        "University of Maryland, College Park"
+      ],
+      "agreement": "disjoint"
+    },
+    {
+      "paper_id": 31691,
+      "arxiv_id": "2603.02790",
+      "pub": "2026-09-14",
+      "title": "Designing UNICORN: a Unified Benchmark for Imaging in Computational Pa",
+      "html_orgs": [
+        "University of Amsterdam"
+      ],
+      "openalex_orgs": [
+        "Clinical Research Consortium"
+      ],
+      "agreement": "disjoint"
+    }
+  ],
+  "author_disagreement_samples": [
+    {
+      "arxiv_id": "2408.10608",
+      "author": "Jing Pan",
+      "html_raw": "Ling Chen",
+      "html_org": null,
+      "openalex_raw": "Monash University",
+      "openalex_org": "Monash University"
+    },
+    {
+      "arxiv_id": "2408.10608",
+      "author": "Jing Pan",
+      "html_raw": "Ling Chen",
+      "html_org": null,
+      "openalex_raw": "Australian Regenerative Medicine Institute",
+      "openalex_org": "Australian Regenerative Medicine Institute"
+    },
+    {
+      "arxiv_id": "2408.10608",
+      "author": "Ling Chen",
+      "html_raw": "Ling Chen",
+      "html_org": null,
+      "openalex_raw": "University of Technology Sydney",
+      "openalex_org": "University of Technology Sydney"
+    },
+    {
+      "arxiv_id": "2408.10608",
+      "author": "Xiaoyu Tan",
+      "html_raw": "Ling Chen",
+      "html_org": null,
+      "openalex_raw": "National University of Singapore",
+      "openalex_org": "National University of Singapore"
+    },
+    {
+      "arxiv_id": "2408.10608",
+      "author": "Xihe Qiu",
+      "html_raw": "Ling Chen",
+      "html_org": null,
+      "openalex_raw": "National University of Singapore",
+      "openalex_org": "National University of Singapore"
+    },
+    {
+      "arxiv_id": "2408.10608",
+      "author": "Yongxin Deng",
+      "html_raw": "Ling Chen",
+      "html_org": null,
+      "openalex_raw": "University of Technology Sydney",
+      "openalex_org": "University of Technology Sydney"
+    },
+    {
+      "arxiv_id": "2408.10608",
+      "author": "Zhen Fang",
+      "html_raw": "Ling Chen",
+      "html_org": null,
+      "openalex_raw": "University of Technology Sydney",
+      "openalex_org": "University of Technology Sydney"
+    },
+    {
+      "arxiv_id": "2410.10136",
+      "author": "Cosimo Spera",
+      "html_raw": "Minerva CQ, Sunnyvale, California, USA",
+      "html_org": null,
+      "openalex_raw": "Sunnyvale Public Library",
+      "openalex_org": "Sunnyvale Public Library"
+    },
+    {
+      "arxiv_id": "2410.10136",
+      "author": "Garima Agrawal",
+      "html_raw": "Minerva CQ, Sunnyvale, California, USA",
+      "html_org": null,
+      "openalex_raw": "Sunnyvale Public Library",
+      "openalex_org": "Sunnyvale Public Library"
+    },
+    {
+      "arxiv_id": "2410.10136",
+      "author": "Sashank Gummuluri",
+      "html_raw": "Minerva CQ, Sunnyvale, California, USA",
+      "html_org": null,
+      "openalex_raw": "Sunnyvale Public Library",
+      "openalex_org": "Sunnyvale Public Library"
+    },
+    {
+      "arxiv_id": "2504.00285",
+      "author": "Benjamin K. Bergen",
+      "html_raw": "Department of Cognitive Science",
+      "html_org": null,
+      "openalex_raw": "University of California, San Diego",
+      "openalex_org": "University of California San Diego"
+    },
+    {
+      "arxiv_id": "2504.00285",
+      "author": "Samuel M. Taylor",
+      "html_raw": "Department of Cognitive Science",
+      "html_org": null,
+      "openalex_raw": "University of California, San Diego",
+      "openalex_org": "University of California San Diego"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Jin Wu",
+      "html_raw": "Hong Kong University of Science and Technology",
+      "html_org": "Hong Kong University of Science and Technology",
+      "openalex_raw": "University of Science and Technology Beijing",
+      "openalex_org": "University of Science and Technology Beijing"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Jin Wu",
+      "html_raw": "Hong Kong University of Science and Technology",
+      "html_org": "Hong Kong University of Science and Technology",
+      "openalex_raw": "University of Science and Technology Beijing",
+      "openalex_org": "University of Science and Technology Beijing"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Mingkai Jia",
+      "html_raw": "University of Science and Technology Beijing",
+      "html_org": "University of Science and Technology Beijing",
+      "openalex_raw": "Hong Kong University of Science and Technology",
+      "openalex_org": "Hong Kong University of Science and Technology"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Ping Tan",
+      "html_raw": "University of Science and Technology Beijing",
+      "html_org": "University of Science and Technology Beijing",
+      "openalex_raw": "Hong Kong University of Science and Technology",
+      "openalex_org": "Hong Kong University of Science and Technology"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Steven L. Waslander",
+      "html_raw": "Hong Kong University of Science and Technology",
+      "html_org": "Hong Kong University of Science and Technology",
+      "openalex_raw": "Aerospace Institute (Germany)",
+      "openalex_org": "Aerospace Institute (Germany)"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Steven L. Waslander",
+      "html_raw": "University of Science and Technology Beijing",
+      "html_org": "University of Science and Technology Beijing",
+      "openalex_raw": "University of Toronto",
+      "openalex_org": "University of Toronto"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Steven L. Waslander",
+      "html_raw": "Hong Kong University of Science and Technology",
+      "html_org": "Hong Kong University of Science and Technology",
+      "openalex_raw": "University of Toronto",
+      "openalex_org": "University of Toronto"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Steven L. Waslander",
+      "html_raw": "University of Science and Technology Beijing",
+      "html_org": "University of Science and Technology Beijing",
+      "openalex_raw": "Aerospace Institute (Germany)",
+      "openalex_org": "Aerospace Institute (Germany)"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Steven L. Waslander",
+      "html_raw": "Hong Kong University of Science and Technology",
+      "html_org": "Hong Kong University of Science and Technology",
+      "openalex_raw": "University of Toronto",
+      "openalex_org": "University of Toronto"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Steven L. Waslander",
+      "html_raw": "Hong Kong University of Science and Technology",
+      "html_org": "Hong Kong University of Science and Technology",
+      "openalex_raw": "Aerospace Institute (Germany)",
+      "openalex_org": "Aerospace Institute (Germany)"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Xiangcheng Hu",
+      "html_raw": "University of Science and Technology Beijing",
+      "html_org": "University of Science and Technology Beijing",
+      "openalex_raw": "Hong Kong University of Science and Technology",
+      "openalex_org": "Hong Kong University of Science and Technology"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Xiangcheng Hu",
+      "html_raw": "University of Science and Technology Beijing",
+      "html_org": "University of Science and Technology Beijing",
+      "openalex_raw": "Hong Kong University of Science and Technology",
+      "openalex_org": "Hong Kong University of Science and Technology"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Xieyuanli Chen",
+      "html_raw": "Hong Kong University of Science and Technology",
+      "html_org": "Hong Kong University of Science and Technology",
+      "openalex_raw": "National University of Defense Technology",
+      "openalex_org": "National University of Defense Technology"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Xieyuanli Chen",
+      "html_raw": "Hong Kong University of Science and Technology",
+      "html_org": "Hong Kong University of Science and Technology",
+      "openalex_raw": "National University of Defense Technology",
+      "openalex_org": "National University of Defense Technology"
+    },
+    {
+      "arxiv_id": "2509.06285",
+      "author": "Xieyuanli Chen",
+      "html_raw": "University of Science and Technology Beijing",
+      "html_org": "University of Science and Technology Beijing",
+      "openalex_raw": "National University of Defense Technology",
+      "openalex_org": "National University of Defense Technology"
+    },
+    {
+      "arxiv_id": "2510.20721",
+      "author": "Koichi Onoue",
+      "html_raw": "Fujitsu Research of America",
+      "html_org": null,
+      "openalex_raw": "Fujitsu (United States)",
+      "openalex_org": "Fujitsu (United States)"
+    },
+    {
+      "arxiv_id": "2510.20721",
+      "author": "Koichi Onoue",
+      "html_raw": "Carnegie Mellon University",
+      "html_org": "Carnegie Mellon University",
+      "openalex_raw": "Fujitsu (Japan)",
+      "openalex_org": "Fujitsu (Japan)"
+    },
+    {
+      "arxiv_id": "2510.20721",
+      "author": "Koichi Onoue",
+      "html_raw": "Fujitsu Research of America",
+      "html_org": null,
+      "openalex_raw": "Fujitsu (Japan)",
+      "openalex_org": "Fujitsu (Japan)"
+    },
+    {
+      "arxiv_id": "2510.20721",
+      "author": "Koichi Onoue",
+      "html_raw": "Fujitsu Research of America",
+      "html_org": null,
+      "openalex_raw": "Fujitsu (China)",
+      "openalex_org": "Fujitsu (China)"
+    },
+    {
+      "arxiv_id": "2510.20721",
+      "author": "Koichi Onoue",
+      "html_raw": "Carnegie Mellon University",
+      "html_org": "Carnegie Mellon University",
+      "openalex_raw": "Fujitsu (United States)",
+      "openalex_org": "Fujitsu (United States)"
+    },
+    {
+      "arxiv_id": "2510.20721",
+      "author": "Koichi Onoue",
+      "html_raw": "Carnegie Mellon University",
+      "html_org": "Carnegie Mellon University",
+      "openalex_raw": "Fujitsu (China)",
+      "openalex_org": "Fujitsu (China)"
+    },
+    {
+      "arxiv_id": "2510.20721",
+      "author": "Lujo Bauer",
+      "html_raw": "Fujitsu Research of America",
+      "html_org": null,
+      "openalex_raw": "Carnegie Mellon University",
+      "openalex_org": "Carnegie Mellon University"
+    },
+    {
+      "arxiv_id": "2510.20721",
+      "author": "Roshni Kaushik",
+      "html_raw": "Fujitsu Research of America",
+      "html_org": null,
+      "openalex_raw": "Fujitsu (Japan)",
+      "openalex_org": "Fujitsu (Japan)"
+    },
+    {
+      "arxiv_id": "2510.20721",
+      "author": "Roshni Kaushik",
+      "html_raw": "Carnegie Mellon University",
+      "html_org": "Carnegie Mellon University",
+      "openalex_raw": "Fujitsu (Japan)",
+      "openalex_org": "Fujitsu (Japan)"
+    },
+    {
+      "arxiv_id": "2510.20721",
+      "author": "Roshni Kaushik",
+      "html_raw": "Fujitsu Research of America",
+      "html_org": null,
+      "openalex_raw": "Fujitsu (China)",
+      "openalex_org": "Fujitsu (China)"
+    },
+    {
+      "arxiv_id": "2510.20721",
+      "author": "Roshni Kaushik",
+      "html_raw": "Carnegie Mellon University",
+      "html_org": "Carnegie Mellon University",
+      "openalex_raw": "Fujitsu (China)",
+      "openalex_org": "Fujitsu (China)"
+    },
+    {
+      "arxiv_id": "2510.20721",
+      "author": "Roshni Kaushik",
+      "html_raw": "Fujitsu Research of America",
+      "html_org": null,
+      "openalex_raw": "Fujitsu (United States)",
+      "openalex_org": "Fujitsu (United States)"
+    },
+    {
+      "arxiv_id": "2510.20721",
+      "author": "Roshni Kaushik",
+      "html_raw": "Carnegie Mellon University",
+      "html_org": "Carnegie Mellon University",
+      "openalex_raw": "Fujitsu (United States)",
+      "openalex_org": "Fujitsu (United States)"
+    }
+  ],
+  "exact_match_examples": [
+    {
+      "arxiv_id": "2504.00285",
+      "title": "When Do Large Language Models Exhibit Unsolicited Deception?",
+      "orgs": [
+        "University of California San Diego"
+      ]
+    },
+    {
+      "arxiv_id": "2601.03163",
+      "title": "LSP-DETR: Efficient and Scalable Nuclei Segmentation in Whol",
+      "orgs": [
+        "Masaryk Memorial Cancer Institute",
+        "Masaryk University"
+      ]
+    },
+    {
+      "arxiv_id": "2602.14048",
+      "title": "ProAct: Harnessing Streaming Motion Generation and Agentic R",
+      "orgs": [
+        "Peking University"
+      ]
+    },
+    {
+      "arxiv_id": "2603.22437",
+      "title": "mmFHE: mmWave Sensing with End-to-End Fully Homomorphic Encr",
+      "orgs": [
+        "Cornell Tech",
+        "Cornell University"
+      ]
+    },
+    {
+      "arxiv_id": "2605.16879",
+      "title": "Towards Generalized Image Manipulation Localization via Scor",
+      "orgs": [
+        "Sichuan University"
+      ]
+    },
+    {
+      "arxiv_id": "2609.09002",
+      "title": "Factorized and Vectorized Execution: Optimizing Analytical a",
+      "orgs": [
+        "Polytechnique Montr\u00e9al"
+      ]
+    }
+  ],
+  "notes": [
+    "HTML evidence = explicit_paper_affiliation (or related) with arxiv.org/html source; paper-level HTML org set also includes ROR/email rows on those papers.",
+    "OpenAlex evidence = evidence_type openalex_paper_specific.",
+    "OpenAlex is a DEEP-mode fallback when HTML/ROR does not fully resolve; both sources on one paper is uncommon.",
+    "Comparable = papers with both sources that also have resolved organisation_id names on both sides."
+  ]
+}

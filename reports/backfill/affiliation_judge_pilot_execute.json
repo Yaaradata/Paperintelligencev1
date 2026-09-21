@@ -1,0 +1,1209 @@
+{
+  "dry_run": false,
+  "judge_version": "html-oa-judge-v001",
+  "spend_cap_usd": 0.05,
+  "max_paid_calls": 6,
+  "papers": [
+    {
+      "pilot_bucket": "exact",
+      "paper_id": 25693,
+      "arxiv_id": "2602.14048",
+      "compare_status": "exact_match",
+      "needs_judge": false,
+      "decision": "AUTO_AGREE",
+      "judge_called": false,
+      "skipped_duplicate": false,
+      "estimate": null,
+      "reason": "auto:exact_match",
+      "accepted_organisation_ids": [
+        50
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [
+        "Peking University"
+      ],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [
+        50
+      ],
+      "effective_after_ids": [
+        50
+      ],
+      "effective_before_names": [
+        "Peking University"
+      ],
+      "effective_after_names": [
+        "Peking University"
+      ],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "exact",
+      "paper_id": 40754,
+      "arxiv_id": "2603.22437",
+      "compare_status": "exact_match",
+      "needs_judge": false,
+      "decision": "AUTO_AGREE",
+      "judge_called": false,
+      "skipped_duplicate": false,
+      "estimate": null,
+      "reason": "auto:exact_match",
+      "accepted_organisation_ids": [
+        46,
+        54
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [
+        "Cornell University",
+        "Cornell Tech"
+      ],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [
+        46,
+        54
+      ],
+      "effective_after_ids": [
+        46,
+        54
+      ],
+      "effective_before_names": [
+        "Cornell University",
+        "Cornell Tech"
+      ],
+      "effective_after_names": [
+        "Cornell University",
+        "Cornell Tech"
+      ],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "exact",
+      "paper_id": 67096,
+      "arxiv_id": "2605.16879",
+      "compare_status": "exact_match",
+      "needs_judge": false,
+      "decision": "AUTO_AGREE",
+      "judge_called": false,
+      "skipped_duplicate": false,
+      "estimate": null,
+      "reason": "auto:exact_match",
+      "accepted_organisation_ids": [
+        56
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [
+        "Sichuan University"
+      ],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [
+        56
+      ],
+      "effective_after_ids": [
+        56
+      ],
+      "effective_before_names": [
+        "Sichuan University"
+      ],
+      "effective_after_names": [
+        "Sichuan University"
+      ],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "exact",
+      "paper_id": 186232,
+      "arxiv_id": "2609.09002",
+      "compare_status": "exact_match",
+      "needs_judge": false,
+      "decision": "AUTO_AGREE",
+      "judge_called": false,
+      "skipped_duplicate": false,
+      "estimate": null,
+      "reason": "auto:exact_match",
+      "accepted_organisation_ids": [
+        41
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [
+        "Polytechnique Montr\u00e9al"
+      ],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [
+        41
+      ],
+      "effective_after_ids": [
+        41
+      ],
+      "effective_before_names": [
+        "Polytechnique Montr\u00e9al"
+      ],
+      "effective_after_names": [
+        "Polytechnique Montr\u00e9al"
+      ],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "disagreement",
+      "paper_id": 12243,
+      "arxiv_id": "2601.10511",
+      "compare_status": "disagreement",
+      "needs_judge": null,
+      "decision": "OPENALEX",
+      "judge_called": true,
+      "skipped_duplicate": true,
+      "estimate": null,
+      "reason": "existing_judgment",
+      "accepted_organisation_ids": [
+        801,
+        1362
+      ],
+      "rejected_organisation_ids": [
+        174
+      ],
+      "accepted_organisation_names": [
+        "University of Maryland, College Park",
+        "National Security Agency"
+      ],
+      "rejected_organisation_names": [
+        "National Security Authority"
+      ],
+      "effective_before_ids": [
+        174,
+        801,
+        1362
+      ],
+      "effective_after_ids": [
+        801,
+        1362
+      ],
+      "effective_before_names": [
+        "National Security Authority",
+        "University of Maryland, College Park",
+        "National Security Agency"
+      ],
+      "effective_after_names": [
+        "University of Maryland, College Park",
+        "National Security Agency"
+      ],
+      "judge_evidence_rows_before": 6,
+      "judge_evidence_rows_after": 6
+    },
+    {
+      "pilot_bucket": "disagreement",
+      "paper_id": 18943,
+      "arxiv_id": "2601.14810",
+      "compare_status": "disagreement",
+      "needs_judge": true,
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "estimate": {
+        "model": "z-ai/glm-4.6",
+        "prompt_version": "v001",
+        "estimated_input_tokens": 731,
+        "estimated_output_tokens": 350,
+        "estimated_cost_usd": 0.000285
+      },
+      "reason": "no_grounded_accepted_organisations",
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [
+        190,
+        191,
+        192
+      ],
+      "effective_after_ids": [
+        190,
+        191,
+        192
+      ],
+      "effective_before_names": [
+        "Institut national de recherche en sciences et technologies du num\u00e9rique",
+        "Laboratoire Interdisciplinaire des Sciences du Num\u00e9rique",
+        "Universit\u00e9 Paris-Saclay"
+      ],
+      "effective_after_names": [
+        "Institut national de recherche en sciences et technologies du num\u00e9rique",
+        "Laboratoire Interdisciplinaire des Sciences du Num\u00e9rique",
+        "Universit\u00e9 Paris-Saclay"
+      ],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "disagreement",
+      "paper_id": 27646,
+      "arxiv_id": "2512.13742",
+      "compare_status": "disagreement",
+      "needs_judge": null,
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": true,
+      "estimate": null,
+      "reason": "existing_judgment",
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [
+        215,
+        216,
+        217,
+        218
+      ],
+      "effective_after_ids": [
+        215,
+        216,
+        217,
+        218
+      ],
+      "effective_before_names": [
+        "Wichita State University",
+        "Khulna University of Engineering and Technology",
+        "University of Ulster",
+        "Queen's University Belfast"
+      ],
+      "effective_after_names": [
+        "Wichita State University",
+        "Khulna University of Engineering and Technology",
+        "University of Ulster",
+        "Queen's University Belfast"
+      ],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "disagreement",
+      "paper_id": 27771,
+      "arxiv_id": "2602.18613",
+      "compare_status": "disagreement",
+      "needs_judge": null,
+      "decision": "BOTH",
+      "judge_called": true,
+      "skipped_duplicate": true,
+      "estimate": null,
+      "reason": "existing_judgment",
+      "accepted_organisation_ids": [
+        220
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [
+        "\u00d6zye\u011fin University"
+      ],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [
+        220
+      ],
+      "effective_after_ids": [
+        220
+      ],
+      "effective_before_names": [
+        "\u00d6zye\u011fin University"
+      ],
+      "effective_after_names": [
+        "\u00d6zye\u011fin University"
+      ],
+      "judge_evidence_rows_before": 2,
+      "judge_evidence_rows_after": 2
+    },
+    {
+      "pilot_bucket": "disagreement",
+      "paper_id": 31691,
+      "arxiv_id": "2603.02790",
+      "compare_status": "disagreement",
+      "needs_judge": null,
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": true,
+      "estimate": null,
+      "reason": "existing_judgment",
+      "accepted_organisation_ids": [
+        245
+      ],
+      "rejected_organisation_ids": [
+        223
+      ],
+      "accepted_organisation_names": [
+        "University of Amsterdam"
+      ],
+      "rejected_organisation_names": [
+        "Clinical Research Consortium"
+      ],
+      "effective_before_ids": [
+        223,
+        245
+      ],
+      "effective_after_ids": [
+        245
+      ],
+      "effective_before_names": [
+        "Clinical Research Consortium",
+        "University of Amsterdam"
+      ],
+      "effective_after_names": [
+        "University of Amsterdam"
+      ],
+      "judge_evidence_rows_before": 21,
+      "judge_evidence_rows_after": 21
+    },
+    {
+      "pilot_bucket": "disagreement",
+      "paper_id": 75641,
+      "arxiv_id": "2605.31291",
+      "compare_status": "disagreement",
+      "needs_judge": true,
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "estimate": {
+        "model": "z-ai/glm-4.6",
+        "prompt_version": "v001",
+        "estimated_input_tokens": 755,
+        "estimated_output_tokens": 350,
+        "estimated_cost_usd": 0.000288
+      },
+      "reason": "no_grounded_accepted_organisations",
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [
+        466,
+        467
+      ],
+      "effective_after_ids": [
+        466,
+        467
+      ],
+      "effective_before_names": [
+        "Swiss Broadcasting Corporation",
+        "\u00c9cole Polytechnique F\u00e9d\u00e9rale de Lausanne"
+      ],
+      "effective_after_names": [
+        "Swiss Broadcasting Corporation",
+        "\u00c9cole Polytechnique F\u00e9d\u00e9rale de Lausanne"
+      ],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "html_only",
+      "paper_id": 5,
+      "arxiv_id": "2608.12036",
+      "compare_status": "html_only",
+      "needs_judge": false,
+      "decision": "AUTO_HTML",
+      "judge_called": false,
+      "skipped_duplicate": false,
+      "estimate": null,
+      "reason": "auto:html_only",
+      "accepted_organisation_ids": [
+        23
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [
+        "Zhejiang University"
+      ],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [],
+      "effective_after_ids": [],
+      "effective_before_names": [],
+      "effective_after_names": [],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "html_only",
+      "paper_id": 155,
+      "arxiv_id": "2607.19020",
+      "compare_status": "html_only",
+      "needs_judge": false,
+      "decision": "AUTO_HTML",
+      "judge_called": false,
+      "skipped_duplicate": false,
+      "estimate": null,
+      "reason": "auto:html_only",
+      "accepted_organisation_ids": [
+        130
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [
+        "University of Dhaka"
+      ],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [
+        130
+      ],
+      "effective_after_ids": [
+        130
+      ],
+      "effective_before_names": [
+        "University of Dhaka"
+      ],
+      "effective_after_names": [
+        "University of Dhaka"
+      ],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "html_only",
+      "paper_id": 156,
+      "arxiv_id": "2608.19914",
+      "compare_status": "html_only",
+      "needs_judge": false,
+      "decision": "AUTO_HTML",
+      "judge_called": false,
+      "skipped_duplicate": false,
+      "estimate": null,
+      "reason": "auto:html_only",
+      "accepted_organisation_ids": [
+        56
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [
+        "Sichuan University"
+      ],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [
+        56
+      ],
+      "effective_after_ids": [
+        56
+      ],
+      "effective_before_names": [
+        "Sichuan University"
+      ],
+      "effective_after_names": [
+        "Sichuan University"
+      ],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "html_only",
+      "paper_id": 179,
+      "arxiv_id": "2608.19584",
+      "compare_status": "html_only",
+      "needs_judge": false,
+      "decision": "AUTO_HTML",
+      "judge_called": false,
+      "skipped_duplicate": false,
+      "estimate": null,
+      "reason": "auto:html_only",
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [],
+      "effective_after_ids": [],
+      "effective_before_names": [],
+      "effective_after_names": [],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "oa_only",
+      "paper_id": 3634,
+      "arxiv_id": "2501.06002",
+      "compare_status": "openalex_only",
+      "needs_judge": false,
+      "decision": "AUTO_SKIP",
+      "judge_called": false,
+      "skipped_duplicate": false,
+      "estimate": null,
+      "reason": "auto:openalex_only",
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [
+        3
+      ],
+      "effective_after_ids": [
+        3
+      ],
+      "effective_before_names": [
+        "Imperial College London"
+      ],
+      "effective_after_names": [
+        "Imperial College London"
+      ],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "oa_only",
+      "paper_id": 10195,
+      "arxiv_id": "2512.23243",
+      "compare_status": "openalex_only",
+      "needs_judge": false,
+      "decision": "AUTO_SKIP",
+      "judge_called": false,
+      "skipped_duplicate": false,
+      "estimate": null,
+      "reason": "auto:openalex_only",
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [
+        42,
+        165
+      ],
+      "effective_after_ids": [
+        42,
+        165
+      ],
+      "effective_before_names": [
+        "Tsinghua University",
+        "Sanda University"
+      ],
+      "effective_after_names": [
+        "Tsinghua University",
+        "Sanda University"
+      ],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "oa_only",
+      "paper_id": 11509,
+      "arxiv_id": "2601.08696",
+      "compare_status": "openalex_only",
+      "needs_judge": false,
+      "decision": "AUTO_SKIP",
+      "judge_called": false,
+      "skipped_duplicate": false,
+      "estimate": null,
+      "reason": "auto:openalex_only",
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [
+        171
+      ],
+      "effective_after_ids": [
+        171
+      ],
+      "effective_before_names": [
+        "University of the Basque Country"
+      ],
+      "effective_after_names": [
+        "University of the Basque Country"
+      ],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "neither",
+      "paper_id": 53,
+      "arxiv_id": "2608.19799",
+      "compare_status": "neither",
+      "needs_judge": false,
+      "decision": "AUTO_SKIP",
+      "judge_called": false,
+      "skipped_duplicate": false,
+      "estimate": null,
+      "reason": "auto:neither",
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [],
+      "effective_after_ids": [],
+      "effective_before_names": [],
+      "effective_after_names": [],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "neither",
+      "paper_id": 54,
+      "arxiv_id": "2608.19800",
+      "compare_status": "neither",
+      "needs_judge": false,
+      "decision": "AUTO_SKIP",
+      "judge_called": false,
+      "skipped_duplicate": false,
+      "estimate": null,
+      "reason": "auto:neither",
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [],
+      "effective_after_ids": [],
+      "effective_before_names": [],
+      "effective_after_names": [],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    },
+    {
+      "pilot_bucket": "neither",
+      "paper_id": 75,
+      "arxiv_id": "2608.20153",
+      "compare_status": "neither",
+      "needs_judge": false,
+      "decision": "AUTO_SKIP",
+      "judge_called": false,
+      "skipped_duplicate": false,
+      "estimate": null,
+      "reason": "auto:neither",
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_organisation_names": [],
+      "rejected_organisation_names": [],
+      "effective_before_ids": [],
+      "effective_after_ids": [],
+      "effective_before_names": [],
+      "effective_after_names": [],
+      "judge_evidence_rows_before": 0,
+      "judge_evidence_rows_after": 0
+    }
+  ],
+  "before_after": [
+    {
+      "paper_id": 25693,
+      "arxiv_id": "2602.14048",
+      "decision": "AUTO_AGREE",
+      "before": [
+        "Peking University"
+      ],
+      "after": [
+        "Peking University"
+      ],
+      "accepted_ids": [
+        50
+      ],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 40754,
+      "arxiv_id": "2603.22437",
+      "decision": "AUTO_AGREE",
+      "before": [
+        "Cornell University",
+        "Cornell Tech"
+      ],
+      "after": [
+        "Cornell University",
+        "Cornell Tech"
+      ],
+      "accepted_ids": [
+        46,
+        54
+      ],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 67096,
+      "arxiv_id": "2605.16879",
+      "decision": "AUTO_AGREE",
+      "before": [
+        "Sichuan University"
+      ],
+      "after": [
+        "Sichuan University"
+      ],
+      "accepted_ids": [
+        56
+      ],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 186232,
+      "arxiv_id": "2609.09002",
+      "decision": "AUTO_AGREE",
+      "before": [
+        "Polytechnique Montr\u00e9al"
+      ],
+      "after": [
+        "Polytechnique Montr\u00e9al"
+      ],
+      "accepted_ids": [
+        41
+      ],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 12243,
+      "arxiv_id": "2601.10511",
+      "decision": "OPENALEX",
+      "before": [
+        "National Security Authority",
+        "University of Maryland, College Park",
+        "National Security Agency"
+      ],
+      "after": [
+        "University of Maryland, College Park",
+        "National Security Agency"
+      ],
+      "accepted_ids": [
+        801,
+        1362
+      ],
+      "rejected_ids": [
+        174
+      ],
+      "removed": [
+        174
+      ],
+      "added": []
+    },
+    {
+      "paper_id": 18943,
+      "arxiv_id": "2601.14810",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Institut national de recherche en sciences et technologies du num\u00e9rique",
+        "Laboratoire Interdisciplinaire des Sciences du Num\u00e9rique",
+        "Universit\u00e9 Paris-Saclay"
+      ],
+      "after": [
+        "Institut national de recherche en sciences et technologies du num\u00e9rique",
+        "Laboratoire Interdisciplinaire des Sciences du Num\u00e9rique",
+        "Universit\u00e9 Paris-Saclay"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 27646,
+      "arxiv_id": "2512.13742",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Wichita State University",
+        "Khulna University of Engineering and Technology",
+        "University of Ulster",
+        "Queen's University Belfast"
+      ],
+      "after": [
+        "Wichita State University",
+        "Khulna University of Engineering and Technology",
+        "University of Ulster",
+        "Queen's University Belfast"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 27771,
+      "arxiv_id": "2602.18613",
+      "decision": "BOTH",
+      "before": [
+        "\u00d6zye\u011fin University"
+      ],
+      "after": [
+        "\u00d6zye\u011fin University"
+      ],
+      "accepted_ids": [
+        220
+      ],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 31691,
+      "arxiv_id": "2603.02790",
+      "decision": "HTML",
+      "before": [
+        "Clinical Research Consortium",
+        "University of Amsterdam"
+      ],
+      "after": [
+        "University of Amsterdam"
+      ],
+      "accepted_ids": [
+        245
+      ],
+      "rejected_ids": [
+        223
+      ],
+      "removed": [
+        223
+      ],
+      "added": []
+    },
+    {
+      "paper_id": 75641,
+      "arxiv_id": "2605.31291",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Swiss Broadcasting Corporation",
+        "\u00c9cole Polytechnique F\u00e9d\u00e9rale de Lausanne"
+      ],
+      "after": [
+        "Swiss Broadcasting Corporation",
+        "\u00c9cole Polytechnique F\u00e9d\u00e9rale de Lausanne"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 5,
+      "arxiv_id": "2608.12036",
+      "decision": "AUTO_HTML",
+      "before": [],
+      "after": [],
+      "accepted_ids": [
+        23
+      ],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 155,
+      "arxiv_id": "2607.19020",
+      "decision": "AUTO_HTML",
+      "before": [
+        "University of Dhaka"
+      ],
+      "after": [
+        "University of Dhaka"
+      ],
+      "accepted_ids": [
+        130
+      ],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 156,
+      "arxiv_id": "2608.19914",
+      "decision": "AUTO_HTML",
+      "before": [
+        "Sichuan University"
+      ],
+      "after": [
+        "Sichuan University"
+      ],
+      "accepted_ids": [
+        56
+      ],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 179,
+      "arxiv_id": "2608.19584",
+      "decision": "AUTO_HTML",
+      "before": [],
+      "after": [],
+      "accepted_ids": [],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 3634,
+      "arxiv_id": "2501.06002",
+      "decision": "AUTO_SKIP",
+      "before": [
+        "Imperial College London"
+      ],
+      "after": [
+        "Imperial College London"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 10195,
+      "arxiv_id": "2512.23243",
+      "decision": "AUTO_SKIP",
+      "before": [
+        "Tsinghua University",
+        "Sanda University"
+      ],
+      "after": [
+        "Tsinghua University",
+        "Sanda University"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 11509,
+      "arxiv_id": "2601.08696",
+      "decision": "AUTO_SKIP",
+      "before": [
+        "University of the Basque Country"
+      ],
+      "after": [
+        "University of the Basque Country"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 53,
+      "arxiv_id": "2608.19799",
+      "decision": "AUTO_SKIP",
+      "before": [],
+      "after": [],
+      "accepted_ids": [],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 54,
+      "arxiv_id": "2608.19800",
+      "decision": "AUTO_SKIP",
+      "before": [],
+      "after": [],
+      "accepted_ids": [],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    },
+    {
+      "paper_id": 75,
+      "arxiv_id": "2608.20153",
+      "decision": "AUTO_SKIP",
+      "before": [],
+      "after": [],
+      "accepted_ids": [],
+      "rejected_ids": [],
+      "removed": [],
+      "added": []
+    }
+  ],
+  "judge_decisions": [
+    {
+      "paper_id": 12243,
+      "arxiv_id": "2601.10511",
+      "decision": "OPENALEX",
+      "accepted_organisation_ids": [
+        801,
+        1362
+      ],
+      "rejected_organisation_ids": [
+        174
+      ],
+      "reason": "existing_judgment",
+      "skipped_duplicate": true
+    },
+    {
+      "paper_id": 18943,
+      "arxiv_id": "2601.14810",
+      "decision": "UNCERTAIN",
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "reason": "no_grounded_accepted_organisations",
+      "skipped_duplicate": false
+    },
+    {
+      "paper_id": 27646,
+      "arxiv_id": "2512.13742",
+      "decision": "UNCERTAIN",
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "reason": "existing_judgment",
+      "skipped_duplicate": true
+    },
+    {
+      "paper_id": 27771,
+      "arxiv_id": "2602.18613",
+      "decision": "BOTH",
+      "accepted_organisation_ids": [
+        220
+      ],
+      "rejected_organisation_ids": [],
+      "reason": "existing_judgment",
+      "skipped_duplicate": true
+    },
+    {
+      "paper_id": 31691,
+      "arxiv_id": "2603.02790",
+      "decision": "HTML",
+      "accepted_organisation_ids": [
+        245
+      ],
+      "rejected_organisation_ids": [
+        223
+      ],
+      "reason": "existing_judgment",
+      "skipped_duplicate": true
+    },
+    {
+      "paper_id": 75641,
+      "arxiv_id": "2605.31291",
+      "decision": "UNCERTAIN",
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "reason": "no_grounded_accepted_organisations",
+      "skipped_duplicate": false
+    }
+  ],
+  "pilot_count": 20,
+  "counts": {
+    "exact_match": 4,
+    "disagreement": 6,
+    "html_only": 4,
+    "openalex_only": 3,
+    "neither": 3,
+    "oa_unavailable": 0,
+    "by_status": {
+      "exact_match": 4,
+      "disagreement": 6,
+      "html_only": 4,
+      "openalex_only": 3,
+      "neither": 3
+    }
+  },
+  "proposed_judge_calls": 2,
+  "estimated_total_judge_cost_usd": 0.000573,
+  "paid_calls_this_run": 2,
+  "actual_judge_cost_usd": 0.001136,
+  "spend_blocked": 0,
+  "examples": {
+    "exact_example": {
+      "paper_id": 25693,
+      "arxiv_id": "2602.14048",
+      "decision": "AUTO_AGREE",
+      "org_ids": [
+        50
+      ]
+    },
+    "disagreement_example": {
+      "paper_id": 18943,
+      "arxiv_id": "2601.14810",
+      "title": "Learning and extrapolating scale-invariant processes",
+      "compare": {
+        "compare_status": "disagreement",
+        "needs_judge": true,
+        "html_org_ids": [],
+        "oa_org_ids": [
+          190,
+          191,
+          192
+        ],
+        "html_org_names": [
+          "inria-saclay"
+        ],
+        "oa_org_names": [
+          "institut national de recherche en sciences et technologies du num\u00e9rique",
+          "laboratoire interdisciplinaire des sciences du num\u00e9rique",
+          "universit\u00e9 paris-saclay"
+        ],
+        "overlap_ids": [],
+        "html_only_ids": [],
+        "oa_only_ids": [
+          190,
+          191,
+          192
+        ]
+      },
+      "estimate": {
+        "model": "z-ai/glm-4.6",
+        "prompt_version": "v001",
+        "estimated_input_tokens": 731,
+        "estimated_output_tokens": 350,
+        "estimated_cost_usd": 0.000285
+      }
+    },
+    "html_only_example": {
+      "paper_id": 5,
+      "decision": "AUTO_HTML",
+      "needs_judge": false
+    }
+  },
+  "idempotency": [
+    {
+      "paper_id": 12243,
+      "skipped_duplicate": true,
+      "judge_called": true,
+      "rows_before": 6,
+      "rows_after": 6,
+      "no_new_rows": true,
+      "no_new_paid_call": true
+    },
+    {
+      "paper_id": 18943,
+      "skipped_duplicate": true,
+      "judge_called": true,
+      "rows_before": 0,
+      "rows_after": 0,
+      "no_new_rows": true,
+      "no_new_paid_call": true
+    },
+    {
+      "paper_id": 27646,
+      "skipped_duplicate": true,
+      "judge_called": true,
+      "rows_before": 0,
+      "rows_after": 0,
+      "no_new_rows": true,
+      "no_new_paid_call": true
+    },
+    {
+      "paper_id": 27771,
+      "skipped_duplicate": true,
+      "judge_called": true,
+      "rows_before": 2,
+      "rows_after": 2,
+      "no_new_rows": true,
+      "no_new_paid_call": true
+    },
+    {
+      "paper_id": 31691,
+      "skipped_duplicate": true,
+      "judge_called": true,
+      "rows_before": 21,
+      "rows_after": 21,
+      "no_new_rows": true,
+      "no_new_paid_call": true
+    },
+    {
+      "paper_id": 75641,
+      "skipped_duplicate": true,
+      "judge_called": true,
+      "rows_before": 0,
+      "rows_after": 0,
+      "no_new_rows": true,
+      "no_new_paid_call": true
+    }
+  ],
+  "verification_checks": {
+    "matched_sources_do_not_invoke_judge": true,
+    "missing_oa_does_not_invoke_judge": true,
+    "disagreements_would_invoke_once": true,
+    "paid_calls_this_run": 2,
+    "under_spend_cap": true,
+    "idempotent_rerun": true,
+    "nsa_authority_excluded": true
+  }
+}

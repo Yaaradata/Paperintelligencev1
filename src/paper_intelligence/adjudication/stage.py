@@ -13,6 +13,12 @@ from typing import Any
 from psycopg import Connection
 
 from paper_intelligence.adjudication.org_score import organisation_score
+from paper_intelligence.author_affiliation.verify.judge_effective import (
+    load_judgment_exclusions,
+)
+from paper_intelligence.author_affiliation.verify.judge_persist import (
+    JUDGE_VERSION_DEFAULT,
+)
 from paper_intelligence.common.config import GATE_PERCENTILE, PI_USE_PAPERS_CATALOG
 from paper_intelligence.quality.stage import (
     composite_score,
@@ -158,6 +164,10 @@ def run_window(
         cur.execute(author_sql, (date_from, date_until))
         author_counts = {int(r["content_item_id"]): int(r["n"]) for r in cur.fetchall()}
 
+    judgment_exclusions = load_judgment_exclusions(
+        conn, list(by_paper.keys()), judge_version=JUDGE_VERSION_DEFAULT
+    )
+
     stats = {
         "papers": 0,
         "with_quality": 0,
@@ -185,7 +195,13 @@ def run_window(
 
         screen_score = _screen_score(screen) if screen else None
 
-        org = organisation_score(affiliations.get(content_id, []))
+        excl = judgment_exclusions.get(content_id) or {}
+        org = organisation_score(
+            affiliations.get(content_id, []),
+            rejected_organisation_ids=excl.get("rejected_organisation_ids") or [],
+            judge_decision=excl.get("decision"),
+            judge_called=bool(excl.get("judge_called")),
+        )
         if org["status"] == "resolved":
             stats["with_org"] += 1
 
@@ -273,6 +289,20 @@ def run_window(
                         "quality_routing": route.as_dict() if route is not None else None,
                         "screen_quality_disagreement": disagreement,
                         "organisation": org,
+                        "affiliation_judge": {
+                            "decision": excl.get("decision"),
+                            "judge_called": bool(excl.get("judge_called")),
+                            "accepted_organisation_ids": excl.get(
+                                "accepted_organisation_ids"
+                            )
+                            or [],
+                            "rejected_organisation_ids": excl.get(
+                                "rejected_organisation_ids"
+                            )
+                            or [],
+                        }
+                        if excl
+                        else None,
                         "author_count": author_counts.get(content_id, 0),
                         "stage_version": STAGE_VERSION,
                         "policy_version": POLICY_VERSION,

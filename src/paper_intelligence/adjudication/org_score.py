@@ -22,6 +22,7 @@ EVIDENCE_WEIGHTS = {
     "email_domain": 1.0,
     "ror_canonical_match": 0.9,
     "openalex_paper_specific": 0.9,
+    "llm_affiliation_judge": 0.95,
     "author_profile_secondary": 0.5,
     "paper_affiliation": 1.0,
     "ror_match": 0.9,
@@ -48,18 +49,39 @@ def _org_standing(row: dict[str, Any]) -> float:
     return float(UNLISTED_RESOLVED_SCORE)
 
 
-def organisation_score(rows: Sequence[dict[str, Any]]) -> dict[str, Any]:
+def organisation_score(
+    rows: Sequence[dict[str, Any]],
+    *,
+    rejected_organisation_ids: Sequence[int] | None = None,
+    judge_decision: str | None = None,
+    judge_called: bool = False,
+) -> dict[str, Any]:
     """Score one paper's affiliation evidence.
 
     `rows` are paper_author_affiliations joined to organisations, each with
     organisation_id, canonical_name, priority, is_org_of_interest,
     evidence_type, confidence.
 
+    When a resolved LLM judge decision is supplied, organisation IDs listed in
+    `rejected_organisation_ids` are excluded from scoring even if their original
+    HTML/OpenAlex evidence rows remain in storage for audit.
+
     Returns:
       organisation_score — constant standing for the chosen organisation
       org_boost          — capped additive boost, scaled by THIS paper's evidence
       evidence_*         — why that org was attributed to this paper
     """
+    from paper_intelligence.author_affiliation.verify.judge_effective import (
+        filter_affiliation_rows,
+    )
+
+    rows = filter_affiliation_rows(
+        rows,
+        rejected_organisation_ids=rejected_organisation_ids,
+        decision=judge_decision,
+        judge_called=judge_called,
+    )
+
     best: dict[str, Any] | None = None
     considered = 0
 

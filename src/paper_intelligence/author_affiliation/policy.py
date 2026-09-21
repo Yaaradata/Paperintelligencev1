@@ -13,6 +13,7 @@ POLICY_NAME = "affiliation_resolution"
 DEFAULT_POLICY_VERSION = "v001"
 
 PRECEDENCE: tuple[str, ...] = (
+    "llm_affiliation_judge",
     "explicit_paper_affiliation",
     "strong_deterministic",
     "ror_canonical_match",

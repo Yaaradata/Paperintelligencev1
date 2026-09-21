@@ -1,0 +1,398 @@
+{
+  "dry_run": true,
+  "judge_version": "html-oa-judge-v001",
+  "papers": [
+    {
+      "pilot_bucket": "exact",
+      "paper_id": 25693,
+      "arxiv_id": "2602.14048",
+      "compare_status": "exact_match",
+      "needs_judge": false,
+      "decision": "AUTO_AGREE",
+      "judge_called": false,
+      "estimate": null,
+      "reason": "auto:exact_match"
+    },
+    {
+      "pilot_bucket": "exact",
+      "paper_id": 40754,
+      "arxiv_id": "2603.22437",
+      "compare_status": "exact_match",
+      "needs_judge": false,
+      "decision": "AUTO_AGREE",
+      "judge_called": false,
+      "estimate": null,
+      "reason": "auto:exact_match"
+    },
+    {
+      "pilot_bucket": "exact",
+      "paper_id": 67096,
+      "arxiv_id": "2605.16879",
+      "compare_status": "exact_match",
+      "needs_judge": false,
+      "decision": "AUTO_AGREE",
+      "judge_called": false,
+      "estimate": null,
+      "reason": "auto:exact_match"
+    },
+    {
+      "pilot_bucket": "exact",
+      "paper_id": 186232,
+      "arxiv_id": "2609.09002",
+      "compare_status": "exact_match",
+      "needs_judge": false,
+      "decision": "AUTO_AGREE",
+      "judge_called": false,
+      "estimate": null,
+      "reason": "auto:exact_match"
+    },
+    {
+      "pilot_bucket": "disagreement",
+      "paper_id": 12243,
+      "arxiv_id": "2601.10511",
+      "compare_status": "disagreement",
+      "needs_judge": true,
+      "decision": null,
+      "judge_called": false,
+      "estimate": {
+        "model": "z-ai/glm-4.6",
+        "prompt_version": "v001",
+        "estimated_input_tokens": 870,
+        "estimated_output_tokens": 350,
+        "estimated_cost_usd": 0.000305
+      },
+      "reason": "dry_run_disagreement_would_call_judge"
+    },
+    {
+      "pilot_bucket": "disagreement",
+      "paper_id": 18943,
+      "arxiv_id": "2601.14810",
+      "compare_status": "disagreement",
+      "needs_judge": true,
+      "decision": null,
+      "judge_called": false,
+      "estimate": {
+        "model": "z-ai/glm-4.6",
+        "prompt_version": "v001",
+        "estimated_input_tokens": 731,
+        "estimated_output_tokens": 350,
+        "estimated_cost_usd": 0.000285
+      },
+      "reason": "dry_run_disagreement_would_call_judge"
+    },
+    {
+      "pilot_bucket": "disagreement",
+      "paper_id": 27646,
+      "arxiv_id": "2512.13742",
+      "compare_status": "disagreement",
+      "needs_judge": true,
+      "decision": null,
+      "judge_called": false,
+      "estimate": {
+        "model": "z-ai/glm-4.6",
+        "prompt_version": "v001",
+        "estimated_input_tokens": 958,
+        "estimated_output_tokens": 350,
+        "estimated_cost_usd": 0.000319
+      },
+      "reason": "dry_run_disagreement_would_call_judge"
+    },
+    {
+      "pilot_bucket": "disagreement",
+      "paper_id": 27771,
+      "arxiv_id": "2602.18613",
+      "compare_status": "disagreement",
+      "needs_judge": true,
+      "decision": null,
+      "judge_called": false,
+      "estimate": {
+        "model": "z-ai/glm-4.6",
+        "prompt_version": "v001",
+        "estimated_input_tokens": 699,
+        "estimated_output_tokens": 350,
+        "estimated_cost_usd": 0.00028
+      },
+      "reason": "dry_run_disagreement_would_call_judge"
+    },
+    {
+      "pilot_bucket": "disagreement",
+      "paper_id": 31691,
+      "arxiv_id": "2603.02790",
+      "compare_status": "disagreement",
+      "needs_judge": true,
+      "decision": null,
+      "judge_called": false,
+      "estimate": {
+        "model": "z-ai/glm-4.6",
+        "prompt_version": "v001",
+        "estimated_input_tokens": 931,
+        "estimated_output_tokens": 350,
+        "estimated_cost_usd": 0.000315
+      },
+      "reason": "dry_run_disagreement_would_call_judge"
+    },
+    {
+      "pilot_bucket": "disagreement",
+      "paper_id": 75641,
+      "arxiv_id": "2605.31291",
+      "compare_status": "disagreement",
+      "needs_judge": true,
+      "decision": null,
+      "judge_called": false,
+      "estimate": {
+        "model": "z-ai/glm-4.6",
+        "prompt_version": "v001",
+        "estimated_input_tokens": 755,
+        "estimated_output_tokens": 350,
+        "estimated_cost_usd": 0.000288
+      },
+      "reason": "dry_run_disagreement_would_call_judge"
+    },
+    {
+      "pilot_bucket": "html_only",
+      "paper_id": 5,
+      "arxiv_id": "2608.12036",
+      "compare_status": "html_only",
+      "needs_judge": false,
+      "decision": "AUTO_HTML",
+      "judge_called": false,
+      "estimate": null,
+      "reason": "auto:html_only"
+    },
+    {
+      "pilot_bucket": "html_only",
+      "paper_id": 155,
+      "arxiv_id": "2607.19020",
+      "compare_status": "html_only",
+      "needs_judge": false,
+      "decision": "AUTO_HTML",
+      "judge_called": false,
+      "estimate": null,
+      "reason": "auto:html_only"
+    },
+    {
+      "pilot_bucket": "html_only",
+      "paper_id": 156,
+      "arxiv_id": "2608.19914",
+      "compare_status": "html_only",
+      "needs_judge": false,
+      "decision": "AUTO_HTML",
+      "judge_called": false,
+      "estimate": null,
+      "reason": "auto:html_only"
+    },
+    {
+      "pilot_bucket": "html_only",
+      "paper_id": 179,
+      "arxiv_id": "2608.19584",
+      "compare_status": "html_only",
+      "needs_judge": false,
+      "decision": "AUTO_HTML",
+      "judge_called": false,
+      "estimate": null,
+      "reason": "auto:html_only"
+    },
+    {
+      "pilot_bucket": "oa_only",
+      "paper_id": 3634,
+      "arxiv_id": "2501.06002",
+      "compare_status": "openalex_only",
+      "needs_judge": false,
+      "decision": "AUTO_SKIP",
+      "judge_called": false,
+      "estimate": null,
+      "reason": "auto:openalex_only"
+    },
+    {
+      "pilot_bucket": "oa_only",
+      "paper_id": 10195,
+      "arxiv_id": "2512.23243",
+      "compare_status": "openalex_only",
+      "needs_judge": false,
+      "decision": "AUTO_SKIP",
+      "judge_called": false,
+      "estimate": null,
+      "reason": "auto:openalex_only"
+    },
+    {
+      "pilot_bucket": "oa_only",
+      "paper_id": 11509,
+      "arxiv_id": "2601.08696",
+      "compare_status": "openalex_only",
+      "needs_judge": false,
+      "decision": "AUTO_SKIP",
+      "judge_called": false,
+      "estimate": null,
+      "reason": "auto:openalex_only"
+    },
+    {
+      "pilot_bucket": "neither",
+      "paper_id": 53,
+      "arxiv_id": "2608.19799",
+      "compare_status": "neither",
+      "needs_judge": false,
+      "decision": "AUTO_SKIP",
+      "judge_called": false,
+      "estimate": null,
+      "reason": "auto:neither"
+    },
+    {
+      "pilot_bucket": "neither",
+      "paper_id": 54,
+      "arxiv_id": "2608.19800",
+      "compare_status": "neither",
+      "needs_judge": false,
+      "decision": "AUTO_SKIP",
+      "judge_called": false,
+      "estimate": null,
+      "reason": "auto:neither"
+    },
+    {
+      "pilot_bucket": "neither",
+      "paper_id": 75,
+      "arxiv_id": "2608.20153",
+      "compare_status": "neither",
+      "needs_judge": false,
+      "decision": "AUTO_SKIP",
+      "judge_called": false,
+      "estimate": null,
+      "reason": "auto:neither"
+    }
+  ],
+  "pilot_count": 20,
+  "counts": {
+    "exact_match": 4,
+    "disagreement": 6,
+    "html_only": 4,
+    "openalex_only": 3,
+    "neither": 3,
+    "oa_unavailable": 0,
+    "by_status": {
+      "exact_match": 4,
+      "disagreement": 6,
+      "html_only": 4,
+      "openalex_only": 3,
+      "neither": 3
+    }
+  },
+  "proposed_judge_calls": 6,
+  "estimated_total_judge_cost_usd": 0.001792,
+  "examples": {
+    "exact_example": {
+      "paper_id": 25693,
+      "arxiv_id": "2602.14048",
+      "decision": "AUTO_AGREE",
+      "org_ids": [
+        50
+      ]
+    },
+    "disagreement_example": {
+      "paper_id": 12243,
+      "arxiv_id": "2601.10511",
+      "title": "Scalable Algorithms for Approximate DNF Model Counting",
+      "compare": {
+        "compare_status": "disagreement",
+        "needs_judge": true,
+        "html_org_ids": [
+          174
+        ],
+        "oa_org_ids": [
+          801,
+          1362
+        ],
+        "html_org_names": [
+          "national security authority"
+        ],
+        "oa_org_names": [
+          "national security agency",
+          "university of maryland, college park"
+        ],
+        "overlap_ids": [],
+        "html_only_ids": [
+          174
+        ],
+        "oa_only_ids": [
+          801,
+          1362
+        ]
+      },
+      "judge_payload_preview": {
+        "paper_id": 12243,
+        "arxiv_id": "2601.10511",
+        "title": "Scalable Algorithms for Approximate DNF Model Counting",
+        "authors": [
+          "Paul Burkhardt",
+          "David G. Harris",
+          "Kevin T Schmitt"
+        ],
+        "html_affiliation_text": [
+          "nsa",
+          "nsa",
+          "nsa",
+          "Note: National Security Agency",
+          "Note: National Security Agency",
+          "Note: National Security Agency",
+          "Note: University of Maryland",
+          "Note: University of Maryland",
+          "Note: University of Maryland",
+          "In some references, a default value of \u03b4 = 1 / 4 \\delta=1/4 is used; one can always obtain a desired smaller value of \u03b4 \\delta via median-amplification",
+          "In some references, a default value of \u03b4 = 1 / 4 \\delta=1/4 is used; one can always obtain a desired smaller value of \u03b4 \\delta via median-amplification",
+          "In some references, a default value of \u03b4 = 1 / 4 \\delta=1/4 is used; one can always obtain a desired smaller value of \u03b4 \\delta via median-amplification"
+        ],
+        "html_organisation_claims": {
+          "org_names": [
+            "national security authority"
+          ],
+          "org_ids": [
+            174
+          ]
+        },
+        "openalex": {
+          "work_id": null,
+          "work_title": null,
+          "identity_ok": true,
+          "identity_reason": "pi_evidence",
+          "organisation_claims": {
+            "org_names": [
+              "national security agency",
+              "university of maryland, college park"
+            ],
+            "org_ids": [
+              801,
+              1362
+            ]
+          },
+          "author_institution_pairs": []
+        },
+        "compare_summary": {
+          "overlap_ids": [],
+          "html_only_ids": [
+            174
+          ],
+          "oa_only_ids": [
+            801,
+            1362
+          ]
+        }
+      },
+      "estimate": {
+        "model": "z-ai/glm-4.6",
+        "prompt_version": "v001",
+        "estimated_input_tokens": 870,
+        "estimated_output_tokens": 350,
+        "estimated_cost_usd": 0.000305
+      }
+    },
+    "html_only_example": {
+      "paper_id": 5,
+      "decision": "AUTO_HTML",
+      "needs_judge": false
+    }
+  },
+  "verification_checks": {
+    "matched_sources_do_not_invoke_judge": true,
+    "missing_oa_does_not_invoke_judge": true,
+    "disagreements_would_invoke_once": true,
+    "paid_calls_this_run": 0
+  }
+}
