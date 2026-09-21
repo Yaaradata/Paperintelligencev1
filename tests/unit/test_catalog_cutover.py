@@ -28,13 +28,16 @@ def test_entity_resolved_in_keep_mapping():
 
 def test_feature_flag_default_on(monkeypatch):
     monkeypatch.delenv("PI_USE_PAPERS_CATALOG", raising=False)
+    monkeypatch.delenv("PI_WRITE_RADAR_COMPAT", raising=False)
     import importlib
 
     importlib.reload(cfg)
     importlib.reload(results_mod)
     assert cfg.PI_USE_PAPERS_CATALOG is True
-    # leave catalog on for subsequent tests that expect production default
+    assert cfg.PI_WRITE_RADAR_COMPAT is False
+    # leave production defaults for subsequent tests
     monkeypatch.delenv("PI_USE_PAPERS_CATALOG", raising=False)
+    monkeypatch.delenv("PI_WRITE_RADAR_COMPAT", raising=False)
     importlib.reload(cfg)
     importlib.reload(results_mod)
 

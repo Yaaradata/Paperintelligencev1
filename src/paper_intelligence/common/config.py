@@ -35,10 +35,11 @@ def _env_flag(name: str, default: str = "0") -> bool:
     return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "on"}
 
 
-# Final cutover: PI catalog is the default authoritative read path.
-# Radar dual-write remains ON until the separate compat-off commit.
+# Final cutover: PI catalog is permanently authoritative.
+# Radar dual-write is OFF by default after soak; re-enable only for
+# optional one-way PI→Radar projection (never as a rollback source of truth).
 PI_USE_PAPERS_CATALOG = _env_flag("PI_USE_PAPERS_CATALOG", "1")
-PI_WRITE_RADAR_COMPAT = _env_flag("PI_WRITE_RADAR_COMPAT", "1")
+PI_WRITE_RADAR_COMPAT = _env_flag("PI_WRITE_RADAR_COMPAT", "0")
 
 # Per-model OpenRouter prices, USD per million tokens. Override per model with
 # PI_PRICE_<SLUG>_IN / _OUT where SLUG upper-cases the model id and replaces
