@@ -93,9 +93,20 @@ def _screen_survivor_ids(conn, date_from: str, date_until: str) -> list[int]:
 
 
 def _quality_ids(conn, date_from: str, date_until: str) -> list[int]:
-    with conn.cursor() as cur:
-        cur.execute(
+    from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
+
+    if PI_USE_PAPERS_CATALOG:
+        sql = """
+            SELECT DISTINCT q.content_item_id
+            FROM paper_intelligence.paper_classification_results q
+            JOIN paper_intelligence.papers p ON p.paper_id = q.content_item_id
+            WHERE q.task_type = 'quality'
+              AND p.published_at >= %s::timestamptz
+              AND p.published_at < (%s::timestamptz + interval '1 day')
+            ORDER BY q.content_item_id
             """
+    else:
+        sql = """
             SELECT DISTINCT q.content_item_id
             FROM paper_intelligence.paper_classification_results q
             JOIN research_radar.content_items ci ON ci.id = q.content_item_id
@@ -103,9 +114,9 @@ def _quality_ids(conn, date_from: str, date_until: str) -> list[int]:
               AND ci.published_at >= %s::timestamptz
               AND ci.published_at < (%s::timestamptz + interval '1 day')
             ORDER BY q.content_item_id
-            """,
-            (date_from, date_until),
-        )
+            """
+    with conn.cursor() as cur:
+        cur.execute(sql, (date_from, date_until))
         return [int(r["content_item_id"]) for r in cur.fetchall()]
 
 

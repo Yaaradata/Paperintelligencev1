@@ -1,0 +1,63 @@
+{
+  "day": "2026-09-02",
+  "PI_USE_PAPERS_CATALOG_soak": 1,
+  "PI_WRITE_RADAR_COMPAT": 1,
+  "comparisons": [
+    {
+      "metric": "paper_window",
+      "old_count": 936,
+      "new_count": 927,
+      "intersection": 927,
+      "old_only": 9,
+      "new_only": 0,
+      "difference_reason": "expected_fix: catalogs may differ for non-backfilled / PI-only rows",
+      "classification": "expected_fix"
+    },
+    {
+      "metric": "screen_candidates",
+      "old_count": 567,
+      "new_count": 567,
+      "intersection": 567,
+      "old_only": 0,
+      "new_only": 0,
+      "difference_reason": "expected_fix: PI keep vs Radar PI_ELIGIBLE_STATUSES",
+      "classification": "match"
+    },
+    {
+      "metric": "audience_candidates",
+      "old_count": 567,
+      "new_count": 567,
+      "intersection": 567,
+      "old_only": 0,
+      "new_only": 0,
+      "difference_reason": "expected_fix: PI keep vs Radar PI_ELIGIBLE_STATUSES",
+      "classification": "match"
+    },
+    {
+      "metric": "screen_results_present",
+      "old_count": 567,
+      "new_count": 567,
+      "intersection": 567,
+      "old_only": 0,
+      "new_only": 0,
+      "difference_reason": "expected_fix: date join source differs; ids should mostly match for backfilled day",
+      "classification": "match"
+    },
+    {
+      "metric": "editorial_quality_papers",
+      "old_count": 163,
+      "new_count": 163,
+      "intersection": 163,
+      "old_only": 0,
+      "new_only": 0,
+      "difference_reason": "expected_fix: same quality rows via different paper joins",
+      "classification": "match"
+    }
+  ],
+  "pi_keep_count": 567,
+  "unexplained_differences": 0,
+  "duplicate_papers": 0,
+  "orphan_results": 0,
+  "unexpected_paid_calls": 0,
+  "passed": true
+}

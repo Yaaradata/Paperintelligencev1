@@ -14,7 +14,7 @@ from typing import Any, Sequence
 
 from psycopg import Connection
 
-from paper_intelligence.common.config import GATE_PERCENTILE, QUALITY_MODEL
+from paper_intelligence.common.config import GATE_PERCENTILE, PI_USE_PAPERS_CATALOG, QUALITY_MODEL
 from paper_intelligence.db import fetch_papers, ids_with_result, latest_screen_scores
 from paper_intelligence.quality.stage import (
     POLICY_VERSION,
@@ -59,15 +59,42 @@ def resolve_content_ids(
         cleaned = [a.strip() for a in arxiv_ids if a and a.strip()]
         if cleaned:
             with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    SELECT pm.content_id, pm.arxiv_id
-                    FROM research_radar.paper_metadata pm
-                    WHERE pm.arxiv_id = ANY(%s)
-                    """,
-                    (cleaned,),
-                )
-                found = {row["arxiv_id"]: int(row["content_id"]) for row in cur.fetchall()}
+                if PI_USE_PAPERS_CATALOG:
+                    from paper_intelligence.catalog.normalize import normalize_arxiv_id
+
+                    norms = [normalize_arxiv_id(a) or a for a in cleaned]
+                    cur.execute(
+                        """
+                        SELECT paper_id AS content_id, arxiv_id
+                        FROM paper_intelligence.papers
+                        WHERE arxiv_id = ANY(%s)
+                        """,
+                        (norms,),
+                    )
+                    found = {
+                        row["arxiv_id"]: int(row["content_id"]) for row in cur.fetchall()
+                    }
+                    # Also accept raw inputs mapped via normalization.
+                    by_norm = {normalize_arxiv_id(k) or k: v for k, v in found.items()}
+                    resolved: dict[str, int] = {}
+                    for raw, norm in zip(cleaned, norms):
+                        if norm in by_norm:
+                            resolved[raw] = by_norm[norm]
+                        elif raw in found:
+                            resolved[raw] = found[raw]
+                    found = resolved
+                else:
+                    cur.execute(
+                        """
+                        SELECT pm.content_id, pm.arxiv_id
+                        FROM research_radar.paper_metadata pm
+                        WHERE pm.arxiv_id = ANY(%s)
+                        """,
+                        (cleaned,),
+                    )
+                    found = {
+                        row["arxiv_id"]: int(row["content_id"]) for row in cur.fetchall()
+                    }
             missing = [a for a in cleaned if a not in found]
             if missing:
                 raise ValueError(f"arxiv_id not found: {missing}")
@@ -113,17 +140,29 @@ def describe_targets(
     if not content_item_ids:
         return []
     with conn.cursor() as cur:
-        cur.execute(
-            """
-            SELECT ci.id AS content_item_id, ci.title, ci.status, ci.published_at,
-                   pm.arxiv_id
-            FROM research_radar.content_items ci
-            LEFT JOIN research_radar.paper_metadata pm ON pm.content_id = ci.id
-            WHERE ci.id = ANY(%s)
-            ORDER BY ci.id
-            """,
-            (list(content_item_ids),),
-        )
+        if PI_USE_PAPERS_CATALOG:
+            cur.execute(
+                """
+                SELECT p.paper_id AS content_item_id, p.title, NULL::text AS status,
+                       p.published_at, p.arxiv_id
+                FROM paper_intelligence.papers p
+                WHERE p.paper_id = ANY(%s)
+                ORDER BY p.paper_id
+                """,
+                (list(content_item_ids),),
+            )
+        else:
+            cur.execute(
+                """
+                SELECT ci.id AS content_item_id, ci.title, ci.status, ci.published_at,
+                       pm.arxiv_id
+                FROM research_radar.content_items ci
+                LEFT JOIN research_radar.paper_metadata pm ON pm.content_id = ci.id
+                WHERE ci.id = ANY(%s)
+                ORDER BY ci.id
+                """,
+                (list(content_item_ids),),
+            )
         rows = {int(r["content_item_id"]): dict(r) for r in cur.fetchall()}
 
     done = ids_with_result(

@@ -1,8 +1,10 @@
 """arXiv OAI-PMH ingest for PaperIntelligence.
 
-Port of Research Radar's arxiv_backfill harvester. Writes the same shared
-tables (`research_radar.content_items` / `paper_metadata`). Does not remove
-or replace Research Radar's copy — both may run against the same RDS.
+When ``PI_USE_PAPERS_CATALOG=1``, writes ``paper_intelligence.papers`` first
+and uses PI ingest checkpoints. Radar dual-write is best-effort when
+``PI_WRITE_RADAR_COMPAT=1`` and must not roll back PI success.
+
+When catalog mode is off, preserves the legacy Radar-first path.
 
 Does not run relevance, screen, affiliation, or any LLM stage.
 `published_at` always comes from OAI `<created>`, never `<datestamp>`.
@@ -20,6 +22,7 @@ from typing import Any, Iterator
 
 import requests
 
+from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG, PI_WRITE_RADAR_COMPAT
 from paper_intelligence.ingest.repository import (
     normalize_url,
     parse_iso_datetime,
@@ -375,9 +378,31 @@ class IngestTotals:
         }
 
 
-def _run_one_window(
+def _radar_compat_write(conn: Any, rec: dict[str, Any], paper_id: int) -> bool:
+    """Best-effort Radar dual-write after PI success. Never raises to caller."""
+    if not PI_WRITE_RADAR_COMPAT:
+        return False
+    try:
+        from paper_intelligence.catalog.ingest import link_legacy_content_item
+
+        item = record_to_item(rec)
+        content_id, _ = upsert_item(conn, item)
+        upsert_paper_metadata(conn, content_id, rec)
+        link_legacy_content_item(conn, paper_id, content_id)
+        return True
+    except Exception:  # noqa: BLE001
+        log.exception(
+            "Radar compat ingest write failed after PI success paper_id=%s arxiv=%s",
+            paper_id,
+            rec.get("arxiv_id"),
+        )
+        return False
+
+
+def _run_one_window_radar(
     conn: Any, set_spec: str, window_from: date, window_until: date
 ) -> WindowStats:
+    """Legacy Radar-first ingest (rollback path)."""
     stats = WindowStats()
     for rec in fetch_window_records(set_spec, window_from, window_until):
         stats.records_seen += 1
@@ -403,17 +428,96 @@ def _run_one_window(
     return stats
 
 
+def _run_one_window_pi(
+    conn: Any, set_spec: str, window_from: date, window_until: date
+) -> WindowStats:
+    """PI-first ingest: papers table is authoritative."""
+    from paper_intelligence.catalog.ingest import upsert_paper_from_oai
+
+    stats = WindowStats()
+    compat_failures = 0
+    for rec in fetch_window_records(set_spec, window_from, window_until):
+        stats.records_seen += 1
+        if rec["deleted"] or not rec.get("arxiv_id"):
+            stats.records_deleted += 1
+            continue
+        if not category_matches(rec["categories"]):
+            continue
+        stats.records_kept += 1
+
+        created_year = _created_year(rec.get("created"))
+        if created_year is not None and created_year < window_from.year:
+            stats.records_revision += 1
+
+        rec["_set_spec"] = set_spec
+        paper_id, is_new = upsert_paper_from_oai(conn, rec, set_spec=set_spec)
+        if is_new:
+            stats.records_new += 1
+        else:
+            stats.records_dupe += 1
+        # Commit PI row before optional Radar write so a Radar failure cannot
+        # roll back the catalog paper.
+        conn.commit()
+        if not _radar_compat_write(conn, rec, paper_id):
+            if PI_WRITE_RADAR_COMPAT:
+                compat_failures += 1
+                try:
+                    conn.rollback()
+                except Exception:  # noqa: BLE001
+                    pass
+        else:
+            try:
+                conn.commit()
+            except Exception:  # noqa: BLE001
+                log.exception(
+                    "Radar compat commit failed paper_id=%s; PI paper retained",
+                    paper_id,
+                )
+                try:
+                    conn.rollback()
+                except Exception:  # noqa: BLE001
+                    pass
+    if compat_failures:
+        log.warning(
+            "ingest PI window set=%s %s..%s radar_compat_failures=%d",
+            set_spec,
+            window_from,
+            window_until,
+            compat_failures,
+        )
+    return stats
+
+
+def _run_one_window(
+    conn: Any, set_spec: str, window_from: date, window_until: date
+) -> WindowStats:
+    if PI_USE_PAPERS_CATALOG:
+        return _run_one_window_pi(conn, set_spec, window_from, window_until)
+    return _run_one_window_radar(conn, set_spec, window_from, window_until)
+
+
 def run_ingest(
     conn: Any, date_from: date, date_until: date, *, force: bool = False
 ) -> IngestTotals:
+    from paper_intelligence.catalog.ingest import (
+        checkpoint_status_pi,
+        finish_checkpoint_pi,
+        start_checkpoint_pi,
+    )
+
     totals = IngestTotals()
+    use_pi = PI_USE_PAPERS_CATALOG
     for set_spec in OAI_SETS:
         for window_from, window_until in _iter_windows(date_from, date_until):
-            if (
-                not force
-                and checkpoint_status(conn, SOURCE, set_spec, window_from, window_until)
-                == "COMPLETE"
-            ):
+            if use_pi:
+                done = checkpoint_status_pi(
+                    conn, SOURCE, set_spec, window_from, window_until
+                )
+            else:
+                done = checkpoint_status(
+                    conn, SOURCE, set_spec, window_from, window_until
+                )
+            if not force and done == "COMPLETE":
                 log.info(
                     "ingest set=%s window=%s..%s SKIP (checkpoint COMPLETE)",
                     set_spec,
@@ -423,25 +527,63 @@ def run_ingest(
                 totals.windows_skipped += 1
                 continue
 
-            start_checkpoint(conn, SOURCE, set_spec, window_from, window_until)
+            pi_ckpt_id: int | None = None
+            if use_pi:
+                pi_ckpt_id = start_checkpoint_pi(
+                    conn, SOURCE, set_spec, window_from, window_until
+                )
+                # Optional Radar checkpoint mirror (does not control resume).
+                if PI_WRITE_RADAR_COMPAT:
+                    try:
+                        start_checkpoint(
+                            conn, SOURCE, set_spec, window_from, window_until
+                        )
+                    except Exception:  # noqa: BLE001
+                        log.exception("Radar compat start_checkpoint failed")
+            else:
+                start_checkpoint(conn, SOURCE, set_spec, window_from, window_until)
             conn.commit()
             started = time.monotonic()
             try:
                 stats = _run_one_window(conn, set_spec, window_from, window_until)
-                finish_checkpoint(
-                    conn,
-                    SOURCE,
-                    set_spec,
-                    window_from,
-                    window_until,
-                    status="COMPLETE",
-                    stats=stats,
-                )
+                if use_pi and pi_ckpt_id is not None:
+                    finish_checkpoint_pi(
+                        conn,
+                        pi_ckpt_id,
+                        status="COMPLETE",
+                        records_seen=stats.records_seen,
+                        records_kept=stats.records_kept,
+                        records_new=stats.records_new,
+                        records_dupe=stats.records_dupe,
+                    )
+                    if PI_WRITE_RADAR_COMPAT:
+                        try:
+                            finish_checkpoint(
+                                conn,
+                                SOURCE,
+                                set_spec,
+                                window_from,
+                                window_until,
+                                status="COMPLETE",
+                                stats=stats,
+                            )
+                        except Exception:  # noqa: BLE001
+                            log.exception("Radar compat finish_checkpoint failed")
+                else:
+                    finish_checkpoint(
+                        conn,
+                        SOURCE,
+                        set_spec,
+                        window_from,
+                        window_until,
+                        status="COMPLETE",
+                        stats=stats,
+                    )
                 conn.commit()
                 totals.add(stats)
                 totals.windows_run += 1
                 log.info(
-                    "ingest set=%s window=%s..%s seen=%d kept=%d new=%d dupe=%d elapsed=%ds",
+                    "ingest set=%s window=%s..%s seen=%d kept=%d new=%d dupe=%d elapsed=%ds catalog=%s",
                     set_spec,
                     window_from,
                     window_until,
@@ -450,20 +592,33 @@ def run_ingest(
                     stats.records_new,
                     stats.records_dupe,
                     int(time.monotonic() - started),
+                    use_pi,
                 )
             except Exception as exc:  # noqa: BLE001 — window isolation
                 conn.rollback()
-                finish_checkpoint(
-                    conn,
-                    SOURCE,
-                    set_spec,
-                    window_from,
-                    window_until,
-                    status="FAILED",
-                    stats=WindowStats(),
-                    error=str(exc)[:2000],
-                )
-                conn.commit()
+                if use_pi and pi_ckpt_id is not None:
+                    try:
+                        finish_checkpoint_pi(
+                            conn,
+                            pi_ckpt_id,
+                            status="FAILED",
+                            error=str(exc)[:2000],
+                        )
+                        conn.commit()
+                    except Exception:  # noqa: BLE001
+                        log.exception("PI finish_checkpoint FAILED write failed")
+                else:
+                    finish_checkpoint(
+                        conn,
+                        SOURCE,
+                        set_spec,
+                        window_from,
+                        window_until,
+                        status="FAILED",
+                        stats=WindowStats(),
+                        error=str(exc)[:2000],
+                    )
+                    conn.commit()
                 totals.windows_failed += 1
                 totals.failures.append(
                     (set_spec, str(window_from), str(window_until), str(exc))

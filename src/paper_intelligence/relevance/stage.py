@@ -13,7 +13,7 @@ from typing import Any
 
 from paper_intelligence.cache.s3_archive import archive_rejected, build_rejected_record
 from paper_intelligence.catalog.relevance import insert_relevance_result
-from paper_intelligence.common.config import PI_WRITE_RADAR_COMPAT
+from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG, PI_WRITE_RADAR_COMPAT
 from paper_intelligence.db import connect
 
 log = logging.getLogger("paper_intelligence.relevance")
@@ -129,35 +129,50 @@ def _store_relevance(
     secondary: list[str],
     reason: str,
 ) -> None:
+    """Best-effort Radar score/topic dual-write. Must not gate PI success."""
+    if not PI_WRITE_RADAR_COMPAT:
+        return
     import json
 
-    with conn.cursor() as cur:
-        for idx, name in enumerate([x for x in [primary, *secondary] if x]):
+    try:
+        with conn.cursor() as cur:
+            for idx, name in enumerate([x for x in [primary, *secondary] if x]):
+                cur.execute(
+                    """
+                    INSERT INTO research_radar.content_topics(
+                        content_id, topic_id, is_primary, confidence, reason
+                    )
+                    SELECT %s, topic_id, %s, %s, %s
+                    FROM research_radar.topics WHERE canonical_name = %s
+                    ON CONFLICT (content_id, topic_id) DO UPDATE SET
+                        is_primary = EXCLUDED.is_primary,
+                        confidence = EXCLUDED.confidence,
+                        reason = EXCLUDED.reason
+                    """,
+                    (content_id, idx == 0, min(1.0, score / 10), reason, name),
+                )
             cur.execute(
                 """
-                INSERT INTO research_radar.content_topics(
-                    content_id, topic_id, is_primary, confidence, reason
-                )
-                SELECT %s, topic_id, %s, %s, %s
-                FROM research_radar.topics WHERE canonical_name = %s
-                ON CONFLICT (content_id, topic_id) DO UPDATE SET
-                    is_primary = EXCLUDED.is_primary,
-                    confidence = EXCLUDED.confidence,
-                    reason = EXCLUDED.reason
+                INSERT INTO research_radar.content_scores(content_id, ai_relevance, scoring_reason)
+                VALUES (%s, %s, %s::jsonb)
+                ON CONFLICT (content_id) DO UPDATE SET
+                    ai_relevance = EXCLUDED.ai_relevance,
+                    scoring_reason = research_radar.content_scores.scoring_reason
+                        || EXCLUDED.scoring_reason,
+                    scored_at = NOW()
                 """,
-                (content_id, idx == 0, min(1.0, score / 10), reason, name),
+                (
+                    content_id,
+                    score,
+                    json.dumps(
+                        {"relevance_reason": reason, "via": "paper_intelligence"}
+                    ),
+                ),
             )
-        cur.execute(
-            """
-            INSERT INTO research_radar.content_scores(content_id, ai_relevance, scoring_reason)
-            VALUES (%s, %s, %s::jsonb)
-            ON CONFLICT (content_id) DO UPDATE SET
-                ai_relevance = EXCLUDED.ai_relevance,
-                scoring_reason = research_radar.content_scores.scoring_reason
-                    || EXCLUDED.scoring_reason,
-                scored_at = NOW()
-            """,
-            (content_id, score, json.dumps({"relevance_reason": reason, "via": "paper_intelligence"})),
+    except Exception:  # noqa: BLE001
+        log.exception(
+            "Radar compat content_scores write failed id=%s (PI relevance retained)",
+            content_id,
         )
 
 
@@ -213,6 +228,115 @@ def _write_pi_relevance(
     )
 
 
+def _select_candidates_radar(
+    conn: Any,
+    date_from: str,
+    date_until: str,
+    *,
+    limit: int | None,
+    reprocess: bool,
+) -> list[dict[str, Any]]:
+    """Legacy Radar-status candidate pool (rollback path only)."""
+    statuses = ("INGESTED", "RELEVANCE_CHECKED", "ERROR")
+    if reprocess:
+        statuses = ("INGESTED", "RELEVANCE_CHECKED", "ERROR", "REJECTED")
+
+    with conn.cursor() as cur:
+        cur.execute(
+            """
+            SELECT ci.id, ci.title, ci.summary, ci.categories_raw, ci.source_type,
+                   ci.canonical_url, ci.status, ci.relevance_version,
+                   pm.arxiv_id,
+                   COALESCE(pm.abstract, ci.summary, '') AS abstract
+            FROM research_radar.content_items ci
+            LEFT JOIN research_radar.paper_metadata pm ON pm.content_id = ci.id
+            WHERE ci.status = ANY(%s)
+              AND ci.published_at >= %s::timestamptz
+              AND ci.published_at < (%s::timestamptz + interval '1 day')
+            ORDER BY ci.published_at DESC NULLS LAST, ci.id DESC
+            LIMIT %s
+            """,
+            (list(statuses), date_from, date_until, limit or 100_000),
+        )
+        rows = [dict(r) for r in cur.fetchall()]
+
+    if reprocess:
+        rows = [
+            r
+            for r in rows
+            if r.get("relevance_version") is None
+            or r["relevance_version"] != RELEVANCE_VERSION
+            or r.get("status") == "REJECTED"
+        ][: limit or 100_000]
+    return rows
+
+
+def _select_candidates_pi(
+    conn: Any,
+    date_from: str,
+    date_until: str,
+    *,
+    limit: int | None,
+    reprocess: bool,
+) -> list[dict[str, Any]]:
+    """PI-native candidates: papers lacking a current valid relevance result.
+
+    Does NOT consult research_radar.content_items.status.
+    """
+    with conn.cursor() as cur:
+        if reprocess:
+            cur.execute(
+                """
+                WITH windowed AS (
+                  SELECT p.paper_id AS id, p.title, p.summary, p.abstract,
+                         p.categories AS categories_raw, p.source_type,
+                         p.canonical_url, p.arxiv_id,
+                         COALESCE(p.abstract, p.summary, '') AS abstract_text
+                  FROM paper_intelligence.papers p
+                  WHERE p.published_at >= %s::timestamptz
+                    AND p.published_at < (%s::timestamptz + interval '1 day')
+                ),
+                latest AS (
+                  SELECT DISTINCT ON (r.paper_id)
+                         r.paper_id, r.stage_version, r.policy_version, r.method
+                  FROM paper_intelligence.paper_relevance_results r
+                  JOIN windowed w ON w.id = r.paper_id
+                  ORDER BY r.paper_id, r.created_at DESC, r.relevance_id DESC
+                )
+                SELECT w.id, w.title, w.summary, w.categories_raw, w.source_type,
+                       w.canonical_url, w.arxiv_id, w.abstract_text AS abstract
+                FROM windowed w
+                LEFT JOIN latest l ON l.paper_id = w.id
+                WHERE l.paper_id IS NULL
+                   OR COALESCE(l.stage_version, '') <> %s
+                   OR COALESCE(l.policy_version, '') <> 'v001'
+                   OR l.method = 'migrated_legacy_state'
+                ORDER BY w.id DESC
+                LIMIT %s
+                """,
+                (date_from, date_until, STAGE_VERSION, limit or 100_000),
+            )
+        else:
+            cur.execute(
+                """
+                SELECT p.paper_id AS id, p.title, p.summary, p.categories AS categories_raw,
+                       p.source_type, p.canonical_url, p.arxiv_id,
+                       COALESCE(p.abstract, p.summary, '') AS abstract
+                FROM paper_intelligence.papers p
+                WHERE p.published_at >= %s::timestamptz
+                  AND p.published_at < (%s::timestamptz + interval '1 day')
+                  AND NOT EXISTS (
+                    SELECT 1 FROM paper_intelligence.paper_relevance_results r
+                    WHERE r.paper_id = p.paper_id
+                  )
+                ORDER BY p.published_at DESC NULLS LAST, p.paper_id DESC
+                LIMIT %s
+                """,
+                (date_from, date_until, limit or 100_000),
+            )
+        return [dict(r) for r in cur.fetchall()]
+
+
 def run_window(
     date_from: str,
     date_until: str,
@@ -223,41 +347,22 @@ def run_window(
     reprocess: bool = False,
     run_id: str | None = None,
 ) -> dict[str, Any]:
-    """Score relevance for ingested papers in [date_from, date_until]."""
+    """Score relevance for papers in [date_from, date_until].
+
+    Catalog mode: candidates from ``paper_intelligence.papers`` with no current
+    valid PI relevance result. Radar status is never an eligibility gate.
+    """
     owns = conn is None
     conn = conn or connect()
     try:
-        statuses = ("INGESTED", "RELEVANCE_CHECKED", "ERROR")
-        if reprocess:
-            statuses = ("INGESTED", "RELEVANCE_CHECKED", "ERROR", "REJECTED")
-
-        with conn.cursor() as cur:
-            cur.execute(
-                f"""
-                SELECT ci.id, ci.title, ci.summary, ci.categories_raw, ci.source_type,
-                       ci.canonical_url, ci.status, ci.relevance_version,
-                       pm.arxiv_id,
-                       COALESCE(pm.abstract, ci.summary, '') AS abstract
-                FROM research_radar.content_items ci
-                LEFT JOIN research_radar.paper_metadata pm ON pm.content_id = ci.id
-                WHERE ci.status = ANY(%s)
-                  AND ci.published_at >= %s::timestamptz
-                  AND ci.published_at < (%s::timestamptz + interval '1 day')
-                ORDER BY ci.published_at DESC NULLS LAST, ci.id DESC
-                LIMIT %s
-                """,
-                (list(statuses), date_from, date_until, limit or 100_000),
+        if PI_USE_PAPERS_CATALOG:
+            rows = _select_candidates_pi(
+                conn, date_from, date_until, limit=limit, reprocess=reprocess
             )
-            rows = [dict(r) for r in cur.fetchall()]
-
-        if reprocess:
-            rows = [
-                r
-                for r in rows
-                if r.get("relevance_version") is None
-                or r["relevance_version"] != RELEVANCE_VERSION
-                or r.get("status") == "REJECTED"
-            ][: limit or 100_000]
+        else:
+            rows = _select_candidates_radar(
+                conn, date_from, date_until, limit=limit, reprocess=reprocess
+            )
 
         kept = rejected = errors = 0
         reject_records: list[dict[str, Any]] = []
@@ -269,7 +374,7 @@ def run_window(
                 if isinstance(cats, str):
                     cats = [cats]
                 score, _, _, _ = score_relevance(
-                    row["title"], row.get("summary") or "", cats, row["source_type"]
+                    row["title"], row.get("summary") or "", cats, row.get("source_type")
                 )
                 if score < MIN_AI_RELEVANCE:
                     rejected += 1
@@ -282,35 +387,40 @@ def run_window(
                 "would_reject": rejected,
                 "min_ai_relevance": MIN_AI_RELEVANCE,
                 "relevance_version": RELEVANCE_VERSION,
+                "catalog_mode": PI_USE_PAPERS_CATALOG,
             }
 
         for row in rows:
+            paper_id = int(row["id"])
             try:
                 cats = row.get("categories_raw") or []
                 if isinstance(cats, str):
                     cats = [cats]
+                elif isinstance(cats, dict):
+                    cats = list(cats.values()) if cats else []
                 score, primary, secondary, reason = score_relevance(
-                    row["title"], row.get("summary") or "", cats, row["source_type"]
+                    row["title"],
+                    row.get("summary") or row.get("abstract") or "",
+                    cats,
+                    row.get("source_type"),
                 )
-                _store_relevance(conn, row["id"], score, primary, secondary, reason)
+                # Authoritative PI write first.
                 if score < MIN_AI_RELEVANCE:
                     _write_pi_relevance(
                         conn,
-                        paper_id=int(row["id"]),
+                        paper_id=paper_id,
                         decision="reject",
                         score=score,
                         reason=reason or "low_ai_relevance",
                         run_id=run_id,
                     )
-                    _set_status(conn, row["id"], "RELEVANCE_CHECKED")
-                    _set_relevance_version(conn, row["id"], RELEVANCE_VERSION)
                     reject_records.append(
                         build_rejected_record(
-                            content_id=row["id"],
+                            content_id=paper_id,
                             canonical_url=row.get("canonical_url") or "",
                             title=row["title"] or "",
                             abstract=row.get("abstract") or row.get("summary") or "",
-                            categories=cats,
+                            categories=cats if isinstance(cats, list) else [],
                             relevance_score=score,
                             primary_topic=primary,
                             rejection_reason="low_ai_relevance",
@@ -318,35 +428,49 @@ def run_window(
                             arxiv_id=row.get("arxiv_id"),
                         )
                     )
-                    reject_ids.append(int(row["id"]))
+                    reject_ids.append(paper_id)
                     rejected += 1
                 else:
                     _write_pi_relevance(
                         conn,
-                        paper_id=int(row["id"]),
+                        paper_id=paper_id,
                         decision="keep",
                         score=score,
                         reason=reason or "deterministic_keep",
                         run_id=run_id,
                     )
-                    _set_status(conn, row["id"], "RELEVANCE_CHECKED")
-                    _set_relevance_version(conn, row["id"], RELEVANCE_VERSION)
-                    _set_status(conn, row["id"], "RELEVANT")
                     kept += 1
-            except Exception as exc:  # noqa: BLE001
-                log.exception("relevance failed id=%s", row["id"])
-                _set_status(conn, row["id"], "ERROR")
-                errors += 1
+                # Best-effort Radar dual-write (may no-op for PI-only papers).
+                _store_relevance(conn, paper_id, score, primary, secondary, reason)
+                _set_status(conn, paper_id, "RELEVANCE_CHECKED")
+                _set_relevance_version(conn, paper_id, RELEVANCE_VERSION)
+                if score >= MIN_AI_RELEVANCE:
+                    _set_status(conn, paper_id, "RELEVANT")
                 conn.commit()
+            except Exception:  # noqa: BLE001
+                log.exception("relevance failed id=%s", paper_id)
+                try:
+                    conn.rollback()
+                except Exception:  # noqa: BLE001
+                    pass
+                _set_status(conn, paper_id, "ERROR")
+                errors += 1
+                try:
+                    conn.commit()
+                except Exception:  # noqa: BLE001
+                    pass
 
         archive_info = None
         if reject_records:
-            archive_info = archive_rejected(
-                conn,
-                run_id or "00000000-0000-0000-0000-000000000000",
-                STAGE_NAME,
-                reject_records,
-            )
+            try:
+                archive_info = archive_rejected(
+                    conn,
+                    run_id or "00000000-0000-0000-0000-000000000000",
+                    STAGE_NAME,
+                    reject_records,
+                )
+            except Exception:  # noqa: BLE001
+                log.exception("S3 reject archive failed (PI relevance retained)")
         for cid in reject_ids:
             _set_status(conn, cid, "REJECTED")
         conn.commit()
@@ -359,6 +483,7 @@ def run_window(
             "min_ai_relevance": MIN_AI_RELEVANCE,
             "relevance_version": RELEVANCE_VERSION,
             "s3_archive": archive_info,
+            "catalog_mode": PI_USE_PAPERS_CATALOG,
         }
     finally:
         if owns:

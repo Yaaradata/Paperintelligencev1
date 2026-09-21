@@ -1,0 +1,15 @@
+{
+  "fake_arxiv_id": "9999.26738",
+  "checks": {
+    "created_new": true,
+    "no_radar_row": true,
+    "selected_for_relevance": true,
+    "has_pi_relevance_keep": true,
+    "not_repeated_after_result": true,
+    "eligible_for_screen": true,
+    "reader_finds_paper": true
+  },
+  "paper_id": 195658,
+  "passed": true,
+  "note": "Stopped before paid stages. Fixture rolled back; no permanent writes."
+}

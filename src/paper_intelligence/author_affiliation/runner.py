@@ -8,6 +8,7 @@ from typing import Any
 from paper_intelligence.author_affiliation.stage import STAGE_NAME, AffiliationStage
 from paper_intelligence.author_affiliation.policy import DEFAULT_POLICY_VERSION, policy_version
 from paper_intelligence.common import RunContext
+from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
 from paper_intelligence.db import connect
 from paper_intelligence.observability.runs import (
     code_commit_sha,
@@ -18,7 +19,7 @@ from paper_intelligence.observability.runs import (
     start_stage_run,
 )
 
-SELECT_WINDOW_SQL = """
+SELECT_WINDOW_SQL_RADAR = """
 SELECT ci.id
 FROM research_radar.content_items ci
 JOIN research_radar.paper_metadata pm ON pm.content_id = ci.id
@@ -29,6 +30,22 @@ WHERE ci.published_at >= %s
 GROUP BY ci.id
 ORDER BY ci.id
 """
+
+SELECT_WINDOW_SQL_PI = """
+SELECT p.paper_id AS id
+FROM paper_intelligence.papers p
+JOIN paper_intelligence.paper_authors pa ON pa.content_item_id = p.paper_id
+WHERE p.published_at >= %s
+  AND p.published_at < %s
+  AND (
+    COALESCE(p.affiliation_text, '[]'::jsonb) <> '[]'::jsonb
+    OR p.doi IS NOT NULL
+  )
+GROUP BY p.paper_id
+ORDER BY p.paper_id
+"""
+
+SELECT_WINDOW_SQL = SELECT_WINDOW_SQL_RADAR
 
 
 # item_stage_runs.status has its own CHECK vocabulary; StageResult.status does not
@@ -46,7 +63,8 @@ def select_window(
     conn: Any, start: str | datetime, end: str | datetime, *, limit: int | None = None
 ) -> list[int]:
     """Content item ids in [start, end) that have authors and some affiliation signal."""
-    sql = SELECT_WINDOW_SQL + ("LIMIT %s" if limit else "")
+    base = SELECT_WINDOW_SQL_PI if PI_USE_PAPERS_CATALOG else SELECT_WINDOW_SQL_RADAR
+    sql = base + (" LIMIT %s" if limit else "")
     params: tuple[Any, ...] = (start, end, limit) if limit else (start, end)
     with conn.cursor() as cur:
         cur.execute(sql, params)

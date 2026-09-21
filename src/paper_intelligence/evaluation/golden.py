@@ -64,8 +64,13 @@ def upsert_golden_set(conn: Connection, payload: dict[str, Any]) -> dict[str, in
         for item in payload["items"]:
             content_item_id = int(item["content_item_id"])
             cur.execute(
-                "SELECT 1 FROM research_radar.content_items WHERE id = %s",
-                (content_item_id,),
+                """
+                SELECT 1 FROM paper_intelligence.papers WHERE paper_id = %s
+                UNION ALL
+                SELECT 1 FROM research_radar.content_items WHERE id = %s
+                LIMIT 1
+                """,
+                (content_item_id, content_item_id),
             )
             if cur.fetchone() is None:
                 missing_content += 1

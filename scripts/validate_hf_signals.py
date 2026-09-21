@@ -21,6 +21,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
 from paper_intelligence.db import connect
 from paper_intelligence.evaluation.hf_validation import (
     DEFAULT_WINDOW_END,
@@ -49,7 +50,7 @@ from paper_intelligence.observability import (
 )
 
 
-PAPER_SQL = """
+PAPER_SQL_RADAR = """
 SELECT
     ci.id AS content_item_id,
     pm.arxiv_id,
@@ -87,6 +88,46 @@ WHERE ci.published_at >= %s::timestamptz
   AND ci.published_at < (%s::timestamptz + interval '1 day')
   AND pm.arxiv_id IS NOT NULL
 """
+
+PAPER_SQL_PI = """
+SELECT
+    p.paper_id AS content_item_id,
+    p.arxiv_id,
+    p.title,
+    p.published_at::date AS published_at,
+    c.domain,
+    c.subdomains,
+    c.audiences,
+    c.application_domains,
+    c.final_score,
+    c.quality_score,
+    c.screen_score,
+    c.org_boost,
+    c.organisation_score,
+    s.hf_featured,
+    s.hf_featured_date,
+    s.hf_upvotes,
+    s.hf_daily_upvote_rank,
+    (
+      SELECT o.canonical_name
+      FROM paper_intelligence.paper_author_affiliations a
+      JOIN paper_intelligence.organisations o ON o.id = a.organisation_id
+      WHERE a.content_item_id = p.paper_id AND o.is_org_of_interest
+      ORDER BY o.priority DESC NULLS LAST, o.canonical_name
+      LIMIT 1
+    ) AS notable_organisation,
+    NULL::text AS notable_person
+FROM paper_intelligence.papers p
+LEFT JOIN paper_intelligence.paper_intelligence_current c
+       ON c.content_item_id = p.paper_id
+LEFT JOIN paper_intelligence.paper_hf_signals s
+       ON s.content_item_id = p.paper_id
+WHERE p.published_at >= %s::timestamptz
+  AND p.published_at < (%s::timestamptz + interval '1 day')
+  AND p.arxiv_id IS NOT NULL
+"""
+
+PAPER_SQL = PAPER_SQL_RADAR
 
 
 def _parse_day(value: str) -> date:
@@ -127,8 +168,9 @@ def ensure_hf_signals_for_window(start: date, end: date) -> dict:
 
 
 def load_papers(conn, start: date, end: date) -> list[dict]:
+    sql = PAPER_SQL_PI if PI_USE_PAPERS_CATALOG else PAPER_SQL_RADAR
     with conn.cursor() as cur:
-        cur.execute(PAPER_SQL, (start.isoformat(), end.isoformat()))
+        cur.execute(sql, (start.isoformat(), end.isoformat()))
         return [dict(r) for r in cur.fetchall()]
 
 

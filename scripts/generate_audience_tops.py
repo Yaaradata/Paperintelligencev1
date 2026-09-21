@@ -34,6 +34,24 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
+
+
+def _current_window_join() -> str:
+    """Join paper_intelligence_current rows to the date window paper table."""
+    if PI_USE_PAPERS_CATALOG:
+        return (
+            "JOIN paper_intelligence.papers ci ON ci.paper_id = c.content_item_id "
+            "AND ci.published_at >= %s::timestamptz "
+            "AND ci.published_at < (%s::timestamptz + interval '1 day')"
+        )
+    return (
+        "JOIN research_radar.content_items ci ON ci.id = c.content_item_id "
+        "AND ci.published_at >= %s::timestamptz "
+        "AND ci.published_at < (%s::timestamptz + interval '1 day')"
+    )
+
+
 TECH_AUDIENCES = ("practitioner", "technical_leadership", "student")
 BUSINESS_AUDIENCE = "enterprise_adoption"
 METHOD_APPLICATIONS = ("general_method", "scientific_research")
@@ -94,6 +112,7 @@ def _title(value: str | None) -> str:
 def fetch_pool(conn, *, date_from: str, date_until: str, pool: str, limit: int):
     if pool not in POOL_SQL:
         raise ValueError(f"unknown pool {pool!r}")
+    join = _current_window_join()
     with conn.cursor() as cur:
         cur.execute(
             f"""
@@ -133,11 +152,9 @@ def fetch_pool(conn, *, date_from: str, date_until: str, pool: str, limit: int):
                       AND COALESCE(a.confidence, 1) >= 0.6
                 ) AS all_organisations
             FROM paper_intelligence.paper_intelligence_current c
-            JOIN research_radar.content_items ci ON ci.id = c.content_item_id
+            {join}
             LEFT JOIN paper_intelligence.organisations o ON o.id = c.top_organisation_id
-            WHERE ci.published_at >= %s::timestamptz
-              AND ci.published_at < (%s::timestamptz + interval '1 day')
-              AND c.final_score IS NOT NULL
+            WHERE c.final_score IS NOT NULL
               AND {POOL_SQL[pool]}
             ORDER BY
                 c.final_score DESC NULLS LAST,
@@ -152,6 +169,7 @@ def fetch_pool(conn, *, date_from: str, date_until: str, pool: str, limit: int):
 
 
 def coverage(conn, *, date_from: str, date_until: str) -> dict:
+    join = _current_window_join()
     with conn.cursor() as cur:
         cur.execute(
             f"""
@@ -179,9 +197,7 @@ def coverage(conn, *, date_from: str, date_until: str) -> dict:
               MIN(ci.published_at)::date AS earliest_published,
               MAX(ci.published_at)::date AS latest_published
             FROM paper_intelligence.paper_intelligence_current c
-            JOIN research_radar.content_items ci ON ci.id = c.content_item_id
-            WHERE ci.published_at >= %s::timestamptz
-              AND ci.published_at < (%s::timestamptz + interval '1 day')
+            {join}
             """,
             (date_from, date_until),
         )

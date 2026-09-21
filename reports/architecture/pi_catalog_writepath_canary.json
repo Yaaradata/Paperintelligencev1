@@ -1,0 +1,37 @@
+{
+  "day": "2026-09-02",
+  "PI_USE_PAPERS_CATALOG": true,
+  "PI_WRITE_RADAR_COMPAT": true,
+  "checks": {
+    "arxiv_version_rediscovery": {
+      "paper_id": 1148,
+      "is_new": false,
+      "arxiv_id_count": 1,
+      "arxiv_version_after": 2,
+      "no_duplicate": true
+    },
+    "relevance_candidates_no_result": {
+      "count": 0,
+      "uses_pi_papers": true
+    },
+    "relevance_dry_scores_sample": [],
+    "screen_candidate_visibility": {
+      "count": 567,
+      "sample_in_pool": true
+    },
+    "paid_projection": {
+      "screen_pending_would_call": 0,
+      "audience_pending_would_call": 325,
+      "quality_gate_pass_ids": 556,
+      "quality_already_scored": 163,
+      "quality_would_call_if_run": 393,
+      "paid_calls_executed": 0,
+      "note": "Canary does not execute paid stages."
+    },
+    "pi_checkpoint_query_ok": true,
+    "pi_checkpoint_status_sample": null
+  },
+  "sample_paper_id": 1148,
+  "sample_arxiv_id": "2608.16968",
+  "passed": true
+}

@@ -1,6 +1,10 @@
 """PI-owned paper catalog (additive / shadow). Production cutover not enabled."""
 
-from paper_intelligence.catalog.normalize import normalize_arxiv_id, normalize_doi
+from paper_intelligence.catalog.normalize import (
+    extract_arxiv_version,
+    normalize_arxiv_id,
+    normalize_doi,
+)
 from paper_intelligence.catalog.papers import (
     fetch_papers_by_ids,
     resolve_paper_id,
@@ -15,6 +19,7 @@ from paper_intelligence.catalog.relevance import (
 )
 
 __all__ = [
+    "extract_arxiv_version",
     "normalize_arxiv_id",
     "normalize_doi",
     "fetch_papers_by_ids",

@@ -6,8 +6,10 @@ from typing import Any, Sequence
 
 from psycopg import Connection
 
+from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
 
-FETCH_AUTHORS_SQL = """
+
+FETCH_AUTHORS_SQL_RADAR = """
 SELECT
     ci.id AS content_item_id,
     CASE
@@ -21,6 +23,21 @@ FROM research_radar.content_items ci
 LEFT JOIN research_radar.paper_metadata pm ON pm.content_id = ci.id
 WHERE ci.id = %s
 """
+
+FETCH_AUTHORS_SQL_PI = """
+SELECT
+    p.paper_id AS content_item_id,
+    COALESCE(
+        NULLIF(p.authors_raw, '[]'::jsonb),
+        p.authors_structured,
+        '[]'::jsonb
+    ) AS authors_raw
+FROM paper_intelligence.papers p
+WHERE p.paper_id = %s
+"""
+
+# Backward-compatible alias for tests that patch FETCH_AUTHORS_SQL.
+FETCH_AUTHORS_SQL = FETCH_AUTHORS_SQL_RADAR
 
 UPSERT_SQL = """
 INSERT INTO paper_intelligence.paper_authors (
@@ -52,8 +69,9 @@ ORDER BY author_position
 
 
 def fetch_authors_raw(conn: Connection, content_item_id: int) -> Any | None:
+    sql = FETCH_AUTHORS_SQL_PI if PI_USE_PAPERS_CATALOG else FETCH_AUTHORS_SQL_RADAR
     with conn.cursor() as cur:
-        cur.execute(FETCH_AUTHORS_SQL, (content_item_id,))
+        cur.execute(sql, (content_item_id,))
         row = cur.fetchone()
     if row is None:
         raise LookupError(f"content_item_id={content_item_id} not found")

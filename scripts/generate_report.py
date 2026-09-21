@@ -16,6 +16,9 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from paper_intelligence.catalog.report_sql import funnel_sql
+from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
+
 
 def _rows(conn, sql: str, params: tuple = ()) -> list[dict]:
     with conn.cursor() as cur:
@@ -39,29 +42,31 @@ def _table(headers: list[str], rows: list[list]) -> str:
 
 def build_report(conn, *, date_from: str, date_until: str, top_n: int) -> str:
     window = (date_from, date_until)
+    if PI_USE_PAPERS_CATALOG:
+        def _pj(cid: str) -> str:
+            return (
+                f"JOIN paper_intelligence.papers ci ON ci.paper_id = {cid} "
+                "AND ci.published_at >= %s::timestamptz "
+                "AND ci.published_at < (%s::timestamptz + interval '1 day')"
+            )
+        title_col = "ci.title"
+    else:
+        def _pj(cid: str) -> str:
+            return (
+                f"JOIN research_radar.content_items ci ON ci.id = {cid} "
+                "AND ci.published_at >= %s::timestamptz "
+                "AND ci.published_at < (%s::timestamptz + interval '1 day')"
+            )
+        title_col = "ci.title"
 
-    funnel = _one(
-        conn,
-        """
-        SELECT
-            COUNT(*) AS ingested,
-            COUNT(*) FILTER (WHERE status = 'REJECTED') AS relevance_rejected,
-            COUNT(*) FILTER (WHERE status <> 'REJECTED') AS relevance_kept
-        FROM research_radar.content_items
-        WHERE published_at >= %s::timestamptz
-          AND published_at < (%s::timestamptz + interval '1 day')
-        """,
-        window,
-    )
+    funnel = _one(conn, funnel_sql(), window)
 
     stage_counts = _rows(
         conn,
-        """
+        f"""
         SELECT r.task_type, COUNT(DISTINCT r.content_item_id) AS papers, COUNT(*) AS rows
         FROM paper_intelligence.paper_classification_results r
-        JOIN research_radar.content_items ci ON ci.id = r.content_item_id
-        WHERE ci.published_at >= %s::timestamptz
-          AND ci.published_at < (%s::timestamptz + interval '1 day')
+        {_pj("r.content_item_id")}
         GROUP BY r.task_type ORDER BY papers DESC
         """,
         window,
@@ -69,17 +74,15 @@ def build_report(conn, *, date_from: str, date_until: str, top_n: int) -> str:
 
     gate = _one(
         conn,
-        """
+        f"""
         SELECT
             COUNT(*) FILTER (WHERE (result_json->'gate'->>'passed')::boolean) AS passed,
             COUNT(*) FILTER (WHERE NOT (result_json->'gate'->>'passed')::boolean) AS failed
         FROM (
             SELECT DISTINCT ON (r.content_item_id) r.result_json
             FROM paper_intelligence.paper_classification_results r
-            JOIN research_radar.content_items ci ON ci.id = r.content_item_id
+            {_pj("r.content_item_id")}
             WHERE r.task_type = 'screen'
-              AND ci.published_at >= %s::timestamptz
-              AND ci.published_at < (%s::timestamptz + interval '1 day')
             ORDER BY r.content_item_id, r.created_at DESC
         ) latest
         """,
@@ -115,17 +118,15 @@ def build_report(conn, *, date_from: str, date_until: str, top_n: int) -> str:
 
     top = _rows(
         conn,
-        """
-        SELECT c.content_item_id, ci.title, c.final_score, c.quality_score,
+        f"""
+        SELECT c.content_item_id, {title_col}, c.final_score, c.quality_score,
                c.screen_score, c.organisation_score, c.org_boost,
                o.canonical_name AS organisation, c.domain,
                c.adjudication_json
         FROM paper_intelligence.paper_intelligence_current c
-        JOIN research_radar.content_items ci ON ci.id = c.content_item_id
+        {_pj("c.content_item_id")}
         LEFT JOIN paper_intelligence.organisations o ON o.id = c.top_organisation_id
-        WHERE ci.published_at >= %s::timestamptz
-          AND ci.published_at < (%s::timestamptz + interval '1 day')
-          AND c.final_score IS NOT NULL
+        WHERE c.final_score IS NOT NULL
         ORDER BY c.final_score DESC NULLS LAST, c.quality_score DESC NULLS LAST
         LIMIT %s
         """,
@@ -134,16 +135,14 @@ def build_report(conn, *, date_from: str, date_until: str, top_n: int) -> str:
 
     orgs = _rows(
         conn,
-        """
+        f"""
         SELECT o.canonical_name, o.is_org_of_interest, o.priority,
                COUNT(DISTINCT c.content_item_id) AS papers,
                ROUND(AVG(c.organisation_score)::numeric, 2) AS avg_org_score,
                ROUND(MAX(c.final_score)::numeric, 1) AS best_final_score
         FROM paper_intelligence.paper_intelligence_current c
         JOIN paper_intelligence.organisations o ON o.id = c.top_organisation_id
-        JOIN research_radar.content_items ci ON ci.id = c.content_item_id
-        WHERE ci.published_at >= %s::timestamptz
-          AND ci.published_at < (%s::timestamptz + interval '1 day')
+        {_pj("c.content_item_id")}
         GROUP BY 1, 2, 3 ORDER BY papers DESC, best_final_score DESC NULLS LAST
         LIMIT 25
         """,
@@ -152,14 +151,12 @@ def build_report(conn, *, date_from: str, date_until: str, top_n: int) -> str:
 
     domains = _rows(
         conn,
-        """
+        f"""
         SELECT c.domain, COUNT(*) AS papers,
                ROUND(AVG(c.quality_score)::numeric, 2) AS avg_quality
         FROM paper_intelligence.paper_intelligence_current c
-        JOIN research_radar.content_items ci ON ci.id = c.content_item_id
-        WHERE ci.published_at >= %s::timestamptz
-          AND ci.published_at < (%s::timestamptz + interval '1 day')
-          AND c.domain IS NOT NULL
+        {_pj("c.content_item_id")}
+        WHERE c.domain IS NOT NULL
         GROUP BY 1 ORDER BY papers DESC
         """,
         window,
@@ -167,7 +164,7 @@ def build_report(conn, *, date_from: str, date_until: str, top_n: int) -> str:
 
     affiliation = _one(
         conn,
-        """
+        f"""
         SELECT
             COUNT(*) AS papers,
             COUNT(*) FILTER (WHERE affiliation_resolution_status = 'resolved') AS resolved,
@@ -177,9 +174,7 @@ def build_report(conn, *, date_from: str, date_until: str, top_n: int) -> str:
             COUNT(*) FILTER (WHERE (adjudication_json->>'screen_quality_disagreement')::numeric
                 >= 3) AS disagreements
         FROM paper_intelligence.paper_intelligence_current c
-        JOIN research_radar.content_items ci ON ci.id = c.content_item_id
-        WHERE ci.published_at >= %s::timestamptz
-          AND ci.published_at < (%s::timestamptz + interval '1 day')
+        {_pj("c.content_item_id")}
         """,
         window,
     )
