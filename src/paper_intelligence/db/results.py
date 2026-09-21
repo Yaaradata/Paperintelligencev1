@@ -14,6 +14,8 @@ EXCLUDED_UPSTREAM_STATUSES = ("REJECTED",)
 
 # Legacy Radar-backed eligibility ONLY when PI_USE_PAPERS_CATALOG=0.
 # Must NOT be used by the PI-catalog eligibility path.
+# Deprecated after final cutover: Radar status allow-list for the
+# PI_USE_PAPERS_CATALOG=0 emergency reader branch only. Not authoritative.
 PI_ELIGIBLE_STATUSES = (
     "RELEVANT",
     "ENRICHED",

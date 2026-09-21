@@ -271,9 +271,20 @@ def test_latest_screen_scores_sql_has_no_status_filter():
     assert captured["params"] == ["2026-09-01", "2026-09-02"]
 
 
-def test_version_aware_skip_sql_includes_versions():
-    """Build the NOT EXISTS clause shape via select_window_candidates parameterization."""
+def test_version_aware_skip_sql_includes_versions(monkeypatch):
+    """Build the NOT EXISTS clause shape via select_window_candidates parameterization.
+
+    Uses the deprecated Radar reader branch explicitly — PI-catalog skip SQL
+    is version-aware via classification_results joins, not Radar status.
+    """
+    monkeypatch.setenv("PI_USE_PAPERS_CATALOG", "0")
+    import importlib
+
+    import paper_intelligence.common.config as cfg
     from paper_intelligence.db import results as results_mod
+
+    importlib.reload(cfg)
+    importlib.reload(results_mod)
 
     captured = {}
 
@@ -321,3 +332,6 @@ def test_version_aware_skip_sql_includes_versions():
         "v004",
         "z-ai/glm-5.3-flash",
     ]
+    monkeypatch.setenv("PI_USE_PAPERS_CATALOG", "1")
+    importlib.reload(cfg)
+    importlib.reload(results_mod)

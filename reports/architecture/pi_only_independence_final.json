@@ -1,0 +1,35 @@
+{
+  "fake_arxiv": "9999.64741",
+  "paper_id": 195814,
+  "flags": {
+    "PI_USE_PAPERS_CATALOG": true,
+    "PI_WRITE_RADAR_COMPAT": false
+  },
+  "paper": {
+    "paper_id": 195814,
+    "arxiv_id": "9999.64741",
+    "title": "PI-only independence: large language models and multi-agent systems",
+    "legacy_content_item_id": null
+  },
+  "relevance": {
+    "decision": "keep",
+    "score": 9.3,
+    "stage_version": "v001",
+    "method": "deterministic"
+  },
+  "checks": {
+    "no_radar_content_item_required": true,
+    "no_radar_paper_metadata_required": true,
+    "no_radar_status_consulted": true,
+    "pi_checkpoint_controls_resume": true,
+    "no_radar_checkpoint_controls_resume": true,
+    "no_radar_archive_index_required": true,
+    "pi_relevance_result_written": true,
+    "visible_to_screen_if_keep": true,
+    "pi_paper_valid_with_radar_absent": true,
+    "reports_editorial_lookup_via_pi": true,
+    "radar_compat_write_disabled": true
+  },
+  "screen_candidate_count_window": 1,
+  "paper_in_screen_pool": true
+}

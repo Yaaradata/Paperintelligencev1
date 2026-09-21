@@ -28,17 +28,17 @@ def sample_content_id():
         with conn.cursor() as cur:
             cur.execute(
                 """
-                SELECT ci.id
-                FROM research_radar.content_items ci
-                WHERE jsonb_typeof(ci.authors_raw) = 'array'
-                  AND jsonb_array_length(ci.authors_raw) >= 2
-                ORDER BY ci.id
+                SELECT p.paper_id AS id
+                FROM paper_intelligence.papers p
+                WHERE jsonb_typeof(p.authors_raw) = 'array'
+                  AND jsonb_array_length(p.authors_raw) >= 2
+                ORDER BY p.paper_id
                 LIMIT 1
                 """
             )
             row = cur.fetchone()
     if not row:
-        pytest.skip("no content_items with authors_raw")
+        pytest.skip("no PI papers with authors_raw")
     return int(row["id"])
 
 
@@ -62,28 +62,28 @@ def test_normalize_idempotent_and_preserves_unicode(sample_content_id: int) -> N
 
 
 def test_empty_authors_succeeds_cleanly() -> None:
-    """Insert a throwaway content_item with empty authors, normalize, then delete."""
+    """Insert a throwaway PI catalog paper with empty authors, normalize, then delete."""
     with connect() as conn:
         with conn.cursor() as cur:
             cur.execute(
                 """
-                INSERT INTO research_radar.content_items (
-                    source_type, source, canonical_url, title, authors_raw, status
+                INSERT INTO paper_intelligence.papers (
+                    source, source_type, canonical_url, title, authors_raw, abstract
                 ) VALUES (
-                    'arxiv', 'arxiv_oai',
+                    'arxiv_oai', 'arxiv',
                     %s, 'PI normalize empty-authors fixture',
-                    '[]'::jsonb, 'INGESTED'
+                    '[]'::jsonb, ''
                 )
-                RETURNING id
+                RETURNING paper_id
                 """,
                 (f"https://example.invalid/pi-normalize-{uuid.uuid4()}",),
             )
-            content_id = int(cur.fetchone()["id"])
+            content_id = int(cur.fetchone()["paper_id"])
         conn.commit()
 
     try:
         result = NormalizeAuthorsStage().process(content_id, _ctx())
-        assert result.status == "success"
+        assert result.status == "success", getattr(result, "metadata", None)
         assert result.data["author_count"] == 0
         with connect() as conn:
             assert list_paper_authors(conn, content_id) == []
@@ -95,7 +95,8 @@ def test_empty_authors_succeeds_cleanly() -> None:
                     (content_id,),
                 )
                 cur.execute(
-                    "DELETE FROM research_radar.content_items WHERE id = %s",
+                    "DELETE FROM paper_intelligence.papers WHERE paper_id = %s",
                     (content_id,),
                 )
+            conn.commit()
             conn.commit()

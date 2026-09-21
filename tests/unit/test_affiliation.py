@@ -102,6 +102,8 @@ class FakeCursor:
         params = params or ()
         if "FROM research_radar.content_items" in text and "paper_metadata" in text:
             self._rows = [self.db.paper]
+        elif "FROM paper_intelligence.papers" in text and "paper_id" in text:
+            self._rows = [self.db.paper]
         elif "FROM paper_intelligence.paper_authors" in text:
             self._rows = list(self.db.authors)
         elif "SELECT * FROM paper_intelligence.organisations" in text:

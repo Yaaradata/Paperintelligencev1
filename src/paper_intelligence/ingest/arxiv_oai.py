@@ -402,7 +402,11 @@ def _radar_compat_write(conn: Any, rec: dict[str, Any], paper_id: int) -> bool:
 def _run_one_window_radar(
     conn: Any, set_spec: str, window_from: date, window_until: date
 ) -> WindowStats:
-    """Legacy Radar-first ingest (rollback path)."""
+    """DEPRECATED: legacy Radar-first ingest (compatibility-only).
+
+    Not used when ``PI_USE_PAPERS_CATALOG=1``. Must not be treated as a
+    production rollback after final cutover — Radar may be stale.
+    """
     stats = WindowStats()
     for rec in fetch_window_records(set_spec, window_from, window_until):
         stats.records_seen += 1
