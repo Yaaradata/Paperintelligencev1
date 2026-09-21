@@ -32,8 +32,11 @@ Paid stages skip a paper only when a `paper_classification_results` row already 
 ## S3 rejects
 
 `S3_ARCHIVE_ENABLED=true` + bucket env →  
-`s3://{bucket}/paper-intelligence/rejected/relevance/.../{run_id}.jsonl.gz`  
-Manifest: `research_radar.s3_archives`.
+`s3://{bucket}/Sources/Arxiv/rejected/relevance/.../{run_id}.jsonl.gz`  
+
+Defaults: bucket `theneural-newsletter`, prefix `Sources/Arxiv`  
+(`PAPER_INTELLIGENCE_S3_BUCKET` / `PAPER_INTELLIGENCE_S3_PREFIX`).  
+Authoritative manifest: `paper_intelligence.archive_records` (Radar `s3_archives` only if compat ON).
 
 ## CLI notes
 

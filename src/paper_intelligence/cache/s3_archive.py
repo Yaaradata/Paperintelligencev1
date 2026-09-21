@@ -22,9 +22,13 @@ log = logging.getLogger("paper_intelligence.s3")
 S3_ARCHIVE_ENABLED = os.getenv("S3_ARCHIVE_ENABLED", "false").lower() == "true"
 S3_BUCKET = os.getenv(
     "PAPER_INTELLIGENCE_S3_BUCKET",
-    os.getenv("RESEARCH_RADAR_S3_BUCKET", ""),
+    os.getenv(
+        "RESEARCH_RADAR_S3_BUCKET",
+        os.getenv("S3_BACKUP_BUCKET", "theneural-newsletter"),
+    ),
 )
-S3_PREFIX = os.getenv("PAPER_INTELLIGENCE_S3_PREFIX", "paper-intelligence")
+# Reject/archive objects live under Sources/Arxiv/… inside the newsletter bucket.
+S3_PREFIX = os.getenv("PAPER_INTELLIGENCE_S3_PREFIX", "Sources/Arxiv")
 
 
 def _utc_now() -> datetime:
