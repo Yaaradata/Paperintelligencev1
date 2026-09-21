@@ -26,16 +26,15 @@ def test_entity_resolved_in_keep_mapping():
     assert "REJECTED" not in RELEVANCE_KEEP_STATUSES
 
 
-def test_feature_flag_default_off(monkeypatch):
+def test_feature_flag_default_on(monkeypatch):
     monkeypatch.delenv("PI_USE_PAPERS_CATALOG", raising=False)
-    monkeypatch.setenv("PI_USE_PAPERS_CATALOG", "0")
     import importlib
 
     importlib.reload(cfg)
     importlib.reload(results_mod)
-    assert cfg.PI_USE_PAPERS_CATALOG is False
-    # restore default for other tests
-    monkeypatch.setenv("PI_USE_PAPERS_CATALOG", "0")
+    assert cfg.PI_USE_PAPERS_CATALOG is True
+    # leave catalog on for subsequent tests that expect production default
+    monkeypatch.delenv("PI_USE_PAPERS_CATALOG", raising=False)
     importlib.reload(cfg)
     importlib.reload(results_mod)
 
@@ -49,7 +48,7 @@ def test_feature_flag_on_uses_pi_sql(monkeypatch):
     assert cfg.PI_USE_PAPERS_CATALOG is True
     assert "paper_intelligence.papers" in results_mod.PAPER_FIELDS_SQL_PI
     assert "research_radar.content_items" in results_mod.PAPER_FIELDS_SQL_RADAR
-    monkeypatch.setenv("PI_USE_PAPERS_CATALOG", "0")
+    monkeypatch.delenv("PI_USE_PAPERS_CATALOG", raising=False)
     importlib.reload(cfg)
     importlib.reload(results_mod)
 
@@ -107,6 +106,6 @@ def test_select_window_candidates_pi_path_no_eligible_statuses(monkeypatch):
     )
     assert ids == [1, 2]
     assert called["stage_task_type"] == "screen"
-    monkeypatch.setenv("PI_USE_PAPERS_CATALOG", "0")
+    monkeypatch.delenv("PI_USE_PAPERS_CATALOG", raising=False)
     importlib.reload(cfg)
     importlib.reload(results_mod)
