@@ -1,5 +1,5 @@
 # Quality model by published_at (UTC calendar date of papers.published_at).
-# Cutover proposed 2026-09-16: confirm before changing.
+# Cutover CONFIRMED 2026-09-22: 2026-09-16 inclusive start of Terra.
 #
 # QUALITY_MODEL env is an explicit one-off override only. When unset, this file
 # is the source of truth for which model is "current" for a paper.
@@ -14,6 +14,7 @@ pre_cutover_model: "openai/gpt-5.6-sol"
 post_cutover_model: "openai/gpt-5.6-terra"
 
 notes: |
-  Sep 1–15 (and earlier Sol-scored days) stay on openai/gpt-5.6-sol.
-  New windows from cutover_date onward use openai/gpt-5.6-terra.
-  Do not flip a single global QUALITY_MODEL for mixed-history adjudication.
+  CONFIRMED 2026-09-22. Sep 1–15 keeps existing Sol scores (do not fill the
+  remaining Sol-pending candidates on that window). New windows from
+  cutover_date onward use openai/gpt-5.6-terra. Do not set QUALITY_MODEL
+  for routine runs — use this map.

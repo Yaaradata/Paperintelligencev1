@@ -29,9 +29,9 @@ QUALITY_BATCH_SIZE = int(os.getenv("QUALITY_BATCH_SIZE", "5"))
 SCREEN_MIN_AI_RELEVANCE = float(os.getenv("SCREEN_MIN_AI_RELEVANCE", "5.0"))
 GATE_PERCENTILE = float(os.getenv("GATE_PERCENTILE", "15"))
 # Quality top-slice scope: "window" (legacy / default) or "day" (per UTC published_at date).
-_ROUTER_SCOPE_RAW = os.getenv("ROUTER_PERCENTILE_SCOPE", "window").strip().lower()
+_ROUTER_SCOPE_RAW = os.getenv("ROUTER_PERCENTILE_SCOPE", "day").strip().lower()
 ROUTER_PERCENTILE_SCOPE = (
-    _ROUTER_SCOPE_RAW if _ROUTER_SCOPE_RAW in {"window", "day"} else "window"
+    _ROUTER_SCOPE_RAW if _ROUTER_SCOPE_RAW in {"window", "day"} else "day"
 )
 
 STAGE_CONCURRENCY = int(os.getenv("PI_STAGE_CONCURRENCY", "6"))
