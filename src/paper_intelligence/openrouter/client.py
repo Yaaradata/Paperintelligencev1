@@ -44,6 +44,7 @@ class LLMResponse:
     input_tokens: int | None = None
     output_tokens: int | None = None
     estimated_cost: float | None = None
+    actual_cost: float | None = None
     raw: dict[str, Any] | None = None
     raw_ref: str | None = None
     error: str | None = None
@@ -56,6 +57,30 @@ def _api_key() -> str:
     return key
 
 
+def provider_reported_cost_usd(usage: dict[str, Any] | None) -> float | None:
+    """Extract OpenRouter ``usage.cost`` (USD credits) when present."""
+    if not usage:
+        return None
+    raw = usage.get("cost")
+    if raw is None:
+        return None
+    try:
+        return float(raw)
+    except (TypeError, ValueError):
+        return None
+
+
+def billable_cost_usd(
+    *,
+    actual_cost: float | None,
+    estimated_cost: float | None,
+) -> float:
+    """Prefer provider-reported cost; fall back to table estimate."""
+    if actual_cost is not None:
+        return float(actual_cost)
+    return float(estimated_cost or 0.0)
+
+
 def _body(request: LLMRequest) -> dict[str, Any]:
     body: dict[str, Any] = {"model": request.model, "messages": request.messages}
     if request.temperature is not None:
@@ -66,6 +91,9 @@ def _body(request: LLMRequest) -> dict[str, Any]:
         body["reasoning"] = {"effort": request.reasoning_effort}
     if request.response_format is not None:
         body["response_format"] = request.response_format
+    # OpenRouter now returns usage.cost by default; ``usage.include`` is a
+    # no-op/deprecated but harmless if an older gateway still keys on it.
+    body.setdefault("usage", {"include": True})
     body.update(request.extra)
     return body
 
@@ -104,12 +132,15 @@ def complete(request: LLMRequest) -> LLMResponse:
             usage = data.get("usage") or {}
             input_tokens = usage.get("prompt_tokens") or usage.get("input_tokens")
             output_tokens = usage.get("completion_tokens") or usage.get("output_tokens")
+            estimated = estimate_cost_usd(request.model, input_tokens, output_tokens)
+            actual = provider_reported_cost_usd(usage)
             return LLMResponse(
                 model=request.model,
                 content=content,
                 input_tokens=input_tokens,
                 output_tokens=output_tokens,
-                estimated_cost=estimate_cost_usd(request.model, input_tokens, output_tokens),
+                estimated_cost=estimated,
+                actual_cost=actual,
                 raw=data,
             )
         except Exception as exc:  # noqa: BLE001 — client boundary normalises errors

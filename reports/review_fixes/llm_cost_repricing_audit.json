@@ -1,0 +1,384 @@
+{
+  "prices_old": {
+    "z-ai/glm-5.3-flash": [
+      0.15,
+      0.5
+    ],
+    "z-ai/glm-4.6": [
+      0.15,
+      0.5
+    ],
+    "openai/gpt-5.6-sol": [
+      1.25,
+      10.0
+    ]
+  },
+  "prices_new": {
+    "z-ai/glm-5.3-flash": [
+      0.15,
+      0.5
+    ],
+    "z-ai/glm-4.6": [
+      0.43,
+      1.75
+    ],
+    "openai/gpt-5.6-sol": [
+      5.0,
+      30.0
+    ]
+  },
+  "verification_note": "OpenRouter model pages, 2026-09-22",
+  "by_stage_month": [
+    {
+      "month": "2026-09",
+      "stage": "affiliation_judge",
+      "model": "z-ai/glm-4.6",
+      "calls": 68,
+      "input_tokens": 64739,
+      "output_tokens": 62596,
+      "old_table_usd": 0.041,
+      "new_table_usd": 0.1374,
+      "logged_estimated_usd": 0.041,
+      "run_ids": [],
+      "ratio_new_over_old": 3.35
+    },
+    {
+      "month": "2026-09",
+      "stage": "audience_domain",
+      "model": "z-ai/glm-5.3-flash",
+      "calls": 19,
+      "input_tokens": 108371,
+      "output_tokens": 87175,
+      "old_table_usd": 0.0598,
+      "new_table_usd": 0.0598,
+      "logged_estimated_usd": 0.0598,
+      "run_ids": [
+        "6921ff86-15f6-43dd-845f-259262fd7ef8",
+        "744c135a-cda2-4faa-a6b1-f6c13d8b37a1",
+        "9c76d27a-16a8-41af-b6a7-481dbb7e6101"
+      ],
+      "ratio_new_over_old": 1.0
+    },
+    {
+      "month": "2026-09",
+      "stage": "classify",
+      "model": "z-ai/glm-5.3-flash",
+      "calls": 291,
+      "input_tokens": 1680437,
+      "output_tokens": 955053,
+      "old_table_usd": 0.7296,
+      "new_table_usd": 0.7296,
+      "logged_estimated_usd": 0.7296,
+      "run_ids": [
+        "08d4012c-924d-4670-b8d7-c5ddcaceb65c",
+        "0960fb85-c648-4c15-9edd-2652436dabf1",
+        "4c473872-8613-4622-bee6-25e712cc8e17",
+        "4f53aca7-1e4c-4a94-91a1-6996181beaf2"
+      ],
+      "ratio_new_over_old": 1.0
+    },
+    {
+      "month": "2026-09",
+      "stage": "quality",
+      "model": "openai/gpt-5.6-sol",
+      "calls": 379,
+      "input_tokens": 800434,
+      "output_tokens": 378606,
+      "old_table_usd": 4.7866,
+      "new_table_usd": 15.3603,
+      "logged_estimated_usd": 4.7866,
+      "run_ids": [
+        "05747117-ebdb-45f1-b83e-954204df1ad0",
+        "3bff3da1-25b6-4298-9eae-1c3fd56e4cc0",
+        "4f5c16ce-1f7f-4265-baa9-988b7d6e1202",
+        "8df5a471-2fd7-4bf0-a695-309a57072a6c",
+        "aaa40c2c-7f5b-4b64-8437-a741e71dbe4d",
+        "d09809e3-f43c-4469-a8da-404a16e37622",
+        "ddad0dbf-d793-4a5b-9c73-aa9597b67984"
+      ],
+      "ratio_new_over_old": 3.209
+    },
+    {
+      "month": "2026-09",
+      "stage": "screen",
+      "model": "z-ai/glm-5.3-flash",
+      "calls": 525,
+      "input_tokens": 2637363,
+      "output_tokens": 716448,
+      "old_table_usd": 0.7538,
+      "new_table_usd": 0.7538,
+      "logged_estimated_usd": 0.7538,
+      "run_ids": [
+        "5970ab85-2005-42c1-ab8d-dd13ba3102f2",
+        "63bd94f0-6060-45fb-b420-3a2d21621a8b",
+        "8896be79-fde1-4925-bece-ef719e0c8dce",
+        "8a90c677-3164-4bb5-8e83-c6f95b3f5b45",
+        "a91962e6-0e69-46cd-b878-41d361dc91b7",
+        "e2e6e7ce-f297-4296-b518-407b336701b0",
+        "fbda9b10-90e7-48ce-ac0a-7595e1816530"
+      ],
+      "ratio_new_over_old": 1.0
+    }
+  ],
+  "runs": [
+    {
+      "run_id": "e2e6e7ce-f297-4296-b518-407b336701b0",
+      "pipeline_name": "paper_intelligence.screen",
+      "run_started_at": "2026-09-15T11:34:17.159031+00:00",
+      "calls": 1,
+      "models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "stages": [
+        "screen"
+      ]
+    },
+    {
+      "run_id": "8896be79-fde1-4925-bece-ef719e0c8dce",
+      "pipeline_name": "paper_intelligence.screen",
+      "run_started_at": "2026-09-15T11:35:01.527353+00:00",
+      "calls": 348,
+      "models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "stages": [
+        "screen"
+      ]
+    },
+    {
+      "run_id": "5970ab85-2005-42c1-ab8d-dd13ba3102f2",
+      "pipeline_name": "paper_intelligence.screen",
+      "run_started_at": "2026-09-15T11:54:54.445756+00:00",
+      "calls": 2,
+      "models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "stages": [
+        "screen"
+      ]
+    },
+    {
+      "run_id": "08d4012c-924d-4670-b8d7-c5ddcaceb65c",
+      "pipeline_name": "paper_intelligence.classify",
+      "run_started_at": "2026-09-15T11:55:17.274900+00:00",
+      "calls": 71,
+      "models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "stages": [
+        "classify"
+      ]
+    },
+    {
+      "run_id": "05747117-ebdb-45f1-b83e-954204df1ad0",
+      "pipeline_name": "paper_intelligence.quality",
+      "run_started_at": "2026-09-15T11:55:18.655110+00:00",
+      "calls": 40,
+      "models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "stages": [
+        "quality"
+      ]
+    },
+    {
+      "run_id": "ddad0dbf-d793-4a5b-9c73-aa9597b67984",
+      "pipeline_name": "paper_intelligence.quality",
+      "run_started_at": "2026-09-15T11:57:17.005282+00:00",
+      "calls": 43,
+      "models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "stages": [
+        "quality"
+      ]
+    },
+    {
+      "run_id": "3bff3da1-25b6-4298-9eae-1c3fd56e4cc0",
+      "pipeline_name": "paper_intelligence.quality",
+      "run_started_at": "2026-09-15T12:35:41.784773+00:00",
+      "calls": 172,
+      "models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "stages": [
+        "quality"
+      ]
+    },
+    {
+      "run_id": "4f53aca7-1e4c-4a94-91a1-6996181beaf2",
+      "pipeline_name": "paper_intelligence.classify",
+      "run_started_at": "2026-09-15T13:07:07.273605+00:00",
+      "calls": 68,
+      "models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "stages": [
+        "classify"
+      ]
+    },
+    {
+      "run_id": "0960fb85-c648-4c15-9edd-2652436dabf1",
+      "pipeline_name": "paper_intelligence.classify",
+      "run_started_at": "2026-09-15T13:12:08.426378+00:00",
+      "calls": 1,
+      "models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "stages": [
+        "classify"
+      ]
+    },
+    {
+      "run_id": "a91962e6-0e69-46cd-b878-41d361dc91b7",
+      "pipeline_name": "paper_intelligence.screen",
+      "run_started_at": "2026-09-16T06:08:37.067793+00:00",
+      "calls": 155,
+      "models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "stages": [
+        "screen"
+      ]
+    },
+    {
+      "run_id": "4c473872-8613-4622-bee6-25e712cc8e17",
+      "pipeline_name": "paper_intelligence.classify",
+      "run_started_at": "2026-09-16T06:13:39.457809+00:00",
+      "calls": 151,
+      "models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "stages": [
+        "classify"
+      ]
+    },
+    {
+      "run_id": "4f5c16ce-1f7f-4265-baa9-988b7d6e1202",
+      "pipeline_name": "paper_intelligence.quality",
+      "run_started_at": "2026-09-16T06:28:10.151661+00:00",
+      "calls": 110,
+      "models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "stages": [
+        "quality"
+      ]
+    },
+    {
+      "run_id": "8a90c677-3164-4bb5-8e83-c6f95b3f5b45",
+      "pipeline_name": "paper_intelligence.screen",
+      "run_started_at": "2026-09-17T12:28:31.839251+00:00",
+      "calls": 17,
+      "models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "stages": [
+        "screen"
+      ]
+    },
+    {
+      "run_id": "744c135a-cda2-4faa-a6b1-f6c13d8b37a1",
+      "pipeline_name": "paper_intelligence.audience_domain",
+      "run_started_at": "2026-09-17T12:30:03.172344+00:00",
+      "calls": 17,
+      "models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "stages": [
+        "audience_domain"
+      ]
+    },
+    {
+      "run_id": "8df5a471-2fd7-4bf0-a695-309a57072a6c",
+      "pipeline_name": "paper_intelligence.quality",
+      "run_started_at": "2026-09-17T12:33:08.750533+00:00",
+      "calls": 10,
+      "models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "stages": [
+        "quality"
+      ]
+    },
+    {
+      "run_id": "63bd94f0-6060-45fb-b420-3a2d21621a8b",
+      "pipeline_name": "paper_intelligence.screen",
+      "run_started_at": "2026-09-21T06:54:34.923054+00:00",
+      "calls": 1,
+      "models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "stages": [
+        "screen"
+      ]
+    },
+    {
+      "run_id": "6921ff86-15f6-43dd-845f-259262fd7ef8",
+      "pipeline_name": "paper_intelligence.audience_domain",
+      "run_started_at": "2026-09-21T06:54:51.232433+00:00",
+      "calls": 1,
+      "models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "stages": [
+        "audience_domain"
+      ]
+    },
+    {
+      "run_id": "d09809e3-f43c-4469-a8da-404a16e37622",
+      "pipeline_name": "paper_intelligence.quality",
+      "run_started_at": "2026-09-21T06:55:22.267379+00:00",
+      "calls": 2,
+      "models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "stages": [
+        "quality"
+      ]
+    },
+    {
+      "run_id": "fbda9b10-90e7-48ce-ac0a-7595e1816530",
+      "pipeline_name": "paper_intelligence.screen",
+      "run_started_at": "2026-09-21T06:59:54.480140+00:00",
+      "calls": 1,
+      "models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "stages": [
+        "screen"
+      ]
+    },
+    {
+      "run_id": "9c76d27a-16a8-41af-b6a7-481dbb7e6101",
+      "pipeline_name": "paper_intelligence.audience_domain",
+      "run_started_at": "2026-09-21T07:00:59.017941+00:00",
+      "calls": 1,
+      "models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "stages": [
+        "audience_domain"
+      ]
+    },
+    {
+      "run_id": "aaa40c2c-7f5b-4b64-8437-a741e71dbe4d",
+      "pipeline_name": "paper_intelligence.quality",
+      "run_started_at": "2026-09-21T07:02:34.343757+00:00",
+      "calls": 2,
+      "models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "stages": [
+        "quality"
+      ]
+    }
+  ],
+  "call_count": 1282,
+  "raw_cache_usage_cost_files": null,
+  "totals": {
+    "old_table_usd": 6.3708,
+    "new_table_usd": 17.0409,
+    "logged_estimated_usd": 6.3708
+  }
+}

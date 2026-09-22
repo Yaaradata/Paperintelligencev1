@@ -226,6 +226,8 @@ def run_window(
                 input_tokens=result["input_tokens"],
                 output_tokens=result["output_tokens"],
                 cost=result["estimated_cost"],
+                estimated_cost=result.get("estimated_cost_usd"),
+                actual_cost=result.get("actual_cost_usd"),
             )
         except Exception as exc:  # noqa: BLE001
             stats.add_error(f"{type(exc).__name__}: {exc}", failed=len(expected))

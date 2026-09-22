@@ -70,11 +70,41 @@ def format_budget_line(
     actual: float,
     cap: float | None,
     stopped: bool = False,
+    estimated: float | None = None,
+    provider_actual: float | None = None,
+    divergence_warned: bool = False,
 ) -> str:
     proj_s = f"${projected:.4f}" if projected is not None else "n/a"
     cap_s = f"${cap:.4f}" if cap is not None else "none"
     status = "stopped_budget_cap" if stopped else "ok"
-    return f"budget: projected={proj_s} actual=${actual:.4f} cap={cap_s} status={status}"
+    line = f"budget: projected={proj_s} actual=${actual:.4f} cap={cap_s} status={status}"
+    if estimated is not None and provider_actual is not None:
+        line += f" table_est=${estimated:.4f} provider=${provider_actual:.4f}"
+    if divergence_warned:
+        line += " WARN_cost_divergence>20%"
+    return line
+
+
+COST_DIVERGENCE_WARN_RATIO = 0.20
+
+
+def cost_divergence_warning(
+    *,
+    estimated_usd: float,
+    actual_usd: float,
+    threshold: float = COST_DIVERGENCE_WARN_RATIO,
+) -> str | None:
+    """Return a warning string when |actual−estimated|/estimated exceeds threshold."""
+    if estimated_usd <= 0:
+        return None
+    ratio = abs(actual_usd - estimated_usd) / estimated_usd
+    if ratio <= threshold:
+        return None
+    return (
+        f"WARN cost divergence: table_est=${estimated_usd:.4f} "
+        f"provider_actual=${actual_usd:.4f} "
+        f"(|Δ|/est={ratio:.1%} > {threshold:.0%})"
+    )
 
 
 def load_budget_state(path: str | Path) -> dict[str, Any]:

@@ -633,6 +633,11 @@ def _run_paid(args: argparse.Namespace) -> int:
             metadata={
                 "cost_usd": round(stats.cost_usd, 4),
                 "projected_cost_usd": round(projected.cost_usd, 6),
+                "estimated_cost_usd": round(stats.estimated_cost_usd, 6),
+                "actual_cost_usd": round(stats.actual_cost_usd, 6)
+                if stats.calls_with_actual_cost
+                else None,
+                "calls_with_actual_cost": stats.calls_with_actual_cost,
                 "max_cost_usd": max_cost,
                 "calls": stats.calls,
                 "stopped_budget_cap": stopped,
@@ -648,6 +653,14 @@ def _run_paid(args: argparse.Namespace) -> int:
             stopped_budget_cap=stopped,
         )
 
+        from paper_intelligence.common.budget import cost_divergence_warning
+
+        div_warn = None
+        if stats.calls_with_actual_cost:
+            div_warn = cost_divergence_warning(
+                estimated_usd=stats.estimated_cost_usd,
+                actual_usd=stats.actual_cost_usd,
+            )
         print(stats.summary_line(args.stage))
         print(
             format_budget_line(
@@ -655,9 +668,14 @@ def _run_paid(args: argparse.Namespace) -> int:
                 actual=stats.cost_usd,
                 cap=max_cost,
                 stopped=stopped,
+                estimated=stats.estimated_cost_usd if stats.calls_with_actual_cost else None,
+                provider_actual=stats.actual_cost_usd if stats.calls_with_actual_cost else None,
+                divergence_warned=bool(div_warn),
             ),
             flush=True,
         )
+        if div_warn:
+            print(div_warn, flush=True)
         for warning in stats.warnings[:10]:
             print(f"  WARN {warning}")
         for error in stats.errors[:10]:

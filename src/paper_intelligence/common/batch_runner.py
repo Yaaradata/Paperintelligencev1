@@ -19,7 +19,10 @@ class BatchStats:
     calls: int = 0
     input_tokens: int = 0
     output_tokens: int = 0
-    cost_usd: float = 0.0
+    cost_usd: float = 0.0  # billable: actual preferred, else table estimate
+    estimated_cost_usd: float = 0.0
+    actual_cost_usd: float = 0.0
+    calls_with_actual_cost: int = 0
     errors: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
     stopped_budget_cap: bool = False
@@ -35,7 +38,14 @@ class BatchStats:
         input_tokens: int,
         output_tokens: int,
         cost: float,
+        estimated_cost: float | None = None,
+        actual_cost: float | None = None,
     ) -> None:
+        """Record one LLM call.
+
+        ``cost`` is the billable amount (actual if known, else estimate).
+        Optional ``estimated_cost`` / ``actual_cost`` feed divergence reporting.
+        """
         with self._lock:
             self.calls += 1
             self.papers_succeeded += succeeded
@@ -43,8 +53,20 @@ class BatchStats:
             self.input_tokens += input_tokens
             self.output_tokens += output_tokens
             self.cost_usd += cost
+            est = float(estimated_cost) if estimated_cost is not None else float(cost)
+            self.estimated_cost_usd += est
+            if actual_cost is not None:
+                self.actual_cost_usd += float(actual_cost)
+                self.calls_with_actual_cost += 1
             if self.budget is not None:
                 self.budget.add_actual(cost)
+
+    def cost_divergence_ratio(self) -> float | None:
+        """(|actual−estimated| / estimated) when both sides are available."""
+        if self.calls_with_actual_cost <= 0 or self.estimated_cost_usd <= 0:
+            return None
+        # Compare actual total only over the same run's estimated total.
+        return abs(self.actual_cost_usd - self.estimated_cost_usd) / self.estimated_cost_usd
 
     def add_error(self, message: str, *, failed: int) -> None:
         with self._lock:
@@ -65,6 +87,11 @@ class BatchStats:
             f"{self.calls} calls, {self.input_tokens} in / {self.output_tokens} out tokens, "
             f"${self.cost_usd:.4f} total (${avg:.6f}/paper)"
         )
+        if self.calls_with_actual_cost:
+            base += (
+                f", estimated=${self.estimated_cost_usd:.4f} "
+                f"actual=${self.actual_cost_usd:.4f}"
+            )
         if self.stopped_budget_cap:
             base += f", stopped_budget_cap skipped={self.papers_skipped_budget}"
         return base

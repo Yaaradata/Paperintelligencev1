@@ -12,7 +12,12 @@ from psycopg import Connection
 from paper_intelligence.cache.raw_store import request_hash, write_raw
 from paper_intelligence.common.config import estimate_cost_usd
 from paper_intelligence.observability.runs import record_external_request
-from paper_intelligence.openrouter import LLMRequest, OpenRouterError, complete
+from paper_intelligence.openrouter import (
+    LLMRequest,
+    OpenRouterError,
+    billable_cost_usd,
+    complete,
+)
 
 
 MAX_ABSTRACT_CHARS = 2000
@@ -86,7 +91,9 @@ def call_llm_logged(
 ) -> dict[str, Any]:
     """One OpenRouter call with raw persistence and external_requests logging.
 
-    Returns {"content", "input_tokens", "output_tokens", "estimated_cost", "raw_path"}.
+    Returns content, tokens, estimated_cost_usd (table), actual_cost_usd
+    (provider, may be None), and billable ``estimated_cost`` (actual preferred)
+    for backward-compatible stage accounting.
     """
     started = datetime.now(timezone.utc)
     messages = [
@@ -131,9 +138,11 @@ def call_llm_logged(
         raise
 
     raw_path, raw_sha = write_raw("openrouter", req_hash, entity, response.raw or {})
-    cost = response.estimated_cost
-    if cost is None:
-        cost = estimate_cost_usd(model, response.input_tokens, response.output_tokens)
+    estimated = response.estimated_cost
+    if estimated is None:
+        estimated = estimate_cost_usd(model, response.input_tokens, response.output_tokens)
+    actual = response.actual_cost
+    billable = billable_cost_usd(actual_cost=actual, estimated_cost=estimated)
 
     if conn is not None:
         record_external_request(
@@ -154,7 +163,8 @@ def call_llm_logged(
                 "prompt_version": prompt_version,
                 "input_tokens": response.input_tokens,
                 "output_tokens": response.output_tokens,
-                "estimated_cost": cost,
+                "estimated_cost": float(estimated or 0.0),
+                "actual_cost": float(actual) if actual is not None else None,
             },
         )
         conn.commit()
@@ -163,6 +173,8 @@ def call_llm_logged(
         "content": response.content,
         "input_tokens": response.input_tokens or 0,
         "output_tokens": response.output_tokens or 0,
-        "estimated_cost": float(cost or 0.0),
+        "estimated_cost": billable,  # preferred billable for legacy callers
+        "estimated_cost_usd": float(estimated or 0.0),
+        "actual_cost_usd": float(actual) if actual is not None else None,
         "raw_path": raw_path,
     }

@@ -250,21 +250,37 @@ def record_external_request(
             ),
         )
         if llm:
-            cur.execute(
-                """
-                INSERT INTO paper_intelligence.llm_requests
-                    (llm_request_id, request_id, model, prompt_version,
-                     input_tokens, output_tokens, estimated_cost)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
-                """,
-                (
-                    str(uuid.uuid4()),
-                    request_id,
-                    llm.get("model"),
-                    llm.get("prompt_version"),
-                    llm.get("input_tokens"),
-                    llm.get("output_tokens"),
-                    llm.get("estimated_cost"),
-                ),
+            params = (
+                str(uuid.uuid4()),
+                request_id,
+                llm.get("model"),
+                llm.get("prompt_version"),
+                llm.get("input_tokens"),
+                llm.get("output_tokens"),
+                llm.get("estimated_cost"),
+                llm.get("actual_cost"),
             )
+            try:
+                cur.execute(
+                    """
+                    INSERT INTO paper_intelligence.llm_requests
+                        (llm_request_id, request_id, model, prompt_version,
+                         input_tokens, output_tokens, estimated_cost, actual_cost)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                    """,
+                    params,
+                )
+            except Exception as exc:
+                # Migration 015 not applied: column actual_cost missing.
+                if "actual_cost" not in str(exc):
+                    raise
+                cur.execute(
+                    """
+                    INSERT INTO paper_intelligence.llm_requests
+                        (llm_request_id, request_id, model, prompt_version,
+                         input_tokens, output_tokens, estimated_cost)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    """,
+                    params[:7],
+                )
     return request_id

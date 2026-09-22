@@ -46,13 +46,16 @@ PI_WRITE_RADAR_COMPAT = _env_flag("PI_WRITE_RADAR_COMPAT", "0")
 # non-alphanumerics with underscores.
 #
 # Unknown models must NOT default to $0 — model_prices() raises instead.
+# Verified against OpenRouter model pages on 2026-09-22.
 _DEFAULT_PRICES: dict[str, tuple[float, float]] = {
+    # https://openrouter.ai/z-ai/glm-5.3-flash — list $0.15 / $0.50.
+    # Note: a 50% promo ran until 2026-09-09 16:00 UTC; earlier billed spend
+    # may be ~half of table estimates.
     "z-ai/glm-5.3-flash": (0.15, 0.50),
-    # TODO: verify z-ai/glm-4.6 against current OpenRouter pricing before relying
-    # on this entry for budget caps. Values below are unverified placeholders
-    # copied from glm-5.3-flash and must be confirmed.
-    "z-ai/glm-4.6": (0.15, 0.50),
-    "openai/gpt-5.6-sol": (1.25, 10.00),
+    # https://openrouter.ai/z-ai/glm-4.6 — list $0.43 / $1.75 (was wrongly 0.15/0.50).
+    "z-ai/glm-4.6": (0.43, 1.75),
+    # https://openrouter.ai/openai/gpt-5.6-sol — list $5 / $30 (was wrongly 1.25/10).
+    "openai/gpt-5.6-sol": (5.00, 30.00),
 }
 
 
