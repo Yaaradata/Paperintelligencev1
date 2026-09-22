@@ -1,7 +1,7 @@
 # Router mode comparison 2026-09-01 → 2026-09-15
 
 Baseline: **window+judge** (n=1661, gate=15.0%).
-Default production scope is unchanged (`window`).
+Default production scope is now **`day`** (confirmed 2026-09-22).
 
 ## Modes
 
@@ -30,5 +30,5 @@ Default production scope is unchanged (`window`).
 - 2026-09-14: selected=160
 - 2026-09-15: selected=112
 
-No LLM calls. No default scope change.
+No LLM calls. Default scope set to `day` after this comparison.
 
