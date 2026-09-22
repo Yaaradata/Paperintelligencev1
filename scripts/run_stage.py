@@ -49,6 +49,28 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help="quality only: top %% of screen survivors to score (default GATE_PERCENTILE)",
     )
+    parser.add_argument(
+        "--max-cost-usd",
+        type=float,
+        default=None,
+        help="refuse / stop paid work when projected or actual spend would exceed this "
+        "(also env PI_MAX_COST_USD)",
+    )
+    parser.add_argument(
+        "--force-over-projection",
+        action="store_true",
+        help="allow starting a paid run even when the dry-run projection exceeds the cap",
+    )
+    parser.add_argument(
+        "--budget-state",
+        default=None,
+        help="optional JSON ledger path for pipeline cumulative spend tracking",
+    )
+    parser.add_argument(
+        "--allow-quality-model-change",
+        action="store_true",
+        help="adjudication: allow QUALITY_MODEL that would stale existing quality rows",
+    )
     args = parser.parse_args(argv)
 
     # Brief name is audience_domain; classify kept as alias.
@@ -281,6 +303,13 @@ def _run_ingest(args: argparse.Namespace) -> int:
 def _run_adjudication(args: argparse.Namespace) -> int:
     """Free deterministic collapse of stage results into current state."""
     from paper_intelligence.adjudication import run_window
+    from paper_intelligence.adjudication.model_guard import count_quality_rows_staled_by_model
+    from paper_intelligence.common.budget import format_model_banner
+    from paper_intelligence.common.config import (
+        CLASSIFY_MODEL,
+        QUALITY_MODEL,
+        SCREEN_MODEL,
+    )
     from paper_intelligence.db import connect
     from paper_intelligence.observability import (
         finish_pipeline_run,
@@ -293,7 +322,38 @@ def _run_adjudication(args: argparse.Namespace) -> int:
         print("adjudication requires both --from and --until", file=sys.stderr)
         return 2
 
+    print(
+        format_model_banner(
+            screen_model=SCREEN_MODEL,
+            classify_model=CLASSIFY_MODEL,
+            quality_model=QUALITY_MODEL,
+        ),
+        flush=True,
+    )
+
     with connect() as conn:
+        stale_n = count_quality_rows_staled_by_model(
+            conn,
+            date_from=args.date_from,
+            date_until=args.date_until,
+            quality_model=QUALITY_MODEL,
+        )
+        if stale_n and not args.allow_quality_model_change:
+            print(
+                f"adjudication refused: QUALITY_MODEL={QUALITY_MODEL!r} would make "
+                f"{stale_n} existing current-version quality row(s) in "
+                f"{args.date_from}..{args.date_until} no longer count as scored. "
+                f"Re-run with --allow-quality-model-change if intentional.",
+                file=sys.stderr,
+            )
+            return 2
+        if stale_n and args.allow_quality_model_change:
+            print(
+                f"WARNING: --allow-quality-model-change: {stale_n} quality row(s) "
+                f"will leave scored status under QUALITY_MODEL={QUALITY_MODEL!r}",
+                flush=True,
+            )
+
         if args.dry_run:
             stats = run_window(
                 conn, date_from=args.date_from, date_until=args.date_until, dry_run=True
@@ -305,7 +365,11 @@ def _run_adjudication(args: argparse.Namespace) -> int:
             conn,
             pipeline_name="paper_intelligence.adjudication",
             trigger_type="manual",
-            metadata={"date_from": args.date_from, "date_until": args.date_until},
+            metadata={
+                "date_from": args.date_from,
+                "date_until": args.date_until,
+                "quality_model": QUALITY_MODEL,
+            },
         )
         stage_run_id = start_stage_run(
             conn, run_id, stage_name="adjudication", stage_version="v001", policy_version="v001"
@@ -330,19 +394,29 @@ def _run_adjudication(args: argparse.Namespace) -> int:
         print(
             f"adjudication: {stats['papers']} papers, {stats['written']} current-state rows, "
             f"{stats['with_quality']} with quality, {stats['with_org']} with a resolved "
-            f"organisation, {stats['disagreements']} screen/quality disagreements"
+            f"organisation, {stats['disagreements']} screen/quality disagreements, "
+            f"inconsistent_attempt_without_result="
+            f"{stats.get('inconsistent_attempt_without_result', 0)}"
         )
     return 0
 
 
 def _run_paid(args: argparse.Namespace) -> int:
     """screen / classify / quality: batched OpenRouter stages."""
+    from paper_intelligence.common.budget import (
+        format_budget_line,
+        format_model_banner,
+        resolve_max_cost_usd,
+        update_budget_state_after_stage,
+    )
     from paper_intelligence.common.config import (
         CLASSIFY_MODEL,
         GATE_PERCENTILE,
         QUALITY_MODEL,
         SCREEN_MIN_AI_RELEVANCE,
         SCREEN_MODEL,
+        UnknownModelPriceError,
+        require_model_priced,
     )
     from paper_intelligence.db import connect, select_window_candidates
     from paper_intelligence.observability import (
@@ -374,6 +448,26 @@ def _run_paid(args: argparse.Namespace) -> int:
     }
     module_name, task_type, model = stage_modules[args.stage]
     module = __import__(module_name, fromlist=["run_window"])
+
+    print(
+        format_model_banner(
+            screen_model=SCREEN_MODEL,
+            classify_model=CLASSIFY_MODEL,
+            quality_model=QUALITY_MODEL,
+        ),
+        flush=True,
+    )
+    try:
+        require_model_priced(model)
+        # Fail fast if any of the three configured models is unpriced (ops clarity).
+        require_model_priced(SCREEN_MODEL)
+        require_model_priced(CLASSIFY_MODEL)
+        require_model_priced(QUALITY_MODEL)
+    except UnknownModelPriceError as exc:
+        print(f"paid stage refused: {exc}", file=sys.stderr)
+        return 2
+
+    max_cost = resolve_max_cost_usd(args.max_cost_usd)
 
     with connect() as conn:
         if args.content_item_id is not None:
@@ -427,18 +521,54 @@ def _run_paid(args: argparse.Namespace) -> int:
             print(f"  gate: ai_relevance >= {SCREEN_MIN_AI_RELEVANCE}")
         if not ids:
             print("nothing to do")
+            print(
+                format_budget_line(projected=0.0, actual=0.0, cap=max_cost, stopped=False),
+                flush=True,
+            )
             return 0
 
+        projected = module.run_window(
+            conn, ids, run_id="dry-run", stage_run_id="dry-run", dry_run=True
+        )
+        print(
+            f"PROJECTION {args.stage}: {len(ids)} papers, ~{projected.calls} calls, "
+            f"~{projected.input_tokens} in / ~{projected.output_tokens} out tokens, "
+            f"~${projected.cost_usd:.2f}"
+        )
+
         if args.dry_run:
-            stats = module.run_window(
-                conn, ids, run_id="dry-run", stage_run_id="dry-run", dry_run=True
-            )
             print(
-                f"PROJECTION {args.stage}: {len(ids)} papers, ~{stats.calls} calls, "
-                f"~{stats.input_tokens} in / ~{stats.output_tokens} out tokens, "
-                f"~${stats.cost_usd:.2f}"
+                format_budget_line(
+                    projected=projected.cost_usd,
+                    actual=0.0,
+                    cap=max_cost,
+                    stopped=False,
+                ),
+                flush=True,
             )
             return 0
+
+        if (
+            max_cost is not None
+            and projected.cost_usd > max_cost
+            and not args.force_over_projection
+        ):
+            print(
+                f"refusing {args.stage}: projected ${projected.cost_usd:.4f} exceeds "
+                f"cap ${max_cost:.4f}. Pass --force-over-projection to override the "
+                f"pre-check (live cap still enforced during the run).",
+                file=sys.stderr,
+            )
+            print(
+                format_budget_line(
+                    projected=projected.cost_usd,
+                    actual=0.0,
+                    cap=max_cost,
+                    stopped=True,
+                ),
+                flush=True,
+            )
+            return 2
 
         run_id = start_pipeline_run(
             conn,
@@ -448,7 +578,14 @@ def _run_paid(args: argparse.Namespace) -> int:
                 "date_from": args.date_from,
                 "date_until": args.date_until,
                 "model": model,
+                "models": {
+                    "screen": SCREEN_MODEL,
+                    "classify": CLASSIFY_MODEL,
+                    "quality": QUALITY_MODEL,
+                },
                 "candidates": len(ids),
+                "max_cost_usd": max_cost,
+                "projected_cost_usd": round(projected.cost_usd, 6),
             },
         )
         stage_run_id = start_stage_run(
@@ -462,9 +599,22 @@ def _run_paid(args: argparse.Namespace) -> int:
         )
         print(f"  run_id={run_id}")
 
-        stats = module.run_window(conn, ids, run_id=run_id, stage_run_id=stage_run_id)
+        stats = module.run_window(
+            conn,
+            ids,
+            run_id=run_id,
+            stage_run_id=stage_run_id,
+            max_cost_usd=max_cost,
+        )
 
-        status = "succeeded" if stats.papers_failed == 0 else "partial"
+        stopped = bool(stats.stopped_budget_cap)
+        if stopped:
+            status = "stopped_budget_cap"
+        elif stats.papers_failed == 0:
+            status = "succeeded"
+        else:
+            status = "partial"
+
         finish_stage_run(
             conn,
             stage_run_id,
@@ -480,14 +630,40 @@ def _run_paid(args: argparse.Namespace) -> int:
             items_input=len(ids),
             items_succeeded=stats.papers_succeeded,
             items_failed=stats.papers_failed,
-            metadata={"cost_usd": round(stats.cost_usd, 4), "calls": stats.calls},
+            metadata={
+                "cost_usd": round(stats.cost_usd, 4),
+                "projected_cost_usd": round(projected.cost_usd, 6),
+                "max_cost_usd": max_cost,
+                "calls": stats.calls,
+                "stopped_budget_cap": stopped,
+                "papers_skipped_budget": stats.papers_skipped_budget,
+            },
+        )
+
+        update_budget_state_after_stage(
+            args.budget_state,
+            stage=args.stage,
+            actual_usd=stats.cost_usd,
+            projected_usd=projected.cost_usd,
+            stopped_budget_cap=stopped,
         )
 
         print(stats.summary_line(args.stage))
+        print(
+            format_budget_line(
+                projected=projected.cost_usd,
+                actual=stats.cost_usd,
+                cap=max_cost,
+                stopped=stopped,
+            ),
+            flush=True,
+        )
         for warning in stats.warnings[:10]:
             print(f"  WARN {warning}")
         for error in stats.errors[:10]:
             print(f"  ERROR {error}", file=sys.stderr)
+        if stopped:
+            return 1
         return 0 if stats.papers_failed == 0 else 1
 
 

@@ -46,8 +46,8 @@ def derive_quality_status(
             err = (latest_attempt_error or "quality_attempt_failed").strip()
             return "failed", f"quality_attempt_failed:{err[:200]}"
         if latest_attempt_status == "succeeded":
-            # Succeeded attempt but no current classification row (should be rare).
-            return "pending", f"quality_succeeded_without_result:{route_reason or 'selected'}"
+            # Succeeded attempt but no current classification row — data inconsistency.
+            return "pending", "inconsistent_attempt_without_result"
         return "pending", f"pending_quality_score:{route_reason or 'selected'}"
 
     if route_decision == "not_selected":

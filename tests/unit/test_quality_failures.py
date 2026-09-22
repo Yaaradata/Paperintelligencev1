@@ -107,16 +107,15 @@ class TestDeriveQualityStatus:
         assert status == "failed"
         assert "TimeoutError" in reason
 
-    def test_failed_then_current_row_is_scored(self):
-        """After a later successful quality row for current versions → scored."""
+    def test_succeeded_attempt_without_row_is_inconsistency(self):
         status, reason = derive_quality_status(
-            has_current_quality_row=True,
+            has_current_quality_row=False,
             route_decision="selected",
             route_reason="selected_top_gate_percentile",
-            latest_attempt_status="failed",
-            latest_attempt_error="old failure",
+            latest_attempt_status="succeeded",
         )
-        assert status == "scored"
+        assert status == "pending"
+        assert reason == "inconsistent_attempt_without_result"
 
     def test_stale_quality_row_selected_no_attempt_pending(self):
         status, reason = derive_quality_status(

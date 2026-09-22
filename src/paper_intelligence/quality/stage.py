@@ -17,6 +17,7 @@ from typing import Any, Sequence
 from psycopg import Connection
 
 from paper_intelligence.common.batch_runner import BatchStats, run_batches
+from paper_intelligence.common.budget import BudgetCap
 from paper_intelligence.common.config import (
     GATE_PERCENTILE,
     QUALITY_BATCH_SIZE,
@@ -443,8 +444,10 @@ def run_window(
     model: str = QUALITY_MODEL,
     batch_size: int = QUALITY_BATCH_SIZE,
     dry_run: bool = False,
+    max_cost_usd: float | None = None,
 ) -> BatchStats:
-    stats = BatchStats(papers_requested=len(content_item_ids))
+    budget = BudgetCap(max_cost_usd) if max_cost_usd is not None else None
+    stats = BatchStats(papers_requested=len(content_item_ids), budget=budget)
     if not content_item_ids:
         return stats
 
@@ -565,5 +568,5 @@ def run_window(
                     f"quality_attempt_persist_failed: {type(persist_exc).__name__}: {persist_exc}"
                 )
 
-    run_batches(batches, handle, label="quality")
+    run_batches(batches, handle, label="quality", budget=budget, stats=stats)
     return stats

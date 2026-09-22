@@ -44,11 +44,20 @@ PI_WRITE_RADAR_COMPAT = _env_flag("PI_WRITE_RADAR_COMPAT", "0")
 # Per-model OpenRouter prices, USD per million tokens. Override per model with
 # PI_PRICE_<SLUG>_IN / _OUT where SLUG upper-cases the model id and replaces
 # non-alphanumerics with underscores.
+#
+# Unknown models must NOT default to $0 — model_prices() raises instead.
 _DEFAULT_PRICES: dict[str, tuple[float, float]] = {
     "z-ai/glm-5.3-flash": (0.15, 0.50),
+    # TODO: verify z-ai/glm-4.6 against current OpenRouter pricing before relying
+    # on this entry for budget caps. Values below are unverified placeholders
+    # copied from glm-5.3-flash and must be confirmed.
     "z-ai/glm-4.6": (0.15, 0.50),
     "openai/gpt-5.6-sol": (1.25, 10.00),
 }
+
+
+class UnknownModelPriceError(ValueError):
+    """Raised when a model has no default price and no PI_PRICE_* env override."""
 
 
 def _slug(model: str) -> str:
@@ -56,12 +65,32 @@ def _slug(model: str) -> str:
 
 
 def model_prices(model: str) -> tuple[float, float]:
-    """(input, output) USD per million tokens for a model."""
+    """(input, output) USD per million tokens for a model.
+
+    Raises ``UnknownModelPriceError`` when the model has no default entry and
+    both ``PI_PRICE_<SLUG>_IN`` and ``_OUT`` are not set. Never returns a silent
+    $0/$0 default for unknown models.
+    """
     slug = _slug(model)
-    default_in, default_out = _DEFAULT_PRICES.get(model, (0.0, 0.0))
-    price_in = float(os.getenv(f"PI_PRICE_{slug}_IN", default_in))
-    price_out = float(os.getenv(f"PI_PRICE_{slug}_OUT", default_out))
-    return price_in, price_out
+    env_in = os.getenv(f"PI_PRICE_{slug}_IN")
+    env_out = os.getenv(f"PI_PRICE_{slug}_OUT")
+    if model in _DEFAULT_PRICES:
+        default_in, default_out = _DEFAULT_PRICES[model]
+        price_in = float(env_in) if env_in is not None else default_in
+        price_out = float(env_out) if env_out is not None else default_out
+        return price_in, price_out
+    if env_in is None or env_out is None:
+        raise UnknownModelPriceError(
+            f"No price configured for model {model!r}. "
+            f"Set PI_PRICE_{slug}_IN and PI_PRICE_{slug}_OUT "
+            f"(USD per million tokens), or add a verified entry to _DEFAULT_PRICES."
+        )
+    return float(env_in), float(env_out)
+
+
+def require_model_priced(model: str) -> tuple[float, float]:
+    """Fail fast at paid-stage startup if ``model`` cannot be costed."""
+    return model_prices(model)
 
 
 def estimate_cost_usd(model: str, input_tokens: int | None, output_tokens: int | None) -> float:

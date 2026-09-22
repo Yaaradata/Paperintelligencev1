@@ -200,6 +200,7 @@ def run_window(
         "with_org": 0,
         "disagreements": 0,
         "written": 0,
+        "inconsistent_attempt_without_result": 0,
     }
     rows: list[tuple] = []
     routing = quality_selection_reason_map(
@@ -281,6 +282,8 @@ def run_window(
             gate_passed=gate_passed,
             has_screen=bool(screen),
         )
+        if selection_reason == "inconsistent_attempt_without_result":
+            stats["inconsistent_attempt_without_result"] += 1
 
         rows.append(
             (

@@ -11,6 +11,7 @@ from typing import Any, Sequence
 from psycopg import Connection
 
 from paper_intelligence.common.batch_runner import BatchStats, run_batches
+from paper_intelligence.common.budget import BudgetCap
 from paper_intelligence.common.config import (
     SCREEN_BATCH_SIZE,
     SCREEN_MIN_AI_RELEVANCE,
@@ -104,8 +105,10 @@ def run_window(
     model: str = SCREEN_MODEL,
     batch_size: int = SCREEN_BATCH_SIZE,
     dry_run: bool = False,
+    max_cost_usd: float | None = None,
 ) -> BatchStats:
-    stats = BatchStats(papers_requested=len(content_item_ids))
+    budget = BudgetCap(max_cost_usd) if max_cost_usd is not None else None
+    stats = BatchStats(papers_requested=len(content_item_ids), budget=budget)
     if not content_item_ids:
         return stats
 
@@ -184,5 +187,5 @@ def run_window(
         except Exception as exc:  # noqa: BLE001 — batch failure must not kill the run
             stats.add_error(f"{type(exc).__name__}: {exc}", failed=len(expected))
 
-    run_batches(batches, handle, label="screen")
+    run_batches(batches, handle, label="screen", budget=budget, stats=stats)
     return stats

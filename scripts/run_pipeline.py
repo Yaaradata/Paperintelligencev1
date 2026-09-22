@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -48,8 +49,17 @@ STAGE_ALIASES = {
     "classify": "audience_domain",
 }
 
+PAID_STAGES = frozenset({"screen", "audience_domain", "quality"})
 
-def _run_stage_cli(args: argparse.Namespace, stage: str) -> int:
+
+def _run_stage_cli(
+    args: argparse.Namespace,
+    stage: str,
+    *,
+    max_cost_usd: float | None = None,
+    budget_state: str | None = None,
+    dry_run_override: bool | None = None,
+) -> int:
     cmd = [
         sys.executable,
         str(SCRIPTS / "run_stage.py"),
@@ -60,9 +70,10 @@ def _run_stage_cli(args: argparse.Namespace, stage: str) -> int:
         "--until",
         args.date_until,
     ]
-    if args.dry_run:
+    dry = args.dry_run if dry_run_override is None else dry_run_override
+    if dry:
         cmd.append("--dry-run")
-    if args.allow_paid and stage in {"screen", "audience_domain", "quality"}:
+    if args.allow_paid and stage in PAID_STAGES:
         cmd.append("--allow-paid")
     # normalize_authors defaults used to silently cap at 100; always cover the window.
     if stage == "normalize_authors":
@@ -75,6 +86,14 @@ def _run_stage_cli(args: argparse.Namespace, stage: str) -> int:
         cmd.append("--force")
     if stage == "quality" and args.gate_percentile is not None:
         cmd.extend(["--gate-percentile", str(args.gate_percentile)])
+    if max_cost_usd is not None and stage in PAID_STAGES:
+        cmd.extend(["--max-cost-usd", str(max_cost_usd)])
+    if getattr(args, "force_over_projection", False) and stage in PAID_STAGES:
+        cmd.append("--force-over-projection")
+    if budget_state and stage in PAID_STAGES:
+        cmd.extend(["--budget-state", budget_state])
+    if stage == "adjudication" and getattr(args, "allow_quality_model_change", False):
+        cmd.append("--allow-quality-model-change")
     print(f"\n=== pipeline stage: {stage} ===", flush=True)
     completed = subprocess.run(cmd, cwd=str(ROOT))
     return int(completed.returncode)
@@ -204,6 +223,46 @@ def _run_reports(args: argparse.Namespace) -> int:
     return 0 if funnel.returncode == 0 else funnel.returncode
 
 
+def _project_paid_total(args: argparse.Namespace, paid_stages: list[str]) -> float:
+    """Sum dry-run projections for paid stages in this invocation (stdout parse)."""
+    import re
+
+    total = 0.0
+    for stage in paid_stages:
+        cmd = [
+            sys.executable,
+            str(SCRIPTS / "run_stage.py"),
+            "--stage",
+            stage,
+            "--from",
+            args.date_from,
+            "--until",
+            args.date_until,
+            "--dry-run",
+        ]
+        if args.limit is not None:
+            cmd.extend(["--limit", str(args.limit)])
+        if args.reprocess:
+            cmd.append("--reprocess")
+        if stage == "quality" and args.gate_percentile is not None:
+            cmd.extend(["--gate-percentile", str(args.gate_percentile)])
+        print(f"\n=== pipeline budget projection: {stage} ===", flush=True)
+        completed = subprocess.run(cmd, cwd=str(ROOT), capture_output=True, text=True)
+        out = (completed.stdout or "") + (completed.stderr or "")
+        sys.stdout.write(completed.stdout or "")
+        sys.stderr.write(completed.stderr or "")
+        if completed.returncode != 0:
+            raise RuntimeError(f"projection for {stage} failed with exit {completed.returncode}")
+        match = re.search(r"PROJECTION \S+: .*?~\$([0-9.]+)", out)
+        if not match:
+            # nothing to do / zero candidates still ok
+            if "nothing to do" in out:
+                continue
+            raise RuntimeError(f"could not parse projection cost for {stage}")
+        total += float(match.group(1))
+    return total
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Run PaperIntelligence stages and write tech/business top-N reports"
@@ -222,6 +281,22 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--gate-percentile", type=float, default=None)
     parser.add_argument("--top", type=int, default=20, help="top-N for audience reports")
     parser.add_argument(
+        "--max-cost-usd",
+        type=float,
+        default=None,
+        help="cumulative cap across all paid stages (also env PI_MAX_COST_USD)",
+    )
+    parser.add_argument(
+        "--force-over-projection",
+        action="store_true",
+        help="start even if the summed paid dry-run projection exceeds the cap",
+    )
+    parser.add_argument(
+        "--allow-quality-model-change",
+        action="store_true",
+        help="pass through to adjudication",
+    )
+    parser.add_argument(
         "--stages",
         default=",".join(DEFAULT_STAGES),
         help=f"comma-separated stages (default: {','.join(DEFAULT_STAGES)})",
@@ -232,6 +307,21 @@ def main(argv: list[str] | None = None) -> int:
         help="start at this stage (inclusive), skipping earlier ones",
     )
     args = parser.parse_args(argv)
+
+    from paper_intelligence.common.budget import (
+        format_budget_line,
+        format_model_banner,
+        load_budget_state,
+        resolve_max_cost_usd,
+        save_budget_state,
+    )
+    from paper_intelligence.common.config import (
+        CLASSIFY_MODEL,
+        QUALITY_MODEL,
+        SCREEN_MODEL,
+        UnknownModelPriceError,
+        require_model_priced,
+    )
 
     stages = [STAGE_ALIASES.get(s.strip(), s.strip()) for s in args.stages.split(",") if s.strip()]
     unknown = [s for s in stages if s not in DEFAULT_STAGES]
@@ -246,7 +336,7 @@ def main(argv: list[str] | None = None) -> int:
             return 2
         stages = stages[stages.index(from_stage) :]
 
-    paid = [s for s in stages if s in {"screen", "audience_domain", "quality"}]
+    paid = [s for s in stages if s in PAID_STAGES]
     if paid and not args.dry_run and not args.allow_paid:
         print(
             "Paid stages require --allow-paid (or pass --dry-run for projections). "
@@ -255,8 +345,90 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 2
 
+    print(
+        format_model_banner(
+            screen_model=SCREEN_MODEL,
+            classify_model=CLASSIFY_MODEL,
+            quality_model=QUALITY_MODEL,
+        ),
+        flush=True,
+    )
+    try:
+        for m in (SCREEN_MODEL, CLASSIFY_MODEL, QUALITY_MODEL):
+            require_model_priced(m)
+    except UnknownModelPriceError as exc:
+        print(f"pipeline refused: {exc}", file=sys.stderr)
+        return 2
+
+    max_cost = resolve_max_cost_usd(args.max_cost_usd)
+    budget_state_path: str | None = None
+    projected_total: float | None = None
+
+    if paid and max_cost is not None:
+        try:
+            projected_total = _project_paid_total(args, paid)
+        except Exception as exc:  # noqa: BLE001
+            print(f"pipeline budget projection failed: {exc}", file=sys.stderr)
+            return 2
+        print(
+            format_budget_line(
+                projected=projected_total,
+                actual=0.0,
+                cap=max_cost,
+                stopped=False,
+            ),
+            flush=True,
+        )
+        if (
+            projected_total > max_cost
+            and not args.force_over_projection
+            and not args.dry_run
+        ):
+            print(
+                f"refusing pipeline: projected paid total ${projected_total:.4f} exceeds "
+                f"cap ${max_cost:.4f}. Pass --force-over-projection to override.",
+                file=sys.stderr,
+            )
+            return 2
+        if not args.dry_run:
+            tmp = tempfile.NamedTemporaryFile(  # noqa: SIM115
+                mode="w",
+                suffix="_pi_budget.json",
+                delete=False,
+                prefix="pipeline_",
+            )
+            budget_state_path = tmp.name
+            tmp.close()
+            save_budget_state(
+                budget_state_path,
+                {
+                    "cap": max_cost,
+                    "spent_total": 0.0,
+                    "remaining": max_cost,
+                    "projected_total": projected_total,
+                    "stages": [],
+                },
+            )
+
     failures: list[str] = []
+    stopped_budget = False
     for stage in stages:
+        remaining = None
+        if budget_state_path and stage in PAID_STAGES:
+            state = load_budget_state(budget_state_path)
+            remaining = state.get("remaining")
+            if state.get("stopped_budget_cap") or (
+                remaining is not None and float(remaining) <= 0
+            ):
+                print(
+                    f"skipping {stage}: cumulative budget cap exhausted "
+                    f"(spent={state.get('spent_total')} cap={state.get('cap')})",
+                    flush=True,
+                )
+                stopped_budget = True
+                failures.append(f"{stage}=stopped_budget_cap")
+                continue
+
         if stage == "affiliation_fast":
             code = _run_affiliation(args, mode="fast")
         elif stage == "affiliation_deep":
@@ -264,16 +436,43 @@ def main(argv: list[str] | None = None) -> int:
         elif stage == "reports":
             code = _run_reports(args)
         else:
-            code = _run_stage_cli(args, stage)
+            code = _run_stage_cli(
+                args,
+                stage,
+                max_cost_usd=float(remaining) if remaining is not None else max_cost,
+                budget_state=budget_state_path,
+            )
         if code != 0:
             failures.append(f"{stage}={code}")
+            if budget_state_path and stage in PAID_STAGES:
+                state = load_budget_state(budget_state_path)
+                if state.get("stopped_budget_cap"):
+                    stopped_budget = True
             # Continue so later free stages (adjudication/reports) still run when
             # a paid stage is only partial; hard-stop only if reports themselves fail.
             if stage == "reports":
                 return code
             print(f"WARNING: stage {stage} exited {code}; continuing", flush=True)
 
+    actual_total = 0.0
+    if budget_state_path:
+        state = load_budget_state(budget_state_path)
+        actual_total = float(state.get("spent_total") or 0.0)
+        stopped_budget = stopped_budget or bool(state.get("stopped_budget_cap"))
+        print(
+            format_budget_line(
+                projected=projected_total,
+                actual=actual_total,
+                cap=max_cost,
+                stopped=stopped_budget,
+            ),
+            flush=True,
+        )
+
     print("\n=== pipeline complete ===", flush=True)
+    if stopped_budget:
+        print("status=stopped_budget_cap", flush=True)
+        return 1
     if failures:
         print(f"partial failures: {', '.join(failures)}", flush=True)
         return 1
