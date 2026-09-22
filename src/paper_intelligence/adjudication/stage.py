@@ -13,14 +13,26 @@ from typing import Any
 from psycopg import Connection
 
 from paper_intelligence.adjudication.org_score import organisation_score
+from paper_intelligence.adjudication.quality_status import (
+    derive_quality_status,
+    quality_result_is_current,
+)
 from paper_intelligence.author_affiliation.verify.judge_effective import (
     load_judgment_exclusions,
 )
 from paper_intelligence.author_affiliation.verify.judge_persist import (
     JUDGE_VERSION_DEFAULT,
 )
-from paper_intelligence.common.config import GATE_PERCENTILE, PI_USE_PAPERS_CATALOG
+from paper_intelligence.common.config import (
+    GATE_PERCENTILE,
+    PI_USE_PAPERS_CATALOG,
+    QUALITY_MODEL,
+)
+from paper_intelligence.quality.attempts import latest_quality_attempts
 from paper_intelligence.quality.stage import (
+    POLICY_VERSION as QUALITY_POLICY_VERSION,
+    PROMPT_VERSION as QUALITY_PROMPT_VERSION,
+    STAGE_VERSION as QUALITY_STAGE_VERSION,
     composite_score,
     quality_selection_reason_map,
 )
@@ -34,7 +46,8 @@ DISAGREEMENT_THRESHOLD = 3.0
 
 LATEST_RESULTS_SQL = """
 SELECT DISTINCT ON (r.content_item_id, r.task_type)
-    r.content_item_id, r.task_type, r.result_json, r.confidence
+    r.content_item_id, r.task_type, r.result_json, r.confidence,
+    r.stage_version, r.prompt_version, r.policy_version, r.model
 FROM paper_intelligence.paper_classification_results r
 JOIN research_radar.content_items ci ON ci.id = r.content_item_id
 WHERE ci.published_at >= %s::timestamptz
@@ -44,7 +57,8 @@ ORDER BY r.content_item_id, r.task_type, r.created_at DESC
 
 LATEST_RESULTS_SQL_PI = """
 SELECT DISTINCT ON (r.content_item_id, r.task_type)
-    r.content_item_id, r.task_type, r.result_json, r.confidence
+    r.content_item_id, r.task_type, r.result_json, r.confidence,
+    r.stage_version, r.prompt_version, r.policy_version, r.model
 FROM paper_intelligence.paper_classification_results r
 JOIN paper_intelligence.papers p ON p.paper_id = r.content_item_id
 WHERE p.published_at >= %s::timestamptz
@@ -154,6 +168,10 @@ def run_window(
             entry[row["task_type"]] = {
                 "result": row["result_json"] or {},
                 "confidence": row["confidence"],
+                "stage_version": row.get("stage_version"),
+                "prompt_version": row.get("prompt_version"),
+                "policy_version": row.get("policy_version"),
+                "model": row.get("model"),
             }
 
         affiliations: dict[int, list[dict[str, Any]]] = {}
@@ -166,6 +184,14 @@ def run_window(
 
     judgment_exclusions = load_judgment_exclusions(
         conn, list(by_paper.keys()), judge_version=JUDGE_VERSION_DEFAULT
+    )
+    attempts = latest_quality_attempts(
+        conn,
+        list(by_paper.keys()),
+        stage_version=QUALITY_STAGE_VERSION,
+        prompt_version=QUALITY_PROMPT_VERSION,
+        policy_version=QUALITY_POLICY_VERSION,
+        model=QUALITY_MODEL,
     )
 
     stats = {
@@ -187,7 +213,8 @@ def run_window(
         stats["papers"] += 1
 
         screen = results.get("screen", {}).get("result") or {}
-        quality = results.get("quality", {}).get("result") or {}
+        quality_meta = results.get("quality") or {}
+        quality = quality_meta.get("result") or {}
         domain_row = results.get("domain", {})
         subdomain_row = results.get("subdomain", {})
         audience_row = results.get("audience", {})
@@ -205,9 +232,17 @@ def run_window(
         if org["status"] == "resolved":
             stats["with_org"] += 1
 
+        has_current_quality = quality_result_is_current(
+            quality_meta if quality else None,
+            stage_version=QUALITY_STAGE_VERSION,
+            prompt_version=QUALITY_PROMPT_VERSION,
+            policy_version=QUALITY_POLICY_VERSION,
+            model=QUALITY_MODEL,
+        )
+
         quality_score = None
         final_score = None
-        if quality:
+        if has_current_quality and quality:
             stats["with_quality"] += 1
             # Recompute from the stored dimensions so the boost is applied here,
             # not baked into the scoring stage's own row.
@@ -236,29 +271,16 @@ def run_window(
 
         gate_passed = bool((screen.get("gate") or {}).get("passed")) if screen else False
         route = routing.get(content_id)
-        if quality_score is not None:
-            quality_status = "scored"
-            selection_reason = "scored_quality_result_present"
-        elif route is not None:
-            if route.decision == "selected":
-                # Selected by router but no quality row yet (pending paid run).
-                quality_status = "not_selected"
-                selection_reason = f"pending_quality_score:{route.reason}"
-            elif route.decision == "not_selected":
-                quality_status = "not_selected"
-                selection_reason = route.reason
-            else:
-                quality_status = "skipped"
-                selection_reason = route.reason
-        elif gate_passed:
-            quality_status = "not_selected"
-            selection_reason = "screen_gate_passed_router_decision_unavailable"
-        elif screen:
-            quality_status = "skipped"
-            selection_reason = "blocked_or_no_screen_gate_pass"
-        else:
-            quality_status = "skipped"
-            selection_reason = "no_screen_result"
+        attempt = attempts.get(content_id) or {}
+        quality_status, selection_reason = derive_quality_status(
+            has_current_quality_row=has_current_quality,
+            route_decision=route.decision if route is not None else None,
+            route_reason=route.reason if route is not None else None,
+            latest_attempt_status=attempt.get("status"),
+            latest_attempt_error=attempt.get("error_summary"),
+            gate_passed=gate_passed,
+            has_screen=bool(screen),
+        )
 
         rows.append(
             (
@@ -283,10 +305,17 @@ def run_window(
                     {
                         "screen_dimensions": {k: screen.get(k) for k in SCREEN_DIMENSIONS},
                         "screen_gate": screen.get("gate"),
-                        "quality_present": bool(quality),
+                        "quality_present": has_current_quality,
                         "quality_status": quality_status,
                         "quality_selection_reason": selection_reason,
                         "quality_routing": route.as_dict() if route is not None else None,
+                        "quality_attempt": {
+                            "status": attempt.get("status"),
+                            "error_summary": attempt.get("error_summary"),
+                            "attempted_at": attempt.get("attempted_at"),
+                        }
+                        if attempt
+                        else None,
                         "screen_quality_disagreement": disagreement,
                         "organisation": org,
                         "affiliation_judge": {

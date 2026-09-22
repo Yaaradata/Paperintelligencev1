@@ -37,6 +37,10 @@ from paper_intelligence.db import (
     insert_classification_results,
     latest_screen_scores,
 )
+from paper_intelligence.quality.attempts import (
+    record_quality_failures,
+    record_quality_successes,
+)
 
 STAGE_NAME = "quality"
 STAGE_VERSION = "v001"
@@ -500,6 +504,34 @@ def run_window(
                         }
                     )
                 insert_classification_results(batch_conn, rows)
+                if parsed:
+                    record_quality_successes(
+                        batch_conn,
+                        list(parsed.keys()),
+                        run_id=run_id,
+                        stage_run_id=stage_run_id,
+                        model=model,
+                        stage_version=STAGE_VERSION,
+                        prompt_version=PROMPT_VERSION,
+                        policy_version=POLICY_VERSION,
+                    )
+                missing = sorted(expected - parsed.keys())
+                if missing:
+                    err = "parse_missing_or_invalid"
+                    if problems:
+                        err = f"parse_missing_or_invalid: {'; '.join(problems)}"[:2000]
+                    record_quality_failures(
+                        batch_conn,
+                        missing,
+                        run_id=run_id,
+                        stage_run_id=stage_run_id,
+                        model=model,
+                        error_summary=err,
+                        stage_version=STAGE_VERSION,
+                        prompt_version=PROMPT_VERSION,
+                        policy_version=POLICY_VERSION,
+                        metadata={"problems": problems},
+                    )
                 batch_conn.commit()
             if problems:
                 stats.add_warning("; ".join(problems))
@@ -511,7 +543,27 @@ def run_window(
                 cost=result["estimated_cost"],
             )
         except Exception as exc:  # noqa: BLE001
-            stats.add_error(f"{type(exc).__name__}: {exc}", failed=len(expected))
+            err = f"{type(exc).__name__}: {exc}"
+            stats.add_error(err, failed=len(expected))
+            try:
+                with connect() as err_conn:
+                    record_quality_failures(
+                        err_conn,
+                        sorted(expected),
+                        run_id=run_id,
+                        stage_run_id=stage_run_id,
+                        model=model,
+                        error_summary=err[:2000],
+                        stage_version=STAGE_VERSION,
+                        prompt_version=PROMPT_VERSION,
+                        policy_version=POLICY_VERSION,
+                        metadata={"kind": "batch_exception"},
+                    )
+                    err_conn.commit()
+            except Exception as persist_exc:  # noqa: BLE001
+                stats.add_warning(
+                    f"quality_attempt_persist_failed: {type(persist_exc).__name__}: {persist_exc}"
+                )
 
     run_batches(batches, handle, label="quality")
     return stats
