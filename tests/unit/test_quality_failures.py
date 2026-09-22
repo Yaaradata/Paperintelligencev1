@@ -147,6 +147,17 @@ class TestDeriveQualityStatus:
         assert status == "skipped"
         assert reason == "blocked_screen_gate_failed"
 
+    def test_stale_content_status(self):
+        status, reason = derive_quality_status(
+            has_current_quality_row=False,
+            route_decision="selected",
+            route_reason="selected_top_gate_percentile",
+            latest_attempt_status=None,
+            content_stale=True,
+        )
+        assert status == "stale_content"
+        assert "stale_content" in reason
+
 
 # ---------------------------------------------------------------------------
 # run_window attempt persistence (mocked LLM / DB)

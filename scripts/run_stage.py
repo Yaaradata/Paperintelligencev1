@@ -69,7 +69,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--allow-quality-model-change",
         action="store_true",
-        help="adjudication: allow QUALITY_MODEL that would stale existing quality rows",
+        help="adjudication: allow quality rows whose model ≠ date mapping",
     )
     args = parser.parse_args(argv)
 
@@ -317,40 +317,56 @@ def _run_adjudication(args: argparse.Namespace) -> int:
         start_pipeline_run,
         start_stage_run,
     )
+    from paper_intelligence.quality.model_policy import (
+        load_quality_model_policy,
+        quality_model_env_override,
+    )
 
     if not (args.date_from and args.date_until):
         print("adjudication requires both --from and --until", file=sys.stderr)
         return 2
 
+    policy = load_quality_model_policy()
     print(
         format_model_banner(
             screen_model=SCREEN_MODEL,
             classify_model=CLASSIFY_MODEL,
-            quality_model=QUALITY_MODEL,
+            quality_model=(
+                quality_model_env_override()
+                or f"mapped(pre={policy['pre_cutover_model']},post={policy['post_cutover_model']},"
+                f"cutover={policy['cutover_date']})"
+            ),
         ),
         flush=True,
     )
 
     with connect() as conn:
-        stale_n = count_quality_rows_staled_by_model(
+        guard = count_quality_rows_staled_by_model(
             conn,
             date_from=args.date_from,
             date_until=args.date_until,
-            quality_model=QUALITY_MODEL,
         )
-        if stale_n and not args.allow_quality_model_change:
+        mismatch = int(guard["mapping_mismatch"] or 0)
+        if mismatch and not args.allow_quality_model_change:
             print(
-                f"adjudication refused: QUALITY_MODEL={QUALITY_MODEL!r} would make "
-                f"{stale_n} existing current-version quality row(s) in "
-                f"{args.date_from}..{args.date_until} no longer count as scored. "
-                f"Re-run with --allow-quality-model-change if intentional.",
+                f"adjudication refused: {mismatch} quality row(s) in "
+                f"{args.date_from}..{args.date_until} have model ≠ date mapping "
+                f"(cutover={guard['cutover_date']}; "
+                f"pre={guard['pre_cutover_model']}; post={guard['post_cutover_model']}). "
+                f"Pass --allow-quality-model-change if intentional.",
                 file=sys.stderr,
             )
             return 2
-        if stale_n and args.allow_quality_model_change:
+        if mismatch and args.allow_quality_model_change:
             print(
-                f"WARNING: --allow-quality-model-change: {stale_n} quality row(s) "
-                f"will leave scored status under QUALITY_MODEL={QUALITY_MODEL!r}",
+                f"WARNING: --allow-quality-model-change: {mismatch} mapping-mismatch "
+                f"quality row(s) will not count as scored",
+                flush=True,
+            )
+        if guard.get("env_override"):
+            print(
+                f"WARNING: QUALITY_MODEL env override={guard['env_override']!r} "
+                f"is set; mapped models still drive adjudication currentness",
                 flush=True,
             )
 
@@ -368,7 +384,12 @@ def _run_adjudication(args: argparse.Namespace) -> int:
             metadata={
                 "date_from": args.date_from,
                 "date_until": args.date_until,
-                "quality_model": QUALITY_MODEL,
+                "quality_model_policy": {
+                    "cutover_date": str(policy["cutover_date"]),
+                    "pre_cutover_model": policy["pre_cutover_model"],
+                    "post_cutover_model": policy["post_cutover_model"],
+                    "env_override": quality_model_env_override(),
+                },
             },
         )
         stage_run_id = start_stage_run(
@@ -396,7 +417,9 @@ def _run_adjudication(args: argparse.Namespace) -> int:
             f"{stats['with_quality']} with quality, {stats['with_org']} with a resolved "
             f"organisation, {stats['disagreements']} screen/quality disagreements, "
             f"inconsistent_attempt_without_result="
-            f"{stats.get('inconsistent_attempt_without_result', 0)}"
+            f"{stats.get('inconsistent_attempt_without_result', 0)}, "
+            f"stale_content={stats.get('stale_content', 0)}, "
+            f"quality_models={stats.get('quality_models_seen')}"
         )
     return 0
 
@@ -444,25 +467,41 @@ def _run_paid(args: argparse.Namespace) -> int:
             "domain",
             CLASSIFY_MODEL,
         ),
-        "quality": ("paper_intelligence.quality", "quality", QUALITY_MODEL),
+        "quality": ("paper_intelligence.quality", "quality", None),
     }
     module_name, task_type, model = stage_modules[args.stage]
     module = __import__(module_name, fromlist=["run_window"])
 
+    from paper_intelligence.quality.model_policy import (
+        load_quality_model_policy,
+        quality_model_env_override,
+    )
+
+    q_policy = load_quality_model_policy()
+    quality_banner = quality_model_env_override() or (
+        f"mapped(pre={q_policy['pre_cutover_model']},"
+        f"post={q_policy['post_cutover_model']},cutover={q_policy['cutover_date']})"
+    )
     print(
         format_model_banner(
             screen_model=SCREEN_MODEL,
             classify_model=CLASSIFY_MODEL,
-            quality_model=QUALITY_MODEL,
+            quality_model=quality_banner if args.stage == "quality" else (QUALITY_MODEL or quality_banner),
         ),
         flush=True,
     )
     try:
-        require_model_priced(model)
-        # Fail fast if any of the three configured models is unpriced (ops clarity).
+        if args.stage == "quality":
+            require_model_priced(q_policy["pre_cutover_model"])
+            require_model_priced(q_policy["post_cutover_model"])
+            if quality_model_env_override():
+                require_model_priced(quality_model_env_override())
+        else:
+            require_model_priced(model)
         require_model_priced(SCREEN_MODEL)
         require_model_priced(CLASSIFY_MODEL)
-        require_model_priced(QUALITY_MODEL)
+        require_model_priced(q_policy["pre_cutover_model"])
+        require_model_priced(q_policy["post_cutover_model"])
     except UnknownModelPriceError as exc:
         print(f"paid stage refused: {exc}", file=sys.stderr)
         return 2
@@ -470,30 +509,13 @@ def _run_paid(args: argparse.Namespace) -> int:
     max_cost = resolve_max_cost_usd(args.max_cost_usd)
 
     with connect() as conn:
+        if args.stage == "quality":
+            return _run_quality_paid(
+                args, conn, module=module, max_cost=max_cost, q_policy=q_policy
+            )
+
         if args.content_item_id is not None:
             ids = [args.content_item_id]
-        elif args.stage == "quality":
-            from paper_intelligence.quality import select_quality_candidates
-
-            ids = select_quality_candidates(
-                conn,
-                date_from=args.date_from,
-                date_until=args.date_until,
-                gate_percentile=args.gate_percentile or GATE_PERCENTILE,
-            )
-            if not args.reprocess:
-                from paper_intelligence.db import ids_with_result
-
-                done = ids_with_result(
-                    conn,
-                    ids,
-                    "quality",
-                    stage_version=module.STAGE_VERSION,
-                    prompt_version=module.PROMPT_VERSION,
-                    policy_version=module.POLICY_VERSION,
-                    model=model,
-                )
-                ids = [i for i in ids if i not in done]
         elif args.stage == "audience_domain":
             ids = _audience_domain_candidates(conn, args, module=module, model=model)
         else:
@@ -528,7 +550,7 @@ def _run_paid(args: argparse.Namespace) -> int:
             return 0
 
         projected = module.run_window(
-            conn, ids, run_id="dry-run", stage_run_id="dry-run", dry_run=True
+            conn, ids, run_id="dry-run", stage_run_id="dry-run", dry_run=True, model=model
         )
         print(
             f"PROJECTION {args.stage}: {len(ids)} papers, ~{projected.calls} calls, "
@@ -683,6 +705,321 @@ def _run_paid(args: argparse.Namespace) -> int:
         if stopped:
             return 1
         return 0 if stats.papers_failed == 0 else 1
+
+
+def _run_quality_paid(
+    args: argparse.Namespace,
+    conn,
+    *,
+    module,
+    max_cost: float | None,
+    q_policy: dict,
+) -> int:
+    """Quality stage: partition candidates by date→model mapping (or env override)."""
+    from paper_intelligence.common.budget import (
+        format_budget_line,
+        update_budget_state_after_stage,
+        cost_divergence_warning,
+    )
+    from paper_intelligence.common.config import (
+        CLASSIFY_MODEL,
+        GATE_PERCENTILE,
+        SCREEN_MODEL,
+    )
+    from paper_intelligence.db import fetch_papers, ids_with_result
+    from paper_intelligence.observability import (
+        finish_pipeline_run,
+        finish_stage_run,
+        start_pipeline_run,
+        start_stage_run,
+    )
+    from paper_intelligence.quality import select_quality_candidates
+    from paper_intelligence.quality.model_policy import (
+        group_ids_by_quality_model,
+        quality_model_env_override,
+    )
+
+    if args.content_item_id is not None:
+        candidate_ids = [args.content_item_id]
+    else:
+        candidate_ids = select_quality_candidates(
+            conn,
+            date_from=args.date_from,
+            date_until=args.date_until,
+            gate_percentile=args.gate_percentile or GATE_PERCENTILE,
+        )
+    if args.limit:
+        candidate_ids = candidate_ids[: args.limit]
+
+    papers = fetch_papers(conn, candidate_ids) if candidate_ids else []
+    # Preserve candidate order within each model group.
+    paper_by_id = {int(p["content_item_id"]): p for p in papers}
+    ordered_papers = [paper_by_id[i] for i in candidate_ids if i in paper_by_id]
+    groups = group_ids_by_quality_model(ordered_papers)
+
+    pending_by_model: dict[str, list[int]] = {}
+    skipped_done = 0
+    for model, ids in groups.items():
+        if args.reprocess:
+            pending_by_model[model] = ids
+            continue
+        done = ids_with_result(
+            conn,
+            ids,
+            "quality",
+            stage_version=module.STAGE_VERSION,
+            prompt_version=module.PROMPT_VERSION,
+            policy_version=module.POLICY_VERSION,
+            model=model,
+        )
+        pending = [i for i in ids if i not in done]
+        skipped_done += len(ids) - len(pending)
+        if pending:
+            pending_by_model[model] = pending
+
+    total_pending = sum(len(v) for v in pending_by_model.values())
+    override = quality_model_env_override()
+    print(
+        f"stage=quality models={dict((m, len(ids)) for m, ids in pending_by_model.items())} "
+        f"candidates={len(candidate_ids)} pending={total_pending} "
+        f"skipped_done={skipped_done} from={args.date_from} until={args.date_until} "
+        f"dry_run={args.dry_run} env_override={override!r} "
+        f"cutover={q_policy['cutover_date']}",
+        flush=True,
+    )
+    if not total_pending:
+        print("nothing to do")
+        print(
+            format_budget_line(projected=0.0, actual=0.0, cap=max_cost, stopped=False),
+            flush=True,
+        )
+        return 0
+
+    # Project per model then sum (token estimates are model-priced).
+    projected_cost = 0.0
+    projected_calls = 0
+    projected_in = 0
+    projected_out = 0
+    for model, ids in pending_by_model.items():
+        stats = module.run_window(
+            conn, ids, run_id="dry-run", stage_run_id="dry-run", dry_run=True, model=model
+        )
+        projected_cost += stats.cost_usd
+        projected_calls += stats.calls
+        projected_in += stats.input_tokens
+        projected_out += stats.output_tokens
+        print(
+            f"  PROJECTION quality model={model}: {len(ids)} papers, "
+            f"~{stats.calls} calls, ~${stats.cost_usd:.4f}",
+            flush=True,
+        )
+    print(
+        f"PROJECTION quality: {total_pending} papers, ~{projected_calls} calls, "
+        f"~{projected_in} in / ~{projected_out} out tokens, ~${projected_cost:.2f}",
+        flush=True,
+    )
+
+    if args.dry_run:
+        print(
+            format_budget_line(
+                projected=projected_cost,
+                actual=0.0,
+                cap=max_cost,
+                stopped=False,
+            ),
+            flush=True,
+        )
+        return 0
+
+    if (
+        max_cost is not None
+        and projected_cost > max_cost
+        and not args.force_over_projection
+    ):
+        print(
+            f"refusing quality: projected ${projected_cost:.4f} exceeds "
+            f"cap ${max_cost:.4f}. Pass --force-over-projection to override the "
+            f"pre-check (live cap still enforced during the run).",
+            file=sys.stderr,
+        )
+        print(
+            format_budget_line(
+                projected=projected_cost,
+                actual=0.0,
+                cap=max_cost,
+                stopped=True,
+            ),
+            flush=True,
+        )
+        return 2
+
+    run_id = start_pipeline_run(
+        conn,
+        pipeline_name="paper_intelligence.quality",
+        trigger_type="manual",
+        metadata={
+            "date_from": args.date_from,
+            "date_until": args.date_until,
+            "models": {
+                "screen": SCREEN_MODEL,
+                "classify": CLASSIFY_MODEL,
+                "quality_by_group": {m: len(ids) for m, ids in pending_by_model.items()},
+                "quality_policy": {
+                    "cutover_date": str(q_policy["cutover_date"]),
+                    "pre_cutover_model": q_policy["pre_cutover_model"],
+                    "post_cutover_model": q_policy["post_cutover_model"],
+                    "env_override": override,
+                },
+            },
+            "candidates": total_pending,
+            "max_cost_usd": max_cost,
+            "projected_cost_usd": round(projected_cost, 6),
+        },
+    )
+    print(f"  run_id={run_id}")
+
+    # Shared budget across model groups.
+    remaining_cap = max_cost
+    total_succeeded = 0
+    total_failed = 0
+    total_cost = 0.0
+    total_estimated = 0.0
+    total_actual = 0.0
+    total_calls = 0
+    calls_with_actual = 0
+    stopped = False
+    papers_skipped_budget = 0
+    all_warnings: list[str] = []
+    all_errors: list[str] = []
+    last_status = "succeeded"
+
+    for model, ids in pending_by_model.items():
+        if remaining_cap is not None and remaining_cap <= 0:
+            stopped = True
+            papers_skipped_budget += len(ids)
+            break
+        stage_run_id = start_stage_run(
+            conn,
+            run_id,
+            stage_name="quality",
+            stage_version=module.STAGE_VERSION,
+            prompt_version=module.PROMPT_VERSION,
+            policy_version=module.POLICY_VERSION,
+            items_input=len(ids),
+        )
+        stats = module.run_window(
+            conn,
+            ids,
+            run_id=run_id,
+            stage_run_id=stage_run_id,
+            model=model,
+            max_cost_usd=remaining_cap,
+        )
+        group_stopped = bool(stats.stopped_budget_cap)
+        if group_stopped:
+            status = "stopped_budget_cap"
+            stopped = True
+        elif stats.papers_failed == 0:
+            status = "succeeded"
+        else:
+            status = "partial"
+        last_status = status
+        finish_stage_run(
+            conn,
+            stage_run_id,
+            status=status,
+            items_success=stats.papers_succeeded,
+            items_failed=stats.papers_failed,
+            error_summary="; ".join(stats.errors)[:2000] or None,
+        )
+        total_succeeded += stats.papers_succeeded
+        total_failed += stats.papers_failed
+        total_cost += stats.cost_usd
+        total_estimated += stats.estimated_cost_usd
+        total_actual += stats.actual_cost_usd
+        total_calls += stats.calls
+        calls_with_actual += stats.calls_with_actual_cost
+        papers_skipped_budget += stats.papers_skipped_budget
+        all_warnings.extend(stats.warnings)
+        all_errors.extend(stats.errors)
+        if remaining_cap is not None:
+            remaining_cap = max(0.0, remaining_cap - stats.cost_usd)
+        print(
+            f"  quality model={model}: ok={stats.papers_succeeded} "
+            f"fail={stats.papers_failed} cost=${stats.cost_usd:.4f}",
+            flush=True,
+        )
+        if stopped:
+            break
+
+    if stopped:
+        pipeline_status = "stopped_budget_cap"
+    elif total_failed == 0:
+        pipeline_status = "succeeded"
+    else:
+        pipeline_status = "partial"
+
+    finish_pipeline_run(
+        conn,
+        run_id,
+        status=pipeline_status,
+        items_input=total_pending,
+        items_succeeded=total_succeeded,
+        items_failed=total_failed,
+        metadata={
+            "cost_usd": round(total_cost, 4),
+            "projected_cost_usd": round(projected_cost, 6),
+            "estimated_cost_usd": round(total_estimated, 6),
+            "actual_cost_usd": round(total_actual, 6) if calls_with_actual else None,
+            "calls_with_actual_cost": calls_with_actual,
+            "max_cost_usd": max_cost,
+            "calls": total_calls,
+            "stopped_budget_cap": stopped,
+            "papers_skipped_budget": papers_skipped_budget,
+            "quality_models": {m: len(ids) for m, ids in pending_by_model.items()},
+        },
+    )
+
+    update_budget_state_after_stage(
+        args.budget_state,
+        stage="quality",
+        actual_usd=total_cost,
+        projected_usd=projected_cost,
+        stopped_budget_cap=stopped,
+    )
+
+    div_warn = None
+    if calls_with_actual:
+        div_warn = cost_divergence_warning(
+            estimated_usd=total_estimated,
+            actual_usd=total_actual,
+        )
+    print(
+        f"quality: papers={total_pending} ok={total_succeeded} fail={total_failed} "
+        f"calls={total_calls} cost=${total_cost:.4f} status={last_status}",
+        flush=True,
+    )
+    print(
+        format_budget_line(
+            projected=projected_cost,
+            actual=total_cost,
+            cap=max_cost,
+            stopped=stopped,
+            estimated=total_estimated if calls_with_actual else None,
+            provider_actual=total_actual if calls_with_actual else None,
+            divergence_warned=bool(div_warn),
+        ),
+        flush=True,
+    )
+    if div_warn:
+        print(div_warn, flush=True)
+    for warning in all_warnings[:10]:
+        print(f"  WARN {warning}")
+    for error in all_errors[:10]:
+        print(f"  ERROR {error}", file=sys.stderr)
+    if stopped:
+        return 1
+    return 0 if total_failed == 0 else 1
 
 
 def _audience_domain_candidates(

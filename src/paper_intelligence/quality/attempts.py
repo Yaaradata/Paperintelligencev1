@@ -124,30 +124,38 @@ def latest_quality_attempts(
     policy_version: str = _DEFAULT_POLICY_VERSION,
     model: str | None = None,
 ) -> dict[int, dict[str, Any]]:
-    """Latest attempt per paper for the given quality versions (+ optional model)."""
+    """Latest attempt per paper for the given quality versions.
+
+    When ``model`` is None, the latest attempt across models (for those versions)
+    is returned so callers can match against a per-paper mapped model.
+    """
     if not content_item_ids:
         return {}
-    model = model or QUALITY_MODEL
+    clauses = [
+        "content_item_id = ANY(%s)",
+        "stage_version = %s",
+        "prompt_version = %s",
+        "policy_version = %s",
+    ]
+    params: list[Any] = [
+        list(content_item_ids),
+        stage_version,
+        prompt_version,
+        policy_version,
+    ]
+    if model is not None:
+        clauses.append("model = %s")
+        params.append(model)
     with conn.cursor() as cur:
         cur.execute(
-            """
+            f"""
             SELECT DISTINCT ON (content_item_id)
                 content_item_id, status, error_summary, attempted_at,
                 stage_version, prompt_version, policy_version, model, run_id
             FROM paper_intelligence.quality_attempts
-            WHERE content_item_id = ANY(%s)
-              AND stage_version = %s
-              AND prompt_version = %s
-              AND policy_version = %s
-              AND model = %s
+            WHERE {" AND ".join(clauses)}
             ORDER BY content_item_id, attempted_at DESC
             """,
-            (
-                list(content_item_ids),
-                stage_version,
-                prompt_version,
-                policy_version,
-                model,
-            ),
+            params,
         )
         return {int(r["content_item_id"]): dict(r) for r in cur.fetchall()}

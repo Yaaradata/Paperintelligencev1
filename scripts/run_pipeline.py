@@ -317,10 +317,13 @@ def main(argv: list[str] | None = None) -> int:
     )
     from paper_intelligence.common.config import (
         CLASSIFY_MODEL,
-        QUALITY_MODEL,
         SCREEN_MODEL,
         UnknownModelPriceError,
         require_model_priced,
+    )
+    from paper_intelligence.quality.model_policy import (
+        load_quality_model_policy,
+        quality_model_env_override,
     )
 
     stages = [STAGE_ALIASES.get(s.strip(), s.strip()) for s in args.stages.split(",") if s.strip()]
@@ -345,17 +348,26 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 2
 
+    q_policy = load_quality_model_policy()
+    quality_banner = quality_model_env_override() or (
+        f"mapped(pre={q_policy['pre_cutover_model']},"
+        f"post={q_policy['post_cutover_model']},cutover={q_policy['cutover_date']})"
+    )
     print(
         format_model_banner(
             screen_model=SCREEN_MODEL,
             classify_model=CLASSIFY_MODEL,
-            quality_model=QUALITY_MODEL,
+            quality_model=quality_banner,
         ),
         flush=True,
     )
     try:
-        for m in (SCREEN_MODEL, CLASSIFY_MODEL, QUALITY_MODEL):
-            require_model_priced(m)
+        require_model_priced(SCREEN_MODEL)
+        require_model_priced(CLASSIFY_MODEL)
+        require_model_priced(q_policy["pre_cutover_model"])
+        require_model_priced(q_policy["post_cutover_model"])
+        if quality_model_env_override():
+            require_model_priced(quality_model_env_override())
     except UnknownModelPriceError as exc:
         print(f"pipeline refused: {exc}", file=sys.stderr)
         return 2

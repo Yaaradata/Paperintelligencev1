@@ -1,10 +1,15 @@
-"""Guards for adjudication vs configured QUALITY_MODEL."""
+"""Guards for adjudication vs date-mapped quality models."""
 
 from __future__ import annotations
 
 from psycopg import Connection
 
-from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG, QUALITY_MODEL
+from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
+from paper_intelligence.quality.model_policy import (
+    load_quality_model_policy,
+    mapped_quality_model,
+    quality_model_env_override,
+)
 from paper_intelligence.quality.stage import (
     POLICY_VERSION as QUALITY_POLICY_VERSION,
     PROMPT_VERSION as QUALITY_PROMPT_VERSION,
@@ -17,63 +22,76 @@ def count_quality_rows_staled_by_model(
     *,
     date_from: str,
     date_until: str,
-    quality_model: str = QUALITY_MODEL,
     stage_version: str = QUALITY_STAGE_VERSION,
     prompt_version: str = QUALITY_PROMPT_VERSION,
     policy_version: str = QUALITY_POLICY_VERSION,
-) -> int:
-    """Count latest quality rows matching current versions but a different model.
+) -> dict[str, int | str | None]:
+    """Compare latest version-matched quality rows to the date→model mapping.
 
-    Re-running adjudication with ``quality_model`` would stop treating these as
-    ``scored`` (Phase 1 current-version+model rule).
+    A row is "mapping_mismatch" when its model differs from
+    ``mapped_quality_model(published_at)``. Env QUALITY_MODEL alone no longer
+    false-alarms on Sol-scored Sep 1–15 windows.
+
+    Returns counts plus whether an env override is active.
     """
+    policy = load_quality_model_policy()
     if PI_USE_PAPERS_CATALOG:
         sql = """
-            SELECT COUNT(*) AS n
+            SELECT r.content_item_id, r.model, p.published_at
             FROM (
                 SELECT DISTINCT ON (r.content_item_id)
-                    r.model, r.stage_version, r.prompt_version, r.policy_version
+                    r.content_item_id, r.model, r.stage_version,
+                    r.prompt_version, r.policy_version
                 FROM paper_intelligence.paper_classification_results r
                 JOIN paper_intelligence.papers p ON p.paper_id = r.content_item_id
                 WHERE r.task_type = 'quality'
                   AND p.published_at >= %s::timestamptz
                   AND p.published_at < (%s::timestamptz + interval '1 day')
                 ORDER BY r.content_item_id, r.created_at DESC
-            ) latest
-            WHERE latest.stage_version = %s
-              AND latest.prompt_version = %s
-              AND latest.policy_version = %s
-              AND latest.model IS DISTINCT FROM %s
+            ) r
+            JOIN paper_intelligence.papers p ON p.paper_id = r.content_item_id
+            WHERE r.stage_version = %s
+              AND r.prompt_version = %s
+              AND r.policy_version = %s
             """
     else:
         sql = """
-            SELECT COUNT(*) AS n
+            SELECT r.content_item_id, r.model, ci.published_at
             FROM (
                 SELECT DISTINCT ON (r.content_item_id)
-                    r.model, r.stage_version, r.prompt_version, r.policy_version
+                    r.content_item_id, r.model, r.stage_version,
+                    r.prompt_version, r.policy_version
                 FROM paper_intelligence.paper_classification_results r
                 JOIN research_radar.content_items ci ON ci.id = r.content_item_id
                 WHERE r.task_type = 'quality'
                   AND ci.published_at >= %s::timestamptz
                   AND ci.published_at < (%s::timestamptz + interval '1 day')
                 ORDER BY r.content_item_id, r.created_at DESC
-            ) latest
-            WHERE latest.stage_version = %s
-              AND latest.prompt_version = %s
-              AND latest.policy_version = %s
-              AND latest.model IS DISTINCT FROM %s
+            ) r
+            JOIN research_radar.content_items ci ON ci.id = r.content_item_id
+            WHERE r.stage_version = %s
+              AND r.prompt_version = %s
+              AND r.policy_version = %s
             """
     with conn.cursor() as cur:
         cur.execute(
             sql,
-            (
-                date_from,
-                date_until,
-                stage_version,
-                prompt_version,
-                policy_version,
-                quality_model,
-            ),
+            (date_from, date_until, stage_version, prompt_version, policy_version),
         )
-        row = cur.fetchone()
-        return int(row["n"] if row else 0)
+        rows = list(cur.fetchall())
+
+    mismatch = 0
+    for row in rows:
+        expected = mapped_quality_model(row["published_at"], policy=policy)
+        if str(row["model"] or "") != expected:
+            mismatch += 1
+
+    override = quality_model_env_override()
+    return {
+        "mapping_mismatch": mismatch,
+        "version_matched_quality_rows": len(rows),
+        "env_override": override,
+        "cutover_date": str(policy["cutover_date"]),
+        "pre_cutover_model": policy["pre_cutover_model"],
+        "post_cutover_model": policy["post_cutover_model"],
+    }

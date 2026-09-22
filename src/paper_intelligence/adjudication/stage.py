@@ -16,6 +16,7 @@ from paper_intelligence.adjudication.org_score import organisation_score
 from paper_intelligence.adjudication.quality_status import (
     derive_quality_status,
     quality_result_is_current,
+    result_content_is_stale,
 )
 from paper_intelligence.author_affiliation.verify.judge_effective import (
     load_judgment_exclusions,
@@ -26,9 +27,12 @@ from paper_intelligence.author_affiliation.verify.judge_persist import (
 from paper_intelligence.common.config import (
     GATE_PERCENTILE,
     PI_USE_PAPERS_CATALOG,
-    QUALITY_MODEL,
 )
 from paper_intelligence.quality.attempts import latest_quality_attempts
+from paper_intelligence.quality.model_policy import (
+    mapped_quality_model,
+    warn_quality_model_override,
+)
 from paper_intelligence.quality.stage import (
     POLICY_VERSION as QUALITY_POLICY_VERSION,
     PROMPT_VERSION as QUALITY_PROMPT_VERSION,
@@ -48,13 +52,13 @@ LATEST_RESULTS_SQL = """
 SELECT DISTINCT ON (r.content_item_id, r.task_type)
     r.content_item_id, r.task_type, r.result_json, r.confidence,
     r.stage_version, r.prompt_version, r.policy_version, r.model,
-    r.input_content_hash, p.content_hash AS paper_content_hash
+    r.input_content_hash, p.content_hash AS paper_content_hash,
+    ci.published_at
 FROM paper_intelligence.paper_classification_results r
 JOIN research_radar.content_items ci ON ci.id = r.content_item_id
 LEFT JOIN paper_intelligence.papers p ON p.paper_id = r.content_item_id
 WHERE ci.published_at >= %s::timestamptz
   AND ci.published_at < (%s::timestamptz + interval '1 day')
-  AND (r.input_content_hash IS NULL OR r.input_content_hash = p.content_hash)
 ORDER BY r.content_item_id, r.task_type, r.created_at DESC
 """
 
@@ -62,12 +66,12 @@ LATEST_RESULTS_SQL_PI = """
 SELECT DISTINCT ON (r.content_item_id, r.task_type)
     r.content_item_id, r.task_type, r.result_json, r.confidence,
     r.stage_version, r.prompt_version, r.policy_version, r.model,
-    r.input_content_hash, p.content_hash AS paper_content_hash
+    r.input_content_hash, p.content_hash AS paper_content_hash,
+    p.published_at
 FROM paper_intelligence.paper_classification_results r
 JOIN paper_intelligence.papers p ON p.paper_id = r.content_item_id
 WHERE p.published_at >= %s::timestamptz
   AND p.published_at < (%s::timestamptz + interval '1 day')
-  AND (r.input_content_hash IS NULL OR r.input_content_hash = p.content_hash)
 ORDER BY r.content_item_id, r.task_type, r.created_at DESC
 """
 
@@ -166,10 +170,12 @@ def run_window(
     author_sql = AUTHOR_COUNT_SQL_PI if PI_USE_PAPERS_CATALOG else AUTHOR_COUNT_SQL
 
     by_paper: dict[int, dict[str, Any]] = {}
+    published_at_by_id: dict[int, Any] = {}
     with conn.cursor() as cur:
         cur.execute(results_sql, (date_from, date_until))
         for row in cur.fetchall():
-            entry = by_paper.setdefault(int(row["content_item_id"]), {})
+            cid = int(row["content_item_id"])
+            entry = by_paper.setdefault(cid, {})
             entry[row["task_type"]] = {
                 "result": row["result_json"] or {},
                 "confidence": row["confidence"],
@@ -180,6 +186,8 @@ def run_window(
                 "input_content_hash": row.get("input_content_hash"),
                 "paper_content_hash": row.get("paper_content_hash"),
             }
+            if row.get("published_at") is not None:
+                published_at_by_id[cid] = row["published_at"]
 
         affiliations: dict[int, list[dict[str, Any]]] = {}
         cur.execute(aff_sql, (date_from, date_until))
@@ -189,16 +197,19 @@ def run_window(
         cur.execute(author_sql, (date_from, date_until))
         author_counts = {int(r["content_item_id"]): int(r["n"]) for r in cur.fetchall()}
 
+    warn_quality_model_override(list(published_at_by_id.values()))
+
     judgment_exclusions = load_judgment_exclusions(
         conn, list(by_paper.keys()), judge_version=JUDGE_VERSION_DEFAULT
     )
+    # Latest attempt across models; matched to mapped model below.
     attempts = latest_quality_attempts(
         conn,
         list(by_paper.keys()),
         stage_version=QUALITY_STAGE_VERSION,
         prompt_version=QUALITY_PROMPT_VERSION,
         policy_version=QUALITY_POLICY_VERSION,
-        model=QUALITY_MODEL,
+        model=None,
     )
 
     stats = {
@@ -208,6 +219,8 @@ def run_window(
         "disagreements": 0,
         "written": 0,
         "inconsistent_attempt_without_result": 0,
+        "stale_content": 0,
+        "quality_models_seen": {},
     }
     rows: list[tuple] = []
     routing = quality_selection_reason_map(
@@ -220,7 +233,8 @@ def run_window(
     for content_id, results in by_paper.items():
         stats["papers"] += 1
 
-        screen = results.get("screen", {}).get("result") or {}
+        screen_meta = results.get("screen") or {}
+        screen = screen_meta.get("result") or {}
         quality_meta = results.get("quality") or {}
         quality = quality_meta.get("result") or {}
         domain_row = results.get("domain", {})
@@ -240,21 +254,45 @@ def run_window(
         if org["status"] == "resolved":
             stats["with_org"] += 1
 
+        expected_model = mapped_quality_model(published_at_by_id.get(content_id))
+        paper_hash = quality_meta.get("paper_content_hash") or screen_meta.get(
+            "paper_content_hash"
+        )
+
         has_current_quality = quality_result_is_current(
             quality_meta if quality else None,
             stage_version=QUALITY_STAGE_VERSION,
             prompt_version=QUALITY_PROMPT_VERSION,
             policy_version=QUALITY_POLICY_VERSION,
-            model=QUALITY_MODEL,
-            paper_content_hash=quality_meta.get("paper_content_hash"),
+            model=expected_model,
+            paper_content_hash=paper_hash,
         )
+
+        content_stale = False
+        if not has_current_quality:
+            if quality and str(quality_meta.get("model") or "") == expected_model:
+                if (
+                    str(quality_meta.get("stage_version") or "") == QUALITY_STAGE_VERSION
+                    and str(quality_meta.get("prompt_version") or "")
+                    == QUALITY_PROMPT_VERSION
+                    and str(quality_meta.get("policy_version") or "")
+                    == QUALITY_POLICY_VERSION
+                    and result_content_is_stale(quality_meta, paper_content_hash=paper_hash)
+                ):
+                    content_stale = True
+            if screen and result_content_is_stale(
+                screen_meta, paper_content_hash=paper_hash
+            ):
+                content_stale = True
 
         quality_score = None
         final_score = None
         if has_current_quality and quality:
             stats["with_quality"] += 1
-            # Recompute from the stored dimensions so the boost is applied here,
-            # not baked into the scoring stage's own row.
+            qm = str(quality_meta.get("model") or expected_model)
+            stats["quality_models_seen"][qm] = (
+                int(stats["quality_models_seen"].get(qm, 0)) + 1
+            )
             try:
                 composite = composite_score(quality, org_boost=org["org_boost"])
                 quality_score = round(
@@ -281,6 +319,9 @@ def run_window(
         gate_passed = bool((screen.get("gate") or {}).get("passed")) if screen else False
         route = routing.get(content_id)
         attempt = attempts.get(content_id) or {}
+        # Only trust attempts that match the mapped model for this paper.
+        if attempt and str(attempt.get("model") or "") != expected_model:
+            attempt = {}
         quality_status, selection_reason = derive_quality_status(
             has_current_quality_row=has_current_quality,
             route_decision=route.decision if route is not None else None,
@@ -289,9 +330,12 @@ def run_window(
             latest_attempt_error=attempt.get("error_summary"),
             gate_passed=gate_passed,
             has_screen=bool(screen),
+            content_stale=content_stale,
         )
         if selection_reason == "inconsistent_attempt_without_result":
             stats["inconsistent_attempt_without_result"] += 1
+        if quality_status == "stale_content":
+            stats["stale_content"] += 1
 
         rows.append(
             (
@@ -319,6 +363,8 @@ def run_window(
                         "quality_present": has_current_quality,
                         "quality_status": quality_status,
                         "quality_selection_reason": selection_reason,
+                        "expected_quality_model": expected_model,
+                        "result_quality_model": quality_meta.get("model"),
                         "quality_routing": route.as_dict() if route is not None else None,
                         "quality_attempt": {
                             "status": attempt.get("status"),

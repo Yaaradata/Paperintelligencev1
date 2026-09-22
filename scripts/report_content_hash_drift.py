@@ -37,13 +37,13 @@ def main(argv: list[str] | None = None) -> int:
 
     from paper_intelligence.common.config import (
         CLASSIFY_MODEL,
-        QUALITY_MODEL,
         SCREEN_MODEL,
     )
-    from paper_intelligence.db import connect
+    from paper_intelligence.db import connect, fetch_papers
     from paper_intelligence.screen import stage as screen_stage
     from paper_intelligence.audience_domain import stage as audience_stage
     from paper_intelligence.quality import stage as quality_stage
+    from paper_intelligence.quality.model_policy import group_ids_by_quality_model
 
     sql = """
         WITH latest AS (
@@ -119,7 +119,6 @@ def main(argv: list[str] | None = None) -> int:
         for label, ids, module, model in (
             ("screen", screen_ids, screen_stage, SCREEN_MODEL),
             ("audience_domain", audience_ids, audience_stage, CLASSIFY_MODEL),
-            ("quality", quality_ids, quality_stage, QUALITY_MODEL),
         ):
             if not ids:
                 projections[label] = {
@@ -129,7 +128,12 @@ def main(argv: list[str] | None = None) -> int:
                 }
                 continue
             stats = module.run_window(
-                conn, ids, run_id="dry-run", stage_run_id="dry-run", dry_run=True
+                conn,
+                ids,
+                run_id="dry-run",
+                stage_run_id="dry-run",
+                dry_run=True,
+                model=model,
             )
             projections[label] = {
                 "papers": len(ids),
@@ -138,6 +142,37 @@ def main(argv: list[str] | None = None) -> int:
                 "calls": stats.calls,
                 "input_tokens": stats.input_tokens,
                 "output_tokens": stats.output_tokens,
+            }
+        if quality_ids:
+            papers = fetch_papers(conn, quality_ids)
+            groups = group_ids_by_quality_model(papers)
+            q_total = 0.0
+            q_by_model = {}
+            for model, ids in groups.items():
+                stats = quality_stage.run_window(
+                    conn,
+                    ids,
+                    run_id="dry-run",
+                    stage_run_id="dry-run",
+                    dry_run=True,
+                    model=model,
+                )
+                q_by_model[model] = {
+                    "papers": len(ids),
+                    "projected_cost_usd": round(stats.cost_usd, 4),
+                }
+                q_total += stats.cost_usd
+            projections["quality"] = {
+                "papers": len(quality_ids),
+                "projected_cost_usd": round(q_total, 4),
+                "model": "mapped",
+                "by_model": q_by_model,
+            }
+        else:
+            projections["quality"] = {
+                "papers": 0,
+                "projected_cost_usd": 0.0,
+                "model": "mapped",
             }
 
     report = {

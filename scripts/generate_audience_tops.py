@@ -369,6 +369,27 @@ def section(
     return parts
 
 
+def _quality_model_header(conn, *, date_from: str, date_until: str) -> list[str]:
+    from paper_intelligence.quality.model_policy import summarize_quality_models_for_window
+
+    q_models = summarize_quality_models_for_window(
+        conn, date_from=date_from, date_until=date_until
+    )
+    model_line = ", ".join(
+        f"`{m}` ×{n}" for m, n in q_models["quality_models"].items()
+    ) or "(none)"
+    lines = [f"**Quality models:** {model_line}  "]
+    if q_models.get("mixed_models"):
+        lines.append(
+            "⚠ **MIXED quality models** in scored pool — treat cross-cutover ranks with care."
+        )
+        lines.append("")
+    stale = int((q_models.get("status_counts") or {}).get("stale_content") or 0)
+    if stale:
+        lines.append(f"**stale_content papers in window:** {stale}  ")
+    return lines
+
+
 def build_tech_report(conn, *, date_from: str, date_until: str, top_n: int) -> str:
     cov = coverage(conn, date_from=date_from, date_until=date_until)
     tech = fetch_pool(conn, date_from=date_from, date_until=date_until, pool="tech", limit=top_n)
@@ -382,6 +403,9 @@ def build_tech_report(conn, *, date_from: str, date_until: str, top_n: int) -> s
         f"**Requested window:** {date_from} → {date_until}  ",
         f"**Data scored:** {cov['earliest_published']} → {cov['latest_published']}  ",
         f"**Generated:** {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}  ",
+    ]
+    parts += _quality_model_header(conn, date_from=date_from, date_until=date_until)
+    parts += [
         f"**Pool:** {tech_pool}/{quality_n} ({pct:.1f}%) method/systems papers "
         f"(exclusive of business/sector papers).",
         "",
@@ -421,6 +445,9 @@ def build_business_report(conn, *, date_from: str, date_until: str, top_n: int) 
         f"**Requested window:** {date_from} → {date_until}  ",
         f"**Data scored:** {cov['earliest_published']} → {cov['latest_published']}  ",
         f"**Generated:** {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}  ",
+    ]
+    parts += _quality_model_header(conn, date_from=date_from, date_until=date_until)
+    parts += [
         f"**Pool:** {biz_pool}/{quality_n} ({pct:.1f}%) — "
         f"`enterprise_adoption` labels={cov['enterprise_adoption_label']}, "
         f"sector applications={cov['sector_application']}.",
@@ -461,6 +488,10 @@ def build_combined_report(conn, *, date_from: str, date_until: str, top_n: int) 
         f"**Requested window:** {date_from} → {date_until}  ",
         f"**Data scored:** {cov['earliest_published']} → {cov['latest_published']}  ",
         f"**Generated:** {generated}",
+        "",
+    ]
+    parts += _quality_model_header(conn, date_from=date_from, date_until=date_until)
+    parts += [
         "",
         "## Verdict",
         "",

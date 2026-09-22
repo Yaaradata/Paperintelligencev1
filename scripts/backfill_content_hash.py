@@ -2,9 +2,11 @@
 """Backfill paper_intelligence.papers.content_hash (no LLM).
 
 Idempotent: only updates rows where content_hash IS NULL or --force.
+Does **not** touch modified_at (content_hash is independent of ingest timing).
+Uses keyset batching (paper_id > last_id LIMIT N) — never loads the whole table.
 
   PYTHONPATH=src python3 scripts/backfill_content_hash.py
-  PYTHONPATH=src python3 scripts/backfill_content_hash.py --force --limit 1000
+  PYTHONPATH=src python3 scripts/backfill_content_hash.py --force --batch-size 500
 """
 
 from __future__ import annotations
@@ -22,7 +24,18 @@ if str(SRC) not in sys.path:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--force", action="store_true", help="recompute even when set")
-    parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="stop after updating this many rows (optional)",
+    )
+    parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=1000,
+        help="keyset page size (default 1000)",
+    )
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args(argv)
 
@@ -31,44 +44,64 @@ def main(argv: list[str] | None = None) -> int:
 
     updated = 0
     scanned = 0
-    with connect() as conn:
-        with conn.cursor() as cur:
-            sql = """
-                SELECT paper_id, title, abstract, content_hash
-                FROM paper_intelligence.papers
-            """
-            if not args.force:
-                sql += " WHERE content_hash IS NULL"
-            sql += " ORDER BY paper_id"
-            if args.limit:
-                sql += f" LIMIT {int(args.limit)}"
-            cur.execute(sql)
-            rows = list(cur.fetchall())
+    last_id = 0
+    batch_size = max(1, int(args.batch_size))
 
-        for row in rows:
-            scanned += 1
-            new_hash = compute_content_hash(row.get("title"), row.get("abstract"))
-            old = row.get("content_hash")
-            if old == new_hash:
-                continue
-            if args.dry_run:
-                updated += 1
-                continue
+    with connect() as conn:
+        while True:
+            if args.limit is not None and updated >= args.limit:
+                break
             with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    UPDATE paper_intelligence.papers
-                    SET content_hash = %s, modified_at = NOW()
-                    WHERE paper_id = %s
-                    """,
-                    (new_hash, int(row["paper_id"])),
-                )
-            updated += 1
-            if updated % 1000 == 0:
+                where = ["paper_id > %s"]
+                params: list = [last_id]
+                if not args.force:
+                    where.append("content_hash IS NULL")
+                sql = f"""
+                    SELECT paper_id, title, abstract, content_hash
+                    FROM paper_intelligence.papers
+                    WHERE {" AND ".join(where)}
+                    ORDER BY paper_id
+                    LIMIT %s
+                """
+                params.append(batch_size)
+                cur.execute(sql, params)
+                rows = list(cur.fetchall())
+            if not rows:
+                break
+
+            for row in rows:
+                last_id = int(row["paper_id"])
+                scanned += 1
+                if args.limit is not None and updated >= args.limit:
+                    break
+                new_hash = compute_content_hash(row.get("title"), row.get("abstract"))
+                old = row.get("content_hash")
+                if old == new_hash:
+                    continue
+                if args.dry_run:
+                    updated += 1
+                    continue
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        UPDATE paper_intelligence.papers
+                        SET content_hash = %s
+                        WHERE paper_id = %s
+                        """,
+                        (new_hash, last_id),
+                    )
+                updated += 1
+                if updated % 1000 == 0:
+                    conn.commit()
+                    print(
+                        f"  … {updated} updated / {scanned} scanned "
+                        f"(last_id={last_id})",
+                        flush=True,
+                    )
+            if not args.dry_run:
                 conn.commit()
-                print(f"  … {updated} updated / {scanned} scanned", flush=True)
-        if not args.dry_run:
-            conn.commit()
+            if len(rows) < batch_size:
+                break
 
     mode = "dry-run would update" if args.dry_run else "updated"
     print(f"content_hash backfill: scanned={scanned} {mode}={updated}")

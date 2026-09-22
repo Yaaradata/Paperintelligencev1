@@ -14,7 +14,7 @@ from typing import Any, Sequence
 
 from psycopg import Connection
 
-from paper_intelligence.common.config import GATE_PERCENTILE, PI_USE_PAPERS_CATALOG, QUALITY_MODEL
+from paper_intelligence.common.config import GATE_PERCENTILE, PI_USE_PAPERS_CATALOG
 from paper_intelligence.db import fetch_papers, ids_with_result, latest_screen_scores
 from paper_intelligence.quality.stage import (
     POLICY_VERSION,
@@ -134,7 +134,7 @@ def describe_targets(
     conn: Connection,
     content_item_ids: Sequence[int],
     *,
-    model: str = QUALITY_MODEL,
+    model: str | None = None,
 ) -> list[NominationTarget]:
     """Build provenance snapshots for nominated papers (no LLM calls)."""
     if not content_item_ids:
@@ -165,15 +165,40 @@ def describe_targets(
             )
         rows = {int(r["content_item_id"]): dict(r) for r in cur.fetchall()}
 
-    done = ids_with_result(
-        conn,
-        list(content_item_ids),
-        "quality",
-        stage_version=STAGE_VERSION,
-        prompt_version=PROMPT_VERSION,
-        policy_version=POLICY_VERSION,
-        model=model,
+    from paper_intelligence.quality.model_policy import (
+        group_ids_by_quality_model,
     )
+
+    if model is not None:
+        done = ids_with_result(
+            conn,
+            list(content_item_ids),
+            "quality",
+            stage_version=STAGE_VERSION,
+            prompt_version=PROMPT_VERSION,
+            policy_version=POLICY_VERSION,
+            model=model,
+        )
+    else:
+        paper_rows = [
+            {
+                "content_item_id": cid,
+                "published_at": (rows.get(cid) or {}).get("published_at"),
+            }
+            for cid in content_item_ids
+            if cid in rows
+        ]
+        done: set[int] = set()
+        for m, ids in group_ids_by_quality_model(paper_rows).items():
+            done |= ids_with_result(
+                conn,
+                ids,
+                "quality",
+                stage_version=STAGE_VERSION,
+                prompt_version=PROMPT_VERSION,
+                policy_version=POLICY_VERSION,
+                model=m,
+            )
 
     out: list[NominationTarget] = []
     for cid in content_item_ids:
@@ -391,33 +416,64 @@ def estimate_exploration_pilot(
     pool = exploration_candidates(conn, date_from=day, date_until=day)
     sample = stratified_sample(pool, per_day=per_day, seed=f"{seed}:{day}")
     ids = [r["content_item_id"] for r in sample]
-    # Deduplicate against already-scored quality versions.
-    done = ids_with_result(
-        conn,
-        ids,
-        "quality",
-        stage_version=STAGE_VERSION,
-        prompt_version=PROMPT_VERSION,
-        policy_version=POLICY_VERSION,
-        model=QUALITY_MODEL,
-    )
+    # Deduplicate against already-scored quality versions (date-mapped model).
+    from paper_intelligence.quality.model_policy import group_ids_by_quality_model
+
+    papers = [
+        {"content_item_id": r["content_item_id"], "published_at": r.get("published_at")}
+        for r in sample
+    ]
+    # exploration_candidates may not include published_at — fetch if needed.
+    if papers and papers[0].get("published_at") is None:
+        from paper_intelligence.db import fetch_papers
+
+        fetched = {
+            int(p["content_item_id"]): p for p in fetch_papers(conn, ids)
+        }
+        papers = [
+            {
+                "content_item_id": i,
+                "published_at": (fetched.get(i) or {}).get("published_at"),
+            }
+            for i in ids
+        ]
+    done: set[int] = set()
+    for model, group_ids in group_ids_by_quality_model(papers).items():
+        done |= ids_with_result(
+            conn,
+            group_ids,
+            "quality",
+            stage_version=STAGE_VERSION,
+            prompt_version=PROMPT_VERSION,
+            policy_version=POLICY_VERSION,
+            model=model,
+        )
     to_score = [i for i in ids if i not in done]
-    stats = run_window(
-        conn,
-        to_score,
-        run_id="dry-run",
-        stage_run_id="dry-run",
-        dry_run=True,
-        route=ROUTE_EXPLORATION,
-    )
+    # Project with post-cutover / mapped mix: use first group's model for rough cost,
+    # or sum per group.
+    projected_cost = 0.0
+    projected_calls = 0
+    for model, group_ids in group_ids_by_quality_model(
+        [p for p in papers if int(p["content_item_id"]) in set(to_score)]
+    ).items():
+        stats = run_window(
+            conn,
+            group_ids,
+            run_id="dry-run",
+            stage_run_id="dry-run",
+            dry_run=True,
+            model=model,
+        )
+        projected_cost += stats.cost_usd
+        projected_calls += stats.calls
     return {
         "day": day,
         "outside_router_pool": len(pool),
         "sample_size": len(sample),
         "already_scored": len(ids) - len(to_score),
         "to_score": len(to_score),
-        "projected_calls": stats.calls,
-        "projected_cost_usd": round(stats.cost_usd, 4),
+        "projected_calls": projected_calls,
+        "projected_cost_usd": round(projected_cost, 4),
         "bands": {
             b: sum(1 for r in sample if r.get("band") == b) for b in ("mid", "low", "high")
         },

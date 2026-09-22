@@ -18,6 +18,9 @@ OPENROUTER_API_BASE = os.getenv("OPENROUTER_API_BASE", "https://openrouter.ai/ap
 SCREEN_MODEL = os.getenv("SCREEN_MODEL", "z-ai/glm-5.3-flash")
 CLASSIFY_MODEL = os.getenv("CLASSIFY_MODEL", SCREEN_MODEL)
 QUALITY_MODEL = os.getenv("QUALITY_MODEL", "openai/gpt-5.6-sol")
+# Note: QUALITY_MODEL env is a one-off override. Prefer
+# policies/quality_models/v001.yaml (mapped_quality_model) for currentness.
+# quality_model_env_override() is True only when the var is actually set.
 
 SCREEN_BATCH_SIZE = int(os.getenv("SCREEN_BATCH_SIZE", "15"))
 CLASSIFY_BATCH_SIZE = int(os.getenv("CLASSIFY_BATCH_SIZE", "15"))
@@ -56,8 +59,8 @@ _DEFAULT_PRICES: dict[str, tuple[float, float]] = {
     "z-ai/glm-4.6": (0.43, 1.75),
     # https://openrouter.ai/openai/gpt-5.6-sol — list $5 / $30 (was wrongly 1.25/10).
     "openai/gpt-5.6-sol": (5.00, 30.00),
-    # https://openrouter.ai/openai/gpt-5.6-terra — list $2 / $12 (for new windows;
-    # keep QUALITY_MODEL=sol for historical scored days).
+    # https://openrouter.ai/openai/gpt-5.6-terra — list $2 / $12 (post-cutover
+    # quality model per policies/quality_models/v001.yaml).
     "openai/gpt-5.6-terra": (2.00, 12.00),
 }
 

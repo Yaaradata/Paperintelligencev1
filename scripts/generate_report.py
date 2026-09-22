@@ -172,11 +172,21 @@ def build_report(conn, *, date_from: str, date_until: str, top_n: int) -> str:
             COUNT(*) FILTER (WHERE affiliation_resolution_status = 'no_evidence_supplied')
                 AS no_evidence,
             COUNT(*) FILTER (WHERE (adjudication_json->>'screen_quality_disagreement')::numeric
-                >= 3) AS disagreements
+                >= 3) AS disagreements,
+            COUNT(*) FILTER (WHERE quality_status = 'stale_content') AS stale_content,
+            COUNT(*) FILTER (WHERE quality_status = 'scored') AS quality_scored,
+            COUNT(*) FILTER (WHERE quality_status = 'pending') AS quality_pending,
+            COUNT(*) FILTER (WHERE quality_status = 'failed') AS quality_failed
         FROM paper_intelligence.paper_intelligence_current c
         {_pj("c.content_item_id")}
         """,
         window,
+    )
+
+    from paper_intelligence.quality.model_policy import summarize_quality_models_for_window
+
+    q_models = summarize_quality_models_for_window(
+        conn, date_from=date_from, date_until=date_until
     )
 
     runs = _rows(
@@ -209,10 +219,28 @@ def build_report(conn, *, date_from: str, date_until: str, top_n: int) -> str:
                 ["Entered paid stages", funnel.get("relevance_kept")],
                 ["Passed screen gate", gate.get("passed")],
                 ["Failed screen gate (scores kept)", gate.get("failed")],
+                ["Quality scored", affiliation.get("quality_scored")],
+                ["Quality pending", affiliation.get("quality_pending")],
+                ["Quality failed", affiliation.get("quality_failed")],
+                ["Stale content (hash mismatch)", affiliation.get("stale_content")],
             ],
         ),
         "Relevance runs first precisely so the paid stages never see the rejected papers.",
         "",
+        f"**Quality models in scored pool:** "
+        + (
+            ", ".join(f"`{m}` ×{n}" for m, n in q_models["quality_models"].items())
+            or "(none)"
+        ),
+        "",
+    ]
+    if q_models.get("mixed_models"):
+        parts.append(
+            "⚠ **MIXED quality models** in this window's scored pool — "
+            "rankings may not be comparable across Sol/Terra cutover."
+        )
+        parts.append("")
+    parts += [
         "## 2. Stage coverage",
         "",
         _table(
@@ -356,6 +384,7 @@ def build_report(conn, *, date_from: str, date_until: str, top_n: int) -> str:
                 ["Affiliation evidence present but ambiguous", affiliation.get("unresolved")],
                 ["No affiliation evidence supplied", affiliation.get("no_evidence")],
                 ["Screen/quality disagreement ≥ 3.0", affiliation.get("disagreements")],
+                ["quality_status=stale_content", affiliation.get("stale_content")],
             ],
         ),
         "",
