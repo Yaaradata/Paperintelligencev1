@@ -24,6 +24,7 @@ from paper_intelligence.common.llm_stage import (
     parse_json_object,
     random_batches,
 )
+from paper_intelligence.common.content_hash import compute_content_hash
 from paper_intelligence.db import connect, fetch_papers, insert_classification_results
 
 STAGE_NAME = "screen"
@@ -150,6 +151,10 @@ def run_window(
                 parsed, problems = parse_response(result["content"], expected)
                 rows = []
                 for content_id, scores in parsed.items():
+                    paper = next(p for p in batch if p["content_item_id"] == content_id)
+                    input_hash = paper.get("content_hash") or compute_content_hash(
+                        paper.get("title"), paper.get("abstract")
+                    )
                     passed = gate_decision(scores, threshold)
                     rows.append(
                         {
@@ -171,6 +176,7 @@ def run_window(
                             "stage_version": STAGE_VERSION,
                             "confidence": None,
                             "run_id": run_id,
+                            "input_content_hash": input_hash,
                         }
                     )
                 insert_classification_results(batch_conn, rows)

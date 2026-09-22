@@ -12,16 +12,26 @@ def quality_result_is_current(
     prompt_version: str,
     policy_version: str,
     model: str,
+    paper_content_hash: str | None = None,
 ) -> bool:
-    """True when a classification result matches the live quality versions + model."""
+    """True when a classification result matches the live quality versions + model.
+
+    Content hash: NULL input_content_hash (legacy) is treated as matching so we
+    do not mass-invalidate historical scores. A non-NULL mismatch is not current.
+    """
     if not result_meta:
         return False
-    return (
+    if not (
         str(result_meta.get("stage_version") or "") == stage_version
         and str(result_meta.get("prompt_version") or "") == prompt_version
         and str(result_meta.get("policy_version") or "") == policy_version
         and str(result_meta.get("model") or "") == model
-    )
+    ):
+        return False
+    result_hash = result_meta.get("input_content_hash")
+    if result_hash is None:
+        return True
+    return paper_content_hash is not None and str(result_hash) == str(paper_content_hash)
 
 
 def derive_quality_status(

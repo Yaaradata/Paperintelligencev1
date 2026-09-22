@@ -16,6 +16,7 @@ from paper_intelligence.catalog.normalize import (
     normalize_arxiv_id,
     normalize_doi,
 )
+from paper_intelligence.common.content_hash import compute_content_hash
 
 log = logging.getLogger("paper_intelligence.catalog.ingest")
 
@@ -145,6 +146,7 @@ def upsert_paper_from_oai(
     authors = rec.get("authors") or []
     title = (rec.get("title") or "(untitled)").strip() or "(untitled)"
     abstract = rec.get("abstract") or ""
+    content_hash = compute_content_hash(title, abstract)
     canonical_url = (
         f"https://arxiv.org/abs/{arxiv_id}" if arxiv_id else None
     )
@@ -174,6 +176,17 @@ def upsert_paper_from_oai(
 
     with conn.cursor() as cur:
         if existing_id is not None:
+            cur.execute(
+                """
+                SELECT content_hash, arxiv_version
+                FROM paper_intelligence.papers
+                WHERE paper_id = %s
+                """,
+                (existing_id,),
+            )
+            prev = cur.fetchone() or {}
+            previous_hash = prev.get("content_hash")
+
             cur.execute(
                 """
                 UPDATE paper_intelligence.papers SET
@@ -217,9 +230,10 @@ def upsert_paper_from_oai(
                     published_at = COALESCE(published_at, %s),
                     source_updated_at = COALESCE(%s, source_updated_at),
                     raw_metadata = raw_metadata || %s::jsonb,
+                    content_hash = %s,
                     modified_at = NOW()
                 WHERE paper_id = %s
-                RETURNING paper_id
+                RETURNING paper_id, content_hash, arxiv_version
                 """,
                 (
                     arxiv_id,
@@ -246,11 +260,55 @@ def upsert_paper_from_oai(
                     published_at,
                     source_updated_at,
                     json.dumps(raw_metadata, default=str),
+                    content_hash,
                     existing_id,
                 ),
             )
-            paper_id = int(cur.fetchone()["paper_id"])
+            updated = cur.fetchone()
+            paper_id = int(updated["paper_id"])
             is_new = False
+            # Recompute hash from stored title/abstract when abstract was empty
+            # in the feed (UPDATE keeps prior abstract).
+            cur.execute(
+                """
+                SELECT title, abstract, content_hash, arxiv_version
+                FROM paper_intelligence.papers WHERE paper_id = %s
+                """,
+                (paper_id,),
+            )
+            stored = cur.fetchone()
+            final_hash = compute_content_hash(stored.get("title"), stored.get("abstract"))
+            if stored.get("content_hash") != final_hash:
+                cur.execute(
+                    """
+                    UPDATE paper_intelligence.papers
+                    SET content_hash = %s, modified_at = NOW()
+                    WHERE paper_id = %s
+                    """,
+                    (final_hash, paper_id),
+                )
+            if previous_hash != final_hash:
+                cur.execute(
+                    """
+                    INSERT INTO paper_intelligence.paper_content_hash_changes
+                        (paper_id, previous_hash, new_hash, arxiv_version, source, metadata)
+                    VALUES (%s, %s, %s, %s, %s, %s::jsonb)
+                    """,
+                    (
+                        paper_id,
+                        previous_hash,
+                        final_hash,
+                        stored.get("arxiv_version"),
+                        SOURCE_ARXIV_OAI,
+                        json.dumps(
+                            {
+                                "oai_identifier": source_external_id,
+                                "datestamp": rec.get("datestamp"),
+                            },
+                            default=str,
+                        ),
+                    ),
+                )
         else:
             cur.execute(
                 """
@@ -258,12 +316,12 @@ def upsert_paper_from_oai(
                     arxiv_id, arxiv_version, doi, source, source_external_id,
                     source_type, canonical_url, title, abstract, summary,
                     categories, authors_raw, authors_structured, affiliation_text,
-                    published_at, source_updated_at, raw_metadata
+                    published_at, source_updated_at, raw_metadata, content_hash
                 ) VALUES (
                     %s, %s::integer, %s, %s, %s,
                     %s, %s, %s, %s, %s,
                     %s::jsonb, %s::jsonb, %s::jsonb, %s::jsonb,
-                    %s, %s, %s::jsonb
+                    %s, %s, %s::jsonb, %s
                 )
                 RETURNING paper_id
                 """,
@@ -285,6 +343,7 @@ def upsert_paper_from_oai(
                     published_at,
                     source_updated_at,
                     json.dumps(raw_metadata, default=str),
+                    content_hash,
                 ),
             )
             paper_id = int(cur.fetchone()["paper_id"])

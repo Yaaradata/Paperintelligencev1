@@ -45,11 +45,15 @@ def select_window_candidates_pi(
         if model is not None:
             done_clauses.append("r.model = %s")
             params.append(model)
+        done_clauses.append(
+            "(r.input_content_hash IS NULL OR r.input_content_hash = p.content_hash)"
+        )
         with conn.cursor() as cur:
             cur.execute(
                 f"""
-                SELECT DISTINCT content_item_id
+                SELECT DISTINCT r.content_item_id
                 FROM paper_intelligence.paper_classification_results r
+                LEFT JOIN paper_intelligence.papers p ON p.paper_id = r.content_item_id
                 WHERE {" AND ".join(done_clauses)}
                 """,
                 params,
@@ -93,6 +97,7 @@ def latest_screen_scores_pi(
             WHERE r.task_type = 'screen'
               AND p.published_at >= %s::timestamptz
               AND p.published_at < (%s::timestamptz + interval '1 day')
+              AND (r.input_content_hash IS NULL OR r.input_content_hash = p.content_hash)
             ORDER BY r.content_item_id, r.created_at DESC
             """,
             (date_from, date_until),

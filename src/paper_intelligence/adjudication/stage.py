@@ -47,22 +47,27 @@ DISAGREEMENT_THRESHOLD = 3.0
 LATEST_RESULTS_SQL = """
 SELECT DISTINCT ON (r.content_item_id, r.task_type)
     r.content_item_id, r.task_type, r.result_json, r.confidence,
-    r.stage_version, r.prompt_version, r.policy_version, r.model
+    r.stage_version, r.prompt_version, r.policy_version, r.model,
+    r.input_content_hash, p.content_hash AS paper_content_hash
 FROM paper_intelligence.paper_classification_results r
 JOIN research_radar.content_items ci ON ci.id = r.content_item_id
+LEFT JOIN paper_intelligence.papers p ON p.paper_id = r.content_item_id
 WHERE ci.published_at >= %s::timestamptz
   AND ci.published_at < (%s::timestamptz + interval '1 day')
+  AND (r.input_content_hash IS NULL OR r.input_content_hash = p.content_hash)
 ORDER BY r.content_item_id, r.task_type, r.created_at DESC
 """
 
 LATEST_RESULTS_SQL_PI = """
 SELECT DISTINCT ON (r.content_item_id, r.task_type)
     r.content_item_id, r.task_type, r.result_json, r.confidence,
-    r.stage_version, r.prompt_version, r.policy_version, r.model
+    r.stage_version, r.prompt_version, r.policy_version, r.model,
+    r.input_content_hash, p.content_hash AS paper_content_hash
 FROM paper_intelligence.paper_classification_results r
 JOIN paper_intelligence.papers p ON p.paper_id = r.content_item_id
 WHERE p.published_at >= %s::timestamptz
   AND p.published_at < (%s::timestamptz + interval '1 day')
+  AND (r.input_content_hash IS NULL OR r.input_content_hash = p.content_hash)
 ORDER BY r.content_item_id, r.task_type, r.created_at DESC
 """
 
@@ -172,6 +177,8 @@ def run_window(
                 "prompt_version": row.get("prompt_version"),
                 "policy_version": row.get("policy_version"),
                 "model": row.get("model"),
+                "input_content_hash": row.get("input_content_hash"),
+                "paper_content_hash": row.get("paper_content_hash"),
             }
 
         affiliations: dict[int, list[dict[str, Any]]] = {}
@@ -239,6 +246,7 @@ def run_window(
             prompt_version=QUALITY_PROMPT_VERSION,
             policy_version=QUALITY_POLICY_VERSION,
             model=QUALITY_MODEL,
+            paper_content_hash=quality_meta.get("paper_content_hash"),
         )
 
         quality_score = None

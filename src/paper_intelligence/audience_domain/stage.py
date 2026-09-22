@@ -21,6 +21,7 @@ from paper_intelligence.common.config import (
     estimate_cost_usd,
     read_prompt,
 )
+from paper_intelligence.common.content_hash import compute_content_hash
 from paper_intelligence.common.llm_stage import (
     call_llm_logged,
     paper_block,
@@ -141,7 +142,14 @@ def parse_response(
     return parsed, problems
 
 
-def _rows_for(content_id: int, values: dict[str, Any], *, model: str, run_id: str) -> list[dict]:
+def _rows_for(
+    content_id: int,
+    values: dict[str, Any],
+    *,
+    model: str,
+    run_id: str,
+    input_content_hash: str | None = None,
+) -> list[dict]:
     base = {
         "content_item_id": content_id,
         "method": "llm",
@@ -152,6 +160,7 @@ def _rows_for(content_id: int, values: dict[str, Any], *, model: str, run_id: st
         "stage_version": STAGE_VERSION,
         "confidence": (values["confidence"] / 10.0) if values["confidence"] is not None else None,
         "run_id": run_id,
+        "input_content_hash": input_content_hash,
     }
     return [
         {**base, "task_type": "audience", "result_json": {"audiences": values["audience_relevance"]}},
@@ -214,8 +223,21 @@ def run_window(
                 )
                 parsed, problems = parse_response(result["content"], expected)
                 rows: list[dict[str, Any]] = []
+                by_id = {p["content_item_id"]: p for p in batch}
                 for content_id, values in parsed.items():
-                    rows.extend(_rows_for(content_id, values, model=model, run_id=run_id))
+                    paper = by_id[content_id]
+                    input_hash = paper.get("content_hash") or compute_content_hash(
+                        paper.get("title"), paper.get("abstract")
+                    )
+                    rows.extend(
+                        _rows_for(
+                            content_id,
+                            values,
+                            model=model,
+                            run_id=run_id,
+                            input_content_hash=input_hash,
+                        )
+                    )
                 insert_classification_results(batch_conn, rows)
                 batch_conn.commit()
             if problems:

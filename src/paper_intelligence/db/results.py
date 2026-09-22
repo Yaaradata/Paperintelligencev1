@@ -49,7 +49,8 @@ SELECT
     p.title,
     COALESCE(p.abstract, p.summary, '') AS abstract,
     COALESCE(p.categories, '[]'::jsonb) AS categories,
-    p.published_at
+    p.published_at,
+    p.content_hash
 FROM paper_intelligence.papers p
 WHERE p.paper_id = ANY(%s)
 ORDER BY p.paper_id
@@ -119,6 +120,17 @@ def select_window_candidates(
         if model is not None:
             done_clauses.append("r.model = %s")
             done_params.append(model)
+        # Legacy NULL input_content_hash counts as reusable; mismatch does not.
+        done_clauses.append(
+            """(
+                r.input_content_hash IS NULL
+                OR EXISTS (
+                    SELECT 1 FROM paper_intelligence.papers p
+                    WHERE p.paper_id = r.content_item_id
+                      AND p.content_hash = r.input_content_hash
+                )
+            )"""
+        )
         clauses.append(
             f"""NOT EXISTS (
                 SELECT 1 FROM paper_intelligence.paper_classification_results r
@@ -162,6 +174,14 @@ def count_window(conn: Connection, *, date_from: str, date_until: str) -> int:
         return int(cur.fetchone()["n"])
 
 
+def _content_reusable_sql(alias_r: str = "r", alias_p: str = "p") -> str:
+    """Result reusable when hash NULL (legacy) or matches current paper content_hash."""
+    return (
+        f"({alias_r}.input_content_hash IS NULL "
+        f"OR {alias_r}.input_content_hash = {alias_p}.content_hash)"
+    )
+
+
 def ids_with_result(
     conn: Connection,
     content_item_ids: Sequence[int],
@@ -172,27 +192,34 @@ def ids_with_result(
     policy_version: str | None = None,
     model: str | None = None,
 ) -> set[int]:
+    """Ids that already have a reusable result for this task/version/model.
+
+    Reusable = version+model match AND (input_content_hash IS NULL OR equals
+    papers.content_hash). Legacy NULL hashes do not force a mass rescore.
+    """
     if not content_item_ids:
         return set()
-    clauses = ["task_type = %s", "content_item_id = ANY(%s)"]
+    clauses = ["r.task_type = %s", "r.content_item_id = ANY(%s)"]
     params: list[Any] = [task_type, list(content_item_ids)]
     if stage_version is not None:
-        clauses.append("stage_version = %s")
+        clauses.append("r.stage_version = %s")
         params.append(stage_version)
     if prompt_version is not None:
-        clauses.append("prompt_version = %s")
+        clauses.append("r.prompt_version = %s")
         params.append(prompt_version)
     if policy_version is not None:
-        clauses.append("policy_version = %s")
+        clauses.append("r.policy_version = %s")
         params.append(policy_version)
     if model is not None:
-        clauses.append("model = %s")
+        clauses.append("r.model = %s")
         params.append(model)
+    clauses.append(_content_reusable_sql())
     with conn.cursor() as cur:
         cur.execute(
             f"""
-            SELECT DISTINCT content_item_id
-            FROM paper_intelligence.paper_classification_results
+            SELECT DISTINCT r.content_item_id
+            FROM paper_intelligence.paper_classification_results r
+            LEFT JOIN paper_intelligence.papers p ON p.paper_id = r.content_item_id
             WHERE {" AND ".join(clauses)}
             """,
             params,
@@ -210,27 +237,44 @@ def insert_classification_results(
         return 0
     with conn.cursor() as cur:
         for row in payload:
-            cur.execute(
-                """
-                INSERT INTO paper_intelligence.paper_classification_results
-                    (content_item_id, task_type, result_json, method, provider, model,
-                     prompt_version, policy_version, stage_version, confidence, run_id)
-                VALUES (%s, %s, %s::jsonb, %s, %s, %s, %s, %s, %s, %s, %s)
-                """,
-                (
-                    row["content_item_id"],
-                    row["task_type"],
-                    json.dumps(row.get("result_json") or {}, default=str),
-                    row.get("method", "llm"),
-                    row.get("provider"),
-                    row.get("model"),
-                    row.get("prompt_version"),
-                    row.get("policy_version"),
-                    row.get("stage_version"),
-                    row.get("confidence"),
-                    row.get("run_id"),
-                ),
+            params = (
+                row["content_item_id"],
+                row["task_type"],
+                json.dumps(row.get("result_json") or {}, default=str),
+                row.get("method", "llm"),
+                row.get("provider"),
+                row.get("model"),
+                row.get("prompt_version"),
+                row.get("policy_version"),
+                row.get("stage_version"),
+                row.get("confidence"),
+                row.get("run_id"),
+                row.get("input_content_hash"),
             )
+            try:
+                cur.execute(
+                    """
+                    INSERT INTO paper_intelligence.paper_classification_results
+                        (content_item_id, task_type, result_json, method, provider, model,
+                         prompt_version, policy_version, stage_version, confidence, run_id,
+                         input_content_hash)
+                    VALUES (%s, %s, %s::jsonb, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """,
+                    params,
+                )
+            except Exception as exc:
+                if "input_content_hash" not in str(exc):
+                    raise
+                # Migration 016 not applied yet.
+                cur.execute(
+                    """
+                    INSERT INTO paper_intelligence.paper_classification_results
+                        (content_item_id, task_type, result_json, method, provider, model,
+                         prompt_version, policy_version, stage_version, confidence, run_id)
+                    VALUES (%s, %s, %s::jsonb, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """,
+                    params[:11],
+                )
     return len(payload)
 
 
@@ -260,9 +304,11 @@ def latest_screen_scores(
                 r.model
             FROM paper_intelligence.paper_classification_results r
             JOIN research_radar.content_items ci ON ci.id = r.content_item_id
+            LEFT JOIN paper_intelligence.papers p ON p.paper_id = r.content_item_id
             WHERE r.task_type = 'screen'
               AND ci.published_at >= %s::timestamptz
               AND ci.published_at < (%s::timestamptz + interval '1 day')
+              AND (r.input_content_hash IS NULL OR r.input_content_hash = p.content_hash)
             ORDER BY r.content_item_id, r.created_at DESC
             """,
             (date_from, date_until),

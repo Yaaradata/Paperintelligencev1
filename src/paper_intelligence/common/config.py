@@ -56,6 +56,9 @@ _DEFAULT_PRICES: dict[str, tuple[float, float]] = {
     "z-ai/glm-4.6": (0.43, 1.75),
     # https://openrouter.ai/openai/gpt-5.6-sol — list $5 / $30 (was wrongly 1.25/10).
     "openai/gpt-5.6-sol": (5.00, 30.00),
+    # https://openrouter.ai/openai/gpt-5.6-terra — list $2 / $12 (for new windows;
+    # keep QUALITY_MODEL=sol for historical scored days).
+    "openai/gpt-5.6-terra": (2.00, 12.00),
 }
 
 

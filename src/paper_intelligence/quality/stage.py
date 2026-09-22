@@ -32,6 +32,7 @@ from paper_intelligence.common.llm_stage import (
     parse_json_object,
     random_batches,
 )
+from paper_intelligence.common.content_hash import compute_content_hash
 from paper_intelligence.db import (
     connect,
     fetch_papers,
@@ -487,7 +488,12 @@ def run_window(
                 )
                 parsed, problems = parse_response(result["content"], expected)
                 rows = []
+                by_id = {p["content_item_id"]: p for p in batch}
                 for content_id, scores in parsed.items():
+                    paper = by_id[content_id]
+                    input_hash = paper.get("content_hash") or compute_content_hash(
+                        paper.get("title"), paper.get("abstract")
+                    )
                     composite = composite_score(scores)
                     rows.append(
                         {
@@ -504,6 +510,7 @@ def run_window(
                             if scores.get("confidence") is not None
                             else None,
                             "run_id": run_id,
+                            "input_content_hash": input_hash,
                         }
                     )
                 insert_classification_results(batch_conn, rows)
