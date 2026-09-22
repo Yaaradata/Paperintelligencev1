@@ -23,6 +23,7 @@ from paper_intelligence.common.config import (
     QUALITY_BATCH_SIZE,
     QUALITY_MODEL,
     QUALITY_REASONING_EFFORT,
+    ROUTER_PERCENTILE_SCOPE,
     estimate_cost_usd,
     read_prompt,
 )
@@ -42,6 +43,14 @@ from paper_intelligence.db import (
 from paper_intelligence.quality.attempts import (
     record_quality_failures,
     record_quality_successes,
+)
+from paper_intelligence.author_affiliation.verify.judge_effective import (
+    filter_affiliation_rows,
+    load_judgment_exclusions,
+    should_exclude_rejected,
+)
+from paper_intelligence.author_affiliation.verify.judge_persist import (
+    JUDGE_VERSION_DEFAULT,
 )
 
 STAGE_NAME = "quality"
@@ -92,6 +101,109 @@ def composite_score(
     }
 
 
+def _utc_published_date(value: Any) -> str | None:
+    """UTC calendar date YYYY-MM-DD from a published_at value."""
+    if value is None:
+        return None
+    if hasattr(value, "date"):
+        # datetime → date in its timezone if aware; treat naive as UTC date.
+        dt = value
+        if getattr(dt, "tzinfo", None) is not None:
+            from datetime import timezone
+
+            return dt.astimezone(timezone.utc).date().isoformat()
+        return dt.date().isoformat() if hasattr(dt, "hour") else dt.isoformat()
+    text = str(value).strip()
+    return text[:10] if text else None
+
+
+def _rank_screen_survivors(
+    screens: Sequence[dict[str, Any]],
+    *,
+    threshold_key: str = "gate",
+) -> tuple[
+    list[tuple[float, int]],
+    dict[int, float],
+    dict[int, bool],
+    set[int],
+    dict[int, str | None],
+]:
+    """Return (ranked, rank_means, gate_by_id, missing_dims, pub_day_by_id)."""
+    ranked: list[tuple[float, int]] = []
+    rank_means: dict[int, float] = {}
+    gate_by_id: dict[int, bool] = {}
+    missing_dims: set[int] = set()
+    pub_day_by_id: dict[int, str | None] = {}
+    for row in screens:
+        cid = int(row["content_item_id"])
+        pub_day_by_id[cid] = _utc_published_date(row.get("published_at"))
+        result = row["result_json"] or {}
+        gate = result.get(threshold_key) or {}
+        passed = bool(gate.get("passed"))
+        gate_by_id[cid] = passed
+        if not passed:
+            continue
+        try:
+            mean = sum(float(result[dim]) for dim in RANK_DIMENSIONS) / len(RANK_DIMENSIONS)
+        except (KeyError, TypeError, ValueError):
+            missing_dims.add(cid)
+            continue
+        ranked.append((mean, cid))
+        rank_means[cid] = mean
+    ranked.sort(key=lambda pair: (-pair[0], pair[1]))
+    return ranked, rank_means, gate_by_id, missing_dims, pub_day_by_id
+
+
+def _top_slice_ids(
+    ranked: list[tuple[float, int]],
+    *,
+    gate_percentile: float,
+    percentile_scope: str,
+    pub_day_by_id: dict[int, str | None],
+) -> tuple[set[int], dict[int, int], dict[int, int], dict[int, int]]:
+    """Return (top_ids, position_by_id, survivors_n_by_id, keep_n_by_id).
+
+    Position / survivor / keep counts are scoped to the ranking pool that
+    selected the paper (whole window, or that paper's UTC day).
+    """
+    position_by_id: dict[int, int] = {}
+    survivors_n_by_id: dict[int, int] = {}
+    keep_n_by_id: dict[int, int] = {}
+    top_ids: set[int] = set()
+
+    if percentile_scope == "day":
+        by_day: dict[str, list[tuple[float, int]]] = {}
+        for mean, cid in ranked:
+            day = pub_day_by_id.get(cid) or "_unknown"
+            by_day.setdefault(day, []).append((mean, cid))
+        for day, day_ranked in by_day.items():
+            day_ranked.sort(key=lambda pair: (-pair[0], pair[1]))
+            survivors_n = len(day_ranked)
+            keep_n = (
+                max(1, int(round(survivors_n * (gate_percentile / 100.0))))
+                if survivors_n
+                else 0
+            )
+            for i, (_, cid) in enumerate(day_ranked):
+                position_by_id[cid] = i + 1
+                survivors_n_by_id[cid] = survivors_n
+                keep_n_by_id[cid] = keep_n
+            top_ids.update(cid for _, cid in day_ranked[:keep_n])
+    else:
+        survivors_n = len(ranked)
+        keep_n = (
+            max(1, int(round(survivors_n * (gate_percentile / 100.0))))
+            if survivors_n
+            else 0
+        )
+        for i, (_, cid) in enumerate(ranked):
+            position_by_id[cid] = i + 1
+            survivors_n_by_id[cid] = survivors_n
+            keep_n_by_id[cid] = keep_n
+        top_ids = {cid for _, cid in ranked[:keep_n]}
+    return top_ids, position_by_id, survivors_n_by_id, keep_n_by_id
+
+
 def select_top_slice(
     conn: Connection,
     *,
@@ -99,25 +211,28 @@ def select_top_slice(
     date_until: str,
     gate_percentile: float = GATE_PERCENTILE,
     threshold_key: str = "gate",
+    percentile_scope: str = ROUTER_PERCENTILE_SCOPE,
 ) -> list[int]:
-    """Screen survivors ranked on mean(tech, novelty, evidence); keep the top slice."""
-    ranked: list[tuple[float, int]] = []
-    for row in latest_screen_scores(conn, date_from=date_from, date_until=date_until):
-        result = row["result_json"] or {}
-        gate = result.get(threshold_key) or {}
-        if not gate.get("passed"):
-            continue
-        try:
-            mean = sum(float(result[dim]) for dim in RANK_DIMENSIONS) / len(RANK_DIMENSIONS)
-        except (KeyError, TypeError, ValueError):
-            continue
-        ranked.append((mean, int(row["content_item_id"])))
+    """Screen survivors ranked on mean(tech, novelty, evidence); keep the top slice.
 
+    ``percentile_scope="window"`` (default): one ranking over the whole date
+    window. ``"day"``: top-N% computed separately per UTC ``published_at`` date.
+    """
+    scope = percentile_scope if percentile_scope in {"window", "day"} else "window"
+    screens = latest_screen_scores(conn, date_from=date_from, date_until=date_until)
+    ranked, _, _, _, pub_day_by_id = _rank_screen_survivors(
+        screens, threshold_key=threshold_key
+    )
     if not ranked:
         return []
-    ranked.sort(key=lambda pair: (-pair[0], pair[1]))
-    keep = max(1, int(round(len(ranked) * (gate_percentile / 100.0))))
-    return [content_id for _, content_id in ranked[:keep]]
+    top_ids, _, _, _ = _top_slice_ids(
+        ranked,
+        gate_percentile=gate_percentile,
+        percentile_scope=scope,
+        pub_day_by_id=pub_day_by_id,
+    )
+    # Stable order: overall rank then id.
+    return [cid for _, cid in ranked if cid in top_ids]
 
 
 def select_notable_org_survivors(
@@ -125,8 +240,15 @@ def select_notable_org_survivors(
     *,
     date_from: str,
     date_until: str,
+    apply_judge_effective: bool = True,
+    judge_version: str = JUDGE_VERSION_DEFAULT,
 ) -> list[int]:
-    """Screen-passed papers with at least one Org-of-Interest affiliation."""
+    """Screen-passed papers with at least one Org-of-Interest affiliation.
+
+    When ``apply_judge_effective`` is True (default), affiliations rejected by a
+    resolved HTML/OA judge decision are excluded at read time — matching
+    adjudication — without mutating stored evidence.
+    """
     survivors = {
         int(row["content_item_id"])
         for row in latest_screen_scores(conn, date_from=date_from, date_until=date_until)
@@ -137,7 +259,8 @@ def select_notable_org_survivors(
     with conn.cursor() as cur:
         cur.execute(
             """
-            SELECT DISTINCT a.content_item_id
+            SELECT a.content_item_id, a.organisation_id, a.confidence,
+                   o.is_org_of_interest
             FROM paper_intelligence.paper_author_affiliations a
             JOIN paper_intelligence.organisations o ON o.id = a.organisation_id
             WHERE a.content_item_id = ANY(%s)
@@ -148,7 +271,36 @@ def select_notable_org_survivors(
             """,
             (list(survivors),),
         )
-        return [int(row["content_item_id"]) for row in cur.fetchall()]
+        aff_rows = [dict(r) for r in cur.fetchall()]
+
+    if not apply_judge_effective:
+        return sorted({int(r["content_item_id"]) for r in aff_rows})
+
+    by_paper: dict[int, list[dict[str, Any]]] = {}
+    for row in aff_rows:
+        by_paper.setdefault(int(row["content_item_id"]), []).append(row)
+
+    exclusions = load_judgment_exclusions(
+        conn, list(by_paper.keys()), judge_version=judge_version
+    )
+    selected: list[int] = []
+    for cid, rows in by_paper.items():
+        excl = exclusions.get(cid) or {}
+        decision = excl.get("decision")
+        judge_called = bool(excl.get("judge_called"))
+        rejected = excl.get("rejected_organisation_ids") or []
+        if should_exclude_rejected(decision, judge_called=judge_called):
+            effective = filter_affiliation_rows(
+                rows,
+                rejected_organisation_ids=rejected,
+                decision=decision,
+                judge_called=judge_called,
+            )
+        else:
+            effective = list(rows)
+        if any(r.get("organisation_id") is not None for r in effective):
+            selected.append(cid)
+    return sorted(selected)
 
 
 def select_notable_person_survivors(
@@ -187,6 +339,8 @@ def select_quality_candidates(
     date_from: str,
     date_until: str,
     gate_percentile: float = GATE_PERCENTILE,
+    percentile_scope: str = ROUTER_PERCENTILE_SCOPE,
+    apply_judge_effective: bool = True,
 ) -> list[int]:
     """Quality router: top screen slice ∪ notable org ∪ notable person."""
     selected = set(
@@ -195,10 +349,16 @@ def select_quality_candidates(
             date_from=date_from,
             date_until=date_until,
             gate_percentile=gate_percentile,
+            percentile_scope=percentile_scope,
         )
     )
     selected.update(
-        select_notable_org_survivors(conn, date_from=date_from, date_until=date_until)
+        select_notable_org_survivors(
+            conn,
+            date_from=date_from,
+            date_until=date_until,
+            apply_judge_effective=apply_judge_effective,
+        )
     )
     selected.update(
         select_notable_person_survivors(conn, date_from=date_from, date_until=date_until)
@@ -218,6 +378,7 @@ class QualityRoutingDecision:
     survivors_in_window: int | None = None
     top_slice_keep: int | None = None
     gate_percentile: float | None = None
+    percentile_scope: str | None = None
 
     def as_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -229,6 +390,8 @@ def explain_quality_routing(
     date_from: str,
     date_until: str,
     gate_percentile: float = GATE_PERCENTILE,
+    percentile_scope: str = ROUTER_PERCENTILE_SCOPE,
+    apply_judge_effective: bool = True,
 ) -> list[QualityRoutingDecision]:
     """Record a routing decision for every latest PI screen result in the window.
 
@@ -239,35 +402,25 @@ def explain_quality_routing(
 
     Does not call the LLM. Does not mutate scores.
     """
+    scope = percentile_scope if percentile_scope in {"window", "day"} else "window"
     screens = latest_screen_scores(conn, date_from=date_from, date_until=date_until)
-    ranked: list[tuple[float, int]] = []
-    rank_means: dict[int, float] = {}
-    gate_by_id: dict[int, bool] = {}
-    missing_dims: set[int] = set()
-
-    for row in screens:
-        cid = int(row["content_item_id"])
-        result = row["result_json"] or {}
-        passed = bool((result.get("gate") or {}).get("passed"))
-        gate_by_id[cid] = passed
-        if not passed:
-            continue
-        try:
-            mean = sum(float(result[dim]) for dim in RANK_DIMENSIONS) / len(RANK_DIMENSIONS)
-        except (KeyError, TypeError, ValueError):
-            missing_dims.add(cid)
-            continue
-        ranked.append((mean, cid))
-        rank_means[cid] = mean
-
-    ranked.sort(key=lambda pair: (-pair[0], pair[1]))
-    survivors_n = len(ranked)
-    keep_n = max(1, int(round(survivors_n * (gate_percentile / 100.0)))) if survivors_n else 0
-    top_ids = {cid for _, cid in ranked[:keep_n]}
-    position = {cid: i + 1 for i, (_, cid) in enumerate(ranked)}
+    ranked, rank_means, gate_by_id, missing_dims, pub_day_by_id = _rank_screen_survivors(
+        screens
+    )
+    top_ids, position, survivors_n_by_id, keep_n_by_id = _top_slice_ids(
+        ranked,
+        gate_percentile=gate_percentile,
+        percentile_scope=scope,
+        pub_day_by_id=pub_day_by_id,
+    )
 
     notable_org = set(
-        select_notable_org_survivors(conn, date_from=date_from, date_until=date_until)
+        select_notable_org_survivors(
+            conn,
+            date_from=date_from,
+            date_until=date_until,
+            apply_judge_effective=apply_judge_effective,
+        )
     )
     notable_person = set(
         select_notable_person_survivors(conn, date_from=date_from, date_until=date_until)
@@ -283,6 +436,7 @@ def explain_quality_routing(
                     decision="blocked",
                     reason="blocked_screen_gate_failed",
                     gate_percentile=gate_percentile,
+                    percentile_scope=scope,
                 )
             )
             continue
@@ -293,12 +447,15 @@ def explain_quality_routing(
                     decision="blocked",
                     reason="blocked_missing_rank_dimensions",
                     gate_percentile=gate_percentile,
+                    percentile_scope=scope,
                 )
             )
             continue
 
         mean = rank_means.get(cid)
         pos = position.get(cid)
+        survivors_n = survivors_n_by_id.get(cid)
+        keep_n = keep_n_by_id.get(cid)
         if cid in top_ids:
             reason = "selected_top_slice"
             if cid in notable_org:
@@ -315,6 +472,7 @@ def explain_quality_routing(
                     survivors_in_window=survivors_n,
                     top_slice_keep=keep_n,
                     gate_percentile=gate_percentile,
+                    percentile_scope=scope,
                 )
             )
         elif cid in notable_org:
@@ -328,6 +486,7 @@ def explain_quality_routing(
                     survivors_in_window=survivors_n,
                     top_slice_keep=keep_n,
                     gate_percentile=gate_percentile,
+                    percentile_scope=scope,
                 )
             )
         elif cid in notable_person:
@@ -341,6 +500,7 @@ def explain_quality_routing(
                     survivors_in_window=survivors_n,
                     top_slice_keep=keep_n,
                     gate_percentile=gate_percentile,
+                    percentile_scope=scope,
                 )
             )
         else:
@@ -354,6 +514,7 @@ def explain_quality_routing(
                     survivors_in_window=survivors_n,
                     top_slice_keep=keep_n,
                     gate_percentile=gate_percentile,
+                    percentile_scope=scope,
                 )
             )
     return decisions
@@ -365,6 +526,8 @@ def quality_selection_reason_map(
     date_from: str,
     date_until: str,
     gate_percentile: float = GATE_PERCENTILE,
+    percentile_scope: str = ROUTER_PERCENTILE_SCOPE,
+    apply_judge_effective: bool = True,
 ) -> dict[int, QualityRoutingDecision]:
     return {
         d.content_item_id: d
@@ -373,6 +536,8 @@ def quality_selection_reason_map(
             date_from=date_from,
             date_until=date_until,
             gate_percentile=gate_percentile,
+            percentile_scope=percentile_scope,
+            apply_judge_effective=apply_judge_effective,
         )
     }
 

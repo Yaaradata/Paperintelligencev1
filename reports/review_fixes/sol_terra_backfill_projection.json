@@ -1,0 +1,93 @@
+{
+  "windows": [
+    {
+      "window": "2026-08-01\u21922026-08-31",
+      "candidates": 47,
+      "already_sol": 47,
+      "already_terra": 0,
+      "need_sol": 0,
+      "need_terra": 47,
+      "proj_fill_sol": 0.0,
+      "proj_fill_terra": 0.4398,
+      "proj_full_sol": 1.0994,
+      "proj_full_terra": 0.4398
+    },
+    {
+      "window": "2026-09-01\u21922026-09-15",
+      "candidates": 1661,
+      "already_sol": 1208,
+      "already_terra": 51,
+      "need_sol": 453,
+      "need_terra": 1610,
+      "proj_fill_sol": 10.5641,
+      "proj_fill_terra": 15.0886,
+      "proj_full_sol": 38.9253,
+      "proj_full_terra": 15.5701
+    },
+    {
+      "window": "2026-09-16\u21922026-09-30",
+      "candidates": 0,
+      "already_sol": 0,
+      "already_terra": 0,
+      "need_sol": 0,
+      "need_terra": 0,
+      "proj_fill_sol": 0.0,
+      "proj_fill_terra": 0.0,
+      "proj_full_sol": 0.0,
+      "proj_full_terra": 0.0
+    },
+    {
+      "window": "2026-10-01\u21922026-10-31",
+      "candidates": 0,
+      "already_sol": 0,
+      "already_terra": 0,
+      "need_sol": 0,
+      "need_terra": 0,
+      "proj_fill_sol": 0.0,
+      "proj_fill_terra": 0.0,
+      "proj_full_sol": 0.0,
+      "proj_full_terra": 0.0
+    },
+    {
+      "window": "2026-11-01\u21922026-11-30",
+      "candidates": 0,
+      "already_sol": 0,
+      "already_terra": 0,
+      "need_sol": 0,
+      "need_terra": 0,
+      "proj_fill_sol": 0.0,
+      "proj_fill_terra": 0.0,
+      "proj_full_sol": 0.0,
+      "proj_full_terra": 0.0
+    },
+    {
+      "window": "2026-12-01\u21922026-12-31",
+      "candidates": 0,
+      "already_sol": 0,
+      "already_terra": 0,
+      "need_sol": 0,
+      "need_terra": 0,
+      "proj_fill_sol": 0.0,
+      "proj_fill_terra": 0.0,
+      "proj_full_sol": 0.0,
+      "proj_full_terra": 0.0
+    },
+    {
+      "window": "2027-01-01\u21922027-01-31",
+      "candidates": 0,
+      "already_sol": 0,
+      "already_terra": 0,
+      "need_sol": 0,
+      "need_terra": 0,
+      "proj_fill_sol": 0.0,
+      "proj_fill_terra": 0.0,
+      "proj_full_sol": 0.0,
+      "proj_full_terra": 0.0
+    }
+  ],
+  "total_fill_remaining_sol_usd": 10.5641,
+  "total_fill_remaining_terra_usd": 15.5284,
+  "unit_cost_per_candidate_sol": 0.0234,
+  "unit_cost_per_candidate_terra": 0.0094,
+  "note": "fill = score missing for that model; full = rescore all router candidates. Empty future months show 0 candidates until ingest."
+}

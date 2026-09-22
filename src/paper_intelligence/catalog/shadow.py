@@ -91,7 +91,8 @@ def latest_screen_scores_pi(
                 r.stage_version,
                 r.prompt_version,
                 r.policy_version,
-                r.model
+                r.model,
+                p.published_at
             FROM paper_intelligence.paper_classification_results r
             JOIN paper_intelligence.papers p ON p.paper_id = r.content_item_id
             WHERE r.task_type = 'screen'

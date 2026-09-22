@@ -24,10 +24,18 @@ class _FakeCur:
         if "paper_author_affiliations" in text and "is_org_of_interest" in text:
             survivors = set(params[0])
             self._rows = [
-                {"content_item_id": cid}
+                {
+                    "content_item_id": cid,
+                    "organisation_id": 1000 + int(cid),
+                    "confidence": 0.9,
+                    "is_org_of_interest": True,
+                }
                 for cid in self.db.notable_org
                 if cid in survivors
             ]
+        elif "affiliation_judgments" in text:
+            # Default: no judgments → notable-org path unchanged.
+            self._rows = list(getattr(self.db, "judgments", []) or [])
         elif "papers_people" in text:
             survivors = set(params[0])
             self._rows = [
@@ -43,10 +51,11 @@ class _FakeCur:
 
 
 class _FakeConn:
-    def __init__(self, screens, notable_org=None, notable_person=None):
+    def __init__(self, screens, notable_org=None, notable_person=None, judgments=None):
         self.screens = screens
         self.notable_org = notable_org or []
         self.notable_person = notable_person or []
+        self.judgments = judgments or []
 
     def cursor(self):
         return _FakeCur(self)
@@ -241,10 +250,11 @@ def test_stale_missing_rank_dimensions_blocked(monkeypatch):
     ) == []
 
 
-def test_latest_screen_scores_sql_has_no_status_filter():
+def test_latest_screen_scores_sql_has_no_status_filter(monkeypatch):
     """Case 6: Radar status must not appear in latest_screen_scores SQL."""
     from paper_intelligence.db import results as results_mod
 
+    monkeypatch.setattr(results_mod, "PI_USE_PAPERS_CATALOG", False)
     captured = {}
 
     class Cur:
@@ -268,7 +278,175 @@ def test_latest_screen_scores_sql_has_no_status_filter():
     results_mod.latest_screen_scores(Conn(), date_from="2026-09-01", date_until="2026-09-02")
     assert "ci.status" not in captured["sql"]
     assert "RELEVANT" not in captured["params"]
+    assert "published_at" in captured["sql"]
     assert captured["params"] == ["2026-09-01", "2026-09-02"]
+
+
+def test_day_scope_invariant_to_window_size(monkeypatch):
+    """Same UTC day selection whether run as 1-day or multi-day window."""
+    from datetime import datetime, timezone
+
+    screens = [
+        {
+            "content_item_id": 1,
+            "published_at": datetime(2026, 9, 1, 12, tzinfo=timezone.utc),
+            "result_json": {
+                "gate": {"passed": True},
+                "technical_significance": 9,
+                "apparent_novelty": 9,
+                "evidence_strength": 9,
+            },
+        },
+        {
+            "content_item_id": 2,
+            "published_at": datetime(2026, 9, 1, 15, tzinfo=timezone.utc),
+            "result_json": {
+                "gate": {"passed": True},
+                "technical_significance": 5,
+                "apparent_novelty": 5,
+                "evidence_strength": 5,
+            },
+        },
+        {
+            "content_item_id": 3,
+            "published_at": datetime(2026, 9, 2, 12, tzinfo=timezone.utc),
+            "result_json": {
+                "gate": {"passed": True},
+                "technical_significance": 8,
+                "apparent_novelty": 8,
+                "evidence_strength": 8,
+            },
+        },
+        {
+            "content_item_id": 4,
+            "published_at": datetime(2026, 9, 2, 15, tzinfo=timezone.utc),
+            "result_json": {
+                "gate": {"passed": True},
+                "technical_significance": 4,
+                "apparent_novelty": 4,
+                "evidence_strength": 4,
+            },
+        },
+    ]
+    conn = _FakeConn(screens)
+
+    def fake_latest(conn, *, date_from, date_until):
+        # Filter like the real query would.
+        out = []
+        for row in screens:
+            day = row["published_at"].date().isoformat()
+            if date_from <= day <= date_until:
+                out.append(row)
+        return out
+
+    monkeypatch.setattr(
+        "paper_intelligence.quality.stage.latest_screen_scores", fake_latest
+    )
+
+    # 50% per day: day1 survivors 2 → keep 1 (id 1); day2 survivors 2 → keep 1 (id 3)
+    day_window = select_quality_candidates(
+        conn,
+        date_from="2026-09-01",
+        date_until="2026-09-02",
+        gate_percentile=50,
+        percentile_scope="day",
+    )
+    day_only = select_quality_candidates(
+        conn,
+        date_from="2026-09-01",
+        date_until="2026-09-01",
+        gate_percentile=50,
+        percentile_scope="day",
+    )
+    assert day_only == [1]
+    assert set(day_window) == {1, 3}
+
+    # Window scope over 2 days: 4 survivors × 50% → keep 2 (ids 1,3)
+    window = select_quality_candidates(
+        conn,
+        date_from="2026-09-01",
+        date_until="2026-09-02",
+        gate_percentile=50,
+        percentile_scope="window",
+    )
+    assert window == [1, 3]
+
+    decisions = explain_quality_routing(
+        conn,
+        date_from="2026-09-01",
+        date_until="2026-09-02",
+        gate_percentile=50,
+        percentile_scope="day",
+    )
+    by_id = {d.content_item_id: d for d in decisions}
+    assert by_id[1].percentile_scope == "day"
+    assert by_id[1].decision == "selected"
+    assert by_id[2].decision == "not_selected"
+
+
+def test_judge_rejected_org_no_longer_selects(monkeypatch):
+    """Judge-rejected OOI org must not trigger selected_notable_org."""
+    screens = _screens_for_router()[:4]
+    # Paper 3 is below top slice at 50% (keep 1,2) but has OOI — unless rejected.
+    judgments = [
+        {
+            "paper_id": 3,
+            "decision": "HTML",
+            "judge_called": True,
+            "accepted_organisation_ids": [],
+            "rejected_organisation_ids": [1003],
+        }
+    ]
+    # Empty accepted with resolved decision → fail-open (no exclusions) per
+    # judge_effective. Use non-empty accepted of a different org so 1003 rejects.
+    judgments[0]["accepted_organisation_ids"] = [9999]
+    conn = _FakeConn(screens, notable_org=[3], judgments=judgments)
+
+    monkeypatch.setattr(
+        "paper_intelligence.quality.stage.latest_screen_scores",
+        lambda *a, **k: screens,
+    )
+
+    ids_raw = select_quality_candidates(
+        conn,
+        date_from="2026-09-01",
+        date_until="2026-09-02",
+        gate_percentile=50,
+        apply_judge_effective=False,
+    )
+    assert 3 in ids_raw
+
+    ids = select_quality_candidates(
+        conn,
+        date_from="2026-09-01",
+        date_until="2026-09-02",
+        gate_percentile=50,
+        apply_judge_effective=True,
+    )
+    assert 3 not in ids
+    assert ids == [1, 2]
+
+
+def test_select_and_explain_agree_on_selected_ids(monkeypatch):
+    screens = _screens_for_router()[:4]
+    conn = _FakeConn(screens, notable_org=[3])
+    monkeypatch.setattr(
+        "paper_intelligence.quality.stage.latest_screen_scores",
+        lambda *a, **k: screens,
+    )
+    ids = set(
+        select_quality_candidates(
+            conn, date_from="2026-09-01", date_until="2026-09-02", gate_percentile=50
+        )
+    )
+    explained = {
+        d.content_item_id
+        for d in explain_quality_routing(
+            conn, date_from="2026-09-01", date_until="2026-09-02", gate_percentile=50
+        )
+        if d.decision == "selected"
+    }
+    assert ids == explained
 
 
 def test_version_aware_skip_sql_includes_versions(monkeypatch):

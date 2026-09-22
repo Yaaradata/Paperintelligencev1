@@ -301,7 +301,8 @@ def latest_screen_scores(
                 r.stage_version,
                 r.prompt_version,
                 r.policy_version,
-                r.model
+                r.model,
+                ci.published_at
             FROM paper_intelligence.paper_classification_results r
             JOIN research_radar.content_items ci ON ci.id = r.content_item_id
             LEFT JOIN paper_intelligence.papers p ON p.paper_id = r.content_item_id

@@ -242,8 +242,36 @@ def main(argv: list[str] | None = None) -> int:
             )
             return 2
 
-        run_id = f"{CALIBRATION_RUN_PREFIX}-{uuid.uuid4()}"
-        stage_run_id = f"{run_id}-stage"
+        from paper_intelligence.observability import (
+            finish_pipeline_run,
+            finish_stage_run,
+            start_pipeline_run,
+            start_stage_run,
+        )
+
+        run_id = start_pipeline_run(
+            conn,
+            pipeline_name="paper_intelligence.quality_calibration_sol_terra",
+            trigger_type="manual",
+            metadata={
+                "calibration": True,
+                "sol_model": SOL_MODEL,
+                "terra_model": TERRA_MODEL,
+                "date_from": args.date_from,
+                "date_until": args.date_until,
+                "sample_size": len(ids),
+                "note": "Terra scores are calibration-only; not current quality",
+            },
+        )
+        stage_run_id = start_stage_run(
+            conn,
+            run_id,
+            stage_name="quality",
+            stage_version=STAGE_VERSION,
+            prompt_version=PROMPT_VERSION,
+            policy_version=POLICY_VERSION,
+            items_input=len(ids),
+        )
         print(f"PAID calibration run_id={run_id}", flush=True)
         stats = quality_stage.run_window(
             conn,
@@ -255,6 +283,50 @@ def main(argv: list[str] | None = None) -> int:
             max_cost_usd=max_cost,
         )
         print(stats.summary_line("quality-calibration"), flush=True)
+        stopped = bool(stats.stopped_budget_cap)
+        if stopped:
+            status = "stopped_budget_cap"
+        elif stats.papers_failed == 0:
+            status = "succeeded"
+        else:
+            status = "partial"
+        finish_stage_run(
+            conn,
+            stage_run_id,
+            status=status,
+            items_success=stats.papers_succeeded,
+            items_failed=stats.papers_failed,
+            error_summary="; ".join(stats.errors)[:2000] or None,
+        )
+        finish_pipeline_run(
+            conn,
+            run_id,
+            status=status,
+            items_input=len(ids),
+            items_succeeded=stats.papers_succeeded,
+            items_failed=stats.papers_failed,
+            metadata={
+                "cost_usd": round(stats.cost_usd, 4),
+                "actual_cost_usd": round(stats.actual_cost_usd, 6)
+                if stats.calls_with_actual_cost
+                else None,
+                "estimated_cost_usd": round(stats.estimated_cost_usd, 6),
+                "calibration": True,
+            },
+        )
+        if stats.papers_succeeded == 0:
+            print(
+                "calibration produced no Terra rows; errors:\n"
+                + "\n".join(stats.errors[:10]),
+                file=sys.stderr,
+            )
+            report["executed"] = False
+            report["run_id"] = run_id
+            report["errors"] = stats.errors[:20]
+            out = Path(args.out)
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_text(json.dumps(report, indent=2, default=str) + "\n", encoding="utf-8")
+            return 1
 
         # Load Terra results for this run and compare to Sol sample.
         with conn.cursor() as cur:
