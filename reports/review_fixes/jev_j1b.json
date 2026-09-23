@@ -1,0 +1,998 @@
+{
+  "generated_at": "2026-09-23T09:47:33.448986+00:00",
+  "grants": {
+    "user": "neural_admin",
+    "pi_usage": true,
+    "papers_select": true,
+    "papers": 69197,
+    "n_tables": 29,
+    "missing_select": [],
+    "neural_rw": {
+      "pi_usage": true,
+      "papers_select_all_29": true,
+      "missing_select": 0,
+      "note": "Verified via has_*_privilege for role neural_rw; run session used neural_admin"
+    }
+  },
+  "model": "typesafe/jev-1.13",
+  "budget": {
+    "cap": 2.0,
+    "spent": 0.2343287939999993,
+    "stopped": false
+  },
+  "timing": {
+    "screen_wall_s": 42.551557725062594,
+    "quality_wall_s": 212.77674309792928,
+    "audience_wall_s": 7.5302740938495845
+  },
+  "spend_breakdown": {
+    "screen": 0.03266986800000001,
+    "quality": 0.19333229999999935,
+    "audience": 0.008326625999999948
+  },
+  "screen": {
+    "sample_n": 704,
+    "sample_reasons": {
+      "gate_failure_sep16_21": 103,
+      "stratum_q1": 45,
+      "stratum_q2": 45,
+      "stratum_q3": 45,
+      "stratum_q4": 45,
+      "stratum_q5": 45,
+      "boundary_15_2026-09-06": 6,
+      "boundary_50_2026-09-06": 6,
+      "boundary_75_2026-09-06": 6,
+      "boundary_15_2026-09-01": 6,
+      "boundary_50_2026-09-01": 6,
+      "boundary_75_2026-09-01": 6,
+      "boundary_15_2026-09-13": 6,
+      "boundary_50_2026-09-13": 6,
+      "boundary_75_2026-09-13": 6,
+      "boundary_15_2026-09-11": 6,
+      "boundary_50_2026-09-11": 6,
+      "boundary_75_2026-09-11": 6,
+      "boundary_15_2026-09-08": 6,
+      "boundary_50_2026-09-08": 6,
+      "boundary_75_2026-09-08": 6,
+      "boundary_15_2026-09-09": 6,
+      "boundary_50_2026-09-09": 6,
+      "boundary_75_2026-09-09": 6,
+      "boundary_15_2026-09-14": 6,
+      "boundary_50_2026-09-14": 6,
+      "boundary_75_2026-09-14": 6,
+      "boundary_15_2026-09-10": 6,
+      "boundary_50_2026-09-10": 6,
+      "boundary_75_2026-09-10": 6,
+      "boundary_15_2026-09-04": 6,
+      "boundary_50_2026-09-04": 6,
+      "boundary_75_2026-09-04": 6,
+      "boundary_15_2026-09-07": 5,
+      "boundary_50_2026-09-07": 6,
+      "boundary_75_2026-09-07": 6,
+      "boundary_15_2026-09-15": 6,
+      "boundary_50_2026-09-15": 6,
+      "boundary_75_2026-09-15": 6,
+      "boundary_15_2026-09-02": 6,
+      "boundary_50_2026-09-02": 6,
+      "boundary_75_2026-09-02": 6,
+      "boundary_15_2026-09-05": 6,
+      "boundary_50_2026-09-05": 6,
+      "boundary_75_2026-09-05": 6,
+      "boundary_15_2026-09-03": 6,
+      "boundary_50_2026-09-03": 5,
+      "boundary_75_2026-09-03": 6,
+      "boundary_15_2026-09-12": 6,
+      "boundary_50_2026-09-12": 6,
+      "boundary_75_2026-09-12": 6,
+      "boundary_15_2026-09-21": 6,
+      "boundary_50_2026-09-21": 6,
+      "boundary_75_2026-09-21": 6,
+      "boundary_15_2026-09-16": 6,
+      "boundary_50_2026-09-16": 6,
+      "boundary_75_2026-09-16": 6,
+      "boundary_15_2026-09-17": 6,
+      "boundary_50_2026-09-17": 6,
+      "boundary_75_2026-09-17": 6,
+      "boundary_15_2026-09-18": 6,
+      "boundary_50_2026-09-18": 6,
+      "boundary_75_2026-09-18": 6,
+      "boundary_15_2026-09-19": 6,
+      "boundary_50_2026-09-19": 6,
+      "boundary_75_2026-09-19": 6,
+      "boundary_15_2026-09-20": 6,
+      "boundary_50_2026-09-20": 6,
+      "boundary_75_2026-09-20": 6
+    },
+    "gate_failures_in_sample": 103,
+    "spearman": {
+      "ai_relevance": {
+        "spearman": 0.7329552629429248,
+        "n": 704
+      },
+      "technical_significance": {
+        "spearman": 0.6595477565712564,
+        "n": 704
+      },
+      "apparent_novelty": {
+        "spearman": 0.6033474519593902,
+        "n": 704
+      },
+      "evidence_strength": {
+        "spearman": 0.5189789840201449,
+        "n": 704
+      },
+      "rank_mean": {
+        "spearman": 0.5745439846398108,
+        "n": 704
+      }
+    },
+    "top_slice": {
+      "15": {
+        "llm_selected": 89,
+        "jev_selected": 89,
+        "flip_in": 62,
+        "flip_out": 62,
+        "flip_in_pct_of_selected": 69.66292134831461,
+        "flip_out_pct_of_selected": 69.66292134831461,
+        "jaccard": 0.17880794701986755,
+        "flip_in_with_quality_n": 34,
+        "flip_in_with_quality": [
+          {
+            "content_item_id": 3822,
+            "quality_score": 7.76,
+            "final": 7.178,
+            "model": "openai/gpt-5.6-terra",
+            "title": "CatchBench: When Can an Agent Failure Be Caught?"
+          },
+          {
+            "content_item_id": 136374,
+            "quality_score": 8.58,
+            "final": 8.1939,
+            "model": "openai/gpt-5.6-sol",
+            "title": "Hearing the Whispers: Black-Box Membership Inference Attacks on Finetuned TTS Mo"
+          },
+          {
+            "content_item_id": 136943,
+            "quality_score": 8.22,
+            "final": 7.8501,
+            "model": "openai/gpt-5.6-sol",
+            "title": "How Output Format Confounds Data Quality and Capability in Instruction Tuning"
+          },
+          {
+            "content_item_id": 138212,
+            "quality_score": 8.36,
+            "final": 7.8584,
+            "model": "openai/gpt-5.6-sol",
+            "title": "RealCADBench: Benchmarking Parametric CAD Modeling from Industrial Design Intent"
+          },
+          {
+            "content_item_id": 138345,
+            "quality_score": 8.46,
+            "final": 7.8255,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Extending concurrent separation logic to the hardware level to verify the xv6 OS"
+          },
+          {
+            "content_item_id": 142563,
+            "quality_score": 8.18,
+            "final": 7.6892,
+            "model": "openai/gpt-5.6-sol",
+            "title": "Compute-in-Memory Attention: A Time-Domain Analog Softmax Circuit with RC-Tunabl"
+          },
+          {
+            "content_item_id": 184777,
+            "quality_score": 8.24,
+            "final": 7.8692,
+            "model": "openai/gpt-5.6-sol",
+            "title": "PARSER: Read in Parallel, Reason in Depth for Long-Context LLM Agents"
+          },
+          {
+            "content_item_id": 184829,
+            "quality_score": 7.82,
+            "final": 7.2335,
+            "model": "openai/gpt-5.6-sol",
+            "title": "NormViz: A Benchmark and Framework for Grounding Multimodal Reasoning in Global "
+          },
+          {
+            "content_item_id": 184983,
+            "quality_score": 8.22,
+            "final": 7.8501,
+            "model": "openai/gpt-5.6-sol",
+            "title": "EquiGQNet: Fast Grasp Quality Evaluation via Shared Equivariant Point Cloud Enco"
+          },
+          {
+            "content_item_id": 185020,
+            "quality_score": 8.1,
+            "final": 7.7355,
+            "model": "openai/gpt-5.6-sol",
+            "title": "Distance-Aware Attention and Wall-Distance Expert Routing for Transformer-Based "
+          },
+          {
+            "content_item_id": 185082,
+            "quality_score": 8.5,
+            "final": 7.99,
+            "model": "openai/gpt-5.6-sol",
+            "title": "BlueprintAgent: Constraint-Triggered Targeted Revisits for Simulation-Ready Gene"
+          },
+          {
+            "content_item_id": 185983,
+            "quality_score": 7.8,
+            "final": 7.332,
+            "model": "openai/gpt-5.6-sol",
+            "title": "Rank Without an Oracle: Deviation-Aware Interaction-Rank Selection from Offline "
+          },
+          {
+            "content_item_id": 185987,
+            "quality_score": 7.94,
+            "final": 7.5827,
+            "model": "openai/gpt-5.6-sol",
+            "title": "Reachability-Certified Subteam Decomposition for Locally Interacting Multi-Agent"
+          },
+          {
+            "content_item_id": 186788,
+            "quality_score": 8.14,
+            "final": 7.7737,
+            "model": "openai/gpt-5.6-sol",
+            "title": "Vision-language models know more about agriculture than they show and rubric-gro"
+          },
+          {
+            "content_item_id": 187663,
+            "quality_score": 8.36,
+            "final": 7.8584,
+            "model": "openai/gpt-5.6-sol",
+            "title": "Grounding Agent Memory: Environment-Probing Curation for Enterprise Agents"
+          },
+          {
+            "content_item_id": 187664,
+            "quality_score": 8.26,
+            "final": 7.8883,
+            "model": "openai/gpt-5.6-sol",
+            "title": "Fork Where the Model Changes Its Mind: Belief-Shift Branching for Tree-Structure"
+          },
+          {
+            "content_item_id": 192499,
+            "quality_score": 7.92,
+            "final": 7.4448,
+            "model": "openai/gpt-5.6-sol",
+            "title": "LePlanner: An Iterative Amortized Controller For World Models"
+          },
+          {
+            "content_item_id": 193071,
+            "quality_score": 7.64,
+            "final": 7.2962,
+            "model": "openai/gpt-5.6-sol",
+            "title": "SemVerBench: Benchmarking LLM Comprehension of Version-Constraint Resolution Sem"
+          },
+          {
+            "content_item_id": 193105,
+            "quality_score": 8.16,
+            "final": 7.6704,
+            "model": "openai/gpt-5.6-sol",
+            "title": "Mizan: A National Benchmark for Evaluating Large Language Models on Iraqi Arabic"
+          },
+          {
+            "content_item_id": 194212,
+            "quality_score": 8.16,
+            "final": 7.7928,
+            "model": "openai/gpt-5.6-sol",
+            "title": "CBW: Towards Dataset Ownership Verification for Speaker Verification via Cluster"
+          },
+          {
+            "content_item_id": 194782,
+            "quality_score": 7.88,
+            "final": 7.1708,
+            "model": "openai/gpt-5.6-sol",
+            "title": "Certified Inference and Training for Deep Equilibrium Networks: A Continuation F"
+          },
+          {
+            "content_item_id": 196274,
+            "quality_score": 7.4,
+            "final": 6.734,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Missing Bridges: Composition-Aware Active Imitation Learning"
+          },
+          {
+            "content_item_id": 196475,
+            "quality_score": 8.2,
+            "final": 7.585,
+            "model": "openai/gpt-5.6-terra",
+            "title": "The Verifiable Action Card: Trustworthy Human-in-the-Loop Control for Secure Aut"
+          },
+          {
+            "content_item_id": 196546,
+            "quality_score": 7.46,
+            "final": 6.6767,
+            "model": "openai/gpt-5.6-terra",
+            "title": "The evolution of sex for artificial intelligence: a population-genetic framework"
+          },
+          {
+            "content_item_id": 197098,
+            "quality_score": 7.84,
+            "final": 7.3696,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Batch Normalization Amplifies Memorization and Privacy Risks"
+          },
+          {
+            "content_item_id": 197541,
+            "quality_score": 8.02,
+            "final": 7.4185,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Perception, Layout, and Validation: Calibrated Confidence for Reliable Straight-"
+          },
+          {
+            "content_item_id": 198632,
+            "quality_score": 7.16,
+            "final": 6.5156,
+            "model": "openai/gpt-5.6-terra",
+            "title": "MAAP: Multi-Agent Active Perception for Collaborative Manipulation"
+          },
+          {
+            "content_item_id": 199228,
+            "quality_score": 7.52,
+            "final": 7.0688,
+            "model": "openai/gpt-5.6-terra",
+            "title": "MMS-VPR: A Fine-Grained Multimodal Street-Level Visual Place Recognition Dataset"
+          },
+          {
+            "content_item_id": 199633,
+            "quality_score": 7.7,
+            "final": 7.1225,
+            "model": "openai/gpt-5.6-terra",
+            "title": "PINNForge: Execution-Grounded Evolutionary Design of Physics-Informed Neural Net"
+          },
+          {
+            "content_item_id": 199683,
+            "quality_score": 7.66,
+            "final": 6.9706,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Whitening Inverts the Hierarchy: What the Norm of a Whitened Embedding Measures"
+          },
+          {
+            "content_item_id": 199784,
+            "quality_score": 7.78,
+            "final": 7.3132,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Stochastic Reconfiguration as Statistical Filtering for Overparameterized Neural"
+          },
+          {
+            "content_item_id": 200606,
+            "quality_score": 7.82,
+            "final": 7.3508,
+            "model": "openai/gpt-5.6-terra",
+            "title": "TimeLitmus: A Diagnostic Benchmark for Cross-Modal Understanding and Explanation"
+          },
+          {
+            "content_item_id": 200622,
+            "quality_score": 7.98,
+            "final": 7.5012,
+            "model": "openai/gpt-5.6-terra",
+            "title": "SPARSER: Sparse Variable Projection by Exploiting Separable Structure in Robotic"
+          },
+          {
+            "content_item_id": 200699,
+            "quality_score": 7.68,
+            "final": 6.9888,
+            "model": "openai/gpt-5.6-terra",
+            "title": "GradAgent: A Knowledge-Guided Multi-Agent System for Structure-Preserving Gradie"
+          }
+        ],
+        "flip_in_quality_mean": 7.9682352941176475
+      },
+      "50": {
+        "llm_selected": 302,
+        "jev_selected": 302,
+        "flip_in": 91,
+        "flip_out": 91,
+        "flip_in_pct_of_selected": 30.132450331125828,
+        "flip_out_pct_of_selected": 30.132450331125828,
+        "jaccard": 0.5368956743002544,
+        "flip_in_with_quality_n": 18,
+        "flip_in_with_quality": [
+          {
+            "content_item_id": 196457,
+            "quality_score": 7.46,
+            "final": 6.7886,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Every Fixed Metric Has a Blind Spot: A Learned Atmospheric Critic for Scoring Fo"
+          },
+          {
+            "content_item_id": 196511,
+            "quality_score": 7.76,
+            "final": 7.0616,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Butterfly Effect and the Kinetic Energy Cascade in Probabilistic Machine Learnin"
+          },
+          {
+            "content_item_id": 196546,
+            "quality_score": 7.46,
+            "final": 6.6767,
+            "model": "openai/gpt-5.6-terra",
+            "title": "The evolution of sex for artificial intelligence: a population-genetic framework"
+          },
+          {
+            "content_item_id": 197075,
+            "quality_score": 7.16,
+            "final": 6.623,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Beyond the Townhall: Spatial Anchoring and LLM Agents for Scalable Participatory"
+          },
+          {
+            "content_item_id": 197302,
+            "quality_score": 7.04,
+            "final": 6.512,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Improving Cross-Lingual Transfer for Sequential Sentence Classification in Resea"
+          },
+          {
+            "content_item_id": 197483,
+            "quality_score": 7.52,
+            "final": 6.8432,
+            "model": "openai/gpt-5.6-terra",
+            "title": "AVTrace: Diagnosing Audio-Visual Temporal Reasoning in Omni Models"
+          },
+          {
+            "content_item_id": 198014,
+            "quality_score": 6.54,
+            "final": 5.8533,
+            "model": "openai/gpt-5.6-terra",
+            "title": "REFINEPPO: Learning Continuous Control Policies by Iterative Action Refinement"
+          },
+          {
+            "content_item_id": 198195,
+            "quality_score": 6.84,
+            "final": 6.1218,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Toward Composable Network Digital Twins: A Subgraph-Based Latency Prediction Stu"
+          },
+          {
+            "content_item_id": 198201,
+            "quality_score": 6.7,
+            "final": 5.896,
+            "model": "openai/gpt-5.6-terra",
+            "title": "The Role of Fine-grained Harm Signals in LLM Safety"
+          },
+          {
+            "content_item_id": 198210,
+            "quality_score": 7.56,
+            "final": 7.1064,
+            "model": "openai/gpt-5.6-terra",
+            "title": "CoReLoop: Parameter-Efficient Controlled Recurrent Refinement for Audio Deepfake"
+          },
+          {
+            "content_item_id": 198588,
+            "quality_score": 7.9,
+            "final": 7.0705,
+            "model": "openai/gpt-5.6-terra",
+            "title": "EnterpriseVal: Quantifying the Efficacy, Reliability and Value of Generative AI "
+          },
+          {
+            "content_item_id": 199158,
+            "quality_score": 7.32,
+            "final": 6.5514,
+            "model": "openai/gpt-5.6-terra",
+            "title": "ProcessLight: Process Supervision for Large Language Model Based Traffic Signal "
+          },
+          {
+            "content_item_id": 199228,
+            "quality_score": 7.52,
+            "final": 7.0688,
+            "model": "openai/gpt-5.6-terra",
+            "title": "MMS-VPR: A Fine-Grained Multimodal Street-Level Visual Place Recognition Dataset"
+          },
+          {
+            "content_item_id": 199461,
+            "quality_score": 6.78,
+            "final": 6.3732,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Sample Count Is Not Enough: Candidate-Generation Strategy Shapes the Energy and "
+          },
+          {
+            "content_item_id": 199466,
+            "quality_score": 7.58,
+            "final": 7.0115,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Dictionary-Constrained Grapheme-to-Phoneme for Unsegmented Languages from LLM-An"
+          },
+          {
+            "content_item_id": 199509,
+            "quality_score": 7.14,
+            "final": 6.2832,
+            "model": "openai/gpt-5.6-terra",
+            "title": "ARCGym: Benchmarking Deep Reinforcement Learning in Autonomous Robotic Colonosco"
+          },
+          {
+            "content_item_id": 199633,
+            "quality_score": 7.7,
+            "final": 7.1225,
+            "model": "openai/gpt-5.6-terra",
+            "title": "PINNForge: Execution-Grounded Evolutionary Design of Physics-Informed Neural Net"
+          },
+          {
+            "content_item_id": 200739,
+            "quality_score": 7.76,
+            "final": 7.178,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Generative Tutorial: Towards Live Contextualized Visual Instructions for Physica"
+          }
+        ],
+        "flip_in_quality_mean": 7.318888888888889
+      },
+      "75": {
+        "llm_selected": 449,
+        "jev_selected": 449,
+        "flip_in": 69,
+        "flip_out": 69,
+        "flip_in_pct_of_selected": 15.367483296213807,
+        "flip_out_pct_of_selected": 15.367483296213807,
+        "jaccard": 0.7335907335907336,
+        "flip_in_with_quality_n": 7,
+        "flip_in_with_quality": [
+          {
+            "content_item_id": 195840,
+            "quality_score": 6.48,
+            "final": 5.7996,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Unleash LLMs Potential for Sequential Recommendation by Coordinating Dual Dynami"
+          },
+          {
+            "content_item_id": 197997,
+            "quality_score": 7.54,
+            "final": 6.8614,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Aligning with Lived Experience: Heterogeneous Benefits of Fine Tuning in Mental "
+          },
+          {
+            "content_item_id": 198588,
+            "quality_score": 7.9,
+            "final": 7.0705,
+            "model": "openai/gpt-5.6-terra",
+            "title": "EnterpriseVal: Quantifying the Efficacy, Reliability and Value of Generative AI "
+          },
+          {
+            "content_item_id": 198990,
+            "quality_score": 6.66,
+            "final": 6.0606,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Forecasting Intrathecal Tracer Enhancement from Pre-Contrast Brain MRI: Direct R"
+          },
+          {
+            "content_item_id": 199509,
+            "quality_score": 7.14,
+            "final": 6.2832,
+            "model": "openai/gpt-5.6-terra",
+            "title": "ARCGym: Benchmarking Deep Reinforcement Learning in Autonomous Robotic Colonosco"
+          },
+          {
+            "content_item_id": 199511,
+            "quality_score": 6.94,
+            "final": 6.2113,
+            "model": "openai/gpt-5.6-terra",
+            "title": "C$^{2}$-INR: Customized Convolutional Implicit Neural Representation"
+          },
+          {
+            "content_item_id": 200755,
+            "quality_score": 7.52,
+            "final": 6.956,
+            "model": "openai/gpt-5.6-terra",
+            "title": "Who Does What in AI Auditing? Designing Human-AI Collaboration for Auditing Gene"
+          }
+        ],
+        "flip_in_quality_mean": 7.168571428571429
+      }
+    },
+    "ok": 704
+  },
+  "quality": {
+    "note": "Used Sol for Sep1\u201315 pubs and Terra for Sep16\u201321 pubs (canonical windows). Requested ~1887; actual eligible Sol+Terra window set reported below.",
+    "n_sol_sep1_15": 1779,
+    "n_terra_sep16_21": 1587,
+    "n_run": 3366,
+    "sol": {
+      "label": "sol_sep1_15",
+      "n_eligible": 1779,
+      "n_ok": 1779,
+      "per_dim": {
+        "technical_significance": {
+          "spearman": 0.5389519670108864,
+          "mae": 0.5705452501405284,
+          "n": 1779
+        },
+        "apparent_novelty": {
+          "spearman": 0.5941529835412186,
+          "mae": 0.938167509836987,
+          "n": 1779
+        },
+        "practical_applicability": {
+          "spearman": 0.7132247810573576,
+          "mae": 1.595559302979202,
+          "n": 1779
+        },
+        "professional_value": {
+          "spearman": 0.4975823786811549,
+          "mae": 1.021079258010118,
+          "n": 1779
+        },
+        "learning_value": {
+          "spearman": 0.3779988451931225,
+          "mae": 0.3552557616638561,
+          "n": 1779
+        },
+        "evidence_strength": {
+          "spearman": 0.6837235638927734,
+          "mae": 1.53513209668353,
+          "n": 1779
+        }
+      },
+      "composite_spearman": 0.44461147802788575,
+      "composite_mae": 1.677938392355256,
+      "overlaps": {
+        "top_20": {
+          "overlap": 2,
+          "of": 20,
+          "pct": 0.1
+        },
+        "top_50": {
+          "overlap": 11,
+          "of": 50,
+          "pct": 0.22
+        }
+      },
+      "confidence_bands": [
+        {
+          "lo": 0.0,
+          "hi": 0.6,
+          "n": 80,
+          "composite_mae": 2.6286137500000004
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.7,
+          "n": 368,
+          "composite_mae": 2.1166258152173913
+        },
+        {
+          "lo": 0.7,
+          "hi": 0.8,
+          "n": 1162,
+          "composite_mae": 1.547153786574871
+        },
+        {
+          "lo": 0.8,
+          "hi": 0.9,
+          "n": 169,
+          "composite_mae": 1.1719071005917163
+        },
+        {
+          "lo": 0.9,
+          "hi": 1.01,
+          "n": 0,
+          "composite_mae": null,
+          "mean_dim_spearman": null
+        }
+      ]
+    },
+    "terra": {
+      "label": "terra_sep16_21",
+      "n_eligible": 1587,
+      "n_ok": 1587,
+      "per_dim": {
+        "technical_significance": {
+          "spearman": 0.5628183942850766,
+          "mae": 0.39571518588531823,
+          "n": 1587
+        },
+        "apparent_novelty": {
+          "spearman": 0.6102506255950971,
+          "mae": 0.47101449275362317,
+          "n": 1587
+        },
+        "practical_applicability": {
+          "spearman": 0.7057022846874658,
+          "mae": 1.1146817895400125,
+          "n": 1587
+        },
+        "professional_value": {
+          "spearman": 0.4572001538842384,
+          "mae": 0.7388153749212351,
+          "n": 1587
+        },
+        "learning_value": {
+          "spearman": 0.4351809469006267,
+          "mae": 0.4231253938248267,
+          "n": 1587
+        },
+        "evidence_strength": {
+          "spearman": 0.6846098288678285,
+          "mae": 1.1159420289855073,
+          "n": 1587
+        }
+      },
+      "composite_spearman": 0.5330860666856927,
+      "composite_mae": 1.2440536862003784,
+      "overlaps": {
+        "top_20": {
+          "overlap": 5,
+          "of": 20,
+          "pct": 0.25
+        },
+        "top_50": {
+          "overlap": 15,
+          "of": 50,
+          "pct": 0.3
+        }
+      },
+      "confidence_bands": [
+        {
+          "lo": 0.0,
+          "hi": 0.6,
+          "n": 42,
+          "composite_mae": 2.023895238095238
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.7,
+          "n": 314,
+          "composite_mae": 1.6659035031847136
+        },
+        {
+          "lo": 0.7,
+          "hi": 0.8,
+          "n": 1051,
+          "composite_mae": 1.1605545195052334
+        },
+        {
+          "lo": 0.8,
+          "hi": 0.9,
+          "n": 180,
+          "composite_mae": 0.8137394444444447
+        },
+        {
+          "lo": 0.9,
+          "hi": 1.01,
+          "n": 0,
+          "composite_mae": null,
+          "mean_dim_spearman": null
+        }
+      ]
+    },
+    "all": {
+      "label": "all_run",
+      "n_eligible": 3366,
+      "n_ok": 3366,
+      "per_dim": {
+        "technical_significance": {
+          "spearman": 0.572371503820326,
+          "mae": 0.488116458704694,
+          "n": 3366
+        },
+        "apparent_novelty": {
+          "spearman": 0.58690383995991,
+          "mae": 0.7179144385026738,
+          "n": 3366
+        },
+        "practical_applicability": {
+          "spearman": 0.6763405782177616,
+          "mae": 1.36883541295306,
+          "n": 3366
+        },
+        "professional_value": {
+          "spearman": 0.45818533766756625,
+          "mae": 0.8879976232917409,
+          "n": 3366
+        },
+        "learning_value": {
+          "spearman": 0.43455145506961124,
+          "mae": 0.3872549019607843,
+          "n": 3366
+        },
+        "evidence_strength": {
+          "spearman": 0.6516657990418125,
+          "mae": 1.3374925727866904,
+          "n": 3366
+        }
+      },
+      "composite_spearman": 0.46844400835415223,
+      "composite_mae": 1.4733706476530009,
+      "overlaps": {
+        "top_20": {
+          "overlap": 2,
+          "of": 20,
+          "pct": 0.1
+        },
+        "top_50": {
+          "overlap": 10,
+          "of": 50,
+          "pct": 0.2
+        }
+      },
+      "confidence_bands": [
+        {
+          "lo": 0.0,
+          "hi": 0.6,
+          "n": 122,
+          "composite_mae": 2.420431967213115
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.7,
+          "n": 682,
+          "composite_mae": 1.9091085043988272
+        },
+        {
+          "lo": 0.7,
+          "hi": 0.8,
+          "n": 2213,
+          "composite_mae": 1.3635497062810666
+        },
+        {
+          "lo": 0.8,
+          "hi": 0.9,
+          "n": 349,
+          "composite_mae": 0.9871787965616048
+        },
+        {
+          "lo": 0.9,
+          "hi": 1.01,
+          "n": 0,
+          "composite_mae": null,
+          "mean_dim_spearman": null
+        }
+      ]
+    },
+    "per_1000": {
+      "jev_cost_usd": 0.05743680926916221,
+      "jev_wall_s": 63.21353033212397,
+      "jev_per_paper_cost_usd": 5.743680926916221e-05,
+      "terra_cost_usd": 3.2484210526315787,
+      "terra_per_paper_cost_usd": 0.003248421052631579,
+      "terra_wall_s_note": "not recorded in Sep16\u201321 paid run; cost only for $/1k"
+    },
+    "hold_condition": {
+      "bar": "Spearman>=0.75 every dim AND top-50 overlap>=35/50 in BOTH Sol and Terra windows",
+      "sol": {
+        "spearman_ge_0_75_all_dims": false,
+        "per_dim_ok": {
+          "technical_significance": false,
+          "apparent_novelty": false,
+          "practical_applicability": false,
+          "professional_value": false,
+          "learning_value": false,
+          "evidence_strength": false
+        },
+        "top50_overlap": 11,
+        "top50_overlap_ge_35": false,
+        "holds": false
+      },
+      "terra": {
+        "spearman_ge_0_75_all_dims": false,
+        "per_dim_ok": {
+          "technical_significance": false,
+          "apparent_novelty": false,
+          "practical_applicability": false,
+          "professional_value": false,
+          "learning_value": false,
+          "evidence_strength": false
+        },
+        "top50_overlap": 15,
+        "top50_overlap_ge_35": false,
+        "holds": false
+      },
+      "holds": false
+    }
+  },
+  "audience": {
+    "n": 110,
+    "ok": 110,
+    "tech_picks": {
+      "n": 4,
+      "tech_relevance_mean": 8.625,
+      "tech_relevance_min": 8.5,
+      "scores": [
+        {
+          "id": 3611,
+          "role": "linkedin_winner",
+          "tech": 8.5,
+          "product": 5.5
+        },
+        {
+          "id": 143079,
+          "role": "runner_up",
+          "tech": 8.5,
+          "product": 4.0
+        },
+        {
+          "id": 172395,
+          "role": "winner",
+          "tech": 9.0,
+          "product": 8.5
+        },
+        {
+          "id": 184890,
+          "role": "winner",
+          "tech": 8.5,
+          "product": 7.5
+        }
+      ]
+    },
+    "product_picks": {
+      "n": 4,
+      "product_relevance_mean": 8.0,
+      "product_relevance_min": 7.0,
+      "scores": [
+        {
+          "id": 2184,
+          "role": "winner",
+          "tech": 7.5,
+          "product": 8.5
+        },
+        {
+          "id": 42672,
+          "role": "runner_up",
+          "tech": 8.5,
+          "product": 8.5
+        },
+        {
+          "id": 120294,
+          "role": "linkedin_winner",
+          "tech": 7.5,
+          "product": 7.0
+        },
+        {
+          "id": 194758,
+          "role": "winner",
+          "tech": 6.0,
+          "product": 8.0
+        }
+      ]
+    },
+    "stratified_n": 102,
+    "both_one_neither_by_threshold": {
+      "5.0": {
+        "both": 71,
+        "one": 34,
+        "neither": 5,
+        "n": 110
+      },
+      "6.0": {
+        "both": 55,
+        "one": 47,
+        "neither": 8,
+        "n": 110
+      },
+      "7.0": {
+        "both": 31,
+        "one": 53,
+        "neither": 26,
+        "n": 110
+      },
+      "8.0": {
+        "both": 9,
+        "one": 31,
+        "neither": 70,
+        "n": 110
+      }
+    },
+    "proposed_tech_pool_min": 8.5,
+    "proposed_product_pool_min": 7.0
+  },
+  "architecture_proposal": {
+    "condition_holds": false,
+    "design": "Bar not met in both windows \u2014 keep LLM for quality scoring. Do not adopt Jev-for-all-survivors.",
+    "today_gate75_window_cost_usd": {
+      "screen_llm": 0.24062319939347993,
+      "quality_llm_75": 6.175248421052632,
+      "total": 6.4158716204461115
+    },
+    "proposed_window_cost_usd": {
+      "jev_quality_all_survivors": 0.14560231149732622,
+      "llm_prose_top_150": 0.48726315789473684,
+      "total": 0.632865469392063
+    },
+    "savings_usd": 5.783006151054049,
+    "window_survivors": 2535,
+    "today_quality_n_gate75": 1901,
+    "proposed_prose_n": 150,
+    "jev_quality_wall_s_all_survivors": 160.24629939193426,
+    "today_quality_wall_note": "Terra wall not logged for Sep16\u201321; cost used for window $ compare"
+  }
+}

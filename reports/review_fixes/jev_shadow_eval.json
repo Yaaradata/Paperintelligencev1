@@ -1,0 +1,223 @@
+{
+  "generated_at": "2026-09-23T07:41:14.881952+00:00",
+  "model": "typesafe/jev-1.13",
+  "db_available": false,
+  "data_source": "openrouter_raw_cache + arxiv_api + reports (DB schema grants missing for neural_rw)",
+  "gate_percentile_config": 75.0,
+  "top_slice_keep_pct": 75.0,
+  "screen": {
+    "n": 300,
+    "ok": 300,
+    "gate": {
+      "n": 300,
+      "tp": 293,
+      "fp": 6,
+      "fn": 0,
+      "tn": 1,
+      "precision": 0.979933110367893,
+      "recall": 1.0,
+      "accuracy": 0.98
+    },
+    "top_slice": {
+      "llm_selected": 219,
+      "jev_selected": 219,
+      "flip_in": 30,
+      "flip_out": 30,
+      "flip_in_ids": [
+        135946,
+        136844,
+        136864,
+        137004,
+        137528,
+        138023,
+        138064,
+        142560,
+        142617,
+        183687,
+        183698,
+        183808,
+        184772,
+        184827,
+        184902,
+        185802,
+        186348,
+        186813,
+        186885,
+        187128,
+        187515,
+        192403,
+        192519,
+        193386,
+        193981,
+        194517,
+        194745,
+        194835,
+        195036,
+        195236
+      ],
+      "flip_out_ids": [
+        135738,
+        136072,
+        136113,
+        136930,
+        137169,
+        137226,
+        138053,
+        138195,
+        142630,
+        142874,
+        143100,
+        184485,
+        184682,
+        184752,
+        184850,
+        185725,
+        185796,
+        186242,
+        186848,
+        187004,
+        187110,
+        192376,
+        192531,
+        193276,
+        193542,
+        193663,
+        194100,
+        194799,
+        194852,
+        194881
+      ]
+    },
+    "spearman": {
+      "ai_relevance": 0.6471576721277581,
+      "ai_relevance_n": 300,
+      "technical_significance": 0.7100091355725552,
+      "technical_significance_n": 300,
+      "apparent_novelty": 0.6603770937846708,
+      "apparent_novelty_n": 300,
+      "evidence_strength": 0.6331570846341468,
+      "evidence_strength_n": 300,
+      "rank_mean": 0.6751124023724363,
+      "rank_mean_n": 300
+    },
+    "golden60": {
+      "n_in_sample": 30,
+      "gate_n": 30,
+      "gate_agree": 30,
+      "gate_accuracy": 1.0,
+      "dim_mae": {
+        "ai_relevance": 0.9333333333333333,
+        "technical_significance": 0.7666666666666667,
+        "apparent_novelty": 0.6833333333333333,
+        "evidence_strength": 1.1333333333333333
+      }
+    },
+    "confidence_bands": [
+      {
+        "lo": 0.0,
+        "hi": 0.6,
+        "n": 4,
+        "gate_accuracy": 0.75
+      },
+      {
+        "lo": 0.6,
+        "hi": 0.7,
+        "n": 14,
+        "gate_accuracy": 0.9285714285714286
+      },
+      {
+        "lo": 0.7,
+        "hi": 0.8,
+        "n": 121,
+        "gate_accuracy": 0.9669421487603306
+      },
+      {
+        "lo": 0.8,
+        "hi": 0.9,
+        "n": 161,
+        "gate_accuracy": 1.0
+      },
+      {
+        "lo": 0.9,
+        "hi": 1.01,
+        "n": 0,
+        "gate_accuracy": null
+      }
+    ],
+    "cost_usd": 0.014197386000000013,
+    "wall_s": 18.50786998705007,
+    "per_paper_cost_usd": 4.732462e-05,
+    "per_paper_wall_s": 0.06169289995683357
+  },
+  "audience": {
+    "n": 300,
+    "ok": 300,
+    "domain_agreement": {
+      "n": 295,
+      "agree": 234,
+      "accuracy": 0.7932203389830509
+    },
+    "application_domain_agreement": {
+      "n": 295,
+      "agree": 257,
+      "accuracy": 0.8711864406779661
+    },
+    "seat_score_baseline": "mostly absent (AUDIENCE_POLICY still v001; no tech/product rows)",
+    "cost_usd": 0.022963164000000008,
+    "wall_s": 18.645274695940316,
+    "per_paper_cost_usd": 7.654388e-05,
+    "per_paper_wall_s": 0.06215091565313439
+  },
+  "cascade_screen": [
+    {
+      "threshold": 0.6,
+      "jev_fraction": 0.9866666666666667,
+      "gate_accuracy_on_decidable": 0.9831081081081081,
+      "cost_per_1000_usd": 0.04795923032317412,
+      "wall_sec_per_1000_est": 61.53699462407579
+    },
+    {
+      "threshold": 0.7,
+      "jev_fraction": 0.94,
+      "gate_accuracy_on_decidable": 0.9858156028368794,
+      "cost_per_1000_usd": 0.05018036645428355,
+      "wall_sec_per_1000_est": 60.99132595942356
+    },
+    {
+      "threshold": 0.8,
+      "jev_fraction": 0.5366666666666666,
+      "gate_accuracy_on_decidable": 1.0,
+      "cost_per_1000_usd": 0.06937732873030074,
+      "wall_sec_per_1000_est": 56.27518964350069
+    },
+    {
+      "threshold": 0.9,
+      "jev_fraction": 0.0,
+      "gate_accuracy_on_decidable": null,
+      "cost_per_1000_usd": 0.09492039423805915,
+      "wall_sec_per_1000_est": 50.0
+    }
+  ],
+  "cost_per_1000": {
+    "screen_llm_usd": 0.09492039423805915,
+    "screen_jev_usd": 0.04732462,
+    "audience_llm_usd": 0.13988165680473374,
+    "audience_jev_usd": 0.07654388
+  },
+  "quality_stage": {
+    "replace_quality": false,
+    "reason": "Jev returns typed noul/choice/score only; editorial selection depends on so_what and reason_not_higher prose from Sol/Terra. At most, Jev could shadow the six rubric scores while an LLM keeps the prose \u2014 not evaluated as a replacement in J1."
+  },
+  "budget": {
+    "cap_usd": 2.0,
+    "spent_usd": 0.03716055000000002,
+    "stopped": false
+  },
+  "proposed_threshold": {
+    "threshold": 0.8,
+    "jev_fraction": 0.5366666666666666,
+    "gate_accuracy_on_decidable": 1.0,
+    "cost_per_1000_usd": 0.06937732873030074,
+    "wall_sec_per_1000_est": 56.27518964350069
+  }
+}

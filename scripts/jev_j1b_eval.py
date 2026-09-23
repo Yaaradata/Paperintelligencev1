@@ -129,7 +129,33 @@ def _confirm_grants(conn) -> dict[str, Any]:
         "SELECT has_table_privilege(current_user,'paper_intelligence.papers','SELECT') ok"
     ).fetchone()["ok"]
     n = conn.execute("SELECT count(*) n FROM paper_intelligence.papers").fetchone()["n"]
-    return {"user": who, "pi_usage": bool(usage), "papers_select": bool(sel), "papers": int(n)}
+    n_tables = conn.execute(
+        """
+        SELECT count(*) n FROM information_schema.tables
+        WHERE table_schema='paper_intelligence' AND table_type='BASE TABLE'
+        """
+    ).fetchone()["n"]
+    missing = conn.execute(
+        """
+        SELECT t.table_name
+        FROM information_schema.tables t
+        WHERE t.table_schema='paper_intelligence' AND t.table_type='BASE TABLE'
+          AND NOT has_table_privilege(
+                current_user,
+                format('%I.%I', t.table_schema, t.table_name),
+                'SELECT'
+              )
+        ORDER BY 1
+        """
+    ).fetchall()
+    return {
+        "user": who,
+        "pi_usage": bool(usage),
+        "papers_select": bool(sel),
+        "papers": int(n),
+        "n_tables": int(n_tables),
+        "missing_select": [r["table_name"] for r in missing],
+    }
 
 
 def _load_screens(conn) -> list[dict[str, Any]]:
@@ -699,13 +725,25 @@ def main() -> int:
     proposed_prod = propose(prod_picks, "product_relevance")
 
     # ---- Architecture proposal ----
-    # Hold condition: Spearman >= 0.75 per dim AND top-50 overlap >= 35/50
-    # Evaluate on combined ok set preferring terra+sol separately; use all_run for proposal gate
-    dims_ok = all(
-        (q_all["per_dim"][d]["spearman"] or 0) >= 0.75 for d in QUALITY_DIMS
-    )
-    top50 = q_all["overlaps"]["top_50"]["overlap"]
-    hold = bool(dims_ok and top50 >= 35)
+    # Bar: Spearman >= 0.75 every dim AND top-50 overlap >= 35/50 in BOTH windows.
+    def _window_holds(block: dict[str, Any]) -> dict[str, Any]:
+        dims = {
+            d: (block["per_dim"][d]["spearman"] or 0) >= 0.75 for d in QUALITY_DIMS
+        }
+        top50_n = block["overlaps"]["top_50"]["overlap"]
+        return {
+            "spearman_ge_0_75_all_dims": all(dims.values()),
+            "per_dim_ok": dims,
+            "top50_overlap": top50_n,
+            "top50_overlap_ge_35": top50_n >= 35,
+            "holds": all(dims.values()) and top50_n >= 35,
+        }
+
+    sol_hold = _window_holds(q_sol)
+    terra_hold = _window_holds(q_terra)
+    hold = bool(sol_hold["holds"] and terra_hold["holds"])
+    top50 = min(sol_hold["top50_overlap"], terra_hold["top50_overlap"])
+    dims_ok = bool(sol_hold["spearman_ge_0_75_all_dims"] and terra_hold["spearman_ge_0_75_all_dims"])
 
     # Cost per window Sep16-21 style: ~2535 screen survivors, today quality ~380 at 15% historically
     # but current GATE=75 → more quality. Use Sep16-21 actual: 2535 pass, 380 quality at then-15%.
@@ -764,14 +802,19 @@ def main() -> int:
             "terra": q_terra,
             "all": q_all,
             "per_1000": {
-                "cost_usd": (1000 * q_pp) if q_pp is not None else None,
-                "wall_s": 1000 * q_wall_pp,
-                "per_paper_cost_usd": q_pp,
+                "jev_cost_usd": (1000 * q_pp) if q_pp is not None else None,
+                "jev_wall_s": 1000 * q_wall_pp,
+                "jev_per_paper_cost_usd": q_pp,
+                # Terra Sep16–21 paid run: $1.2344 / 380 papers. Wall not logged;
+                # pipeline batch ~76 calls; use measured table proxy only for $ compare.
+                "terra_cost_usd": 1000 * (1.2344 / 380.0),
+                "terra_per_paper_cost_usd": 1.2344 / 380.0,
+                "terra_wall_s_note": "not recorded in Sep16–21 paid run; cost only for $/1k",
             },
             "hold_condition": {
-                "spearman_ge_0_75_all_dims": dims_ok,
-                "top50_overlap_ge_35": top50 >= 35,
-                "top50_overlap": top50,
+                "bar": "Spearman>=0.75 every dim AND top-50 overlap>=35/50 in BOTH Sol and Terra windows",
+                "sol": sol_hold,
+                "terra": terra_hold,
                 "holds": hold,
             },
         },
@@ -826,11 +869,20 @@ def main() -> int:
                 "drop cost-driven quality router; LLM writes so_what + reason_not_higher "
                 "only for top ~150 editorial candidates."
                 if hold
-                else "Hold condition not met — do not adopt Jev-for-all-survivors design yet."
+                else (
+                    "Bar not met in both windows — keep LLM for quality scoring. "
+                    "Do not adopt Jev-for-all-survivors."
+                )
             ),
             "today_gate75_window_cost_usd": today_cost,
-            "proposed_window_cost_usd": proposed_cost if hold else None,
-            "savings_usd": (today_cost["total"] - proposed_cost["total"]) if hold else None,
+            # Always show proposed economics for decision context even if bar fails.
+            "proposed_window_cost_usd": proposed_cost,
+            "savings_usd": today_cost["total"] - proposed_cost["total"],
+            "window_survivors": survivors,
+            "today_quality_n_gate75": today_75_quality_n,
+            "proposed_prose_n": 150,
+            "jev_quality_wall_s_all_survivors": survivors * q_wall_pp,
+            "today_quality_wall_note": "Terra wall not logged for Sep16–21; cost used for window $ compare",
         },
     }
 
@@ -853,9 +905,48 @@ def main() -> int:
         f"**DB grants:** user=`{grants['user']}` pi_usage={grants['pi_usage']} "
         f"papers_select={grants['papers_select']} papers={grants['papers']}",
         "",
+        "## Decision numbers (lead)",
+        "",
+        f"**Recommend Jev-for-all-survivors?** "
+        f"**{'YES' if hold else 'NO — keep LLM for quality'}** "
+        f"(bar: Spearman≥0.75 every dim **and** top-50≥35/50 in **both** Sol and Terra windows).",
+        "",
+        "### (a) Per-dimension Spearman — Jev vs LLM quality",
+        "",
+        "| Dimension | vs Sol (Sep 1–15) | vs Terra (Sep 16–21) |",
+        "|---|---:|---:|",
+    ]
+    for d in QUALITY_DIMS:
+        lines.append(
+            f"| {d} | {fmt(q_sol['per_dim'][d]['spearman'])} | "
+            f"{fmt(q_terra['per_dim'][d]['spearman'])} |"
+        )
+    lines += [
+        "",
+        "### (b) Top-50 overlap by composite quality score",
+        "",
+        "| Window | Top-50 overlap | Top-20 overlap |",
+        "|---|---:|---:|",
+        f"| Sol (Sep 1–15) | **{q_sol['overlaps']['top_50']['overlap']}/50** | "
+        f"{q_sol['overlaps']['top_20']['overlap']}/20 |",
+        f"| Terra (Sep 16–21) | **{q_terra['overlaps']['top_50']['overlap']}/50** | "
+        f"{q_terra['overlaps']['top_20']['overlap']}/20 |",
+        "",
+        "### (c) Cost & wall-clock per 1,000 papers (quality scoring)",
+        "",
+        "| Engine | $/1,000 | wall-clock / 1,000 |",
+        "|---|---:|---:|",
+        f"| Jev 6-dim (this run) | "
+        f"**${fmt((1000 * q_pp) if q_pp else None, 4)}** | "
+        f"**{fmt(1000 * q_wall_pp, 1)} s** (~{fmt((1000 * q_wall_pp) / 60.0, 1)} min) |",
+        f"| Terra full quality (Sep16–21 actual $1.2344/380) | "
+        f"**${fmt(1000 * (1.2344 / 380.0), 4)}** | "
+        f"not logged in that run |",
+        "",
         "## 0. Grant confirmation",
         "",
-        "`GRANT USAGE ON SCHEMA paper_intelligence TO neural_rw` (+ table SELECT) is in effect. "
+        "`GRANT USAGE ON SCHEMA paper_intelligence TO neural_rw` (+ table SELECT) is in effect "
+        f"({grants.get('n_tables', 'all')} base tables SELECT-ok). "
         "This evaluation ran against the live DB (title/abstract + classification rows), not caches.",
         "",
         "## 1. Screen — top-slice is the decision",
@@ -980,36 +1071,34 @@ def main() -> int:
         "",
         "## Architecture proposal (not implemented)",
         "",
-        f"Hold condition (Spearman≥0.75 all dims **and** top-50 overlap≥35/50 on combined run): "
-        f"**{'HOLDS' if hold else 'DOES NOT HOLD'}** "
-        f"(top-50 overlap={top50}/50; all-dim≥0.75={dims_ok}).",
+        f"Bar (Spearman≥0.75 every dim **and** top-50≥35/50 in **both** windows): "
+        f"**{'HOLDS — recommend' if hold else 'DOES NOT HOLD — keep LLM for quality'}**.",
+        f"- Sol: dims_ok={sol_hold['spearman_ge_0_75_all_dims']} top-50={sol_hold['top50_overlap']}/50",
+        f"- Terra: dims_ok={terra_hold['spearman_ge_0_75_all_dims']} "
+        f"top-50={terra_hold['top50_overlap']}/50",
         "",
         summary["architecture_proposal"]["design"],
         "",
+        "### Cost & runtime per Sep16–21-scale window (~2535 survivors)",
+        "",
+        "| Design | Quality / prose $ | Est. quality wall | Notes |",
+        "|---|---:|---:|---|",
+        f"| Today: GATE=75% full Terra quality (~{today_75_quality_n} papers) | "
+        f"**${today_cost['quality_llm_75']:.2f}** | Terra wall not logged | "
+        f"screen LLM ~${today_cost['screen_llm']:.2f} unchanged |",
+        f"| Proposed: Jev 6-dim on all {survivors} survivors + LLM prose top 150 | "
+        f"**${proposed_cost['total']:.2f}** "
+        f"(Jev ${proposed_cost['jev_quality_all_survivors']:.2f} + "
+        f"prose ${proposed_cost['llm_prose_top_150']:.2f}) | "
+        f"~{fmt(survivors * q_wall_pp, 0)} s Jev "
+        f"(~{fmt((survivors * q_wall_pp) / 60.0, 1)} min at this run's concurrency) "
+        f"+ LLM prose for 150 | "
+        f"Δ vs today quality path: ${summary['architecture_proposal']['savings_usd']:.2f} |",
+        "",
     ]
-    if hold:
+    if not hold:
         lines += [
-            "### Cost per Sep16–21-scale window (~2535 survivors)",
-            "",
-            f"| Design | Screen | Quality / prose | Total |",
-            f"|---|---:|---:|---:|",
-            f"| Today: LLM screen + GATE=75% full Terra quality (~{today_75_quality_n} papers) | "
-            f"${today_cost['screen_llm']:.2f} | ${today_cost['quality_llm_75']:.2f} | "
-            f"**${today_cost['total']:.2f}** |",
-            f"| Proposed: Jev 6-dim on all survivors + LLM prose top 150 | "
-            f"(screen unchanged/optional) | "
-            f"${proposed_cost['jev_quality_all_survivors']:.2f} + "
-            f"${proposed_cost['llm_prose_top_150']:.2f} | "
-            f"**${proposed_cost['total']:.2f}** |",
-            f"",
-            f"Estimated savings vs today GATE=75 quality path: "
-            f"**${summary['architecture_proposal']['savings_usd']:.2f}** / window "
-            f"(screen LLM cost kept separate; main cut is dropping ~{today_75_quality_n - 150} full Terra calls).",
-            "",
-        ]
-    else:
-        lines += [
-            "No adopt-now cost redesign — improve quality agreement first.",
+            "Economics above are illustrative only — **do not adopt** until both-window bar holds.",
             "",
         ]
 
