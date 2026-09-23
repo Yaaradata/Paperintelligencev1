@@ -1,0 +1,266 @@
+{
+  "top_strings_tried": 30,
+  "orgs_created": 1,
+  "aliases_added": 18,
+  "actions": {
+    "no_grounded_ror_match": 23,
+    "created_or_aliased": 7
+  },
+  "root_cause_hints": {
+    "ambiguous_name_matches": 3,
+    "institution_aliases_added": 7,
+    "ror_ungrounded_or_false_positive_ranking": 19,
+    "truncated_extraction": 1
+  },
+  "results": [
+    {
+      "query": "University of California",
+      "lookup": "University of California",
+      "cause_hint": "ambiguous_multi_campus",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "The Chinese University of Hong Kong",
+      "lookup": "The Chinese University of Hong Kong",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "created_or_aliased",
+      "organisation_id": 188,
+      "name": "Chinese University of Hong Kong",
+      "score": 1.0,
+      "span": "Chinese University of Hong Kong"
+    },
+    {
+      "query": "University of Science and Technology of",
+      "lookup": "University of Science and Technology of",
+      "cause_hint": "truncated_or_ambiguous_short",
+      "error": null,
+      "action": "created_or_aliased",
+      "organisation_id": 132,
+      "name": "Korea University of Science and Technology",
+      "score": 1.0,
+      "span": "University of Science and Technology"
+    },
+    {
+      "query": "The University of Hong Kong",
+      "lookup": "The University of Hong Kong",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "created_or_aliased",
+      "organisation_id": 291,
+      "name": "University of Hong Kong",
+      "score": 1.0,
+      "span": "University of Hong Kong"
+    },
+    {
+      "query": "Imperial College",
+      "lookup": "Imperial College",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "The Hong Kong University of Science and Technology",
+      "lookup": "The Hong Kong University of Science and Technology",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "created_or_aliased",
+      "organisation_id": 78,
+      "name": "Hong Kong University of Science and Technology",
+      "score": 1.0,
+      "span": "Hong Kong University of Science and Technology"
+    },
+    {
+      "query": "Purdue University",
+      "lookup": "Purdue University",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "The University of Texas",
+      "lookup": "The University of Texas",
+      "cause_hint": "ambiguous_multi_campus",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "University of Maryland",
+      "lookup": "University of Maryland",
+      "cause_hint": "ambiguous_multi_campus",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "The Hong Kong Polytechnic",
+      "lookup": "The Hong Kong Polytechnic",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "These authors contributed equally to this work",
+      "lookup": "These authors contributed equally to this work",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "University of Electronic Science and Technology",
+      "lookup": "University of Electronic Science and Technology",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "Xi\u2019an Jiaotong University",
+      "lookup": "Xi\u2019an Jiaotong University",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "created_or_aliased",
+      "organisation_id": 76,
+      "name": "Xi'an Jiaotong University",
+      "score": 1.0,
+      "span": "Xi\u2019an Jiaotong University"
+    },
+    {
+      "query": "Zayed University of Artificial Intelligence",
+      "lookup": "Zayed University of Artificial Intelligence",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "University of Texas",
+      "lookup": "University of Texas",
+      "cause_hint": "truncated_or_ambiguous_short",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "Technische Universit\u00e4t",
+      "lookup": "Technische Universit\u00e4t",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "Shenzhen University",
+      "lookup": "Shenzhen University",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "created_or_aliased",
+      "organisation_id": 1364,
+      "name": "Shenzhen University",
+      "score": 1.0,
+      "span": "Shenzhen University"
+    },
+    {
+      "query": "Munich Center for Machine Learning (MCML)",
+      "lookup": "Munich Center for Machine Learning (MCML)",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "Shanghai Innovation Institute",
+      "lookup": "Shanghai Innovation Institute",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "Adobe Research",
+      "lookup": "Adobe Research",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "Pengcheng Laboratory",
+      "lookup": "Pengcheng Laboratory",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "affiliation: ByteDance Seed",
+      "lookup": "affiliation: ByteDance Seed",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "created_or_aliased",
+      "organisation_id": 58,
+      "name": "ByteDance (China)",
+      "score": 0.65,
+      "span": "ByteDance"
+    },
+    {
+      "query": "affiliation: M-A-P",
+      "lookup": "affiliation: M-A-P",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "University of North Carolina",
+      "lookup": "University of North Carolina",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "Huawei Technologies Co",
+      "lookup": "Huawei Technologies Co",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "Zhongguancun Academy",
+      "lookup": "Zhongguancun Academy",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "ELLIS Institute",
+      "lookup": "ELLIS Institute",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "Vrije Universiteit",
+      "lookup": "Vrije Universiteit",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "Shenzhen Loop Area Institute",
+      "lookup": "Shenzhen Loop Area Institute",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    },
+    {
+      "query": "Berlin Institute for the Foundations of Learning",
+      "lookup": "Berlin Institute for the Foundations of Learning",
+      "cause_hint": "alias_or_missing_local",
+      "error": null,
+      "action": "no_grounded_ror_match"
+    }
+  ],
+  "impact_orig33": {
+    "n": 33,
+    "already_linked": 0,
+    "newly_resolvable": 0
+  },
+  "impact_html_sample80": {
+    "n": 80,
+    "already_linked": 61,
+    "newly_resolvable": 1
+  },
+  "additional_correctly_linkable_estimate_note": "newly_resolvable counts papers that gain a local org match after alias pass without writing affiliation rows"
+}

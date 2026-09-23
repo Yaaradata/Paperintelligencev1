@@ -1,0 +1,30 @@
+{
+  "n": 6504,
+  "legacy_outcome_counts": {
+    "verified_html_primary": 5430,
+    "needs_pdf_review": 295,
+    "unresolved": 698,
+    "verified_openalex_primary": 62,
+    "conflict": 15,
+    "verified_agreement": 4
+  },
+  "mutually_exclusive_ish_states": {
+    "evidence_found": 5492,
+    "canonical_organisation_successfully_resolved": 4726,
+    "unresolved_organisation_identity": 766,
+    "pdf_manual_review_required": 295,
+    "no_usable_source_evidence": 678,
+    "external_lookup_failed": 20,
+    "conflict_requiring_decision": 15,
+    "independently_corroborated_organisation": 4
+  },
+  "note_on_states": "evidence_found and canonical_* can co-occur on same paper in this tally; use legacy outcomes for exclusivity. 'verified_*_primary' is NOT claimed verified-correct.",
+  "high_priority_manual_review": 310,
+  "exact": 4,
+  "partial": 0,
+  "conflict": 15,
+  "unresolved": 698,
+  "html_primary": 5430,
+  "oa_primary": 62,
+  "needs_pdf_review": 295
+}

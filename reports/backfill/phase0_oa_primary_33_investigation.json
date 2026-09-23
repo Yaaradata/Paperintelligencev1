@@ -1,0 +1,712 @@
+{
+  "counts": {
+    "ror_lookup_canonicalisation_miss": 29,
+    "html_evidence_not_actually_organisation": 3,
+    "html_affiliation_parsing_failed": 1
+  },
+  "post_fix_of_33": {
+    "conflict": 30,
+    "oa_primary": 3
+  },
+  "cases": [
+    {
+      "paper_id": 18943,
+      "arxiv_id": "2601.14810",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "inria-saclay"
+      ],
+      "provisional": [
+        "inria-saclay"
+      ],
+      "linked": 0,
+      "raw": [
+        "INRIA-Saclay",
+        "INRIA-Saclay",
+        "INRIA-Saclay"
+      ],
+      "oa": [
+        "institut national de recherche en sciences et technologies du num\u00e9rique",
+        "laboratoire interdisciplinaire des sciences du num\u00e9rique",
+        "universit\u00e9 paris-saclay"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 27646,
+      "arxiv_id": "2512.13742",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "engineering and intelligent systems",
+        "university of engineering",
+        "university of engineering and technology"
+      ],
+      "provisional": [
+        "engineering and intelligent systems",
+        "university of engineering",
+        "university of engineering and technology"
+      ],
+      "linked": 0,
+      "raw": [
+        "University of Engineering",
+        "University of Engineering",
+        "University of Engineering"
+      ],
+      "oa": [
+        "khulna university of engineering and technology",
+        "queen's university belfast",
+        "university of ulster",
+        "wichita state university"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 27771,
+      "arxiv_id": "2602.18613",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "ozyegin university"
+      ],
+      "provisional": [
+        "ozyegin university"
+      ],
+      "linked": 0,
+      "raw": [
+        "Ozyegin University",
+        "Ozyegin University",
+        "Note: Corresponding author"
+      ],
+      "oa": [
+        "\u00f6zye\u011fin university"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 73920,
+      "arxiv_id": "2605.28703",
+      "reason": "html_evidence_not_actually_organisation",
+      "html_orgs": [],
+      "provisional": [],
+      "linked": 0,
+      "raw": [
+        "Laboratoire",
+        "Laboratoire",
+        "Laboratoire"
+      ],
+      "oa": [
+        "centre national de la recherche scientifique",
+        "laboratoire d'informatique de l'\u00e9cole polytechnique"
+      ],
+      "post_fix_would_be": "oa_primary"
+    },
+    {
+      "paper_id": 75641,
+      "arxiv_id": "2605.31291",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "epfl, lausanne, switzerland",
+        "radio t\u00e9l\u00e9vision suisse"
+      ],
+      "provisional": [
+        "epfl, lausanne, switzerland",
+        "radio t\u00e9l\u00e9vision suisse"
+      ],
+      "linked": 0,
+      "raw": [
+        "Radio T\u00e9l\u00e9vision Suisse",
+        "Radio T\u00e9l\u00e9vision Suisse",
+        "Radio T\u00e9l\u00e9vision Suisse"
+      ],
+      "oa": [
+        "swiss broadcasting corporation",
+        "\u00e9cole polytechnique f\u00e9d\u00e9rale de lausanne"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 106442,
+      "arxiv_id": "2603.14841",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "american center for mobility ypsilanti"
+      ],
+      "provisional": [
+        "american center for mobility ypsilanti"
+      ],
+      "linked": 0,
+      "raw": [
+        "Independent Researcher IEEE Senior Member Austin",
+        "Independent Researcher IEEE Senior Member Austin",
+        "Independent Researcher IEEE Senior Member Austin"
+      ],
+      "oa": [
+        "michigan technological university"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 111967,
+      "arxiv_id": "2608.05980",
+      "reason": "html_evidence_not_actually_organisation",
+      "html_orgs": [],
+      "provisional": [],
+      "linked": 0,
+      "raw": [
+        "Orange",
+        "Orange",
+        "Orange"
+      ],
+      "oa": [
+        "orange (poland)"
+      ],
+      "post_fix_would_be": "oa_primary"
+    },
+    {
+      "paper_id": 135301,
+      "arxiv_id": "2603.10529",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "dynamic legged systems istituto italiano di tecnologia (iit) genova, italy"
+      ],
+      "provisional": [
+        "dynamic legged systems istituto italiano di tecnologia (iit) genova, italy"
+      ],
+      "linked": 0,
+      "raw": [
+        "Dynamic Legged Systems Istituto Italiano di Tecnologia (IIT) Genova, Italy",
+        "Dynamic Legged Systems Istituto Italiano di Tecnologia (IIT) Genova, Italy",
+        "Dynamic Legged Systems Istituto Italiano di Tecnologia (IIT) Genova, Italy"
+      ],
+      "oa": [
+        "italian institute of technology"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 136263,
+      "arxiv_id": "2609.01554",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "brightskies, egypt"
+      ],
+      "provisional": [
+        "brightskies, egypt"
+      ],
+      "linked": 0,
+      "raw": [
+        "Brightskies, Egypt",
+        "Brightskies, Egypt",
+        "Brightskies, Egypt"
+      ],
+      "oa": [
+        "brightspec"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 136429,
+      "arxiv_id": "2410.10136",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "minerva cq, sunnyvale, california, usa"
+      ],
+      "provisional": [
+        "minerva cq, sunnyvale, california, usa"
+      ],
+      "linked": 0,
+      "raw": [
+        "Minerva CQ, Sunnyvale, California, USA",
+        "Minerva CQ, Sunnyvale, California, USA",
+        "Minerva CQ, Sunnyvale, California, USA"
+      ],
+      "oa": [
+        "sunnyvale public library"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 137254,
+      "arxiv_id": "2609.02652",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "scub , bordeaux , france"
+      ],
+      "provisional": [
+        "scub , bordeaux , france"
+      ],
+      "linked": 0,
+      "raw": [
+        "Scub , Bordeaux , France"
+      ],
+      "oa": [
+        "science club"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 137779,
+      "arxiv_id": "2512.03070",
+      "reason": "html_affiliation_parsing_failed",
+      "html_orgs": [
+        "avenue du g\u00e9n\u00e9ral leclerc",
+        "l\u00e9onard de vinci p\u00f4le universitaire"
+      ],
+      "provisional": [
+        "avenue du g\u00e9n\u00e9ral leclerc",
+        "l\u00e9onard de vinci p\u00f4le universitaire"
+      ],
+      "linked": 0,
+      "raw": [
+        "\u00c9cole",
+        "\u00c9cole",
+        "\u00c9cole"
+      ],
+      "oa": [
+        "laboratoire d\u2019informatique parall\u00e9lisme r\u00e9seaux algorithmes distribu\u00e9s",
+        "p\u00f4le l\u00e9onard de vinci"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 137973,
+      "arxiv_id": "2609.02149",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "baidu, inc., beijing, china",
+        "ningxia electric power engineering co"
+      ],
+      "provisional": [
+        "baidu, inc., beijing, china",
+        "ningxia electric power engineering co"
+      ],
+      "linked": 0,
+      "raw": [
+        "Baidu, Inc., Beijing, China",
+        "Baidu, Inc., Beijing, China",
+        "Baidu, Inc., Beijing, China"
+      ],
+      "oa": [
+        "baidu (china)"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 137977,
+      "arxiv_id": "2609.02760",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "ai lab of enakronic pc aspasias 72, 15561, cholargos, greece 0000-0003-3887-9789",
+        "ai lab of enakronic pc aspasias 72, 15561, cholargos, greece 0000-0003-4475-6232",
+        "ai lab of enakronic pc aspasias 72, 15561, cholargos, greece 0009-0009-7391-4659"
+      ],
+      "provisional": [
+        "ai lab of enakronic pc aspasias 72, 15561, cholargos, greece 0000-0003-3887-9789",
+        "ai lab of enakronic pc aspasias 72, 15561, cholargos, greece 0000-0003-4475-6232",
+        "ai lab of enakronic pc aspasias 72, 15561, cholargos, greece 0009-0009-7391-4659"
+      ],
+      "linked": 0,
+      "raw": [
+        "AI lab of enakronIC PC Aspasias 72, 15561, Cholargos, Greece 0000-0003-4475-6232",
+        "AI lab of enakronIC PC Aspasias 72, 15561, Cholargos, Greece 0000-0003-4475-6232",
+        "AI lab of enakronIC PC Aspasias 72, 15561, Cholargos, Greece 0000-0003-4475-6232"
+      ],
+      "oa": [
+        "omron (japan)",
+        "university of patras"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 138035,
+      "arxiv_id": "2609.03436",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "johannes kepler university"
+      ],
+      "provisional": [
+        "johannes kepler university"
+      ],
+      "linked": 0,
+      "raw": [
+        "Johannes Kepler University"
+      ],
+      "oa": [
+        "johannes kepler university of linz"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 138044,
+      "arxiv_id": "2609.03450",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "glasp"
+      ],
+      "provisional": [
+        "glasp"
+      ],
+      "linked": 0,
+      "raw": [
+        "Glasp"
+      ],
+      "oa": [
+        "central glass (japan)",
+        "institute of glass"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 138103,
+      "arxiv_id": "2609.03565",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "genisom ai, beijing, china"
+      ],
+      "provisional": [
+        "genisom ai, beijing, china"
+      ],
+      "linked": 0,
+      "raw": [
+        "GENISOM AI, Beijing, China",
+        "GENISOM AI, Beijing, China",
+        "GENISOM AI, Beijing, China"
+      ],
+      "oa": [
+        "genecast (china)"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 138338,
+      "arxiv_id": "2609.04024",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "peacetech vc, israel"
+      ],
+      "provisional": [
+        "peacetech vc, israel"
+      ],
+      "linked": 0,
+      "raw": [
+        "PeaceTech VC, Israel"
+      ],
+      "oa": [
+        "united states institute of peace"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 183707,
+      "arxiv_id": "2609.05725",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "poznan university of technology"
+      ],
+      "provisional": [
+        "poznan university of technology"
+      ],
+      "linked": 0,
+      "raw": [
+        "Poznan University of Technology",
+        "Poznan University of Technology"
+      ],
+      "oa": [
+        "pozna\u0144 university of technology"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 184474,
+      "arxiv_id": "2609.06058",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "department of computer science"
+      ],
+      "provisional": [
+        "department of computer science"
+      ],
+      "linked": 0,
+      "raw": [
+        "Department of Computer Science"
+      ],
+      "oa": [
+        "the university of texas at austin"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 184518,
+      "arxiv_id": "2609.06129",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "redrob"
+      ],
+      "provisional": [
+        "redrob"
+      ],
+      "linked": 0,
+      "raw": [
+        "Redrob",
+        "ORCID 0009-0002-8108-5407"
+      ],
+      "oa": [
+        "petrobras (brazil)"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 184988,
+      "arxiv_id": "2609.07152",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "mentomy ai almer\u00eda"
+      ],
+      "provisional": [
+        "mentomy ai almer\u00eda"
+      ],
+      "linked": 0,
+      "raw": [
+        "Mentomy AI Almer\u00eda",
+        "Mentomy AI Almer\u00eda"
+      ],
+      "oa": [
+        "mentor"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 186444,
+      "arxiv_id": "2408.10608",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "ling chen"
+      ],
+      "provisional": [
+        "ling chen"
+      ],
+      "linked": 0,
+      "raw": [
+        "Ling Chen",
+        "Ling Chen",
+        "Ling Chen"
+      ],
+      "oa": [
+        "australian regenerative medicine institute",
+        "monash university",
+        "national university of singapore",
+        "university of technology sydney"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 187067,
+      "arxiv_id": "2609.10016",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "continker"
+      ],
+      "provisional": [
+        "continker"
+      ],
+      "linked": 0,
+      "raw": [
+        "Continker"
+      ],
+      "oa": [
+        "tinker air force base"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 187209,
+      "arxiv_id": "2609.10357",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "brightmind ai",
+        "university of texas"
+      ],
+      "provisional": [
+        "brightmind ai",
+        "university of texas"
+      ],
+      "linked": 0,
+      "raw": [
+        "BrightMind AI",
+        "BrightMind AI",
+        "University of Texas"
+      ],
+      "oa": [
+        "bright cloud international (united states)",
+        "the university of texas at arlington"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 187797,
+      "arxiv_id": "2602.14948",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "skygrid, austin, tx, 78727"
+      ],
+      "provisional": [
+        "skygrid, austin, tx, 78727"
+      ],
+      "linked": 0,
+      "raw": [
+        "SkyGrid, Austin, TX, 78727",
+        "SkyGrid, Austin, TX, 78727",
+        "Note: Machine Learning Research Engineer"
+      ],
+      "oa": [
+        "machine science"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 188253,
+      "arxiv_id": "2609.11804",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "compvis @ lmu munich, germany"
+      ],
+      "provisional": [
+        "compvis @ lmu munich, germany"
+      ],
+      "linked": 0,
+      "raw": [
+        "CompVis @ LMU Munich, Germany",
+        "CompVis @ LMU Munich, Germany",
+        "CompVis @ LMU Munich, Germany"
+      ],
+      "oa": [
+        "lmu klinikum",
+        "ludwig-maximilians-universit\u00e4t m\u00fcnchen",
+        "munich center for machine learning"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 191774,
+      "arxiv_id": "2609.12748",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "philflow, schenefeld, germany"
+      ],
+      "provisional": [
+        "philflow, schenefeld, germany"
+      ],
+      "linked": 0,
+      "raw": [
+        "Philflow, Schenefeld, Germany"
+      ],
+      "oa": [
+        "philips (finland)"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 192550,
+      "arxiv_id": "2609.13940",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "ai for sustainable industry ibm research europe dublin, ireland",
+        "ibm t.j. watson research center ibm research ny"
+      ],
+      "provisional": [
+        "ai for sustainable industry ibm research europe dublin, ireland",
+        "ibm t.j. watson research center ibm research ny"
+      ],
+      "linked": 0,
+      "raw": [
+        "AI for Sustainable Industry IBM Research Europe Dublin, Ireland",
+        "AI for Sustainable Industry IBM Research Europe Dublin, Ireland",
+        "AI for Sustainable Industry IBM Research Europe Dublin, Ireland"
+      ],
+      "oa": [
+        "dyson (united kingdom)",
+        "ibm (united states)",
+        "ibm research - ireland",
+        "imperial college london"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 193733,
+      "arxiv_id": "2609.15219",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "yun zhi li ai institute"
+      ],
+      "provisional": [
+        "yun zhi li ai institute"
+      ],
+      "linked": 0,
+      "raw": [
+        "Yun Zhi Li AI Institute"
+      ],
+      "oa": [
+        "xing wei college"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 195029,
+      "arxiv_id": "2609.16964",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "engineering mehran university of engineering"
+      ],
+      "provisional": [
+        "engineering mehran university of engineering"
+      ],
+      "linked": 0,
+      "raw": [
+        "Engineering Mehran University of Engineering",
+        "Engineering Mehran University of Engineering",
+        "Engineering Mehran University of Engineering"
+      ],
+      "oa": [
+        "mehran university of engineering and technology",
+        "university of sindh"
+      ],
+      "post_fix_would_be": "conflict"
+    },
+    {
+      "paper_id": 195087,
+      "arxiv_id": "2609.17101",
+      "reason": "html_evidence_not_actually_organisation",
+      "html_orgs": [],
+      "provisional": [],
+      "linked": 0,
+      "raw": [
+        "University"
+      ],
+      "oa": [
+        "polytechnic university of timi\u015foara"
+      ],
+      "post_fix_would_be": "oa_primary"
+    },
+    {
+      "paper_id": 195098,
+      "arxiv_id": "2609.17118",
+      "reason": "ror_lookup_canonicalisation_miss",
+      "html_orgs": [
+        "school of computer and communication sciences"
+      ],
+      "provisional": [
+        "school of computer and communication sciences"
+      ],
+      "linked": 0,
+      "raw": [
+        "School of Computer and Communication Sciences",
+        "School of Computer and Communication Sciences",
+        "School of Computer and Communication Sciences"
+      ],
+      "oa": [
+        "\u00e9cole polytechnique f\u00e9d\u00e9rale de lausanne"
+      ],
+      "post_fix_would_be": "conflict"
+    }
+  ],
+  "root_cause_summary": "Verification load_html_orgs ignored evidence_value when organisation_id was NULL, while OpenAlex path used evidence_value. Combined with ROR non-links (~43% of window HTML rows lack organisation_id), this falsely labelled 33 papers as OA-primary. Fix: provisional names from cleaned HTML evidence_value. Does not mutate stored affiliations."
+}

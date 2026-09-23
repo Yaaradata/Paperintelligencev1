@@ -1,0 +1,98 @@
+{
+  "phase0_root_cause_counts": {
+    "ror_lookup_canonicalisation_miss": 29,
+    "html_evidence_not_actually_organisation": 3,
+    "html_affiliation_parsing_failed": 1
+  },
+  "phase0_summary": "Verification load_html_orgs ignored evidence_value when organisation_id was NULL, while OpenAlex path used evidence_value. Combined with ROR non-links (~43% of window HTML rows lack organisation_id), this falsely labelled 33 papers as OA-primary. Fix: provisional names from cleaned HTML evidence_value. Does not mutate stored affiliations.",
+  "phase1": {
+    "processed": 6504,
+    "wall_seconds": 192.585,
+    "papers_per_minute": 2026.32,
+    "outcomes": {
+      "verified_html_primary": 5430,
+      "needs_openalex_lookup": 992,
+      "verified_openalex_primary": 38,
+      "partial_agreement": 6,
+      "conflict": 34,
+      "verified_agreement": 4
+    },
+    "errors": 0,
+    "external": {
+      "cache_hits": 82,
+      "pi_evidence_hits": 82,
+      "cache_misses": 0,
+      "api_calls": 0,
+      "429s": 0,
+      "retries": 0,
+      "pdf_fallbacks": 0,
+      "errors": 0
+    }
+  },
+  "phase2": {
+    "queue": 992,
+    "processed": 992,
+    "wall_seconds": 191.23,
+    "papers_per_minute": 311.25,
+    "outcomes": {
+      "unresolved": 973,
+      "verified_openalex_primary": 19
+    },
+    "external": {
+      "cache_hits": 924,
+      "pi_evidence_hits": 0,
+      "cache_misses": 68,
+      "api_calls": 68,
+      "429s": 0,
+      "retries": 0,
+      "pdf_fallbacks": 0,
+      "errors": 66
+    },
+    "actual_api_calls": 68,
+    "cache_hits": 924,
+    "429s": 0,
+    "retries": 0
+  },
+  "phase3": {
+    "queue_size": 295,
+    "reason_counts": {
+      "unresolved_quality_selected": 254,
+      "partial_extra_orgs": 6,
+      "newsletter_linkedin_uncertainty": 25,
+      "oa_primary_notable_no_html": 16,
+      "disjoint_html_oa": 19,
+      "notable_org_uncertainty": 2
+    },
+    "pdfs_downloaded": 0,
+    "pdfs_extracted": 0,
+    "note": "PDF text extraction not implemented in v001; queue persisted as needs_pdf_review for manual/primary-source follow-up. No binary downloads."
+  },
+  "final_outcome_counts": {
+    "verified_html_primary": 5430,
+    "needs_pdf_review": 295,
+    "unresolved": 719,
+    "verified_openalex_primary": 41,
+    "conflict": 15,
+    "verified_agreement": 4
+  },
+  "author_conflicts_on_paper_conflicts": {
+    "author_pairs": 55,
+    "author_disjoint": 49,
+    "author_partial": 0
+  },
+  "accepted_affiliation_policy": {
+    "verified_agreement": "accept either (identical sets)",
+    "partial_agreement": "keep both evidence tiers separate; do not union; prefer HTML for primary display when present",
+    "verified_html_primary": "accept HTML/ROR evidence as primary",
+    "verified_openalex_primary": "accept OA only when HTML has no usable org text; do not overwrite HTML rows",
+    "conflict": "manual review \u2014 do not auto-merge",
+    "unresolved": "no org evidence yet",
+    "needs_pdf_review": "primary-source PDF/manual queue"
+  },
+  "manual_review_queue_size": 1029,
+  "manual_review_by_outcome": {
+    "needs_pdf_review": 295,
+    "unresolved": 719,
+    "conflict": 15
+  }
+}

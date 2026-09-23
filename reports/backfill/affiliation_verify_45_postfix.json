@@ -1,0 +1,1096 @@
+{
+  "generated_at": "2026-09-21T09:35:05.189155+00:00",
+  "args": {
+    "workers": 4,
+    "verification_version": "html-oa-v004-postfix",
+    "date_from": "2026-09-01",
+    "date_until": "2026-09-15",
+    "set": "both-sep",
+    "resume": false,
+    "dry_run": false,
+    "allow_openalex_network": false,
+    "phase": "local"
+  },
+  "enqueued_new": 0,
+  "enqueued_total_ids": 45,
+  "run": {
+    "workers": 4,
+    "verification_version": "html-oa-v004-postfix",
+    "reclaimed_stale": 0,
+    "processed": 0,
+    "errors": 0,
+    "outcomes": {},
+    "wall_seconds": 0.109,
+    "papers_per_minute": 0.0,
+    "external": {
+      "cache_hits": 0,
+      "pi_evidence_hits": 0,
+      "cache_misses": 0,
+      "api_calls": 0,
+      "429s": 0,
+      "retries": 0,
+      "pdf_fallbacks": 0,
+      "errors": 0
+    },
+    "status_counts": {
+      "complete": 45
+    },
+    "timing_ms_avg": null
+  },
+  "run_details": [],
+  "investigation_by_outcome": {
+    "partial_agreement": [
+      {
+        "paper_id": 9160,
+        "arxiv_id": "2601.03163",
+        "html_orgs": [
+          "bbmri-eric, neue stiftingtalstrasse 2/b/6, graz, 8010, austria",
+          "masaryk memorial cancer institute",
+          "masaryk university"
+        ],
+        "oa_orgs": [
+          "masaryk memorial cancer institute",
+          "masaryk university"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [],
+          "overlap": [
+            "masaryk memorial cancer institute",
+            "masaryk university"
+          ],
+          "html_only": [
+            "bbmri-eric, neue stiftingtalstrasse 2/b/6, graz, 8010, austria"
+          ]
+        },
+        "title": "LSP-DETR: Efficient and Scalable Nuclei Segmentation in Whole-Slide Images"
+      },
+      {
+        "paper_id": 12036,
+        "arxiv_id": "2510.20721",
+        "html_orgs": [
+          "carnegie mellon university",
+          "fujitsu research of america"
+        ],
+        "oa_orgs": [
+          "carnegie mellon university",
+          "fujitsu (china)",
+          "fujitsu (japan)",
+          "fujitsu (united states)"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "fujitsu (china)",
+            "fujitsu (japan)",
+            "fujitsu (united states)"
+          ],
+          "overlap": [
+            "carnegie mellon university"
+          ],
+          "html_only": [
+            "fujitsu research of america"
+          ]
+        },
+        "title": "User Perceptions vs. Proxy LLM Judges: Privacy and Helpfulness in LLM Responses to Privacy-Sensitive Scenarios"
+      },
+      {
+        "paper_id": 132759,
+        "arxiv_id": "2604.24622",
+        "html_orgs": [
+          "enacta ai , shenzhen , china",
+          "southern university of science and technology",
+          "tsinghua university",
+          "university of chinese academy of sciences",
+          "xi\u2019an jiaotong university"
+        ],
+        "oa_orgs": [
+          "nova management (united states)",
+          "southern university of science and technology",
+          "university of science and technology of china",
+          "xi'an jiaotong university"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "nova management (united states)",
+            "university of science and technology of china",
+            "xi'an jiaotong university"
+          ],
+          "overlap": [
+            "southern university of science and technology"
+          ],
+          "html_only": [
+            "enacta ai , shenzhen , china",
+            "tsinghua university",
+            "university of chinese academy of sciences",
+            "xi\u2019an jiaotong university"
+          ]
+        },
+        "title": "CF-VLA: Efficient Coarse-to-Fine Action Generation for Vision-Language-Action Policies"
+      },
+      {
+        "paper_id": 135191,
+        "arxiv_id": "2509.06285",
+        "html_orgs": [
+          "hong kong university of science and technology",
+          "university of science and technology beijing"
+        ],
+        "oa_orgs": [
+          "aerospace institute (germany)",
+          "hong kong university of science and technology",
+          "national university of defense technology",
+          "university of science and technology beijing",
+          "university of toronto"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "aerospace institute (germany)",
+            "national university of defense technology",
+            "university of toronto"
+          ],
+          "overlap": [
+            "hong kong university of science and technology",
+            "university of science and technology beijing"
+          ],
+          "html_only": []
+        },
+        "title": "DCReg: Decoupled Characterization for Efficient Degenerate LiDAR Registration"
+      },
+      {
+        "paper_id": 186461,
+        "arxiv_id": "2504.00285",
+        "html_orgs": [
+          "department of cognitive science",
+          "university of california san diego"
+        ],
+        "oa_orgs": [
+          "university of california san diego"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [],
+          "overlap": [
+            "university of california san diego"
+          ],
+          "html_only": [
+            "department of cognitive science"
+          ]
+        },
+        "title": "When Do Large Language Models Exhibit Unsolicited Deception?"
+      },
+      {
+        "paper_id": 188127,
+        "arxiv_id": "2609.11486",
+        "html_orgs": [
+          "ai center",
+          "lomonosov moscow state university",
+          "msu institute for artificial intelligence"
+        ],
+        "oa_orgs": [
+          "lomonosov moscow state university",
+          "moscow state university"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "moscow state university"
+          ],
+          "overlap": [
+            "lomonosov moscow state university"
+          ],
+          "html_only": [
+            "ai center",
+            "msu institute for artificial intelligence"
+          ]
+        },
+        "title": "FreeFlow: A Bias-free Hierarchical Transformer for Optical Flow Estimation"
+      }
+    ],
+    "conflict": [
+      {
+        "paper_id": 12243,
+        "arxiv_id": "2601.10511",
+        "html_orgs": [
+          "in some references, a default value of \u03b4 = 1 / 4 \\delta=1/4 is used; one can always obtain a desired smaller value of \u03b4 \\delta via median-amplification",
+          "national security authority"
+        ],
+        "oa_orgs": [
+          "national security agency",
+          "university of maryland, college park"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "national security agency",
+            "university of maryland, college park"
+          ],
+          "overlap": [],
+          "html_only": [
+            "in some references, a default value of \u03b4 = 1 / 4 \\delta=1/4 is used; one can always obtain a desired smaller value of \u03b4 \\delta via median-amplification",
+            "national security authority"
+          ]
+        },
+        "title": "Scalable Algorithms for Approximate DNF Model Counting"
+      },
+      {
+        "paper_id": 18943,
+        "arxiv_id": "2601.14810",
+        "html_orgs": [
+          "inria-saclay"
+        ],
+        "oa_orgs": [
+          "institut national de recherche en sciences et technologies du num\u00e9rique",
+          "laboratoire interdisciplinaire des sciences du num\u00e9rique",
+          "universit\u00e9 paris-saclay"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "institut national de recherche en sciences et technologies du num\u00e9rique",
+            "laboratoire interdisciplinaire des sciences du num\u00e9rique",
+            "universit\u00e9 paris-saclay"
+          ],
+          "overlap": [],
+          "html_only": [
+            "inria-saclay"
+          ]
+        },
+        "title": "Learning and extrapolating scale-invariant processes"
+      },
+      {
+        "paper_id": 27646,
+        "arxiv_id": "2512.13742",
+        "html_orgs": [
+          "engineering and intelligent systems",
+          "university of engineering",
+          "university of engineering and technology"
+        ],
+        "oa_orgs": [
+          "khulna university of engineering and technology",
+          "queen's university belfast",
+          "university of ulster",
+          "wichita state university"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "khulna university of engineering and technology",
+            "queen's university belfast",
+            "university of ulster",
+            "wichita state university"
+          ],
+          "overlap": [],
+          "html_only": [
+            "engineering and intelligent systems",
+            "university of engineering",
+            "university of engineering and technology"
+          ]
+        },
+        "title": "DL$^3$M: A Vision-to-Language Framework for Expert-Level Medical Reasoning through Deep Learning and Large Language Models"
+      },
+      {
+        "paper_id": 27771,
+        "arxiv_id": "2602.18613",
+        "html_orgs": [
+          "ozyegin university"
+        ],
+        "oa_orgs": [
+          "\u00f6zye\u011fin university"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "\u00f6zye\u011fin university"
+          ],
+          "overlap": [],
+          "html_only": [
+            "ozyegin university"
+          ]
+        },
+        "title": "Diagnosing LLM Reranker Behavior Under Fixed Evidence Pools"
+      },
+      {
+        "paper_id": 31691,
+        "arxiv_id": "2603.02790",
+        "html_orgs": [
+          "departments of biomedical engineering and physics",
+          "informatics institute",
+          "oncode institute",
+          "radboud university",
+          "the consortium",
+          "university of amsterdam"
+        ],
+        "oa_orgs": [
+          "clinical research consortium"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "clinical research consortium"
+          ],
+          "overlap": [],
+          "html_only": [
+            "departments of biomedical engineering and physics",
+            "informatics institute",
+            "oncode institute",
+            "radboud university",
+            "the consortium",
+            "university of amsterdam"
+          ]
+        },
+        "title": "Designing UNICORN: a Unified Benchmark for Imaging in Computational Pathology, Radiology, and Natural Language"
+      },
+      {
+        "paper_id": 75641,
+        "arxiv_id": "2605.31291",
+        "html_orgs": [
+          "epfl, lausanne, switzerland",
+          "radio t\u00e9l\u00e9vision suisse"
+        ],
+        "oa_orgs": [
+          "swiss broadcasting corporation",
+          "\u00e9cole polytechnique f\u00e9d\u00e9rale de lausanne"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "swiss broadcasting corporation",
+            "\u00e9cole polytechnique f\u00e9d\u00e9rale de lausanne"
+          ],
+          "overlap": [],
+          "html_only": [
+            "epfl, lausanne, switzerland",
+            "radio t\u00e9l\u00e9vision suisse"
+          ]
+        },
+        "title": "Contextual Scalarisation Thompson Sampling for multi-objective decisions in public media"
+      },
+      {
+        "paper_id": 106442,
+        "arxiv_id": "2603.14841",
+        "html_orgs": [
+          "american center for mobility ypsilanti"
+        ],
+        "oa_orgs": [
+          "michigan technological university"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "michigan technological university"
+          ],
+          "overlap": [],
+          "html_only": [
+            "american center for mobility ypsilanti"
+          ]
+        },
+        "title": "Real-Time Driver Safety Scoring Through Inverse Crash Probability Modeling"
+      },
+      {
+        "paper_id": 111967,
+        "arxiv_id": "2608.05980",
+        "html_orgs": [
+          "orange"
+        ],
+        "oa_orgs": [
+          "orange (poland)"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "orange (poland)"
+          ],
+          "overlap": [],
+          "html_only": [
+            "orange"
+          ]
+        },
+        "title": "How Far Do Simple Transformations Translate Across Text Embedding Models?"
+      },
+      {
+        "paper_id": 135301,
+        "arxiv_id": "2603.10529",
+        "html_orgs": [
+          "dynamic legged systems istituto italiano di tecnologia (iit) genova, italy"
+        ],
+        "oa_orgs": [
+          "italian institute of technology"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "italian institute of technology"
+          ],
+          "overlap": [],
+          "html_only": [
+            "dynamic legged systems istituto italiano di tecnologia (iit) genova, italy"
+          ]
+        },
+        "title": "BinWalker: Development and Field Evaluation of a Quadruped Manipulator Platform for Sustainable Litter Collection"
+      },
+      {
+        "paper_id": 136263,
+        "arxiv_id": "2609.01554",
+        "html_orgs": [
+          "brightskies, egypt"
+        ],
+        "oa_orgs": [
+          "brightspec"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "brightspec"
+          ],
+          "overlap": [],
+          "html_only": [
+            "brightskies, egypt"
+          ]
+        },
+        "title": "BS: Take the Hint - Interactive Multitracer PET/CT Lesion Segmentation with a Scribble-Conditioned ResEnc U-Net"
+      },
+      {
+        "paper_id": 136429,
+        "arxiv_id": "2410.10136",
+        "html_orgs": [
+          "minerva cq, sunnyvale, california, usa"
+        ],
+        "oa_orgs": [
+          "sunnyvale public library"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "sunnyvale public library"
+          ],
+          "overlap": [],
+          "html_only": [
+            "minerva cq, sunnyvale, california, usa"
+          ]
+        },
+        "title": "Beyond-RAG: Question Identification and Answer Generation in Real-Time Conversations"
+      },
+      {
+        "paper_id": 137254,
+        "arxiv_id": "2609.02652",
+        "html_orgs": [
+          "scub , bordeaux , france"
+        ],
+        "oa_orgs": [
+          "science club"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "science club"
+          ],
+          "overlap": [],
+          "html_only": [
+            "scub , bordeaux , france"
+          ]
+        },
+        "title": "Unfolding the Leech Lattice: Fused Multi-Shell Decoding and VRAM Layouts for 2-Bit LLM Weights"
+      },
+      {
+        "paper_id": 137779,
+        "arxiv_id": "2512.03070",
+        "html_orgs": [
+          "avenue du g\u00e9n\u00e9ral leclerc",
+          "l\u00e9onard de vinci p\u00f4le universitaire"
+        ],
+        "oa_orgs": [
+          "laboratoire d\u2019informatique parall\u00e9lisme r\u00e9seaux algorithmes distribu\u00e9s",
+          "p\u00f4le l\u00e9onard de vinci"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "laboratoire d\u2019informatique parall\u00e9lisme r\u00e9seaux algorithmes distribu\u00e9s",
+            "p\u00f4le l\u00e9onard de vinci"
+          ],
+          "overlap": [],
+          "html_only": [
+            "avenue du g\u00e9n\u00e9ral leclerc",
+            "l\u00e9onard de vinci p\u00f4le universitaire"
+          ]
+        },
+        "title": "Mixed Data Clustering Survey and Challenges"
+      },
+      {
+        "paper_id": 137973,
+        "arxiv_id": "2609.02149",
+        "html_orgs": [
+          "baidu, inc., beijing, china",
+          "ningxia electric power engineering co"
+        ],
+        "oa_orgs": [
+          "baidu (china)"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "baidu (china)"
+          ],
+          "overlap": [],
+          "html_only": [
+            "baidu, inc., beijing, china",
+            "ningxia electric power engineering co"
+          ]
+        },
+        "title": "OmegaUse-SOP: SOP Engineering for Professional Computer Use from Human Demonstrations"
+      },
+      {
+        "paper_id": 137977,
+        "arxiv_id": "2609.02760",
+        "html_orgs": [
+          "ai lab of enakronic pc aspasias 72, 15561, cholargos, greece 0000-0003-3887-9789",
+          "ai lab of enakronic pc aspasias 72, 15561, cholargos, greece 0000-0003-4475-6232",
+          "ai lab of enakronic pc aspasias 72, 15561, cholargos, greece 0009-0009-7391-4659"
+        ],
+        "oa_orgs": [
+          "omron (japan)",
+          "university of patras"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "omron (japan)",
+            "university of patras"
+          ],
+          "overlap": [],
+          "html_only": [
+            "ai lab of enakronic pc aspasias 72, 15561, cholargos, greece 0000-0003-3887-9789",
+            "ai lab of enakronic pc aspasias 72, 15561, cholargos, greece 0000-0003-4475-6232",
+            "ai lab of enakronic pc aspasias 72, 15561, cholargos, greece 0009-0009-7391-4659"
+          ]
+        },
+        "title": "Measurement-Driven Sub-Network Selection for On-Premise Retrieval-Augmented Factory Agents"
+      },
+      {
+        "paper_id": 138035,
+        "arxiv_id": "2609.03436",
+        "html_orgs": [
+          "johannes kepler university"
+        ],
+        "oa_orgs": [
+          "johannes kepler university of linz"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "johannes kepler university of linz"
+          ],
+          "overlap": [],
+          "html_only": [
+            "johannes kepler university"
+          ]
+        },
+        "title": "It's the Problem, Not the Path: Budget and Difficulty Confounds in LLM Reasoning Trajectories"
+      },
+      {
+        "paper_id": 138044,
+        "arxiv_id": "2609.03450",
+        "html_orgs": [
+          "glasp"
+        ],
+        "oa_orgs": [
+          "central glass (japan)",
+          "institute of glass"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "central glass (japan)",
+            "institute of glass"
+          ],
+          "overlap": [],
+          "html_only": [
+            "glasp"
+          ]
+        },
+        "title": "Plan Pointers and Record-Directive Form in Budgeted Verification of Inherited Agent Memory"
+      },
+      {
+        "paper_id": 138103,
+        "arxiv_id": "2609.03565",
+        "html_orgs": [
+          "genisom ai, beijing, china"
+        ],
+        "oa_orgs": [
+          "genecast (china)"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "genecast (china)"
+          ],
+          "overlap": [],
+          "html_only": [
+            "genisom ai, beijing, china"
+          ]
+        },
+        "title": "Toward Physically Grounded JEPA World Models for Goal-Conditioned Robotic Planning"
+      },
+      {
+        "paper_id": 138338,
+        "arxiv_id": "2609.04024",
+        "html_orgs": [
+          "peacetech vc, israel"
+        ],
+        "oa_orgs": [
+          "united states institute of peace"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "united states institute of peace"
+          ],
+          "overlap": [],
+          "html_only": [
+            "peacetech vc, israel"
+          ]
+        },
+        "title": "Instruction Duplication as an Inference-Time Control Primitive"
+      },
+      {
+        "paper_id": 183707,
+        "arxiv_id": "2609.05725",
+        "html_orgs": [
+          "poznan university of technology"
+        ],
+        "oa_orgs": [
+          "pozna\u0144 university of technology"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "pozna\u0144 university of technology"
+          ],
+          "overlap": [],
+          "html_only": [
+            "poznan university of technology"
+          ]
+        },
+        "title": "WIP: Energy-Efficient LLM-Based Serving Cluster Formulation in Cell-Free Massive MIMO"
+      },
+      {
+        "paper_id": 184474,
+        "arxiv_id": "2609.06058",
+        "html_orgs": [
+          "department of computer science"
+        ],
+        "oa_orgs": [
+          "the university of texas at austin"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "the university of texas at austin"
+          ],
+          "overlap": [],
+          "html_only": [
+            "department of computer science"
+          ]
+        },
+        "title": "GradeTrap: Authority Cues in Images Shift VLM Judgments Despite Explicit Instructions to Ignore Them"
+      },
+      {
+        "paper_id": 184518,
+        "arxiv_id": "2609.06129",
+        "html_orgs": [
+          "redrob"
+        ],
+        "oa_orgs": [
+          "petrobras (brazil)"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "petrobras (brazil)"
+          ],
+          "overlap": [],
+          "html_only": [
+            "redrob"
+          ]
+        },
+        "title": "Protocol Compression Changes Which Party Pays: Bilateral Cost in Cross-Organization LLM Agent Communication"
+      },
+      {
+        "paper_id": 184988,
+        "arxiv_id": "2609.07152",
+        "html_orgs": [
+          "mentomy ai almer\u00eda"
+        ],
+        "oa_orgs": [
+          "mentor"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "mentor"
+          ],
+          "overlap": [],
+          "html_only": [
+            "mentomy ai almer\u00eda"
+          ]
+        },
+        "title": "An Auditable Symbolic-RAG-Generative AI Architecture for Goal-Oriented Conversation Orchestration"
+      },
+      {
+        "paper_id": 186444,
+        "arxiv_id": "2408.10608",
+        "html_orgs": [
+          "ling chen"
+        ],
+        "oa_orgs": [
+          "australian regenerative medicine institute",
+          "monash university",
+          "national university of singapore",
+          "university of technology sydney"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "australian regenerative medicine institute",
+            "monash university",
+            "national university of singapore",
+            "university of technology sydney"
+          ],
+          "overlap": [],
+          "html_only": [
+            "ling chen"
+          ]
+        },
+        "title": "BTBR: A Bayesian-Theory-Driven Probabilistic-Fuzzy Framework for Implicit Bias Removal in Large Language Models"
+      },
+      {
+        "paper_id": 187067,
+        "arxiv_id": "2609.10016",
+        "html_orgs": [
+          "continker"
+        ],
+        "oa_orgs": [
+          "tinker air force base"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "tinker air force base"
+          ],
+          "overlap": [],
+          "html_only": [
+            "continker"
+          ]
+        },
+        "title": "MetroLLM-Bench: Evaluating Language Models as Transit Kiosk Runtimes"
+      },
+      {
+        "paper_id": 187209,
+        "arxiv_id": "2609.10357",
+        "html_orgs": [
+          "brightmind ai",
+          "university of texas"
+        ],
+        "oa_orgs": [
+          "bright cloud international (united states)",
+          "the university of texas at arlington"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "bright cloud international (united states)",
+            "the university of texas at arlington"
+          ],
+          "overlap": [],
+          "html_only": [
+            "brightmind ai",
+            "university of texas"
+          ]
+        },
+        "title": "A Later Test Set Is Not a New Domain: Pretraining Familiarity Survives a Contamination-Free Hold-Out"
+      },
+      {
+        "paper_id": 187797,
+        "arxiv_id": "2602.14948",
+        "html_orgs": [
+          "skygrid, austin, tx, 78727"
+        ],
+        "oa_orgs": [
+          "machine science"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "machine science"
+          ],
+          "overlap": [],
+          "html_only": [
+            "skygrid, austin, tx, 78727"
+          ]
+        },
+        "title": "Kalman Filtering Based Flight Management System Modeling for AAM Aircraft"
+      },
+      {
+        "paper_id": 188253,
+        "arxiv_id": "2609.11804",
+        "html_orgs": [
+          "compvis @ lmu munich, germany"
+        ],
+        "oa_orgs": [
+          "lmu klinikum",
+          "ludwig-maximilians-universit\u00e4t m\u00fcnchen",
+          "munich center for machine learning"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "lmu klinikum",
+            "ludwig-maximilians-universit\u00e4t m\u00fcnchen",
+            "munich center for machine learning"
+          ],
+          "overlap": [],
+          "html_only": [
+            "compvis @ lmu munich, germany"
+          ]
+        },
+        "title": "Logit Refiner: Improving Visual Autoregressive Models via Intra-Scale Dependency Modeling"
+      },
+      {
+        "paper_id": 191774,
+        "arxiv_id": "2609.12748",
+        "html_orgs": [
+          "philflow, schenefeld, germany"
+        ],
+        "oa_orgs": [
+          "philips (finland)"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "philips (finland)"
+          ],
+          "overlap": [],
+          "html_only": [
+            "philflow, schenefeld, germany"
+          ]
+        },
+        "title": "The Mechanics of a Swarm: A Reproducible External Reconstruction of an Unintended Agent-Coordination Episode on a Third-Party Wiki"
+      },
+      {
+        "paper_id": 192550,
+        "arxiv_id": "2609.13940",
+        "html_orgs": [
+          "ai for sustainable industry ibm research europe dublin, ireland",
+          "ibm t.j. watson research center ibm research ny"
+        ],
+        "oa_orgs": [
+          "dyson (united kingdom)",
+          "ibm (united states)",
+          "ibm research - ireland",
+          "imperial college london"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "dyson (united kingdom)",
+            "ibm (united states)",
+            "ibm research - ireland",
+            "imperial college london"
+          ],
+          "overlap": [],
+          "html_only": [
+            "ai for sustainable industry ibm research europe dublin, ireland",
+            "ibm t.j. watson research center ibm research ny"
+          ]
+        },
+        "title": "Optimal Transport for Efficient, Unsupervised Anomaly Detection on Industrial Data"
+      },
+      {
+        "paper_id": 193733,
+        "arxiv_id": "2609.15219",
+        "html_orgs": [
+          "yun zhi li ai institute"
+        ],
+        "oa_orgs": [
+          "xing wei college"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "xing wei college"
+          ],
+          "overlap": [],
+          "html_only": [
+            "yun zhi li ai institute"
+          ]
+        },
+        "title": "From Ideas to Actions: A Public-Data Decision-Support Toolchain Across the Venture Lifecycle"
+      },
+      {
+        "paper_id": 195029,
+        "arxiv_id": "2609.16964",
+        "html_orgs": [
+          "engineering mehran university of engineering"
+        ],
+        "oa_orgs": [
+          "mehran university of engineering and technology",
+          "university of sindh"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "mehran university of engineering and technology",
+            "university of sindh"
+          ],
+          "overlap": [],
+          "html_only": [
+            "engineering mehran university of engineering"
+          ]
+        },
+        "title": "HUMAID-NER: A Disaster Tweet Dataset for Joint Named Entity Recognition and Event Classification via Uncertainty-Weighted Multitask Learning"
+      },
+      {
+        "paper_id": 195098,
+        "arxiv_id": "2609.17118",
+        "html_orgs": [
+          "school of computer and communication sciences"
+        ],
+        "oa_orgs": [
+          "\u00e9cole polytechnique f\u00e9d\u00e9rale de lausanne"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "\u00e9cole polytechnique f\u00e9d\u00e9rale de lausanne"
+          ],
+          "overlap": [],
+          "html_only": [
+            "school of computer and communication sciences"
+          ]
+        },
+        "title": "Enhancing Procedural Writing Through Personalized Example Retrieval: A Case Study on Cooking Recipes"
+      }
+    ],
+    "verified_agreement": [
+      {
+        "paper_id": 25693,
+        "arxiv_id": "2602.14048",
+        "html_orgs": [
+          "peking university"
+        ],
+        "oa_orgs": [
+          "peking university"
+        ],
+        "agreement": {
+          "exact": true,
+          "oa_only": [],
+          "overlap": [
+            "peking university"
+          ],
+          "html_only": []
+        },
+        "title": "ProAct: Harnessing Streaming Motion Generation and Agentic Reasoning for Real-Time Embodied Social Interaction"
+      },
+      {
+        "paper_id": 40754,
+        "arxiv_id": "2603.22437",
+        "html_orgs": [
+          "cornell tech",
+          "cornell university"
+        ],
+        "oa_orgs": [
+          "cornell tech",
+          "cornell university"
+        ],
+        "agreement": {
+          "exact": true,
+          "oa_only": [],
+          "overlap": [
+            "cornell tech",
+            "cornell university"
+          ],
+          "html_only": []
+        },
+        "title": "mmFHE: mmWave Sensing with End-to-End Fully Homomorphic Encryption"
+      },
+      {
+        "paper_id": 67096,
+        "arxiv_id": "2605.16879",
+        "html_orgs": [
+          "sichuan university"
+        ],
+        "oa_orgs": [
+          "sichuan university"
+        ],
+        "agreement": {
+          "exact": true,
+          "oa_only": [],
+          "overlap": [
+            "sichuan university"
+          ],
+          "html_only": []
+        },
+        "title": "Towards Generalized Image Manipulation Localization via Score-based Model"
+      },
+      {
+        "paper_id": 186232,
+        "arxiv_id": "2609.09002",
+        "html_orgs": [
+          "polytechnique montr\u00e9al"
+        ],
+        "oa_orgs": [
+          "polytechnique montr\u00e9al"
+        ],
+        "agreement": {
+          "exact": true,
+          "oa_only": [],
+          "overlap": [
+            "polytechnique montr\u00e9al"
+          ],
+          "html_only": []
+        },
+        "title": "Factorized and Vectorized Execution: Optimizing Analytical and Semantic Queries over Relations"
+      }
+    ],
+    "verified_openalex_primary": [
+      {
+        "paper_id": 73920,
+        "arxiv_id": "2605.28703",
+        "html_orgs": [],
+        "oa_orgs": [
+          "centre national de la recherche scientifique",
+          "laboratoire d'informatique de l'\u00e9cole polytechnique"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "centre national de la recherche scientifique",
+            "laboratoire d'informatique de l'\u00e9cole polytechnique"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "A Fresh Look at Lamarckian Evolution and the Baldwin Effect"
+      },
+      {
+        "paper_id": 195087,
+        "arxiv_id": "2609.17101",
+        "html_orgs": [],
+        "oa_orgs": [
+          "polytechnic university of timi\u015foara"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "polytechnic university of timi\u015foara"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "High-Fidelity Digital Twin Data Models by Randomized Dynamic Mode Decomposition and Deep Learning with Applications in Fluid Dynamics"
+      }
+    ]
+  }
+}

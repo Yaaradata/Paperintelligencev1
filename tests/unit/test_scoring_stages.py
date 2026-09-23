@@ -13,9 +13,9 @@ from paper_intelligence.quality import stage as quality
 from paper_intelligence.screen import stage as screen
 
 
-def _screen_payload(content_id: int, **overrides) -> str:
+def _screen_payload(batch_index: int, **overrides) -> str:
     entry = {
-        "content_item_id": content_id,
+        "batch_index": batch_index,
         "ai_relevance": 7.0,
         "technical_significance": 6.5,
         "apparent_novelty": 6.0,
@@ -27,30 +27,34 @@ def _screen_payload(content_id: int, **overrides) -> str:
 
 class TestScreenParsing:
     def test_valid_scores_parse(self):
-        parsed, problems = screen.parse_response(_screen_payload(1), {1})
+        parsed, problems = screen.parse_response(_screen_payload(1), {1: 1})
         assert problems == []
         assert parsed[1]["ai_relevance"] == 7.0
 
     def test_fenced_json_is_accepted(self):
         text = f"```json\n{_screen_payload(1)}\n```"
-        parsed, _ = screen.parse_response(text, {1})
+        parsed, _ = screen.parse_response(text, {1: 1})
         assert parsed[1]["technical_significance"] == 6.5
 
     def test_off_scale_score_is_rejected_not_clamped(self):
-        parsed, problems = screen.parse_response(_screen_payload(1, ai_relevance=12.0), {1})
+        parsed, problems = screen.parse_response(
+            _screen_payload(1, ai_relevance=12.0), {1: 1}
+        )
         assert parsed == {}
         assert any("invalid ai_relevance" in p for p in problems)
 
     def test_non_half_increment_is_rejected(self):
-        parsed, problems = screen.parse_response(_screen_payload(1, apparent_novelty=6.3), {1})
+        parsed, problems = screen.parse_response(
+            _screen_payload(1, apparent_novelty=6.3), {1: 1}
+        )
         assert parsed == {}
         assert any("apparent_novelty" in p for p in problems)
 
     def test_unexpected_and_missing_ids_are_reported(self):
-        parsed, problems = screen.parse_response(_screen_payload(99), {1})
+        parsed, problems = screen.parse_response(_screen_payload(99), {1: 1})
         assert parsed == {}
-        assert any("unexpected content_item_id 99" in p for p in problems)
-        assert any("missing ids: [1]" in p for p in problems)
+        assert any("unexpected batch_index 99" in p for p in problems)
+        assert any("missing batch_index: [1]" in p for p in problems)
 
 
 class TestScreenGate:
@@ -62,7 +66,7 @@ class TestScreenGate:
     def test_failing_paper_keeps_its_other_scores(self):
         """A gate failure must not zero or suppress the honest dimension scores."""
         parsed, _ = screen.parse_response(
-            _screen_payload(1, ai_relevance=1.0, technical_significance=9.0), {1}
+            _screen_payload(1, ai_relevance=1.0, technical_significance=9.0), {1: 1}
         )
         assert parsed[1]["technical_significance"] == 9.0
         assert screen.gate_decision(parsed[1], 5.0) is False
@@ -125,9 +129,9 @@ class TestQualityScoring:
 
     def test_missing_reason_not_higher_is_flagged(self):
         entry = {dim: 6.0 for dim in quality.RUBRIC_DIMENSIONS}
-        entry["content_item_id"] = 1
+        entry["batch_index"] = 1
         entry["so_what"] = "useful"
-        parsed, problems = quality.parse_response(json.dumps({"papers": [entry]}), {1})
+        parsed, problems = quality.parse_response(json.dumps({"papers": [entry]}), {1: 1})
         assert 1 in parsed
         assert any("missing reason_not_higher" in p for p in problems)
 
@@ -148,7 +152,7 @@ class TestBlinding:
         assert "Meta" not in block
 
     def test_quality_prompt_is_blinded(self):
-        prompt = quality.build_user_prompt(
+        prompt, mapping = quality.build_user_prompt(
             [
                 {
                     "content_item_id": 1,
@@ -159,7 +163,10 @@ class TestBlinding:
                 }
             ]
         )
+        assert mapping == {1: 1}
         assert "Hinton" not in prompt
+        assert "batch_index: 1" in prompt
+        assert "content_item_id:" not in prompt
 
 
 class TestOrganisationScore:
@@ -205,6 +212,23 @@ class TestOrganisationScore:
         )
         assert strong["organisation_score"] == weak["organisation_score"] == 3.0
         assert strong["org_boost"] > weak["org_boost"]
+
+    def test_society_member_email_does_not_score(self):
+        result = organisation_score(
+            [
+                {
+                    "organisation_id": 1,
+                    "canonical_name": "IEEE Standards Association",
+                    "priority": 3,
+                    "is_org_of_interest": True,
+                    "evidence_type": "email_domain",
+                    "evidence_value": "ieee.org",
+                    "confidence": 0.9,
+                }
+            ]
+        )
+        assert result["status"] == "unresolved"
+        assert result["org_boost"] == 0.0
 
     def test_boost_never_exceeds_cap(self):
         result = organisation_score(

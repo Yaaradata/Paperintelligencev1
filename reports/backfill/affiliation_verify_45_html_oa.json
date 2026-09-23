@@ -1,0 +1,2234 @@
+{
+  "generated_at": "2026-09-21T08:08:03.209499+00:00",
+  "args": {
+    "workers": 8,
+    "verification_version": "html-oa-v002",
+    "date_from": "2026-09-01",
+    "date_until": "2026-09-15",
+    "set": "both-sep",
+    "resume": false,
+    "dry_run": false,
+    "allow_openalex_network": false
+  },
+  "enqueued_new": 45,
+  "enqueued_total_ids": 45,
+  "run": {
+    "workers": 8,
+    "verification_version": "html-oa-v002",
+    "reclaimed_stale": 0,
+    "processed": 45,
+    "errors": 0,
+    "outcomes": {
+      "partial_agreement": 4,
+      "verified_agreement": 6,
+      "conflict": 2,
+      "verified_openalex_primary": 33
+    },
+    "wall_seconds": 1.203,
+    "papers_per_minute": 2243.55,
+    "external": {
+      "cache_hits": 45,
+      "pi_evidence_hits": 45,
+      "cache_misses": 0,
+      "api_calls": 0,
+      "429s": 0,
+      "retries": 0,
+      "pdf_fallbacks": 0,
+      "errors": 0
+    },
+    "status_counts": {
+      "complete": 45
+    },
+    "timing_ms_avg": 40.46
+  },
+  "run_details": [
+    {
+      "paper_id": 12036,
+      "arxiv_id": "2510.20721",
+      "outcome": "partial_agreement",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [
+          "carnegie mellon university"
+        ],
+        "html_only": [],
+        "oa_only": [
+          "fujitsu (china)",
+          "fujitsu (japan)",
+          "fujitsu (united states)"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 2.6500741951167583,
+        "html_ms": 11.998998932540417,
+        "pi_oa_ms": 2.578496001660824,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0036549754440784454,
+        "total_ms": 17.265193862840533
+      },
+      "error": null
+    },
+    {
+      "paper_id": 9160,
+      "arxiv_id": "2601.03163",
+      "outcome": "verified_agreement",
+      "status": "complete",
+      "agreement": {
+        "exact": true,
+        "overlap": [
+          "masaryk memorial cancer institute",
+          "masaryk university"
+        ],
+        "html_only": [],
+        "oa_only": []
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 2.795554930344224,
+        "html_ms": 11.234526988118887,
+        "pi_oa_ms": 2.7721819933503866,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0033550895750522614,
+        "total_ms": 16.829110914841294
+      },
+      "error": null
+    },
+    {
+      "paper_id": 12243,
+      "arxiv_id": "2601.10511",
+      "outcome": "conflict",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [
+          "national security authority"
+        ],
+        "oa_only": [
+          "national security agency",
+          "university of maryland, college park"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 11.912821792066097,
+        "html_ms": 11.634436901658773,
+        "pi_oa_ms": 1.2730869930237532,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0021171290427446365,
+        "total_ms": 24.8402610886842
+      },
+      "error": null
+    },
+    {
+      "paper_id": 18943,
+      "arxiv_id": "2601.14810",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "institut national de recherche en sciences et technologies du num\u00e9rique",
+          "laboratoire interdisciplinaire des sciences du num\u00e9rique",
+          "universit\u00e9 paris-saclay"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 5.593196954578161,
+        "html_ms": 24.039176059886813,
+        "pi_oa_ms": 2.9237240087240934,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0021490268409252167,
+        "total_ms": 32.5761151034385
+      },
+      "error": null
+    },
+    {
+      "paper_id": 27646,
+      "arxiv_id": "2512.13742",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "khulna university of engineering and technology",
+          "queen's university belfast",
+          "university of ulster",
+          "wichita state university"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 16.217402881011367,
+        "html_ms": 18.990484066307545,
+        "pi_oa_ms": 3.7872979883104563,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0027299392968416214,
+        "total_ms": 39.02027290314436
+      },
+      "error": null
+    },
+    {
+      "paper_id": 27771,
+      "arxiv_id": "2602.18613",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "\u00f6zye\u011fin university"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 9.386557852849364,
+        "html_ms": 30.175677966326475,
+        "pi_oa_ms": 2.0793539006263018,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0022721942514181137,
+        "total_ms": 41.66043899022043
+      },
+      "error": null
+    },
+    {
+      "paper_id": 25693,
+      "arxiv_id": "2602.14048",
+      "outcome": "verified_agreement",
+      "status": "complete",
+      "agreement": {
+        "exact": true,
+        "overlap": [
+          "peking university"
+        ],
+        "html_only": [],
+        "oa_only": []
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 14.015281805768609,
+        "html_ms": 34.18624494224787,
+        "pi_oa_ms": 2.192388055846095,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.00254996120929718,
+        "total_ms": 50.421380903571844
+      },
+      "error": null
+    },
+    {
+      "paper_id": 31691,
+      "arxiv_id": "2603.02790",
+      "outcome": "conflict",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [
+          "university of amsterdam"
+        ],
+        "oa_only": [
+          "clinical research consortium"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 7.700907997786999,
+        "html_ms": 40.22229206748307,
+        "pi_oa_ms": 2.8285349253565073,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0025639310479164124,
+        "total_ms": 50.78590987250209
+      },
+      "error": null
+    },
+    {
+      "paper_id": 40754,
+      "arxiv_id": "2603.22437",
+      "outcome": "verified_agreement",
+      "status": "complete",
+      "agreement": {
+        "exact": true,
+        "overlap": [
+          "cornell tech",
+          "cornell university"
+        ],
+        "html_only": [],
+        "oa_only": []
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 7.3122631292790174,
+        "html_ms": 33.50962698459625,
+        "pi_oa_ms": 1.5181750059127808,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0030831433832645416,
+        "total_ms": 42.3895800486207
+      },
+      "error": null
+    },
+    {
+      "paper_id": 73920,
+      "arxiv_id": "2605.28703",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "centre national de la recherche scientifique",
+          "laboratoire d'informatique de l'\u00e9cole polytechnique"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 18.038748065009713,
+        "html_ms": 30.356076778844,
+        "pi_oa_ms": 1.784890191629529,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.002988148480653763,
+        "total_ms": 50.20255409181118
+      },
+      "error": null
+    },
+    {
+      "paper_id": 75641,
+      "arxiv_id": "2605.31291",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "swiss broadcasting corporation",
+          "\u00e9cole polytechnique f\u00e9d\u00e9rale de lausanne"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 10.756895877420902,
+        "html_ms": 27.498464100062847,
+        "pi_oa_ms": 5.136441206559539,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.00265706330537796,
+        "total_ms": 43.412948958575726
+      },
+      "error": null
+    },
+    {
+      "paper_id": 106442,
+      "arxiv_id": "2603.14841",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "michigan technological university"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 7.900310913100839,
+        "html_ms": 33.946536015719175,
+        "pi_oa_ms": 2.732865046709776,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0024349428713321686,
+        "total_ms": 44.598672073334455
+      },
+      "error": null
+    },
+    {
+      "paper_id": 67096,
+      "arxiv_id": "2605.16879",
+      "outcome": "verified_agreement",
+      "status": "complete",
+      "agreement": {
+        "exact": true,
+        "overlap": [
+          "sichuan university"
+        ],
+        "html_only": [],
+        "oa_only": []
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 15.680306125432253,
+        "html_ms": 35.63860314898193,
+        "pi_oa_ms": 5.935305962339044,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.002507120370864868,
+        "total_ms": 57.27768992073834
+      },
+      "error": null
+    },
+    {
+      "paper_id": 111967,
+      "arxiv_id": "2608.05980",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "orange (poland)"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 4.6848461497575045,
+        "html_ms": 33.05620304308832,
+        "pi_oa_ms": 9.740344947203994,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0020801089704036713,
+        "total_ms": 47.50175797380507
+      },
+      "error": null
+    },
+    {
+      "paper_id": 132759,
+      "arxiv_id": "2604.24622",
+      "outcome": "partial_agreement",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [
+          "southern university of science and technology"
+        ],
+        "html_only": [
+          "tsinghua university",
+          "university of chinese academy of sciences"
+        ],
+        "oa_only": [
+          "nova management (united states)",
+          "university of science and technology of china",
+          "xi'an jiaotong university"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 25.75961803086102,
+        "html_ms": 18.657723907381296,
+        "pi_oa_ms": 0.8185480255633593,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0023830216377973557,
+        "total_ms": 45.26119912043214
+      },
+      "error": null
+    },
+    {
+      "paper_id": 135191,
+      "arxiv_id": "2509.06285",
+      "outcome": "partial_agreement",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [
+          "hong kong university of science and technology",
+          "university of science and technology beijing"
+        ],
+        "html_only": [],
+        "oa_only": [
+          "aerospace institute (germany)",
+          "national university of defense technology",
+          "university of toronto"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 16.23195083811879,
+        "html_ms": 16.34284993633628,
+        "pi_oa_ms": 3.208251902833581,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0024298205971717834,
+        "total_ms": 35.8081110753119
+      },
+      "error": null
+    },
+    {
+      "paper_id": 135301,
+      "arxiv_id": "2603.10529",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "italian institute of technology"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 3.3604458440095186,
+        "html_ms": 12.107256799936295,
+        "pi_oa_ms": 6.546963006258011,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.002886168658733368,
+        "total_ms": 22.039775969460607
+      },
+      "error": null
+    },
+    {
+      "paper_id": 136263,
+      "arxiv_id": "2609.01554",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "brightspec"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 3.0074878595769405,
+        "html_ms": 21.486095851287246,
+        "pi_oa_ms": 5.776309873908758,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.002242857590317726,
+        "total_ms": 30.288641806691885
+      },
+      "error": null
+    },
+    {
+      "paper_id": 137254,
+      "arxiv_id": "2609.02652",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "science club"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 6.952566094696522,
+        "html_ms": 30.845558969303966,
+        "pi_oa_ms": 1.5709679573774338,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0025350600481033325,
+        "total_ms": 39.39005802385509
+      },
+      "error": null
+    },
+    {
+      "paper_id": 137973,
+      "arxiv_id": "2609.02149",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "baidu (china)"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 7.585760904476047,
+        "html_ms": 25.12199804186821,
+        "pi_oa_ms": 4.365758970379829,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.003020046278834343,
+        "total_ms": 37.093420047312975
+      },
+      "error": null
+    },
+    {
+      "paper_id": 137779,
+      "arxiv_id": "2512.03070",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "laboratoire d\u2019informatique parall\u00e9lisme r\u00e9seaux algorithmes distribu\u00e9s",
+          "p\u00f4le l\u00e9onard de vinci"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 6.967523135244846,
+        "html_ms": 34.9438670091331,
+        "pi_oa_ms": 2.374972915276885,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.003070104867219925,
+        "total_ms": 44.30932900868356
+      },
+      "error": null
+    },
+    {
+      "paper_id": 136429,
+      "arxiv_id": "2410.10136",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "sunnyvale public library"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 10.780710959807038,
+        "html_ms": 26.267478009685874,
+        "pi_oa_ms": 7.417064858600497,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0023690517991781235,
+        "total_ms": 44.484452810138464
+      },
+      "error": null
+    },
+    {
+      "paper_id": 137977,
+      "arxiv_id": "2609.02760",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "omron (japan)",
+          "university of patras"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 20.48837603069842,
+        "html_ms": 28.216185979545116,
+        "pi_oa_ms": 3.7911750841885805,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0021078158169984818,
+        "total_ms": 52.51621105708182
+      },
+      "error": null
+    },
+    {
+      "paper_id": 138035,
+      "arxiv_id": "2609.03436",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "johannes kepler university of linz"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 4.533164901658893,
+        "html_ms": 26.30490018054843,
+        "pi_oa_ms": 7.339719217270613,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0025900080800056458,
+        "total_ms": 38.19900890812278
+      },
+      "error": null
+    },
+    {
+      "paper_id": 138044,
+      "arxiv_id": "2609.03450",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "central glass (japan)",
+          "institute of glass"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 8.139800978824496,
+        "html_ms": 25.411559967324138,
+        "pi_oa_ms": 1.4961198903620243,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0022640451788902283,
+        "total_ms": 35.06885305978358
+      },
+      "error": null
+    },
+    {
+      "paper_id": 138103,
+      "arxiv_id": "2609.03565",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "genecast (china)"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 4.907288821414113,
+        "html_ms": 27.967589907348156,
+        "pi_oa_ms": 3.661480965092778,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0026689376682043076,
+        "total_ms": 36.55928513035178
+      },
+      "error": null
+    },
+    {
+      "paper_id": 138338,
+      "arxiv_id": "2609.04024",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "united states institute of peace"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 6.169057916849852,
+        "html_ms": 21.7120461165905,
+        "pi_oa_ms": 1.7362700309604406,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.002780929207801819,
+        "total_ms": 29.640314169228077
+      },
+      "error": null
+    },
+    {
+      "paper_id": 184474,
+      "arxiv_id": "2609.06058",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "the university of texas at austin"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 4.522428149357438,
+        "html_ms": 17.23369094543159,
+        "pi_oa_ms": 3.033533925190568,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0026889611035585403,
+        "total_ms": 24.811876006424427
+      },
+      "error": null
+    },
+    {
+      "paper_id": 183707,
+      "arxiv_id": "2609.05725",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "pozna\u0144 university of technology"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 4.624383058398962,
+        "html_ms": 16.09334396198392,
+        "pi_oa_ms": 4.241870017722249,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0026319175958633423,
+        "total_ms": 24.993833852931857
+      },
+      "error": null
+    },
+    {
+      "paper_id": 186232,
+      "arxiv_id": "2609.09002",
+      "outcome": "verified_agreement",
+      "status": "complete",
+      "agreement": {
+        "exact": true,
+        "overlap": [
+          "polytechnique montr\u00e9al"
+        ],
+        "html_only": [],
+        "oa_only": []
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 6.117960903793573,
+        "html_ms": 17.708035884425044,
+        "pi_oa_ms": 4.288152791559696,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.002194894477725029,
+        "total_ms": 28.136058012023568
+      },
+      "error": null
+    },
+    {
+      "paper_id": 184518,
+      "arxiv_id": "2609.06129",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "petrobras (brazil)"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 6.925848079845309,
+        "html_ms": 16.106859082356095,
+        "pi_oa_ms": 0.7795081473886967,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0019229482859373093,
+        "total_ms": 23.83121196180582
+      },
+      "error": null
+    },
+    {
+      "paper_id": 184988,
+      "arxiv_id": "2609.07152",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "mentor"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 19.534016959369183,
+        "html_ms": 21.018199156969786,
+        "pi_oa_ms": 6.940128980204463,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.002787914127111435,
+        "total_ms": 47.518088947981596
+      },
+      "error": null
+    },
+    {
+      "paper_id": 186444,
+      "arxiv_id": "2408.10608",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "australian regenerative medicine institute",
+          "monash university",
+          "national university of singapore",
+          "university of technology sydney"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 13.215326936915517,
+        "html_ms": 93.15096912905574,
+        "pi_oa_ms": 3.6745709367096424,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.002919929102063179,
+        "total_ms": 110.06707209162414
+      },
+      "error": null
+    },
+    {
+      "paper_id": 186461,
+      "arxiv_id": "2504.00285",
+      "outcome": "verified_agreement",
+      "status": "complete",
+      "agreement": {
+        "exact": true,
+        "overlap": [
+          "university of california san diego"
+        ],
+        "html_only": [],
+        "oa_only": []
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 35.253070993348956,
+        "html_ms": 56.23790994286537,
+        "pi_oa_ms": 1.9973600283265114,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0022959429770708084,
+        "total_ms": 93.51234114728868
+      },
+      "error": null
+    },
+    {
+      "paper_id": 187067,
+      "arxiv_id": "2609.10016",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "tinker air force base"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 15.474305022507906,
+        "html_ms": 69.7783490177244,
+        "pi_oa_ms": 1.4116980601102114,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.003474997356534004,
+        "total_ms": 86.6900640539825
+      },
+      "error": null
+    },
+    {
+      "paper_id": 187209,
+      "arxiv_id": "2609.10357",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "bright cloud international (united states)",
+          "the university of texas at arlington"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 28.867421206086874,
+        "html_ms": 54.5159459579736,
+        "pi_oa_ms": 5.552648101001978,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0027441419661045074,
+        "total_ms": 88.96083105355501
+      },
+      "error": null
+    },
+    {
+      "paper_id": 187797,
+      "arxiv_id": "2602.14948",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "machine science"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 2.376697026193142,
+        "html_ms": 13.790124095976353,
+        "pi_oa_ms": 0.7480739150196314,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.00231107696890831,
+        "total_ms": 16.93777716718614
+      },
+      "error": null
+    },
+    {
+      "paper_id": 188127,
+      "arxiv_id": "2609.11486",
+      "outcome": "partial_agreement",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [
+          "lomonosov moscow state university"
+        ],
+        "html_only": [],
+        "oa_only": [
+          "moscow state university"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 7.648542057722807,
+        "html_ms": 13.179850997403264,
+        "pi_oa_ms": 3.226261818781495,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0021830201148986816,
+        "total_ms": 24.093213956803083
+      },
+      "error": null
+    },
+    {
+      "paper_id": 191774,
+      "arxiv_id": "2609.12748",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "philips (finland)"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 8.208968909457326,
+        "html_ms": 18.989336909726262,
+        "pi_oa_ms": 1.7570389900356531,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.002735992893576622,
+        "total_ms": 28.978623915463686
+      },
+      "error": null
+    },
+    {
+      "paper_id": 188253,
+      "arxiv_id": "2609.11804",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "lmu klinikum",
+          "ludwig-maximilians-universit\u00e4t m\u00fcnchen",
+          "munich center for machine learning"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 4.401129903271794,
+        "html_ms": 35.28750501573086,
+        "pi_oa_ms": 3.665782045572996,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.003052176907658577,
+        "total_ms": 43.37836988270283
+      },
+      "error": null
+    },
+    {
+      "paper_id": 195029,
+      "arxiv_id": "2609.16964",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "mehran university of engineering and technology",
+          "university of sindh"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 3.117817919701338,
+        "html_ms": 8.921185042709112,
+        "pi_oa_ms": 0.9250028524547815,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0024070031940937042,
+        "total_ms": 12.988598085939884
+      },
+      "error": null
+    },
+    {
+      "paper_id": 195098,
+      "arxiv_id": "2609.17118",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "\u00e9cole polytechnique f\u00e9d\u00e9rale de lausanne"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 7.175393868237734,
+        "html_ms": 21.5237638913095,
+        "pi_oa_ms": 1.3329561334103346,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.003186054527759552,
+        "total_ms": 30.05926520563662
+      },
+      "error": null
+    },
+    {
+      "paper_id": 193733,
+      "arxiv_id": "2609.15219",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "xing wei college"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 4.562904126942158,
+        "html_ms": 21.47419610992074,
+        "pi_oa_ms": 3.0307010747492313,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.003078952431678772,
+        "total_ms": 29.09150393679738
+      },
+      "error": null
+    },
+    {
+      "paper_id": 195087,
+      "arxiv_id": "2609.17101",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "polytechnic university of timi\u015foara"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 4.250571131706238,
+        "html_ms": 20.905869780108333,
+        "pi_oa_ms": 2.006818074733019,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.002844957634806633,
+        "total_ms": 27.18294318765402
+      },
+      "error": null
+    },
+    {
+      "paper_id": 192550,
+      "arxiv_id": "2609.13940",
+      "outcome": "verified_openalex_primary",
+      "status": "complete",
+      "agreement": {
+        "exact": false,
+        "overlap": [],
+        "html_only": [],
+        "oa_only": [
+          "dyson (united kingdom)",
+          "ibm (united states)",
+          "ibm research - ireland",
+          "imperial college london"
+        ]
+      },
+      "openalex": {
+        "source": "pi_evidence",
+        "cache_hit": null,
+        "api_called": null
+      },
+      "timing_ms": {
+        "db_paper_ms": 6.599273066967726,
+        "html_ms": 21.489337785169482,
+        "pi_oa_ms": 2.0578138064593077,
+        "oa_wait_ms": 0.0,
+        "pdf_ms": 0.0019918661564588547,
+        "total_ms": 30.164296040311456
+      },
+      "error": null
+    }
+  ],
+  "investigation_by_outcome": {
+    "verified_agreement": [
+      {
+        "paper_id": 9160,
+        "arxiv_id": "2601.03163",
+        "html_orgs": [
+          "masaryk memorial cancer institute",
+          "masaryk university"
+        ],
+        "oa_orgs": [
+          "masaryk memorial cancer institute",
+          "masaryk university"
+        ],
+        "agreement": {
+          "exact": true,
+          "oa_only": [],
+          "overlap": [
+            "masaryk memorial cancer institute",
+            "masaryk university"
+          ],
+          "html_only": []
+        },
+        "title": "LSP-DETR: Efficient and Scalable Nuclei Segmentation in Whole-Slide Images"
+      },
+      {
+        "paper_id": 25693,
+        "arxiv_id": "2602.14048",
+        "html_orgs": [
+          "peking university"
+        ],
+        "oa_orgs": [
+          "peking university"
+        ],
+        "agreement": {
+          "exact": true,
+          "oa_only": [],
+          "overlap": [
+            "peking university"
+          ],
+          "html_only": []
+        },
+        "title": "ProAct: Harnessing Streaming Motion Generation and Agentic Reasoning for Real-Time Embodied Social Interaction"
+      },
+      {
+        "paper_id": 40754,
+        "arxiv_id": "2603.22437",
+        "html_orgs": [
+          "cornell tech",
+          "cornell university"
+        ],
+        "oa_orgs": [
+          "cornell tech",
+          "cornell university"
+        ],
+        "agreement": {
+          "exact": true,
+          "oa_only": [],
+          "overlap": [
+            "cornell tech",
+            "cornell university"
+          ],
+          "html_only": []
+        },
+        "title": "mmFHE: mmWave Sensing with End-to-End Fully Homomorphic Encryption"
+      },
+      {
+        "paper_id": 67096,
+        "arxiv_id": "2605.16879",
+        "html_orgs": [
+          "sichuan university"
+        ],
+        "oa_orgs": [
+          "sichuan university"
+        ],
+        "agreement": {
+          "exact": true,
+          "oa_only": [],
+          "overlap": [
+            "sichuan university"
+          ],
+          "html_only": []
+        },
+        "title": "Towards Generalized Image Manipulation Localization via Score-based Model"
+      },
+      {
+        "paper_id": 186232,
+        "arxiv_id": "2609.09002",
+        "html_orgs": [
+          "polytechnique montr\u00e9al"
+        ],
+        "oa_orgs": [
+          "polytechnique montr\u00e9al"
+        ],
+        "agreement": {
+          "exact": true,
+          "oa_only": [],
+          "overlap": [
+            "polytechnique montr\u00e9al"
+          ],
+          "html_only": []
+        },
+        "title": "Factorized and Vectorized Execution: Optimizing Analytical and Semantic Queries over Relations"
+      },
+      {
+        "paper_id": 186461,
+        "arxiv_id": "2504.00285",
+        "html_orgs": [
+          "university of california san diego"
+        ],
+        "oa_orgs": [
+          "university of california san diego"
+        ],
+        "agreement": {
+          "exact": true,
+          "oa_only": [],
+          "overlap": [
+            "university of california san diego"
+          ],
+          "html_only": []
+        },
+        "title": "When Do Large Language Models Exhibit Unsolicited Deception?"
+      }
+    ],
+    "partial_agreement": [
+      {
+        "paper_id": 12036,
+        "arxiv_id": "2510.20721",
+        "html_orgs": [
+          "carnegie mellon university"
+        ],
+        "oa_orgs": [
+          "carnegie mellon university",
+          "fujitsu (china)",
+          "fujitsu (japan)",
+          "fujitsu (united states)"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "fujitsu (china)",
+            "fujitsu (japan)",
+            "fujitsu (united states)"
+          ],
+          "overlap": [
+            "carnegie mellon university"
+          ],
+          "html_only": []
+        },
+        "title": "User Perceptions vs. Proxy LLM Judges: Privacy and Helpfulness in LLM Responses to Privacy-Sensitive Scenarios"
+      },
+      {
+        "paper_id": 132759,
+        "arxiv_id": "2604.24622",
+        "html_orgs": [
+          "southern university of science and technology",
+          "tsinghua university",
+          "university of chinese academy of sciences"
+        ],
+        "oa_orgs": [
+          "nova management (united states)",
+          "southern university of science and technology",
+          "university of science and technology of china",
+          "xi'an jiaotong university"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "nova management (united states)",
+            "university of science and technology of china",
+            "xi'an jiaotong university"
+          ],
+          "overlap": [
+            "southern university of science and technology"
+          ],
+          "html_only": [
+            "tsinghua university",
+            "university of chinese academy of sciences"
+          ]
+        },
+        "title": "CF-VLA: Efficient Coarse-to-Fine Action Generation for Vision-Language-Action Policies"
+      },
+      {
+        "paper_id": 135191,
+        "arxiv_id": "2509.06285",
+        "html_orgs": [
+          "hong kong university of science and technology",
+          "university of science and technology beijing"
+        ],
+        "oa_orgs": [
+          "aerospace institute (germany)",
+          "hong kong university of science and technology",
+          "national university of defense technology",
+          "university of science and technology beijing",
+          "university of toronto"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "aerospace institute (germany)",
+            "national university of defense technology",
+            "university of toronto"
+          ],
+          "overlap": [
+            "hong kong university of science and technology",
+            "university of science and technology beijing"
+          ],
+          "html_only": []
+        },
+        "title": "DCReg: Decoupled Characterization for Efficient Degenerate LiDAR Registration"
+      },
+      {
+        "paper_id": 188127,
+        "arxiv_id": "2609.11486",
+        "html_orgs": [
+          "lomonosov moscow state university"
+        ],
+        "oa_orgs": [
+          "lomonosov moscow state university",
+          "moscow state university"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "moscow state university"
+          ],
+          "overlap": [
+            "lomonosov moscow state university"
+          ],
+          "html_only": []
+        },
+        "title": "FreeFlow: A Bias-free Hierarchical Transformer for Optical Flow Estimation"
+      }
+    ],
+    "conflict": [
+      {
+        "paper_id": 12243,
+        "arxiv_id": "2601.10511",
+        "html_orgs": [
+          "national security authority"
+        ],
+        "oa_orgs": [
+          "national security agency",
+          "university of maryland, college park"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "national security agency",
+            "university of maryland, college park"
+          ],
+          "overlap": [],
+          "html_only": [
+            "national security authority"
+          ]
+        },
+        "title": "Scalable Algorithms for Approximate DNF Model Counting"
+      },
+      {
+        "paper_id": 31691,
+        "arxiv_id": "2603.02790",
+        "html_orgs": [
+          "university of amsterdam"
+        ],
+        "oa_orgs": [
+          "clinical research consortium"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "clinical research consortium"
+          ],
+          "overlap": [],
+          "html_only": [
+            "university of amsterdam"
+          ]
+        },
+        "title": "Designing UNICORN: a Unified Benchmark for Imaging in Computational Pathology, Radiology, and Natural Language"
+      }
+    ],
+    "verified_openalex_primary": [
+      {
+        "paper_id": 18943,
+        "arxiv_id": "2601.14810",
+        "html_orgs": [],
+        "oa_orgs": [
+          "institut national de recherche en sciences et technologies du num\u00e9rique",
+          "laboratoire interdisciplinaire des sciences du num\u00e9rique",
+          "universit\u00e9 paris-saclay"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "institut national de recherche en sciences et technologies du num\u00e9rique",
+            "laboratoire interdisciplinaire des sciences du num\u00e9rique",
+            "universit\u00e9 paris-saclay"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Learning and extrapolating scale-invariant processes"
+      },
+      {
+        "paper_id": 27646,
+        "arxiv_id": "2512.13742",
+        "html_orgs": [],
+        "oa_orgs": [
+          "khulna university of engineering and technology",
+          "queen's university belfast",
+          "university of ulster",
+          "wichita state university"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "khulna university of engineering and technology",
+            "queen's university belfast",
+            "university of ulster",
+            "wichita state university"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "DL$^3$M: A Vision-to-Language Framework for Expert-Level Medical Reasoning through Deep Learning and Large Language Models"
+      },
+      {
+        "paper_id": 27771,
+        "arxiv_id": "2602.18613",
+        "html_orgs": [],
+        "oa_orgs": [
+          "\u00f6zye\u011fin university"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "\u00f6zye\u011fin university"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Diagnosing LLM Reranker Behavior Under Fixed Evidence Pools"
+      },
+      {
+        "paper_id": 73920,
+        "arxiv_id": "2605.28703",
+        "html_orgs": [],
+        "oa_orgs": [
+          "centre national de la recherche scientifique",
+          "laboratoire d'informatique de l'\u00e9cole polytechnique"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "centre national de la recherche scientifique",
+            "laboratoire d'informatique de l'\u00e9cole polytechnique"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "A Fresh Look at Lamarckian Evolution and the Baldwin Effect"
+      },
+      {
+        "paper_id": 75641,
+        "arxiv_id": "2605.31291",
+        "html_orgs": [],
+        "oa_orgs": [
+          "swiss broadcasting corporation",
+          "\u00e9cole polytechnique f\u00e9d\u00e9rale de lausanne"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "swiss broadcasting corporation",
+            "\u00e9cole polytechnique f\u00e9d\u00e9rale de lausanne"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Contextual Scalarisation Thompson Sampling for multi-objective decisions in public media"
+      },
+      {
+        "paper_id": 106442,
+        "arxiv_id": "2603.14841",
+        "html_orgs": [],
+        "oa_orgs": [
+          "michigan technological university"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "michigan technological university"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Real-Time Driver Safety Scoring Through Inverse Crash Probability Modeling"
+      },
+      {
+        "paper_id": 111967,
+        "arxiv_id": "2608.05980",
+        "html_orgs": [],
+        "oa_orgs": [
+          "orange (poland)"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "orange (poland)"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "How Far Do Simple Transformations Translate Across Text Embedding Models?"
+      },
+      {
+        "paper_id": 135301,
+        "arxiv_id": "2603.10529",
+        "html_orgs": [],
+        "oa_orgs": [
+          "italian institute of technology"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "italian institute of technology"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "BinWalker: Development and Field Evaluation of a Quadruped Manipulator Platform for Sustainable Litter Collection"
+      },
+      {
+        "paper_id": 136263,
+        "arxiv_id": "2609.01554",
+        "html_orgs": [],
+        "oa_orgs": [
+          "brightspec"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "brightspec"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "BS: Take the Hint - Interactive Multitracer PET/CT Lesion Segmentation with a Scribble-Conditioned ResEnc U-Net"
+      },
+      {
+        "paper_id": 136429,
+        "arxiv_id": "2410.10136",
+        "html_orgs": [],
+        "oa_orgs": [
+          "sunnyvale public library"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "sunnyvale public library"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Beyond-RAG: Question Identification and Answer Generation in Real-Time Conversations"
+      },
+      {
+        "paper_id": 137254,
+        "arxiv_id": "2609.02652",
+        "html_orgs": [],
+        "oa_orgs": [
+          "science club"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "science club"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Unfolding the Leech Lattice: Fused Multi-Shell Decoding and VRAM Layouts for 2-Bit LLM Weights"
+      },
+      {
+        "paper_id": 137779,
+        "arxiv_id": "2512.03070",
+        "html_orgs": [],
+        "oa_orgs": [
+          "laboratoire d\u2019informatique parall\u00e9lisme r\u00e9seaux algorithmes distribu\u00e9s",
+          "p\u00f4le l\u00e9onard de vinci"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "laboratoire d\u2019informatique parall\u00e9lisme r\u00e9seaux algorithmes distribu\u00e9s",
+            "p\u00f4le l\u00e9onard de vinci"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Mixed Data Clustering Survey and Challenges"
+      },
+      {
+        "paper_id": 137973,
+        "arxiv_id": "2609.02149",
+        "html_orgs": [],
+        "oa_orgs": [
+          "baidu (china)"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "baidu (china)"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "OmegaUse-SOP: SOP Engineering for Professional Computer Use from Human Demonstrations"
+      },
+      {
+        "paper_id": 137977,
+        "arxiv_id": "2609.02760",
+        "html_orgs": [],
+        "oa_orgs": [
+          "omron (japan)",
+          "university of patras"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "omron (japan)",
+            "university of patras"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Measurement-Driven Sub-Network Selection for On-Premise Retrieval-Augmented Factory Agents"
+      },
+      {
+        "paper_id": 138035,
+        "arxiv_id": "2609.03436",
+        "html_orgs": [],
+        "oa_orgs": [
+          "johannes kepler university of linz"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "johannes kepler university of linz"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "It's the Problem, Not the Path: Budget and Difficulty Confounds in LLM Reasoning Trajectories"
+      },
+      {
+        "paper_id": 138044,
+        "arxiv_id": "2609.03450",
+        "html_orgs": [],
+        "oa_orgs": [
+          "central glass (japan)",
+          "institute of glass"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "central glass (japan)",
+            "institute of glass"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Plan Pointers and Record-Directive Form in Budgeted Verification of Inherited Agent Memory"
+      },
+      {
+        "paper_id": 138103,
+        "arxiv_id": "2609.03565",
+        "html_orgs": [],
+        "oa_orgs": [
+          "genecast (china)"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "genecast (china)"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Toward Physically Grounded JEPA World Models for Goal-Conditioned Robotic Planning"
+      },
+      {
+        "paper_id": 138338,
+        "arxiv_id": "2609.04024",
+        "html_orgs": [],
+        "oa_orgs": [
+          "united states institute of peace"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "united states institute of peace"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Instruction Duplication as an Inference-Time Control Primitive"
+      },
+      {
+        "paper_id": 183707,
+        "arxiv_id": "2609.05725",
+        "html_orgs": [],
+        "oa_orgs": [
+          "pozna\u0144 university of technology"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "pozna\u0144 university of technology"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "WIP: Energy-Efficient LLM-Based Serving Cluster Formulation in Cell-Free Massive MIMO"
+      },
+      {
+        "paper_id": 184474,
+        "arxiv_id": "2609.06058",
+        "html_orgs": [],
+        "oa_orgs": [
+          "the university of texas at austin"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "the university of texas at austin"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "GradeTrap: Authority Cues in Images Shift VLM Judgments Despite Explicit Instructions to Ignore Them"
+      },
+      {
+        "paper_id": 184518,
+        "arxiv_id": "2609.06129",
+        "html_orgs": [],
+        "oa_orgs": [
+          "petrobras (brazil)"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "petrobras (brazil)"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Protocol Compression Changes Which Party Pays: Bilateral Cost in Cross-Organization LLM Agent Communication"
+      },
+      {
+        "paper_id": 184988,
+        "arxiv_id": "2609.07152",
+        "html_orgs": [],
+        "oa_orgs": [
+          "mentor"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "mentor"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "An Auditable Symbolic-RAG-Generative AI Architecture for Goal-Oriented Conversation Orchestration"
+      },
+      {
+        "paper_id": 186444,
+        "arxiv_id": "2408.10608",
+        "html_orgs": [],
+        "oa_orgs": [
+          "australian regenerative medicine institute",
+          "monash university",
+          "national university of singapore",
+          "university of technology sydney"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "australian regenerative medicine institute",
+            "monash university",
+            "national university of singapore",
+            "university of technology sydney"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "BTBR: A Bayesian-Theory-Driven Probabilistic-Fuzzy Framework for Implicit Bias Removal in Large Language Models"
+      },
+      {
+        "paper_id": 187067,
+        "arxiv_id": "2609.10016",
+        "html_orgs": [],
+        "oa_orgs": [
+          "tinker air force base"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "tinker air force base"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "MetroLLM-Bench: Evaluating Language Models as Transit Kiosk Runtimes"
+      },
+      {
+        "paper_id": 187209,
+        "arxiv_id": "2609.10357",
+        "html_orgs": [],
+        "oa_orgs": [
+          "bright cloud international (united states)",
+          "the university of texas at arlington"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "bright cloud international (united states)",
+            "the university of texas at arlington"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "A Later Test Set Is Not a New Domain: Pretraining Familiarity Survives a Contamination-Free Hold-Out"
+      },
+      {
+        "paper_id": 187797,
+        "arxiv_id": "2602.14948",
+        "html_orgs": [],
+        "oa_orgs": [
+          "machine science"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "machine science"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Kalman Filtering Based Flight Management System Modeling for AAM Aircraft"
+      },
+      {
+        "paper_id": 188253,
+        "arxiv_id": "2609.11804",
+        "html_orgs": [],
+        "oa_orgs": [
+          "lmu klinikum",
+          "ludwig-maximilians-universit\u00e4t m\u00fcnchen",
+          "munich center for machine learning"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "lmu klinikum",
+            "ludwig-maximilians-universit\u00e4t m\u00fcnchen",
+            "munich center for machine learning"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Logit Refiner: Improving Visual Autoregressive Models via Intra-Scale Dependency Modeling"
+      },
+      {
+        "paper_id": 191774,
+        "arxiv_id": "2609.12748",
+        "html_orgs": [],
+        "oa_orgs": [
+          "philips (finland)"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "philips (finland)"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "The Mechanics of a Swarm: A Reproducible External Reconstruction of an Unintended Agent-Coordination Episode on a Third-Party Wiki"
+      },
+      {
+        "paper_id": 192550,
+        "arxiv_id": "2609.13940",
+        "html_orgs": [],
+        "oa_orgs": [
+          "dyson (united kingdom)",
+          "ibm (united states)",
+          "ibm research - ireland",
+          "imperial college london"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "dyson (united kingdom)",
+            "ibm (united states)",
+            "ibm research - ireland",
+            "imperial college london"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Optimal Transport for Efficient, Unsupervised Anomaly Detection on Industrial Data"
+      },
+      {
+        "paper_id": 193733,
+        "arxiv_id": "2609.15219",
+        "html_orgs": [],
+        "oa_orgs": [
+          "xing wei college"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "xing wei college"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "From Ideas to Actions: A Public-Data Decision-Support Toolchain Across the Venture Lifecycle"
+      },
+      {
+        "paper_id": 195029,
+        "arxiv_id": "2609.16964",
+        "html_orgs": [],
+        "oa_orgs": [
+          "mehran university of engineering and technology",
+          "university of sindh"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "mehran university of engineering and technology",
+            "university of sindh"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "HUMAID-NER: A Disaster Tweet Dataset for Joint Named Entity Recognition and Event Classification via Uncertainty-Weighted Multitask Learning"
+      },
+      {
+        "paper_id": 195087,
+        "arxiv_id": "2609.17101",
+        "html_orgs": [],
+        "oa_orgs": [
+          "polytechnic university of timi\u015foara"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "polytechnic university of timi\u015foara"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "High-Fidelity Digital Twin Data Models by Randomized Dynamic Mode Decomposition and Deep Learning with Applications in Fluid Dynamics"
+      },
+      {
+        "paper_id": 195098,
+        "arxiv_id": "2609.17118",
+        "html_orgs": [],
+        "oa_orgs": [
+          "\u00e9cole polytechnique f\u00e9d\u00e9rale de lausanne"
+        ],
+        "agreement": {
+          "exact": false,
+          "oa_only": [
+            "\u00e9cole polytechnique f\u00e9d\u00e9rale de lausanne"
+          ],
+          "overlap": [],
+          "html_only": []
+        },
+        "title": "Enhancing Procedural Writing Through Personalized Example Retrieval: A Case Study on Cooking Recipes"
+      }
+    ]
+  }
+}

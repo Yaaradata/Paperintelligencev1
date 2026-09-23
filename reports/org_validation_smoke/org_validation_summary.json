@@ -1,0 +1,409 @@
+{
+  "stage_name": "org_coverage_validation",
+  "stage_version": "v001",
+  "code_commit_sha": "32ee6af1d6cea160cda4573b757a72becf951cd0",
+  "date_from": "2026-08-16",
+  "date_until": "2026-09-15",
+  "windows": [
+    7,
+    15,
+    31
+  ],
+  "limit": 20,
+  "refresh_openalex": false,
+  "fetch_stats": {
+    "attempted": 20,
+    "matched": 20,
+    "unmatched": 0,
+    "no_identifier": 0,
+    "errors": 0,
+    "requests": 20,
+    "cache_hits": 0,
+    "cache_misses": 20,
+    "runtime_seconds": 11.406
+  },
+  "wall_runtime_seconds": 11.464,
+  "windows_metrics": [
+    {
+      "window_days": 7,
+      "date_from": "2026-09-09",
+      "date_until": "2026-09-15",
+      "min_confidence": 0.6,
+      "internal": {
+        "total_arxiv_papers": 0,
+        "relevant_papers": 0,
+        "papers_with_affiliation_row": 0,
+        "papers_with_organisation_id": 0,
+        "papers_with_accepted_org": 0,
+        "unique_canonical_organisations": 0,
+        "paper_organisation_pairs": 0,
+        "avg_organisations_per_paper": null,
+        "avg_organisations_per_affiliated_paper": null,
+        "median_organisations_per_affiliated_paper": null,
+        "org_of_interest_paper_count": 0,
+        "unique_org_of_interest_organisations": 0,
+        "resolution_by_evidence_bucket_papers": {}
+      },
+      "openalex": {
+        "papers_attempted": 0,
+        "works_matched": 0,
+        "match_rate": null,
+        "match_rate_denominator": "total_arxiv_papers",
+        "matched_with_institution": 0,
+        "unique_institutions": 0,
+        "paper_institution_pairs": 0,
+        "avg_institutions_per_matched_paper": null,
+        "avg_institutions_among_papers_with_institutions": null,
+        "org_coverage": null,
+        "org_coverage_denominator": "openalex_matched_papers"
+      },
+      "openalex_agreement": {
+        "exact_set_match_count": 0,
+        "at_least_one_org_overlap_count": 0,
+        "ours_has_org_openalex_none": 0,
+        "openalex_has_org_ours_none": 0,
+        "both_have_org_sets_disagree": 0,
+        "both_empty": 0,
+        "matched_papers": 0,
+        "matched_either_has_org": 0,
+        "matched_with_common_org": 0,
+        "agreement_rate": null,
+        "agreement_rate_denominator": "matched_papers_where_either_side_has_org"
+      },
+      "openalex_coverage_comparison": {
+        "unique_organisations_ours": 0,
+        "unique_institutions_openalex": 0,
+        "canonical_intersection": 0,
+        "ours_only_canonical_orgs": 0,
+        "openalex_only_canonical_institutions": 0
+      },
+      "rates": {
+        "ours_org_coverage": null,
+        "ours_org_coverage_denominator": "total_arxiv_papers",
+        "openalex_org_coverage": null,
+        "openalex_org_coverage_denominator": "openalex_matched_papers",
+        "openalex_match_rate": null,
+        "openalex_match_rate_denominator": "total_arxiv_papers",
+        "agreement_rate": null,
+        "agreement_rate_denominator": "matched_papers_where_either_side_has_org"
+      },
+      "ours_org_coverage": null,
+      "disagreement_samples": {
+        "openalex_has_ours_none": [],
+        "ours_has_openalex_none": [],
+        "both_disagree": [],
+        "org_of_interest_disagreement": []
+      }
+    },
+    {
+      "window_days": 15,
+      "date_from": "2026-09-01",
+      "date_until": "2026-09-15",
+      "min_confidence": 0.6,
+      "internal": {
+        "total_arxiv_papers": 2,
+        "relevant_papers": 0,
+        "papers_with_affiliation_row": 1,
+        "papers_with_organisation_id": 1,
+        "papers_with_accepted_org": 0,
+        "unique_canonical_organisations": 0,
+        "paper_organisation_pairs": 0,
+        "avg_organisations_per_paper": 0.0,
+        "avg_organisations_per_affiliated_paper": null,
+        "median_organisations_per_affiliated_paper": null,
+        "org_of_interest_paper_count": 0,
+        "unique_org_of_interest_organisations": 0,
+        "resolution_by_evidence_bucket_papers": {}
+      },
+      "openalex": {
+        "papers_attempted": 2,
+        "works_matched": 2,
+        "match_rate": 1.0,
+        "match_rate_denominator": "total_arxiv_papers",
+        "matched_with_institution": 0,
+        "unique_institutions": 0,
+        "paper_institution_pairs": 0,
+        "avg_institutions_per_matched_paper": 0.0,
+        "avg_institutions_among_papers_with_institutions": null,
+        "org_coverage": 0.0,
+        "org_coverage_denominator": "openalex_matched_papers"
+      },
+      "openalex_agreement": {
+        "exact_set_match_count": 0,
+        "at_least_one_org_overlap_count": 0,
+        "ours_has_org_openalex_none": 0,
+        "openalex_has_org_ours_none": 0,
+        "both_have_org_sets_disagree": 0,
+        "both_empty": 2,
+        "matched_papers": 2,
+        "matched_either_has_org": 0,
+        "matched_with_common_org": 0,
+        "agreement_rate": null,
+        "agreement_rate_denominator": "matched_papers_where_either_side_has_org"
+      },
+      "openalex_coverage_comparison": {
+        "unique_organisations_ours": 0,
+        "unique_institutions_openalex": 0,
+        "canonical_intersection": 0,
+        "ours_only_canonical_orgs": 0,
+        "openalex_only_canonical_institutions": 0
+      },
+      "rates": {
+        "ours_org_coverage": 0.0,
+        "ours_org_coverage_denominator": "total_arxiv_papers",
+        "openalex_org_coverage": 0.0,
+        "openalex_org_coverage_denominator": "openalex_matched_papers",
+        "openalex_match_rate": 1.0,
+        "openalex_match_rate_denominator": "total_arxiv_papers",
+        "agreement_rate": null,
+        "agreement_rate_denominator": "matched_papers_where_either_side_has_org"
+      },
+      "ours_org_coverage": 0.0,
+      "disagreement_samples": {
+        "openalex_has_ours_none": [],
+        "ours_has_openalex_none": [],
+        "both_disagree": [],
+        "org_of_interest_disagreement": []
+      }
+    },
+    {
+      "window_days": 31,
+      "date_from": "2026-08-16",
+      "date_until": "2026-09-15",
+      "min_confidence": 0.6,
+      "internal": {
+        "total_arxiv_papers": 20,
+        "relevant_papers": 0,
+        "papers_with_affiliation_row": 1,
+        "papers_with_organisation_id": 1,
+        "papers_with_accepted_org": 0,
+        "unique_canonical_organisations": 0,
+        "paper_organisation_pairs": 0,
+        "avg_organisations_per_paper": 0.0,
+        "avg_organisations_per_affiliated_paper": null,
+        "median_organisations_per_affiliated_paper": null,
+        "org_of_interest_paper_count": 0,
+        "unique_org_of_interest_organisations": 0,
+        "resolution_by_evidence_bucket_papers": {}
+      },
+      "openalex": {
+        "papers_attempted": 20,
+        "works_matched": 20,
+        "match_rate": 1.0,
+        "match_rate_denominator": "total_arxiv_papers",
+        "matched_with_institution": 5,
+        "unique_institutions": 11,
+        "paper_institution_pairs": 11,
+        "avg_institutions_per_matched_paper": 0.55,
+        "avg_institutions_among_papers_with_institutions": 2.2,
+        "org_coverage": 0.25,
+        "org_coverage_denominator": "openalex_matched_papers"
+      },
+      "openalex_agreement": {
+        "exact_set_match_count": 0,
+        "at_least_one_org_overlap_count": 0,
+        "ours_has_org_openalex_none": 0,
+        "openalex_has_org_ours_none": 5,
+        "both_have_org_sets_disagree": 0,
+        "both_empty": 15,
+        "matched_papers": 20,
+        "matched_either_has_org": 5,
+        "matched_with_common_org": 0,
+        "agreement_rate": 0.0,
+        "agreement_rate_denominator": "matched_papers_where_either_side_has_org"
+      },
+      "openalex_coverage_comparison": {
+        "unique_organisations_ours": 0,
+        "unique_institutions_openalex": 11,
+        "canonical_intersection": 0,
+        "ours_only_canonical_orgs": 0,
+        "openalex_only_canonical_institutions": 11
+      },
+      "rates": {
+        "ours_org_coverage": 0.0,
+        "ours_org_coverage_denominator": "total_arxiv_papers",
+        "openalex_org_coverage": 0.25,
+        "openalex_org_coverage_denominator": "openalex_matched_papers",
+        "openalex_match_rate": 1.0,
+        "openalex_match_rate_denominator": "total_arxiv_papers",
+        "agreement_rate": 0.0,
+        "agreement_rate_denominator": "matched_papers_where_either_side_has_org"
+      },
+      "ours_org_coverage": 0.0,
+      "disagreement_samples": {
+        "openalex_has_ours_none": [
+          {
+            "content_item_id": 1,
+            "arxiv_id": "2605.02259",
+            "doi": null,
+            "title": "An Information-theoretic Propagation Denoising and Fusion Framework for Fake News Detection",
+            "our_organisations": [],
+            "our_evidence_types": [],
+            "our_confidence_values": [],
+            "openalex_institutions": [
+              {
+                "canonical_key": "ror:034t30j35",
+                "institution_name": "Chinese Academy of Sciences",
+                "ror_id": "034t30j35",
+                "openalex_institution_id": "I19820366",
+                "country_code": "CN",
+                "institution_type": "government"
+              },
+              {
+                "canonical_key": "ror:04r53se39",
+                "institution_name": "Institute of Information Engineering",
+                "ror_id": "04r53se39",
+                "openalex_institution_id": "I4210156404",
+                "country_code": "CN",
+                "institution_type": "facility"
+              },
+              {
+                "canonical_key": "ror:05qbk4x57",
+                "institution_name": "University of Chinese Academy of Sciences",
+                "ror_id": "05qbk4x57",
+                "openalex_institution_id": "I4210165038",
+                "country_code": "CN",
+                "institution_type": "education"
+              }
+            ],
+            "openalex_match_status": "matched",
+            "openalex_match_strategy": "arxiv_datacite_doi",
+            "fast_deep_source": "unknown",
+            "disagreement_class": "openalex_only"
+          },
+          {
+            "content_item_id": 2,
+            "arxiv_id": "2607.10476",
+            "doi": "10.1007/978-3-031-96590-6_7",
+            "title": "Hallucination Detection in Large Language Models Using Diversion Decoding",
+            "our_organisations": [],
+            "our_evidence_types": [],
+            "our_confidence_values": [],
+            "openalex_institutions": [
+              {
+                "canonical_key": "ror:049emcs32",
+                "institution_name": "The University of Texas at Dallas",
+                "ror_id": "049emcs32",
+                "openalex_institution_id": "I162577319",
+                "country_code": "US",
+                "institution_type": "education"
+              },
+              {
+                "canonical_key": "ror:05xpvk416",
+                "institution_name": "National Institute of Standards and Technology",
+                "ror_id": "05xpvk416",
+                "openalex_institution_id": "I1321296531",
+                "country_code": "US",
+                "institution_type": "government"
+              },
+              {
+                "canonical_key": "ror:05x2bcf33",
+                "institution_name": "Carnegie Mellon University",
+                "ror_id": "05x2bcf33",
+                "openalex_institution_id": "I74973139",
+                "country_code": "US",
+                "institution_type": "education"
+              }
+            ],
+            "openalex_match_status": "matched",
+            "openalex_match_strategy": "doi",
+            "fast_deep_source": "unknown",
+            "disagreement_class": "openalex_only"
+          },
+          {
+            "content_item_id": 8,
+            "arxiv_id": "2307.12896",
+            "doi": "10.1080/09296174.2025.2455764",
+            "title": "Corrections of Zipf's and Heaps' Laws Derived from Hapax Rate Models",
+            "our_organisations": [],
+            "our_evidence_types": [],
+            "our_confidence_values": [],
+            "openalex_institutions": [
+              {
+                "canonical_key": "ror:01dr6c206",
+                "institution_name": "Polish Academy of Sciences",
+                "ror_id": "01dr6c206",
+                "openalex_institution_id": "I99542240",
+                "country_code": "PL",
+                "institution_type": "government"
+              }
+            ],
+            "openalex_match_status": "matched",
+            "openalex_match_strategy": "doi",
+            "fast_deep_source": "unknown",
+            "disagreement_class": "openalex_only"
+          },
+          {
+            "content_item_id": 9,
+            "arxiv_id": "2603.17566",
+            "doi": "10.1016/j.eswa.2026.133951",
+            "title": "KA2L: A Knowledge-Aware Active Learning Framework for LLMs",
+            "our_organisations": [],
+            "our_evidence_types": [],
+            "our_confidence_values": [],
+            "openalex_institutions": [
+              {
+                "canonical_key": "ror:01yqg2h08",
+                "institution_name": "Harbin Institute of Technology",
+                "ror_id": "01yqg2h08",
+                "openalex_institution_id": "I204983213",
+                "country_code": "CN",
+                "institution_type": "education"
+              },
+              {
+                "canonical_key": "ror:00zky6d38",
+                "institution_name": "Computer Algorithms for Medicine",
+                "ror_id": "00zky6d38",
+                "openalex_institution_id": "I4210099593",
+                "country_code": "AT",
+                "institution_type": "facility"
+              },
+              {
+                "canonical_key": "ror:03x80pn82",
+                "institution_name": "Harbin Engineering University",
+                "ror_id": "03x80pn82",
+                "openalex_institution_id": "I151727225",
+                "country_code": "CN",
+                "institution_type": "education"
+              }
+            ],
+            "openalex_match_status": "matched",
+            "openalex_match_strategy": "doi",
+            "fast_deep_source": "unknown",
+            "disagreement_class": "openalex_only"
+          },
+          {
+            "content_item_id": 21,
+            "arxiv_id": "2608.19218",
+            "doi": "10.36001/phme.2026.v9i1.4969",
+            "title": "Time-Series Retrieval for Grounding Multimodal Language Models in Remaining Useful Life Prediction",
+            "our_organisations": [],
+            "our_evidence_types": [],
+            "our_confidence_values": [],
+            "openalex_institutions": [
+              {
+                "canonical_key": "ror:036x5ad56",
+                "institution_name": "University of Luxembourg",
+                "ror_id": "036x5ad56",
+                "openalex_institution_id": "I186903577",
+                "country_code": "LU",
+                "institution_type": "education"
+              }
+            ],
+            "openalex_match_status": "matched",
+            "openalex_match_strategy": "doi",
+            "fast_deep_source": "unknown",
+            "disagreement_class": "openalex_only"
+          }
+        ],
+        "ours_has_openalex_none": [],
+        "both_disagree": [],
+        "org_of_interest_disagreement": []
+      }
+    }
+  ],
+  "observed_disagreement_causes": [
+    "OpenAlex-only orgs dominate residual gaps in counts (summed across windows: 5 matched papers).",
+    "sample: OA institutions present while we stored no accepted organisation_id"
+  ]
+}

@@ -28,7 +28,7 @@ Independent of Sol/Terra decision. **Default scope unchanged (`window`).**
 | `day+judge` | 1667 | +90 / −84 | 0 (all 90 already have reusable Sol quality) |
 | `day+raw_ooi` | 1667 | +90 / −84 | same |
 
----
+Judge-effective did not change the notable-org set on this window (`raw == judge`). Day scope reshuffles ~90 ids in / 84 out vs window.
 
 ## Files
 

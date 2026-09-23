@@ -17,7 +17,7 @@ ingest → relevance → normalize_authors → screen
 1. **relevance** (free) — deterministic AI relevance; rejects archived to S3  
 2. **normalize_authors** (free) — PI-eligible Radar statuses until PI catalog owns authors  
 3. **screen** (paid) — gate `ai_relevance`  
-4. **affiliation_fast** (free) — OAI / existing `affiliation_text` + alias/domain; **no HTML/ROR/OpenAlex**  
+4. **affiliation_fast** (free) — OAI / existing `affiliation_text` + alias/domain; **arXiv HTML** when OAI empty; **no ROR/OpenAlex**  
 5. **audience_domain** (paid) — audience / domain / subdomains / application_domain  
 6. **quality** (paid) — router on **PI screen survivors** (not Radar `status`): top `GATE_PERCENTILE` ∪ Org-of-Interest ∪ Person-of-Interest; scoring stays author/org-blind  
 7. **affiliation_deep** (free) — HTML footnotes → ROR → OpenAlex  

@@ -1,0 +1,153 @@
+{
+  "window": {
+    "from": "2026-08-01",
+    "until": "2026-08-31"
+  },
+  "excluded_newsletter_winners": [
+    172395,
+    2184
+  ],
+  "tech": {
+    "seat": "TECH",
+    "role": "linkedin_winner",
+    "why_this_paper": "Makes the KV cache\u2014not model weights\u2014the throughput ceiling for long-context inference, and offers a near-lossless compression path leaders can evaluate against capacity plans.",
+    "decision_it_changes": "Whether long-context serving investments should prioritize KV-cache compression/memory strategy alongside model choice.",
+    "action_for_reader": "Benchmark one production long-context workload\u2019s memory/throughput with and without a KV-cache compression candidate (or vendor equivalent); decide if cache strategy is now a capacity lever.",
+    "talking_point": "At long context, the KV cache\u2014not the weights\u2014often sets the inference throughput ceiling.",
+    "caveat": "Validated on two model families/selected tasks; real impact still depends on kernels, runtime overhead, hardware, and longer contexts.",
+    "why_it_works_for_linkedin": "One crisp infra insight professionals can debate without academic setup: what actually bottlenecks long-context serving, and whether compression is a capacity decision this quarter.",
+    "why_not_runner_up": "More immediately explainable and capacity-relevant for a broad engineering audience than decomposition-attack theory, which is important but denser for a short LinkedIn post.",
+    "content_item_id": 3611,
+    "arxiv_id": "2607.12550",
+    "title": "A JoLT for the KV cache: Near-lossless KV cache compression via joint Lagrangian allocation of Tucker ranks and a rotated residual for llms",
+    "canonical_url": "https://arxiv.org/abs/2607.12550",
+    "published_at": "2026-08-23T00:00:00+00:00",
+    "quality_score": 8.5,
+    "final_score": 8.1,
+    "domain": "efficient_inference",
+    "audiences": [
+      "practitioner",
+      "technical_leadership"
+    ],
+    "application_domains": [
+      "general_method"
+    ],
+    "organisations": [],
+    "top_organisation": null,
+    "hf_featured": false,
+    "so_what": "Near-lossless 2\u20133x KV-cache compression could materially increase long-context inference capacity and throughput without sacrificing model quality.",
+    "reason_not_higher": "The reported validation covers only two model families and selected tasks, and real-world impact still depends on end-to-end kernel efficiency, runtime memory overhead, hardware behavior, and performance at substantially longer contexts."
+  },
+  "tech_runner_up": {
+    "seat": "TECH",
+    "role": "linkedin_runner_up",
+    "why_this_paper": "Shows stateful request monitoring alone cannot stop decomposed harmful tasks when attackers rotate identities\u2014useful security debate for LLM service owners.",
+    "decision_it_changes": "Whether identity-rotating decomposition is in scope for the LLM abuse-defense roadmap.",
+    "action_for_reader": "Threat-model one production LLM API for decomposition + identity rotation; list controls beyond per-request stateful grouping that would be required.",
+    "talking_point": "Stateful monitors that only group by identity can fail when attackers unlink and learn from blocks.",
+    "caveat": "Formal/empirical scope is bounded; real services may have economic or side-channel controls outside the studied model.",
+    "why_it_works_for_linkedin": "Sharp security claim that challenges a common assumption about \u201cstateful defenses.\u201d",
+    "content_item_id": 120560,
+    "arxiv_id": "2608.17445",
+    "title": "Decomposition Attacks Across Unlinkable Identities: Limits of Stateful Defenses for LLM Services",
+    "canonical_url": "https://arxiv.org/abs/2608.17445",
+    "published_at": "2026-08-23T00:00:00+00:00",
+    "quality_score": 8.7,
+    "final_score": 8.3,
+    "domain": "alignment_safety",
+    "audiences": [
+      "practitioner",
+      "technical_leadership",
+      "enterprise_adoption"
+    ],
+    "application_domains": [
+      "general_method"
+    ],
+    "organisations": [],
+    "top_organisation": null,
+    "hf_featured": false,
+    "so_what": "It shows that stateful request monitoring alone cannot reliably stop decomposed harmful tasks when attackers can rotate identities and learn from blocking feedback, clarifying which additional controls are necessary.",
+    "reason_not_higher": "The formal result assumes specified attack and grouping models, while the empirical scope covers a finite task set and policy family; real services may possess side signals, economic controls, or usage constraints outside that model."
+  },
+  "product": {
+    "seat": "PRODUCT",
+    "role": "linkedin_winner",
+    "why_this_paper": "Reframes agent products from isolated task completers to collaborators that ask useful questions and adapt to people\u2014changing product requirements for \u201cagent\u201d features.",
+    "decision_it_changes": "Whether the agent roadmap optimizes only for solo task success, or also for proactive questioning and personalization as first-class product outcomes.",
+    "action_for_reader": "Define acceptance criteria for one agent workflow that include question quality and preference adaptation\u2014not only task completion\u2014then score the current agent against that rubric with 10\u201320 real user traces.",
+    "talking_point": "Most agents are trained to finish tasks alone; real collaborators need to ask and adapt.",
+    "caveat": "Depends on LLM user simulation and multi-objective rewards; simulator bias and real-user generalization remain open.",
+    "why_it_works_for_linkedin": "Product leaders recognize the gap between \u201cdemo agents\u201d and useful collaborators; the insight fits a post hook without overselling deployment readiness.",
+    "why_not_runner_up": "Broader product-roadmap implication than grounded policy-rule generation, which is powerful for compliance tooling but narrower for a general product audience.",
+    "content_item_id": 120294,
+    "arxiv_id": "2511.02208",
+    "title": "Training Proactive and Personalized LLM Agents",
+    "canonical_url": "https://arxiv.org/abs/2511.02208",
+    "published_at": "2026-08-23T00:00:00+00:00",
+    "quality_score": 8.4,
+    "final_score": 8.2,
+    "domain": "reinforcement_learning",
+    "audiences": [
+      "practitioner"
+    ],
+    "application_domains": [
+      "general_method"
+    ],
+    "organisations": [
+      "Carnegie Mellon University"
+    ],
+    "top_organisation": "Carnegie Mellon University",
+    "hf_featured": false,
+    "so_what": "Training agents to ask useful questions and adapt to individual preferences could make them substantially more effective, controllable, and usable as real collaborators.",
+    "reason_not_higher": "The approach depends on LLM-based user simulation and multi-objective reward design, creating open questions about simulator bias, reward trade-offs, deployment cost, and generalization to sustained interactions with diverse real users."
+  },
+  "product_runner_up": {
+    "seat": "PRODUCT",
+    "role": "linkedin_runner_up",
+    "why_this_paper": "Argues institutional/workplace policies must be operationally verifiable against records, not merely fluent\u2014useful for AI policy/compliance product design.",
+    "decision_it_changes": "Whether AI-drafted policies are accepted based on readability or checked for enforceability against available environment data.",
+    "action_for_reader": "Take one AI-drafted internal policy; attempt to map each clause to an auditable record/check; reject clauses that cannot be verified.",
+    "talking_point": "A policy that reads well but cannot be checked against real records is not operational.",
+    "caveat": "Controlled formalism may miss complex legal contexts; benchmarks do not prove live compliance readiness.",
+    "why_it_works_for_linkedin": "Concrete governance lesson for enterprise AI product and risk leaders.",
+    "content_item_id": 3556,
+    "arxiv_id": "2608.22229",
+    "title": "Grounded Normative Rule Generation with Structured Search",
+    "canonical_url": "https://arxiv.org/abs/2608.22229",
+    "published_at": "2026-08-23T00:00:00+00:00",
+    "quality_score": 7.8,
+    "final_score": 7.4,
+    "domain": "natural_language_processing",
+    "audiences": [
+      "practitioner",
+      "enterprise_adoption"
+    ],
+    "application_domains": [
+      "legal_compliance"
+    ],
+    "organisations": [
+      "Peking University",
+      "University of Chinese Academy of Sciences"
+    ],
+    "top_organisation": "Peking University",
+    "hf_featured": false,
+    "so_what": "Turning policy drafting into structured, inspectable search could reduce the risk of producing fluent rules that cannot actually be checked or enforced with available records.",
+    "reason_not_higher": "The five-slot controlled formalism may limit coverage of complex, ambiguous, conflicting, or legally contextualized policies, while the reported benchmarks do not by themselves establish compliance readiness in live regulated settings."
+  },
+  "cross_check": {
+    "linkedin_winners_differ_from_newsletter_winners": true,
+    "newsletter_winners": [
+      172395,
+      2184
+    ],
+    "linkedin_winners": [
+      3611,
+      120294
+    ],
+    "linkedin_runner_ups": [
+      120560,
+      3556
+    ],
+    "distinct_editorial_lessons": true
+  }
+}

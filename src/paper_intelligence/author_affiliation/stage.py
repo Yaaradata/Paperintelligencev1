@@ -42,7 +42,7 @@ STAGE_NAME = "affiliation"
 STAGE_NAME_FAST = "affiliation_fast"
 STAGE_NAME_DEEP = "affiliation_deep"
 STAGE_VERSION = "v002"
-STAGE_VERSION_FAST = "v002"
+STAGE_VERSION_FAST = "v003"  # v003: arXiv HTML when OAI empty (still no ROR/OpenAlex)
 STAGE_VERSION_DEEP = "v002"
 
 EVIDENCE_EXPLICIT = "explicit_paper_affiliation"
@@ -51,6 +51,15 @@ EVIDENCE_ROR = "ror_canonical_match"
 EVIDENCE_OPENALEX = "openalex_paper_specific"
 EVIDENCE_PROFILE = "author_profile_secondary"
 EVIDENCE_OAI = "oai_author_affiliation"
+
+# Evidence types affiliation_fast can produce (no ROR / OpenAlex). Used by the
+# pre-quality notable-org router so deep-first rows still count when FAST also
+# resolved them (stage_version alone was wrong after deep dedupe).
+FAST_ROUTER_EVIDENCE_TYPES = (
+    EVIDENCE_EXPLICIT,
+    EVIDENCE_EMAIL,
+    EVIDENCE_OAI,
+)
 
 SCOPE_AUTHOR = "author_specific"
 SCOPE_PAPER = "paper_level_unassigned"
@@ -167,13 +176,14 @@ class AffiliationStage:
         self._conn = conn
         self._policy_version = resolve_policy_version(policy_version)
         self._mode = mode
-        # FAST: OAI + local alias/domain only. DEEP: HTML fallback + ROR + OpenAlex.
+        # FAST: OAI + local alias/domain + arXiv HTML (no ROR/OpenAlex).
+        # DEEP: same plus ROR + OpenAlex after quality.
         if mode == "fast":
             self.stage_name = STAGE_NAME_FAST
             self.stage_version = STAGE_VERSION_FAST
             self._allow_ror = False
             self._allow_openalex = False
-            self._allow_html = False
+            self._allow_html = True
         else:
             self.stage_name = STAGE_NAME_DEEP
             self.stage_version = STAGE_VERSION_DEEP
@@ -242,7 +252,8 @@ class AffiliationStage:
                 run_context=run_context,
             )
 
-        # DEEP only: when local/OAI evidence is empty, pull arXiv HTML footnotes.
+        # When local/OAI evidence is empty, pull arXiv HTML footnotes (fast+deep).
+        # Fast still skips ROR/OpenAlex; HTML + watchlist/alias/domain only.
         if evidence.is_empty and self._allow_html and arxiv_id:
             page = arxiv_html_client.fetch_affiliations(
                 arxiv_id,

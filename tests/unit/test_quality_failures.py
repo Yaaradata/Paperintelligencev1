@@ -215,9 +215,9 @@ def _paper(cid: int) -> dict[str, Any]:
     }
 
 
-def _valid_quality_entry(cid: int) -> dict[str, Any]:
+def _valid_quality_entry(batch_index: int) -> dict[str, Any]:
     entry = {dim: 6.0 for dim in quality.RUBRIC_DIMENSIONS}
-    entry["content_item_id"] = cid
+    entry["batch_index"] = batch_index
     entry["so_what"] = "useful"
     entry["reason_not_higher"] = "limited evidence"
     entry["confidence"] = 7.0

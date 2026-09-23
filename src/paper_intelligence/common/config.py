@@ -27,12 +27,28 @@ CLASSIFY_BATCH_SIZE = int(os.getenv("CLASSIFY_BATCH_SIZE", "15"))
 QUALITY_BATCH_SIZE = int(os.getenv("QUALITY_BATCH_SIZE", "5"))
 
 SCREEN_MIN_AI_RELEVANCE = float(os.getenv("SCREEN_MIN_AI_RELEVANCE", "5.0"))
-GATE_PERCENTILE = float(os.getenv("GATE_PERCENTILE", "15"))
+GATE_PERCENTILE = float(os.getenv("GATE_PERCENTILE", "75"))
 # Quality top-slice scope: "window" (legacy / default) or "day" (per UTC published_at date).
 _ROUTER_SCOPE_RAW = os.getenv("ROUTER_PERCENTILE_SCOPE", "day").strip().lower()
 ROUTER_PERCENTILE_SCOPE = (
     _ROUTER_SCOPE_RAW if _ROUTER_SCOPE_RAW in {"window", "day"} else "day"
 )
+
+# Audience / seat classification policy. Default v001 until Phase 7c cutover.
+# v002 → seat scores (tech_relevance / product_relevance) + prompt v003.
+_AUDIENCE_POLICY_RAW = os.getenv("AUDIENCE_POLICY", "v001").strip().lower()
+AUDIENCE_POLICY = (
+    _AUDIENCE_POLICY_RAW if _AUDIENCE_POLICY_RAW in {"v001", "v002"} else "v001"
+)
+
+# Pool thresholds for AUDIENCE_POLICY=v002 (provisional until 7b calibration).
+TECH_POOL_MIN = float(os.getenv("TECH_POOL_MIN", "6.0"))
+PRODUCT_POOL_MIN = float(os.getenv("PRODUCT_POOL_MIN", "6.0"))
+
+# Optional quality-router product slice (Phase 7 amendments). 0 = off.
+# When >0, screen-passed papers in the top N% by product_relevance join quality
+# candidates as selected_product_slice. Flag off → routing identical to today.
+ROUTER_PRODUCT_SLICE_PCT = float(os.getenv("ROUTER_PRODUCT_SLICE_PCT", "0"))
 
 STAGE_CONCURRENCY = int(os.getenv("PI_STAGE_CONCURRENCY", "6"))
 

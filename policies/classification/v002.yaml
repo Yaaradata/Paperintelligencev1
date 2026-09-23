@@ -1,0 +1,136 @@
+policy_version: v002
+policy_name: classification
+
+# Closed vocabularies — must be supplied inline in prompts/audience_domain/*.md.
+# Out-of-vocabulary values are logged and counted; never silently dropped.
+#
+# v002 replaces audience_relevance labels with independent seat scores
+# (tech_relevance / product_relevance). Shared seat definitions live in
+# policies/editorial_seats/v001.yaml — do not duplicate reader/anchor text here.
+#
+# Pool membership (scripts/generate_audience_tops.py when AUDIENCE_POLICY=v002)
+# is driven ONLY by seat scores vs TECH_POOL_MIN / PRODUCT_POOL_MIN.
+# application_domain must NO LONGER decide pool membership (sector tags are
+# metadata only). Never map old audience labels to seat scores.
+
+# Seat scoring (0.0–10.0, 0.5 increments). Scores are independent:
+# both high, one high, or both low are all valid.
+seat_scores:
+  tech_relevance:
+    range: [0.0, 10.0]
+    increment: 0.5
+    reason_field: tech_reason  # one short sentence
+  product_relevance:
+    range: [0.0, 10.0]
+    increment: 0.5
+    reason_field: product_reason  # one short sentence
+
+domain:
+  - computer_vision
+  - natural_language_processing
+  - speech_audio
+  - reinforcement_learning
+  - graph_learning
+  - generative_models
+  - multimodal_learning
+  - model_compression
+  - efficient_inference
+  - interpretability
+  - alignment_safety
+  - evaluation_benchmarking
+  - robotics_embodied
+  - systems_infrastructure
+  - theory_foundations
+
+# Subdomains keyed by parent domain (~60). Expand as Architect finalises list.
+subdomains:
+  computer_vision:
+    - object_detection
+    - image_segmentation
+    - image_generation
+    - video_understanding
+    - 3d_vision
+  natural_language_processing:
+    - language_modeling
+    - information_extraction
+    - summarization
+    - machine_translation
+    - question_answering
+    - retrieval
+  speech_audio:
+    - speech_recognition
+    - speech_synthesis
+    - audio_understanding
+  reinforcement_learning:
+    - offline_rl
+    - multi_agent_rl
+    - rlhf
+  graph_learning:
+    - graph_neural_networks
+    - knowledge_graphs
+  generative_models:
+    - diffusion
+    - gans
+    - autoregressive_generation
+  multimodal_learning:
+    - vision_language
+    - audio_visual
+  model_compression:
+    - quantization
+    - pruning
+    - distillation
+  efficient_inference:
+    - serving
+    - caching
+    - speculative_decoding
+  interpretability:
+    - attribution
+    - mechanistic_interpretability
+  alignment_safety:
+    - jailbreak_robustness
+    - preference_alignment
+    - content_safety
+  evaluation_benchmarking:
+    - benchmark_design
+    - eval_methodology
+  robotics_embodied:
+    - manipulation
+    - navigation
+    - world_models
+  systems_infrastructure:
+    - training_systems
+    - distributed_training
+    - data_pipelines
+  theory_foundations:
+    - optimization
+    - generalization
+    - representation_learning
+
+application_domain:
+  - healthcare_life_sciences
+  - financial_services
+  - mining_resources
+  - manufacturing
+  - energy_utilities
+  - agriculture_food
+  - legal_compliance
+  - education
+  - cybersecurity
+  - drug_discovery
+  - autonomous_systems
+  - hardware_design
+  - content_moderation
+  - enterprise_workforce
+  - scientific_research
+  - transport_logistics
+  - general_method
+
+rules:
+  general_method_mutually_exclusive: true
+  general_method_is_default_for_most_papers: true
+  # Constructing an argument that a method "could apply" to a sector → general_method.
+  do_not_require_named_industry_for_relevance: true
+  # Seat scores are independent; do not force complementarity.
+  seat_scores_independent: true
+  # application_domain is metadata only — never a pool membership gate under v002.
+  application_domain_does_not_decide_pools: true

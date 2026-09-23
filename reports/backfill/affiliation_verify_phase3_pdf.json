@@ -1,0 +1,30 @@
+{
+  "verification_version": "html-oa-targeted-pdf-v001",
+  "queue_size": 295,
+  "processed": 295,
+  "pdfs_downloaded": 0,
+  "pdfs_extracted": 0,
+  "note": "PDF text extraction not implemented in v001; queue persisted as needs_pdf_review for manual/primary-source follow-up. No binary downloads.",
+  "outcomes": {
+    "needs_pdf_review": 295
+  },
+  "wall_seconds": 44.504,
+  "external": {
+    "cache_hits": 289,
+    "pi_evidence_hits": 36,
+    "cache_misses": 6,
+    "api_calls": 0,
+    "429s": 0,
+    "retries": 0,
+    "pdf_fallbacks": 540,
+    "errors": 0
+  },
+  "reason_counts": {
+    "unresolved_quality_selected": 254,
+    "partial_extra_orgs": 6,
+    "newsletter_linkedin_uncertainty": 25,
+    "oa_primary_notable_no_html": 16,
+    "disjoint_html_oa": 19,
+    "notable_org_uncertainty": 2
+  }
+}

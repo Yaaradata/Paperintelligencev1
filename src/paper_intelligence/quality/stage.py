@@ -24,11 +24,13 @@ from paper_intelligence.common.config import (
     QUALITY_MODEL,
     QUALITY_REASONING_EFFORT,
     ROUTER_PERCENTILE_SCOPE,
+    ROUTER_PRODUCT_SLICE_PCT,
     estimate_cost_usd,
     read_prompt,
 )
 from paper_intelligence.common.llm_stage import (
     call_llm_logged,
+    indexed_paper_blocks,
     paper_block,
     parse_json_object,
     random_batches,
@@ -49,6 +51,11 @@ from paper_intelligence.author_affiliation.verify.judge_effective import (
     load_judgment_exclusions,
     should_exclude_rejected,
 )
+from paper_intelligence.author_affiliation.stage import (
+    FAST_ROUTER_EVIDENCE_TYPES,
+    STAGE_VERSION_FAST,
+)
+from paper_intelligence.organisation_resolution import member_society_email_domains
 from paper_intelligence.author_affiliation.verify.judge_persist import (
     JUDGE_VERSION_DEFAULT,
 )
@@ -242,13 +249,26 @@ def select_notable_org_survivors(
     date_until: str,
     apply_judge_effective: bool = True,
     judge_version: str = JUDGE_VERSION_DEFAULT,
+    fast_stage_version: str = STAGE_VERSION_FAST,
 ) -> list[int]:
-    """Screen-passed papers with at least one Org-of-Interest affiliation.
+    """Screen-passed papers with a *resolved* FAST-tier Org-of-Interest affiliation.
+
+    Counts affiliation rows whose ``evidence_type`` is one affiliation_fast can
+    produce (explicit HTML/OAI, email_domain) with a non-null ``organisation_id``.
+    ROR/OpenAlex (deep) rows are excluded so the pre-quality router never depends
+    on post-quality affiliation_deep.
+
+    ``stage_version`` alone is insufficient: when deep ran first, FAST re-emit
+    dedupes against the same evidence and historically left ``v002`` stamped.
+    Evidence-type filtering recovers those FAST-resolvable OOI matches.
+
+    Professional-society member email domains (ieee.org, acm.org, …) never count.
 
     When ``apply_judge_effective`` is True (default), affiliations rejected by a
     resolved HTML/OA judge decision are excluded at read time — matching
     adjudication — without mutating stored evidence.
     """
+    del fast_stage_version  # retained for call-site compat; evidence_type is SoT
     survivors = {
         int(row["content_item_id"])
         for row in latest_screen_scores(conn, date_from=date_from, date_until=date_until)
@@ -256,6 +276,7 @@ def select_notable_org_survivors(
     }
     if not survivors:
         return []
+    society_domains = sorted(member_society_email_domains())
     with conn.cursor() as cur:
         cur.execute(
             """
@@ -264,12 +285,17 @@ def select_notable_org_survivors(
             FROM paper_intelligence.paper_author_affiliations a
             JOIN paper_intelligence.organisations o ON o.id = a.organisation_id
             WHERE a.content_item_id = ANY(%s)
+              AND a.evidence_type = ANY(%s)
+              AND NOT (
+                    a.evidence_type = 'email_domain'
+                    AND lower(COALESCE(a.evidence_value, '')) = ANY(%s)
+                  )
               AND o.is_org_of_interest IS TRUE
               AND o.active IS TRUE
               AND a.organisation_id IS NOT NULL
             ORDER BY a.content_item_id
             """,
-            (list(survivors),),
+            (list(survivors), list(FAST_ROUTER_EVIDENCE_TYPES), society_domains),
         )
         aff_rows = [dict(r) for r in cur.fetchall()]
 
@@ -333,6 +359,85 @@ def select_notable_person_survivors(
         return [int(row["content_item_id"]) for row in cur.fetchall()]
 
 
+def _latest_product_relevance_scores(
+    conn: Connection, content_item_ids: Sequence[int]
+) -> dict[int, float]:
+    """Latest product_relevance from v002 classification rows only."""
+    if not content_item_ids:
+        return {}
+    with conn.cursor() as cur:
+        cur.execute(
+            """
+            SELECT DISTINCT ON (r.content_item_id)
+                r.content_item_id,
+                (r.result_json->>'product_relevance')::float AS product_relevance
+            FROM paper_intelligence.paper_classification_results r
+            WHERE r.content_item_id = ANY(%s)
+              AND r.task_type = 'product_relevance'
+              AND (
+                    r.policy_version = 'v002'
+                 OR r.prompt_version = 'v003'
+              )
+              AND r.result_json ? 'product_relevance'
+            ORDER BY r.content_item_id, r.created_at DESC
+            """,
+            (list(content_item_ids),),
+        )
+        out: dict[int, float] = {}
+        for row in cur.fetchall():
+            try:
+                out[int(row["content_item_id"])] = float(row["product_relevance"])
+            except (TypeError, ValueError, KeyError):
+                continue
+        return out
+
+
+def select_product_slice_survivors(
+    conn: Connection,
+    *,
+    date_from: str,
+    date_until: str,
+    product_slice_pct: float | None = None,
+    percentile_scope: str = ROUTER_PERCENTILE_SCOPE,
+) -> list[int]:
+    """Screen-passed papers in the top N% by product_relevance (opt-in).
+
+    When ``product_slice_pct`` is 0 / None / unset, returns []. Same percentile
+    scope semantics as the screen top-slice (window vs per-UTC-day).
+    """
+    pct = ROUTER_PRODUCT_SLICE_PCT if product_slice_pct is None else float(product_slice_pct)
+    if pct <= 0:
+        return []
+    scope = percentile_scope if percentile_scope in {"window", "day"} else "window"
+    screens = latest_screen_scores(conn, date_from=date_from, date_until=date_until)
+    survivors: list[int] = []
+    pub_day_by_id: dict[int, str | None] = {}
+    for row in screens:
+        gate = (row.get("result_json") or {}).get("gate") or {}
+        if not gate.get("passed"):
+            continue
+        cid = int(row["content_item_id"])
+        survivors.append(cid)
+        pub_day_by_id[cid] = _utc_published_date(row.get("published_at"))
+
+    scores = _latest_product_relevance_scores(conn, survivors)
+    # Rank only papers that have a v002 product_relevance score.
+    ranked: list[tuple[float, int]] = [
+        (scores[cid], cid) for cid in survivors if cid in scores
+    ]
+    ranked.sort(key=lambda pair: (-pair[0], pair[1]))
+    if not ranked:
+        return []
+
+    top_ids, _, _, _ = _top_slice_ids(
+        ranked,
+        gate_percentile=pct,
+        percentile_scope=scope,
+        pub_day_by_id=pub_day_by_id,
+    )
+    return sorted(top_ids)
+
+
 def select_quality_candidates(
     conn: Connection,
     *,
@@ -341,8 +446,9 @@ def select_quality_candidates(
     gate_percentile: float = GATE_PERCENTILE,
     percentile_scope: str = ROUTER_PERCENTILE_SCOPE,
     apply_judge_effective: bool = True,
+    product_slice_pct: float | None = None,
 ) -> list[int]:
-    """Quality router: top screen slice ∪ notable org ∪ notable person."""
+    """Quality router: top screen slice ∪ notable org ∪ notable person ∪ product slice."""
     selected = set(
         select_top_slice(
             conn,
@@ -362,6 +468,15 @@ def select_quality_candidates(
     )
     selected.update(
         select_notable_person_survivors(conn, date_from=date_from, date_until=date_until)
+    )
+    selected.update(
+        select_product_slice_survivors(
+            conn,
+            date_from=date_from,
+            date_until=date_until,
+            product_slice_pct=product_slice_pct,
+            percentile_scope=percentile_scope,
+        )
     )
     return sorted(selected)
 
@@ -392,11 +507,13 @@ def explain_quality_routing(
     gate_percentile: float = GATE_PERCENTILE,
     percentile_scope: str = ROUTER_PERCENTILE_SCOPE,
     apply_judge_effective: bool = True,
+    product_slice_pct: float | None = None,
 ) -> list[QualityRoutingDecision]:
     """Record a routing decision for every latest PI screen result in the window.
 
     Decisions:
     - selected / selected_top_slice | selected_notable_org | selected_notable_person
+      | selected_product_slice
     - not_selected / not_selected_below_gate_percentile
     - blocked / blocked_screen_gate_failed | blocked_missing_rank_dimensions
 
@@ -424,6 +541,15 @@ def explain_quality_routing(
     )
     notable_person = set(
         select_notable_person_survivors(conn, date_from=date_from, date_until=date_until)
+    )
+    product_slice = set(
+        select_product_slice_survivors(
+            conn,
+            date_from=date_from,
+            date_until=date_until,
+            product_slice_pct=product_slice_pct,
+            percentile_scope=scope,
+        )
     )
 
     decisions: list[QualityRoutingDecision] = []
@@ -462,6 +588,8 @@ def explain_quality_routing(
                 reason = "selected_top_slice_and_notable_org"
             elif cid in notable_person:
                 reason = "selected_top_slice_and_notable_person"
+            elif cid in product_slice:
+                reason = "selected_top_slice_and_product_slice"
             decisions.append(
                 QualityRoutingDecision(
                     content_item_id=cid,
@@ -503,6 +631,20 @@ def explain_quality_routing(
                     percentile_scope=scope,
                 )
             )
+        elif cid in product_slice:
+            decisions.append(
+                QualityRoutingDecision(
+                    content_item_id=cid,
+                    decision="selected",
+                    reason="selected_product_slice",
+                    rank_mean=round(mean, 4) if mean is not None else None,
+                    rank_position=pos,
+                    survivors_in_window=survivors_n,
+                    top_slice_keep=keep_n,
+                    gate_percentile=gate_percentile,
+                    percentile_scope=scope,
+                )
+            )
         else:
             decisions.append(
                 QualityRoutingDecision(
@@ -528,6 +670,7 @@ def quality_selection_reason_map(
     gate_percentile: float = GATE_PERCENTILE,
     percentile_scope: str = ROUTER_PERCENTILE_SCOPE,
     apply_judge_effective: bool = True,
+    product_slice_pct: float | None = None,
 ) -> dict[int, QualityRoutingDecision]:
     return {
         d.content_item_id: d
@@ -538,17 +681,19 @@ def quality_selection_reason_map(
             gate_percentile=gate_percentile,
             percentile_scope=percentile_scope,
             apply_judge_effective=apply_judge_effective,
+            product_slice_pct=product_slice_pct,
         )
     }
 
 
-def build_user_prompt(papers: Sequence[dict[str, Any]]) -> str:
-    blocks = "\n---\n".join(paper_block(p, max_abstract_chars=3000) for p in papers)
-    ids = [p["content_item_id"] for p in papers]
-    return (
+def build_user_prompt(papers: Sequence[dict[str, Any]]) -> tuple[str, dict[int, int]]:
+    blocks, index_to_id = indexed_paper_blocks(papers, max_abstract_chars=3000)
+    indices = sorted(index_to_id)
+    prompt = (
         f"Score these {len(papers)} papers against the full rubric. Return one object "
-        f"per paper, for exactly these content_item_id values: {ids}.\n\n{blocks}"
+        f"per paper, for exactly these batch_index values: {indices}.\n\n{blocks}"
     )
+    return prompt, index_to_id
 
 
 def _score(value: Any) -> float | None:
@@ -562,26 +707,35 @@ def _score(value: Any) -> float | None:
 
 
 def parse_response(
-    text: str, expected_ids: set[int]
+    text: str, index_to_id: dict[int, int]
 ) -> tuple[dict[int, dict[str, Any]], list[str]]:
     payload = parse_json_object(text)
     parsed: dict[int, dict[str, Any]] = {}
     problems: list[str] = []
+    expected_indices = set(index_to_id)
+    seen_indices: set[int] = set()
     for entry in payload.get("papers") or []:
         try:
-            content_id = int(entry.get("content_item_id"))
+            batch_index = int(entry.get("batch_index"))
         except (TypeError, ValueError):
-            problems.append("unparseable content_item_id")
+            problems.append("unparseable batch_index")
             continue
-        if content_id not in expected_ids:
-            problems.append(f"unexpected content_item_id {content_id}")
+        if batch_index not in expected_indices:
+            problems.append(f"unexpected batch_index {batch_index}")
             continue
+        if batch_index in seen_indices:
+            problems.append(f"duplicate batch_index {batch_index}")
+            continue
+        seen_indices.add(batch_index)
+        content_id = index_to_id[batch_index]
         scores: dict[str, Any] = {}
         bad = False
         for dimension in RUBRIC_DIMENSIONS:
             value = _score(entry.get(dimension))
             if value is None:
-                problems.append(f"{content_id}: invalid {dimension}={entry.get(dimension)!r}")
+                problems.append(
+                    f"batch_index={batch_index}: invalid {dimension}={entry.get(dimension)!r}"
+                )
                 bad = True
                 break
             scores[dimension] = value
@@ -589,15 +743,15 @@ def parse_response(
             continue
         reason_not_higher = (entry.get("reason_not_higher") or "").strip()
         if not reason_not_higher:
-            problems.append(f"{content_id}: missing reason_not_higher")
+            problems.append(f"batch_index={batch_index}: missing reason_not_higher")
         scores["so_what"] = (entry.get("so_what") or "").strip()
         scores["reason_not_higher"] = reason_not_higher
         confidence = _score(entry.get("confidence"))
         scores["confidence"] = confidence
         parsed[content_id] = scores
-    missing = expected_ids - parsed.keys()
+    missing = expected_indices - seen_indices
     if missing:
-        problems.append(f"missing ids: {sorted(missing)}")
+        problems.append(f"missing batch_index: {sorted(missing)}")
     return parsed, problems
 
 
@@ -636,11 +790,12 @@ def run_window(
         expected = {p["content_item_id"] for p in batch}
         try:
             with connect() as batch_conn:
+                user_prompt, index_to_id = build_user_prompt(batch)
                 result = call_llm_logged(
                     batch_conn,
                     model=model,
                     system_prompt=system_prompt,
-                    user_prompt=build_user_prompt(batch),
+                    user_prompt=user_prompt,
                     prompt_version=PROMPT_VERSION,
                     stage_name=STAGE_NAME,
                     reasoning_effort=QUALITY_REASONING_EFFORT,
@@ -651,7 +806,7 @@ def run_window(
                     entity=f"quality_{min(expected)}",
                     timeout=600.0,
                 )
-                parsed, problems = parse_response(result["content"], expected)
+                parsed, problems = parse_response(result["content"], index_to_id)
                 rows = []
                 by_id = {p["content_item_id"]: p for p in batch}
                 for content_id, scores in parsed.items():

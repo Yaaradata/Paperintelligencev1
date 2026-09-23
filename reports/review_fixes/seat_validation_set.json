@@ -1,0 +1,591 @@
+{
+  "built_at": "2026-09-22",
+  "past_editorial_picks": [
+    {
+      "content_item_id": 184890,
+      "seat": "TECH",
+      "source": "newsletter_picks_2026-09-01_to_2026-09-15.json",
+      "role": "winner",
+      "title": "MOLE: Detecting Insider Threats in AI Agents"
+    },
+    {
+      "content_item_id": 143079,
+      "seat": "TECH",
+      "source": "newsletter_picks_2026-09-01_to_2026-09-15.json",
+      "role": "runner_up",
+      "title": null
+    },
+    {
+      "content_item_id": 194758,
+      "seat": "PRODUCT",
+      "source": "newsletter_picks_2026-09-01_to_2026-09-15.json",
+      "role": "winner",
+      "title": "A light-touch AI literacy intervention helps protect against AI political persuasion"
+    },
+    {
+      "content_item_id": 42672,
+      "seat": "PRODUCT",
+      "source": "newsletter_picks_2026-09-01_to_2026-09-15.json",
+      "role": "runner_up",
+      "title": null
+    },
+    {
+      "content_item_id": 172395,
+      "seat": "TECH",
+      "source": "august_newsletter_selection.json",
+      "role": "winner",
+      "title": "KeyPooling: Measuring Where LLM API Relay Paths Collapse Prompt Cache Isolation"
+    },
+    {
+      "content_item_id": 2184,
+      "seat": "PRODUCT",
+      "source": "august_newsletter_selection.json",
+      "role": "winner",
+      "title": "Is Your Neighborhood Safe? Place-based Stigma in Large Language Models' Urban Safety Judgments"
+    },
+    {
+      "content_item_id": 3611,
+      "seat": "TECH",
+      "source": "august_linkedin_selection.json",
+      "role": "linkedin_winner",
+      "title": "A JoLT for the KV cache: Near-lossless KV cache compression via joint Lagrangian allocation of Tucker ranks and a rotated residual for llms"
+    },
+    {
+      "content_item_id": 120294,
+      "seat": "PRODUCT",
+      "source": "august_linkedin_selection.json",
+      "role": "linkedin_winner",
+      "title": "Training Proactive and Personalized LLM Agents"
+    }
+  ],
+  "stratified_sep1_15": [
+    {
+      "content_item_id": 102936,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 137399,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 142779,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 183689,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 99006,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 103073,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 134934,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 135530,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 135551,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 135579,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 135815,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 136019,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 136101,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 136271,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 136354,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 136651,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 136983,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 137176,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 137553,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 137852,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 137868,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 137973,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 138004,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 138384,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 142412,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 142610,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 142740,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 142760,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 142905,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 143081,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 184574,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 184708,
+      "stratum": "enterprise_adoption_sep1_10"
+    },
+    {
+      "content_item_id": 25120,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 10428,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 142195,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 143071,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 195086,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 90977,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 186289,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 194490,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 88817,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 191584,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 187588,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 4317,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 36930,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 188027,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 185711,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 194174,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 193781,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 26685,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 195027,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 193295,
+      "stratum": "sector_only_business"
+    },
+    {
+      "content_item_id": 76357,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 142747,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 133255,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 184987,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 192360,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 185655,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 136197,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 137241,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 184530,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 136550,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 194151,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 185919,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 188115,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 83854,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 102008,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 137198,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 191308,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 121144,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 184909,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 192017,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 186746,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 185233,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 185892,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 138061,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 186904,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 184793,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 67096,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 135914,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 187508,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 194877,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 184941,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 94180,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 194819,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 186840,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 121488,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 194574,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 137266,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 185945,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 186868,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 135172,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 135301,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 136886,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 137278,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 136138,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 183842,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 193386,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 183664,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 137114,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 142591,
+      "stratum": "tech_poolish"
+    },
+    {
+      "content_item_id": 136210,
+      "stratum": "tech_poolish"
+    }
+  ],
+  "all_content_item_ids": [
+    2184,
+    3611,
+    4317,
+    10428,
+    25120,
+    26685,
+    36930,
+    42672,
+    67096,
+    76357,
+    83854,
+    88817,
+    90977,
+    94180,
+    99006,
+    102008,
+    102936,
+    103073,
+    120294,
+    121144,
+    121488,
+    133255,
+    134934,
+    135172,
+    135301,
+    135530,
+    135551,
+    135579,
+    135815,
+    135914,
+    136019,
+    136101,
+    136138,
+    136197,
+    136210,
+    136271,
+    136354,
+    136550,
+    136651,
+    136886,
+    136983,
+    137114,
+    137176,
+    137198,
+    137241,
+    137266,
+    137278,
+    137399,
+    137553,
+    137852,
+    137868,
+    137973,
+    138004,
+    138061,
+    138384,
+    142195,
+    142412,
+    142591,
+    142610,
+    142740,
+    142747,
+    142760,
+    142779,
+    142905,
+    143071,
+    143079,
+    143081,
+    172395,
+    183664,
+    183689,
+    183842,
+    184530,
+    184574,
+    184708,
+    184793,
+    184890,
+    184909,
+    184941,
+    184987,
+    185233,
+    185655,
+    185711,
+    185892,
+    185919,
+    185945,
+    186289,
+    186746,
+    186840,
+    186868,
+    186904,
+    187508,
+    187588,
+    188027,
+    188115,
+    191308,
+    191584,
+    192017,
+    192360,
+    193295,
+    193386,
+    193781,
+    194151,
+    194174,
+    194490,
+    194574,
+    194758,
+    194819,
+    194877,
+    195027,
+    195086
+  ],
+  "notes": {
+    "newsletter_picks_glob": "reports/newsletter_picks_*.json (1 file found)",
+    "august_newsletter": "found",
+    "august_linkedin": "found",
+    "enterprise_adoption_sep1_10_available": 53,
+    "enterprise_included": 32,
+    "sector_only_included": 20
+  }
+}

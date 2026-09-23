@@ -22,8 +22,19 @@ batch_sizes:
 gating:
   # Overridden by env SCREEN_MIN_AI_RELEVANCE / GATE_PERCENTILE when set.
   screen_min_ai_relevance: 5.0
-  gate_percentile: 15
+  gate_percentile: 75
   # Relevance stage (free) uses MIN_AI_RELEVANCE_FOR_ENRICHMENT (default 5.0)
+  # Quality top-slice scope: env ROUTER_PERCENTILE_SCOPE=window|day (default day).
+  router_percentile_scope: day
+  # Optional product-relevance quality slice; 0 = off (Phase 7 amendments).
+  router_product_slice_pct: 0
+
+audience:
+  # AUDIENCE_POLICY=v001|v002 — default v001 until Phase 7c cutover.
+  policy: v001
+  # Provisional pool thresholds when policy=v002 (calibrated in 7b).
+  tech_pool_min: 6.0
+  product_pool_min: 6.0
 
 paths:
   prompts: prompts

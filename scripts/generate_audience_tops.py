@@ -1,30 +1,31 @@
 #!/usr/bin/env python3
 """Audience-split top papers — manager-facing report.
 
-List definitions (exclusive pools among quality-scored papers):
+AUDIENCE_POLICY=v001 (default until 7c) — exclusive pools among quality-scored papers:
 
   TECH — for ML/AI builders and technical leads
     application_domains ⊆ {general_method, scientific_research} (or empty)
     AND audiences overlap {practitioner, technical_leadership, student}
 
-  BUSINESS — for product / ops / risk / enterprise decision-makers
+  BUSINESS / PRODUCT — for product / ops / risk / enterprise decision-makers
     audiences contains enterprise_adoption
     OR application_domains contains any sector other than
        general_method / scientific_research
 
-This is intentional: raw `practitioner` alone covers ~99% of arXiv CS papers,
-so it cannot define the tech list. Sector application + enterprise_adoption
-defines business; pure method work defines tech.
+AUDIENCE_POLICY=v002 — independent seat-score pools (a paper may be in both):
 
-Default deliverables from write_all_reports / run_pipeline:
-  - tech_top_{N}_{from}_to_{until}.md
-  - business_top_{N}_{from}_to_{until}.md
-  - audience_top_{N}_{from}_to_{until}.md
+  TECH    = tech_relevance >= TECH_POOL_MIN (provisional default 6.0 until 7b)
+  PRODUCT = product_relevance >= PRODUCT_POOL_MIN
+  Only rows with audience_policy_version=v002 participate; v001 rows ignored.
+
+Ranking (both policies): quality_score DESC, then final_score DESC.
+Org boost and final_score are columns; organisation name is a label.
 """
 
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -34,7 +35,12 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
+from paper_intelligence.common.config import (
+    AUDIENCE_POLICY,
+    PI_USE_PAPERS_CATALOG,
+    PRODUCT_POOL_MIN,
+    TECH_POOL_MIN,
+)
 
 
 def _current_window_join() -> str:
@@ -52,14 +58,12 @@ def _current_window_join() -> str:
     )
 
 
-TECH_AUDIENCES = ("practitioner", "technical_leadership", "student")
-BUSINESS_AUDIENCE = "enterprise_adoption"
-METHOD_APPLICATIONS = ("general_method", "scientific_research")
 BUSINESS_SENDABLE_MIN_PCT = 15.0
 
+# SQL fragments keyed by (policy, pool). product is the v002 name; business is
+# retained as an alias for v001 / file-compat paths.
 POOL_SQL = {
-    # Method / systems papers for builders.
-    "tech": """
+    ("v001", "tech"): """
         (
           audiences ?| ARRAY['practitioner','technical_leadership','student']
           AND NOT (
@@ -71,8 +75,7 @@ POOL_SQL = {
           )
         )
     """,
-    # Decision-maker papers: explicit enterprise label OR a real sector.
-    "business": """
+    ("v001", "business"): """
         (
           audiences ? 'enterprise_adoption'
           OR EXISTS (
@@ -81,7 +84,53 @@ POOL_SQL = {
           )
         )
     """,
+    ("v001", "product"): """
+        (
+          audiences ? 'enterprise_adoption'
+          OR EXISTS (
+            SELECT 1 FROM jsonb_array_elements_text(c.application_domains) d
+            WHERE d NOT IN ('general_method', 'scientific_research')
+          )
+        )
+    """,
+    ("v002", "tech"): """
+        (
+          c.audience_policy_version = 'v002'
+          AND c.tech_relevance IS NOT NULL
+          AND c.tech_relevance >= %s
+        )
+    """,
+    ("v002", "product"): """
+        (
+          c.audience_policy_version = 'v002'
+          AND c.product_relevance IS NOT NULL
+          AND c.product_relevance >= %s
+        )
+    """,
+    ("v002", "business"): """
+        (
+          c.audience_policy_version = 'v002'
+          AND c.product_relevance IS NOT NULL
+          AND c.product_relevance >= %s
+        )
+    """,
 }
+
+
+def _policy() -> str:
+    raw = os.getenv("AUDIENCE_POLICY", AUDIENCE_POLICY).strip().lower()
+    return raw if raw in {"v001", "v002"} else "v001"
+
+
+def _pool_predicate(pool: str, policy: str) -> tuple[str, list]:
+    key = (policy, pool)
+    if key not in POOL_SQL:
+        raise ValueError(f"unknown pool/policy {pool!r}/{policy!r}")
+    sql = POOL_SQL[key]
+    if policy == "v002":
+        threshold = TECH_POOL_MIN if pool == "tech" else PRODUCT_POOL_MIN
+        return sql, [threshold]
+    return sql, []
 
 
 def _table(headers: list[str], rows: list[list]) -> str:
@@ -110,8 +159,8 @@ def _title(value: str | None) -> str:
 
 
 def fetch_pool(conn, *, date_from: str, date_until: str, pool: str, limit: int):
-    if pool not in POOL_SQL:
-        raise ValueError(f"unknown pool {pool!r}")
+    policy = _policy()
+    predicate, extra = _pool_predicate(pool, policy)
     join = _current_window_join()
     with conn.cursor() as cur:
         cur.execute(
@@ -130,6 +179,9 @@ def fetch_pool(conn, *, date_from: str, date_until: str, pool: str, limit: int):
                 c.subdomains,
                 c.audiences,
                 c.application_domains,
+                c.tech_relevance,
+                c.product_relevance,
+                c.audience_policy_version,
                 c.adjudication_json->'organisation' AS org_evidence,
                 (
                     SELECT r.result_json->>'so_what'
@@ -155,20 +207,23 @@ def fetch_pool(conn, *, date_from: str, date_until: str, pool: str, limit: int):
             {join}
             LEFT JOIN paper_intelligence.organisations o ON o.id = c.top_organisation_id
             WHERE c.final_score IS NOT NULL
-              AND {POOL_SQL[pool]}
+              AND {predicate}
             ORDER BY
+                c.quality_score DESC NULLS LAST,
                 c.final_score DESC NULLS LAST,
-                COALESCE(c.organisation_score, 0) DESC,
-                COALESCE(c.quality_score, 0) DESC,
                 c.content_item_id
             LIMIT %s
             """,
-            (date_from, date_until, limit),
+            (date_from, date_until, *extra, limit),
         )
         return [dict(r) for r in cur.fetchall()]
 
 
 def coverage(conn, *, date_from: str, date_until: str) -> dict:
+    policy = _policy()
+    tech_pred, tech_extra = _pool_predicate("tech", policy)
+    prod_pool = "product" if policy == "v002" else "business"
+    prod_pred, prod_extra = _pool_predicate(prod_pool, policy)
     join = _current_window_join()
     with conn.cursor() as cur:
         cur.execute(
@@ -179,10 +234,13 @@ def coverage(conn, *, date_from: str, date_until: str) -> dict:
                 WHERE final_score IS NOT NULL AND jsonb_array_length(audiences) > 0
               ) AS quality_with_audience,
               COUNT(*) FILTER (
-                WHERE final_score IS NOT NULL AND {POOL_SQL['tech']}
+                WHERE final_score IS NOT NULL AND {tech_pred}
               ) AS tech_pool,
               COUNT(*) FILTER (
-                WHERE final_score IS NOT NULL AND {POOL_SQL['business']}
+                WHERE final_score IS NOT NULL AND {prod_pred}
+              ) AS product_pool,
+              COUNT(*) FILTER (
+                WHERE final_score IS NOT NULL AND {prod_pred}
               ) AS business_pool,
               COUNT(*) FILTER (
                 WHERE final_score IS NOT NULL AND audiences ? 'enterprise_adoption'
@@ -194,12 +252,15 @@ def coverage(conn, *, date_from: str, date_until: str) -> dict:
                     WHERE d NOT IN ('general_method', 'scientific_research')
                   )
               ) AS sector_application,
+              COUNT(*) FILTER (
+                WHERE final_score IS NOT NULL AND c.audience_policy_version = 'v002'
+              ) AS v002_scored,
               MIN(ci.published_at)::date AS earliest_published,
               MAX(ci.published_at)::date AS latest_published
             FROM paper_intelligence.paper_intelligence_current c
             {join}
             """,
-            (date_from, date_until),
+            (date_from, date_until, *tech_extra, *prod_extra, *prod_extra),
         )
         return dict(cur.fetchone())
 
@@ -241,43 +302,56 @@ def _provenance_block(costs: list[dict]) -> list[str]:
             ],
         ),
         f"**Total LLM spend:** ${sum(float(r['cost_usd'] or 0) for r in costs):.4f}  ",
-        "Quality: `openai/gpt-5.6-sol` · Screen/classify: `z-ai/glm-5.3-flash` · "
+        "Quality: date-mapped Sol/Terra · Screen/classify: `z-ai/glm-5.3-flash` · "
         "Affiliation: arXiv HTML + ROR + OpenAlex (no LLM).",
         "",
     ]
 
 
 def _definitions_block() -> list[str]:
+    policy = _policy()
+    if policy == "v002":
+        return [
+            "## Seat / list definitions",
+            "",
+            f"**AUDIENCE_POLICY=v002** (thresholds provisional until 7b: "
+            f"TECH_POOL_MIN={TECH_POOL_MIN}, PRODUCT_POOL_MIN={PRODUCT_POOL_MIN}).",
+            "",
+            "- **Tech** — `tech_relevance >= TECH_POOL_MIN` (audience_policy_version=v002).",
+            "- **Product** — `product_relevance >= PRODUCT_POOL_MIN` (same). "
+            "A paper may appear in **both** pools.",
+            "- Sector `application_domain` alone does **not** raise product pool membership.",
+            "- v001 / legacy audience-label rows are ignored by these pools.",
+            "",
+        ]
     return [
         "## Audience / list definitions",
         "",
-        "These lists are **exclusive** among quality-scored papers:",
+        "These lists are **exclusive** among quality-scored papers "
+        "(AUDIENCE_POLICY=v001):",
         "",
         "- **Tech** — method/systems papers for builders: application domain is only "
         "`general_method` / `scientific_research` (or empty), and audiences include "
         "practitioner / technical_leadership / student. Pure `practitioner` alone is "
         "**not** used as the tech filter (it matches almost every arXiv CS paper).",
-        "- **Business** — decision-maker papers: `enterprise_adoption` in audiences, "
-        "**or** a concrete sector application "
+        "- **Product (business)** — decision-maker papers: `enterprise_adoption` in "
+        "audiences, **or** a concrete sector application "
         "(healthcare, finance, cybersecurity, transport, energy, legal, etc.).",
-        "",
-        "Classifier audience labels still matter for provenance; the list split above "
-        "uses application_domain because `enterprise_adoption` was under-assigned "
-        "(~2.5%) while sector applications are common (~25%+).",
         "",
     ]
 
 
 def _score_legend() -> list[str]:
     return [
-        "## How to read Final vs Quality",
+        "## How to read Quality vs Final",
         "",
+        "Lists are ranked by **quality_score** (then final_score). "
         "Final = quality × evidence_factor + org_boost. Final below Quality with "
         "org boost 0 means the evidence_factor discounted the rubric; that is correct.",
         "",
         "**Org standing** is a property of the organisation (constant across papers). "
         "**Org boost** is how much of that standing this paper's verified affiliation "
-        "evidence earns.",
+        "evidence earns. Org name is shown as a label, not a sort key.",
         "",
     ]
 
@@ -291,7 +365,54 @@ def section(
     quality_n: int,
     filter_blurb: str,
 ) -> list[str]:
+    policy = _policy()
     named = sum(1 for r in rows if r.get("organisation") or r.get("all_organisations"))
+    headers = [
+        "#",
+        "Title",
+        "Published",
+        "Quality",
+        "Org boost",
+        "Final",
+        "Organisation",
+        "Domain",
+    ]
+    if policy == "v002":
+        headers[7:7] = ["Tech rel", "Product rel"]
+    else:
+        headers[7:7] = ["Audiences", "Application"]
+
+    table_rows = []
+    for i, r in enumerate(rows, start=1):
+        org_label = r.get("all_organisations") or r.get("organisation") or "—"
+        base = [
+            i,
+            _title(r["title"]),
+            _fmt_date(r.get("published_at")),
+            r["quality_score"],
+            r["org_boost"] if r.get("organisation") else "—",
+            r["final_score"],
+            org_label,
+        ]
+        if policy == "v002":
+            base.extend(
+                [
+                    r.get("tech_relevance") if r.get("tech_relevance") is not None else "—",
+                    r.get("product_relevance")
+                    if r.get("product_relevance") is not None
+                    else "—",
+                ]
+            )
+        else:
+            base.extend(
+                [
+                    ", ".join(r["audiences"] or []) or "—",
+                    ", ".join(r.get("application_domains") or []) or "—",
+                ]
+            )
+        base.append(r["domain"] or "—")
+        table_rows.append(base)
+
     parts = [
         f"## {title}",
         "",
@@ -302,41 +423,10 @@ def section(
         f"Organisation named in this list: **{named}/{len(rows)}** "
         f"({(100.0 * named / len(rows)) if rows else 0:.0f}% affiliation coverage)",
         "",
-        "Ranked by **final_score → organisation standing → quality_score**.",
+        "Ranked by **quality_score → final_score** "
+        "(org_boost / final shown as columns; org name as label).",
         "",
-        _table(
-            [
-                "#",
-                "Title",
-                "Published",
-                "Final",
-                "Quality",
-                "Org standing",
-                "Org boost",
-                "Organisation(s)",
-                "Audiences",
-                "Application",
-                "Domain",
-                "Subdomains",
-            ],
-            [
-                [
-                    i,
-                    _title(r["title"]),
-                    _fmt_date(r.get("published_at")),
-                    r["final_score"],
-                    r["quality_score"],
-                    r["organisation_score"] if r.get("organisation") else "—",
-                    r["org_boost"] if r.get("organisation") else "—",
-                    (r.get("all_organisations") or r.get("organisation") or "—"),
-                    ", ".join(r["audiences"] or []) or "—",
-                    ", ".join(r.get("application_domains") or []) or "—",
-                    r["domain"] or "—",
-                    ", ".join(r.get("subdomains") or []) or "—",
-                ]
-                for i, r in enumerate(rows, start=1)
-            ],
-        ),
+        _table(headers, table_rows),
         "",
     ]
     for i, r in enumerate(rows, start=1):
@@ -345,12 +435,18 @@ def section(
             org_ev = {}
         orgs = r.get("all_organisations") or r.get("organisation") or "unresolved"
         apps = ", ".join(r.get("application_domains") or []) or "—"
-        subs = ", ".join(r.get("subdomains") or []) or "—"
+        if policy == "v002":
+            seat_line = (
+                f"Tech relevance: {r.get('tech_relevance') if r.get('tech_relevance') is not None else '—'} · "
+                f"Product relevance: {r.get('product_relevance') if r.get('product_relevance') is not None else '—'} · "
+            )
+        else:
+            seat_line = f"Audiences: {', '.join(r['audiences'] or []) or '—'} · "
         parts.append(
             f"**{i}. {_title(r['title'])}**  \n"
             f"id {r['content_item_id']} · published {_fmt_date(r.get('published_at'))}  \n"
-            f"Final {r['final_score']} (= quality {r['quality_score']} × evidence_factor "
-            f"+ org_boost {r['org_boost'] or 0})  \n"
+            f"Quality {r['quality_score']} · org_boost {r['org_boost'] or 0} · "
+            f"Final {r['final_score']}  \n"
             f"Organisation(s): {orgs}"
             + (
                 f" · standing {r['organisation_score']} · evidence "
@@ -360,9 +456,8 @@ def section(
                 else " · no verified affiliation evidence"
             )
             + "  \n"
-            f"Audiences: {', '.join(r['audiences'] or []) or '—'} · "
-            f"Application: {apps} · Domain: {r['domain'] or '—'} · "
-            f"Subdomains: {subs}  \n"
+            + seat_line
+            + f"Application: {apps} · Domain: {r['domain'] or '—'}  \n"
             f"So what: {r.get('so_what') or '—'}  \n"
             f"Not higher: {r.get('reason_not_higher') or '—'}\n"
         )
@@ -387,6 +482,7 @@ def _quality_model_header(conn, *, date_from: str, date_until: str) -> list[str]
     stale = int((q_models.get("status_counts") or {}).get("stale_content") or 0)
     if stale:
         lines.append(f"**stale_content papers in window:** {stale}  ")
+    lines.append(f"**AUDIENCE_POLICY:** `{_policy()}`  ")
     return lines
 
 
@@ -397,6 +493,12 @@ def build_tech_report(conn, *, date_from: str, date_until: str, top_n: int) -> s
     quality_n = int(cov["quality_papers"] or 0)
     tech_pool = int(cov["tech_pool"] or 0)
     pct = (100.0 * tech_pool / quality_n) if quality_n else 0.0
+    policy = _policy()
+    filter = (
+        f"`tech_relevance >= {TECH_POOL_MIN}` (v002)"
+        if policy == "v002"
+        else "method papers (`general_method` / `scientific_research`) for builders"
+    )
     parts = [
         f"# PaperIntelligence — Tech Top {top_n} (sendable)",
         "",
@@ -406,8 +508,7 @@ def build_tech_report(conn, *, date_from: str, date_until: str, top_n: int) -> s
     ]
     parts += _quality_model_header(conn, date_from=date_from, date_until=date_until)
     parts += [
-        f"**Pool:** {tech_pool}/{quality_n} ({pct:.1f}%) method/systems papers "
-        f"(exclusive of business/sector papers).",
+        f"**Pool:** {tech_pool}/{quality_n} ({pct:.1f}%) tech-seat / method papers.",
         "",
     ]
     parts += _definitions_block()
@@ -419,25 +520,34 @@ def build_tech_report(conn, *, date_from: str, date_until: str, top_n: int) -> s
         sendable=True,
         pool_size=tech_pool,
         quality_n=quality_n,
-        filter_blurb="method papers (`general_method` / `scientific_research`) for builders",
+        filter_blurb=filter,
     )
     return "\n".join(parts)
 
 
-def build_business_report(conn, *, date_from: str, date_until: str, top_n: int) -> str:
+def build_product_report(conn, *, date_from: str, date_until: str, top_n: int) -> str:
+    """Product top-N (v002 name). Under v001 this is the former business pool."""
     cov = coverage(conn, date_from=date_from, date_until=date_until)
-    business = fetch_pool(
-        conn, date_from=date_from, date_until=date_until, pool="business", limit=top_n
+    policy = _policy()
+    pool_name = "product" if policy == "v002" else "business"
+    product = fetch_pool(
+        conn, date_from=date_from, date_until=date_until, pool=pool_name, limit=top_n
     )
     costs = provenance(conn)
     quality_n = int(cov["quality_papers"] or 0)
-    biz_pool = int(cov["business_pool"] or 0)
-    pct = (100.0 * biz_pool / quality_n) if quality_n else 0.0
-    sendable = pct >= BUSINESS_SENDABLE_MIN_PCT and len(business) >= min(top_n, 10)
+    prod_pool = int(cov.get("product_pool") or cov.get("business_pool") or 0)
+    pct = (100.0 * prod_pool / quality_n) if quality_n else 0.0
+    sendable = pct >= BUSINESS_SENDABLE_MIN_PCT and len(product) >= min(top_n, 10)
+    label = "Product" if policy == "v002" else "Business"
+    filter = (
+        f"`product_relevance >= {PRODUCT_POOL_MIN}` (v002)"
+        if policy == "v002"
+        else "`enterprise_adoption` OR concrete sector application"
+    )
     header = (
-        f"# PaperIntelligence — Business Top {top_n} (sendable)"
+        f"# PaperIntelligence — {label} Top {top_n} (sendable)"
         if sendable
-        else f"# PaperIntelligence — Business Top {top_n} (diagnostic)"
+        else f"# PaperIntelligence — {label} Top {top_n} (diagnostic)"
     )
     parts = [
         header,
@@ -447,40 +557,54 @@ def build_business_report(conn, *, date_from: str, date_until: str, top_n: int) 
         f"**Generated:** {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}  ",
     ]
     parts += _quality_model_header(conn, date_from=date_from, date_until=date_until)
-    parts += [
-        f"**Pool:** {biz_pool}/{quality_n} ({pct:.1f}%) — "
-        f"`enterprise_adoption` labels={cov['enterprise_adoption_label']}, "
-        f"sector applications={cov['sector_application']}.",
-        "",
-    ]
+    if policy == "v002":
+        parts += [
+            f"**Pool:** {prod_pool}/{quality_n} ({pct:.1f}%) — "
+            f"v002 scored={cov.get('v002_scored')}.",
+            "",
+        ]
+    else:
+        parts += [
+            f"**Pool:** {prod_pool}/{quality_n} ({pct:.1f}%) — "
+            f"`enterprise_adoption` labels={cov['enterprise_adoption_label']}, "
+            f"sector applications={cov['sector_application']}.",
+            "",
+        ]
     parts += _definitions_block()
     parts += _score_legend()
     parts += _provenance_block(costs)
     parts += section(
-        f"Top {top_n} — Business people",
-        business,
+        f"Top {top_n} — {label} people",
+        product,
         sendable=sendable,
-        pool_size=biz_pool,
+        pool_size=prod_pool,
         quality_n=quality_n,
-        filter_blurb="`enterprise_adoption` OR concrete sector application",
+        filter_blurb=filter,
     )
     return "\n".join(parts)
+
+
+# Compat alias
+build_business_report = build_product_report
 
 
 def build_combined_report(conn, *, date_from: str, date_until: str, top_n: int) -> str:
     cov = coverage(conn, date_from=date_from, date_until=date_until)
     costs = provenance(conn)
+    policy = _policy()
     tech = fetch_pool(conn, date_from=date_from, date_until=date_until, pool="tech", limit=top_n)
-    business = fetch_pool(
-        conn, date_from=date_from, date_until=date_until, pool="business", limit=top_n
+    prod_pool_name = "product" if policy == "v002" else "business"
+    product = fetch_pool(
+        conn, date_from=date_from, date_until=date_until, pool=prod_pool_name, limit=top_n
     )
     quality_n = int(cov["quality_papers"] or 0)
     tech_pool = int(cov["tech_pool"] or 0)
-    biz_pool = int(cov["business_pool"] or 0)
+    prod_pool = int(cov.get("product_pool") or cov.get("business_pool") or 0)
     tech_pct = (100.0 * tech_pool / quality_n) if quality_n else 0.0
-    biz_pct = (100.0 * biz_pool / quality_n) if quality_n else 0.0
-    biz_sendable = biz_pct >= BUSINESS_SENDABLE_MIN_PCT
+    prod_pct = (100.0 * prod_pool / quality_n) if quality_n else 0.0
+    prod_sendable = prod_pct >= BUSINESS_SENDABLE_MIN_PCT
     generated = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    label = "Product" if policy == "v002" else "Business"
 
     parts = [
         "# PaperIntelligence — Audience Top Lists",
@@ -495,16 +619,9 @@ def build_combined_report(conn, *, date_from: str, date_until: str, top_n: int) 
         "",
         "## Verdict",
         "",
-        f"- **Tech list:** {tech_pool}/{quality_n} = **{tech_pct:.1f}%** "
-        f"(method/systems papers). Sendable.",
-        f"- **Business list:** {biz_pool}/{quality_n} = **{biz_pct:.1f}%** "
-        f"(enterprise_adoption label={cov['enterprise_adoption_label']}; "
-        f"sector applications={cov['sector_application']}). "
-        + ("Sendable." if biz_sendable else "Still thin — check sector classify quality."),
-        "",
-        "Earlier 99.5%/2.5% skew was from defining tech=`practitioner` and "
-        "business=`enterprise_adoption` alone. That was wrong: arXiv CS tags almost "
-        "everything practitioner, and the model under-uses enterprise_adoption.",
+        f"- **Tech list:** {tech_pool}/{quality_n} = **{tech_pct:.1f}%**. Sendable.",
+        f"- **{label} list:** {prod_pool}/{quality_n} = **{prod_pct:.1f}%**. "
+        + ("Sendable." if prod_sendable else "Still thin — check classify / thresholds."),
         "",
     ]
     parts += _definitions_block()
@@ -516,10 +633,11 @@ def build_combined_report(conn, *, date_from: str, date_until: str, top_n: int) 
             ["Metric", "Count"],
             [
                 ["Quality-scored papers", quality_n],
-                ["Tech pool (method papers)", f"{tech_pool} ({tech_pct:.1f}%)"],
-                ["Business pool (sector / enterprise)", f"{biz_pool} ({biz_pct:.1f}%)"],
+                ["Tech pool", f"{tech_pool} ({tech_pct:.1f}%)"],
+                [f"{label} pool", f"{prod_pool} ({prod_pct:.1f}%)"],
                 ["Raw enterprise_adoption labels", cov["enterprise_adoption_label"]],
                 ["Papers with sector application_domain", cov["sector_application"]],
+                ["v002 seat-scored", cov.get("v002_scored")],
             ],
         ),
         "",
@@ -531,15 +649,15 @@ def build_combined_report(conn, *, date_from: str, date_until: str, top_n: int) 
         sendable=True,
         pool_size=tech_pool,
         quality_n=quality_n,
-        filter_blurb="method papers for builders",
+        filter_blurb="tech seat / method papers",
     )
     parts += section(
-        f"Top {top_n} — Business people",
-        business,
-        sendable=biz_sendable,
-        pool_size=biz_pool,
+        f"Top {top_n} — {label} people",
+        product,
+        sendable=prod_sendable,
+        pool_size=prod_pool,
         quality_n=quality_n,
-        filter_blurb="enterprise_adoption OR sector application",
+        filter_blurb="product seat / enterprise+sector",
     )
     return "\n".join(parts)
 
@@ -554,19 +672,24 @@ def write_all_reports(
 ) -> dict[str, Path]:
     out_dir = Path(reports_dir or ROOT / "reports")
     out_dir.mkdir(parents=True, exist_ok=True)
+    product_path = out_dir / f"product_top_{top_n}_{date_from}_to_{date_until}.md"
+    business_path = out_dir / f"business_top_{top_n}_{date_from}_to_{date_until}.md"
     paths = {
         "tech": out_dir / f"tech_top_{top_n}_{date_from}_to_{date_until}.md",
-        "business": out_dir / f"business_top_{top_n}_{date_from}_to_{date_until}.md",
+        "product": product_path,
+        "business": business_path,
         "combined": out_dir / f"audience_top_{top_n}_{date_from}_to_{date_until}.md",
     }
     paths["tech"].write_text(
         build_tech_report(conn, date_from=date_from, date_until=date_until, top_n=top_n),
         encoding="utf-8",
     )
-    paths["business"].write_text(
-        build_business_report(conn, date_from=date_from, date_until=date_until, top_n=top_n),
-        encoding="utf-8",
+    product_body = build_product_report(
+        conn, date_from=date_from, date_until=date_until, top_n=top_n
     )
+    product_path.write_text(product_body, encoding="utf-8")
+    # Compat: also write business_ filename (same body).
+    business_path.write_text(product_body, encoding="utf-8")
     paths["combined"].write_text(
         build_combined_report(conn, date_from=date_from, date_until=date_until, top_n=top_n),
         encoding="utf-8",
@@ -576,7 +699,7 @@ def write_all_reports(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Generate tech/business/combined audience top-N reports"
+        description="Generate tech/product/combined audience top-N reports"
     )
     parser.add_argument("--from", dest="date_from", required=True)
     parser.add_argument("--until", dest="date_until", required=True)
@@ -584,6 +707,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", default=None)
     parser.add_argument("--tech-only", action="store_true")
     parser.add_argument("--business-only", action="store_true")
+    parser.add_argument("--product-only", action="store_true")
     parser.add_argument("--all", action="store_true")
     args = parser.parse_args(argv)
 
@@ -602,16 +726,16 @@ def main(argv: list[str] | None = None) -> int:
             out.write_text(report, encoding="utf-8")
             print(f"report written: {out}")
             return 0
-        if args.business_only:
-            report = build_business_report(
+        if args.business_only or args.product_only:
+            report = build_product_report(
                 conn, date_from=args.date_from, date_until=args.date_until, top_n=args.top
             )
-            out = Path(
-                args.out
-                or ROOT
-                / "reports"
-                / f"business_top_{args.top}_{args.date_from}_to_{args.date_until}.md"
+            default_name = (
+                f"product_top_{args.top}_{args.date_from}_to_{args.date_until}.md"
+                if args.product_only or _policy() == "v002"
+                else f"business_top_{args.top}_{args.date_from}_to_{args.date_until}.md"
             )
+            out = Path(args.out or ROOT / "reports" / default_name)
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_text(report, encoding="utf-8")
             print(f"report written: {out}")

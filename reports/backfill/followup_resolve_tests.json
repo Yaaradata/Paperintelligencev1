@@ -1,0 +1,69 @@
+{
+  "before": [
+    {
+      "label": "original_33_oa_primary",
+      "n": 33,
+      "already_linked": 0,
+      "newly_resolvable_via_normalize": 0,
+      "still_unlinked_or_ambiguous": 33,
+      "alias_proposals": 0
+    },
+    {
+      "label": "current_conflicts",
+      "n": 15,
+      "already_linked": 0,
+      "newly_resolvable_via_normalize": 0,
+      "still_unlinked_or_ambiguous": 15,
+      "alias_proposals": 0
+    },
+    {
+      "label": "html_primary_sample_80",
+      "n": 80,
+      "already_linked": 61,
+      "newly_resolvable_via_normalize": 1,
+      "still_unlinked_or_ambiguous": 18,
+      "alias_proposals": 0
+    },
+    {
+      "label": "unresolved_sample_40",
+      "n": 40,
+      "already_linked": 0,
+      "newly_resolvable_via_normalize": 0,
+      "still_unlinked_or_ambiguous": 40,
+      "alias_proposals": 0
+    }
+  ],
+  "after_alias": [
+    {
+      "label": "original_33_after_alias",
+      "n": 33,
+      "already_linked": 0,
+      "newly_resolvable_via_normalize": 0,
+      "still_unlinked_or_ambiguous": 33,
+      "alias_proposals": 0
+    },
+    {
+      "label": "conflicts_after_alias",
+      "n": 15,
+      "already_linked": 0,
+      "newly_resolvable_via_normalize": 0,
+      "still_unlinked_or_ambiguous": 15,
+      "alias_proposals": 0
+    },
+    {
+      "label": "html_sample_after_alias",
+      "n": 80,
+      "already_linked": 61,
+      "newly_resolvable_via_normalize": 1,
+      "still_unlinked_or_ambiguous": 18,
+      "alias_proposals": 0
+    }
+  ],
+  "aliases_added": 0,
+  "alias_samples_before": {
+    "original_33_oa_primary": [],
+    "current_conflicts": [],
+    "html_primary_sample_80": [],
+    "unresolved_sample_40": []
+  }
+}

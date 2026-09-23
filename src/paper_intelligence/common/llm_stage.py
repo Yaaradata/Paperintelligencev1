@@ -23,8 +23,17 @@ from paper_intelligence.openrouter import (
 MAX_ABSTRACT_CHARS = 2000
 
 
-def paper_block(paper: dict[str, Any], *, max_abstract_chars: int = MAX_ABSTRACT_CHARS) -> str:
-    """Blinded paper payload: title, categories, abstract. No authors or affiliations."""
+def paper_block(
+    paper: dict[str, Any],
+    *,
+    max_abstract_chars: int = MAX_ABSTRACT_CHARS,
+    batch_index: int | None = None,
+) -> str:
+    """Blinded paper payload: title, categories, abstract. No authors or affiliations.
+
+    When ``batch_index`` is set (1..N within a batch), emit that index instead of
+    ``content_item_id`` so the model never has to echo real paper ids.
+    """
     categories = paper.get("categories") or []
     if isinstance(categories, str):
         try:
@@ -32,12 +41,37 @@ def paper_block(paper: dict[str, Any], *, max_abstract_chars: int = MAX_ABSTRACT
         except ValueError:
             categories = [categories]
     abstract = (paper.get("abstract") or "")[:max_abstract_chars]
+    id_line = (
+        f"batch_index: {int(batch_index)}\n"
+        if batch_index is not None
+        else f"content_item_id: {paper['content_item_id']}\n"
+    )
     return (
-        f"content_item_id: {paper['content_item_id']}\n"
+        f"{id_line}"
         f"title: {paper.get('title') or ''}\n"
         f"categories: {', '.join(str(c) for c in categories)}\n"
         f"abstract: {abstract}\n"
     )
+
+
+def indexed_paper_blocks(
+    papers: Sequence[dict[str, Any]],
+    *,
+    max_abstract_chars: int = MAX_ABSTRACT_CHARS,
+) -> tuple[str, dict[int, int]]:
+    """Join paper blocks with 1..N batch indices.
+
+    Returns ``(joined_text, index_to_content_item_id)``. Callers must map model
+    ``batch_index`` values back via this dict — never trust echoed paper ids.
+    """
+    index_to_id: dict[int, int] = {}
+    parts: list[str] = []
+    for i, paper in enumerate(papers, start=1):
+        index_to_id[i] = int(paper["content_item_id"])
+        parts.append(
+            paper_block(paper, max_abstract_chars=max_abstract_chars, batch_index=i)
+        )
+    return "\n---\n".join(parts), index_to_id
 
 
 def random_batches(items: Sequence[Any], batch_size: int) -> list[list[Any]]:

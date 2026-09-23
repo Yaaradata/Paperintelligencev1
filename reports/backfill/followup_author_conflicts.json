@@ -1,0 +1,83 @@
+{
+  "local_conflict_papers": 34,
+  "author_pairs_examined": 133,
+  "author_pairs_with_both_org_id_sets": 25,
+  "disjoint_pairs": 25,
+  "genuine_author_affiliation_conflicts": 25,
+  "comparison_canonicalisation_artifacts": 0,
+  "samples_genuine": [
+    {
+      "paper_id": 12243,
+      "html": [
+        "national security authority"
+      ],
+      "oa": [
+        "national security agency"
+      ]
+    },
+    {
+      "paper_id": 12243,
+      "html": [
+        "national security authority"
+      ],
+      "oa": [
+        "university of maryland, college park"
+      ]
+    },
+    {
+      "paper_id": 12243,
+      "html": [
+        "national security authority"
+      ],
+      "oa": [
+        "national security agency"
+      ]
+    },
+    {
+      "paper_id": 31691,
+      "html": [
+        "university of amsterdam"
+      ],
+      "oa": [
+        "clinical research consortium"
+      ]
+    },
+    {
+      "paper_id": 31691,
+      "html": [
+        "university of amsterdam"
+      ],
+      "oa": [
+        "clinical research consortium"
+      ]
+    },
+    {
+      "paper_id": 31691,
+      "html": [
+        "university of amsterdam"
+      ],
+      "oa": [
+        "clinical research consortium"
+      ]
+    },
+    {
+      "paper_id": 31691,
+      "html": [
+        "university of amsterdam"
+      ],
+      "oa": [
+        "clinical research consortium"
+      ]
+    },
+    {
+      "paper_id": 31691,
+      "html": [
+        "university of amsterdam"
+      ],
+      "oa": [
+        "clinical research consortium"
+      ]
+    }
+  ],
+  "samples_artifact": []
+}

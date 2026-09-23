@@ -39,8 +39,16 @@ Quality stays author/org-blind. FAST affiliation feeds the quality router. HF do
 | S-OBS | Parent pipeline run + item_stage_runs everywhere; OAI raw cache | P1 |
 | S-1DAY | One previous day E2E with new funnel | Next after people or in parallel |
 | S-HF-SCORE | Consider HF in final_score | Blocked on stronger evidence |
+| S-ORG-BOOST | org_boost magnitude vs Terra score spread | Open decision (Phase 7a) |
 
 ---
+
+## Open decisions
+
+- **org_boost magnitude vs Terra score spread** — top-N reports now rank by
+  `quality_score` (org_boost / final_score as columns). Whether org_boost
+  should be rescaled relative to Terra's score distribution is undecided;
+  final_score formula unchanged for now.
 
 ## Notes
 

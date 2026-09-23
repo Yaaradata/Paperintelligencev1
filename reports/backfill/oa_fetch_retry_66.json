@@ -1,0 +1,202 @@
+{
+  "retry_queue": 66,
+  "direct_fetch_wall_seconds": 169.263,
+  "direct_fetch_status": {
+    "work_with_institutions": 23,
+    "work_zero_institutions": 21,
+    "no_work_found": 18,
+    "fetch_failed": 4
+  },
+  "direct_with_institutions": 23,
+  "direct_stats": {
+    "cache_hits": 0,
+    "pi_evidence_hits": 0,
+    "cache_misses": 66,
+    "api_calls": 132,
+    "429s": 0,
+    "retries": 0,
+    "pdf_fallbacks": 0,
+    "errors": 70,
+    "no_work_found": 18,
+    "work_zero_institutions": 21,
+    "identity_rejected": 104
+  },
+  "verify_processed": 66,
+  "verify_wall_seconds": 85.417,
+  "verify_outcomes": {
+    "verified_openalex_primary": 23,
+    "unresolved": 43
+  },
+  "incorrectly_cached_failed_lookups": 0,
+  "note": "All 66 prior 404s were uncached (client does not write raw on error). Title-search fallback + identity validation applied.",
+  "samples_success": [
+    {
+      "paper_id": 193209,
+      "arxiv_id": "2609.14180",
+      "status": "work_with_institutions",
+      "strategy": "arxiv_datacite_doi+title_search",
+      "identity": "arxiv_id_in_location_url",
+      "orgs": [
+        "oklahoma state university oklahoma city",
+        "sri international"
+      ]
+    },
+    {
+      "paper_id": 138395,
+      "arxiv_id": "2609.04167",
+      "status": "work_with_institutions",
+      "strategy": "arxiv_datacite_doi+title_search",
+      "identity": "arxiv_id_in_location_url",
+      "orgs": [
+        "chongqing university",
+        "national sun yat-sen university",
+        "sun yat-sen university",
+        "zhejiang university of science and technology"
+      ]
+    },
+    {
+      "paper_id": 185231,
+      "arxiv_id": "2509.25180",
+      "status": "work_with_institutions",
+      "strategy": "arxiv_datacite_doi+title_search",
+      "identity": "arxiv_id_in_location_url",
+      "orgs": [
+        "nvidia (united states)"
+      ]
+    },
+    {
+      "paper_id": 135978,
+      "arxiv_id": "2609.00951",
+      "status": "work_with_institutions",
+      "strategy": "arxiv_datacite_doi+title_search",
+      "identity": "arxiv_id_in_location_url",
+      "orgs": [
+        "chinese academy of sciences",
+        "university of chinese academy of sciences"
+      ]
+    },
+    {
+      "paper_id": 136862,
+      "arxiv_id": "2609.01840",
+      "status": "work_with_institutions",
+      "strategy": "arxiv_datacite_doi+title_search",
+      "identity": "arxiv_id_in_location_url",
+      "orgs": [
+        "northwestern university",
+        "university of northwestern"
+      ]
+    },
+    {
+      "paper_id": 143109,
+      "arxiv_id": "2609.05333",
+      "status": "work_with_institutions",
+      "strategy": "arxiv_datacite_doi+title_search",
+      "identity": "arxiv_id_in_location_url",
+      "orgs": [
+        "universidade estadual de campinas (unicamp)"
+      ]
+    },
+    {
+      "paper_id": 185951,
+      "arxiv_id": "2609.08283",
+      "status": "work_with_institutions",
+      "strategy": "arxiv_datacite_doi+title_search",
+      "identity": "arxiv_id_in_location_url",
+      "orgs": [
+        "tohoku university"
+      ]
+    },
+    {
+      "paper_id": 187272,
+      "arxiv_id": "2609.10522",
+      "status": "work_with_institutions",
+      "strategy": "arxiv_datacite_doi+title_search",
+      "identity": "arxiv_id_in_location_url",
+      "orgs": [
+        "national university of singapore"
+      ]
+    },
+    {
+      "paper_id": 188167,
+      "arxiv_id": "2609.11582",
+      "status": "work_with_institutions",
+      "strategy": "arxiv_datacite_doi+title_search",
+      "identity": "arxiv_id_in_location_url",
+      "orgs": [
+        "kootenay association for science & technology",
+        "korea advanced institute of science and technology",
+        "korea post",
+        "pohang university of science and technology"
+      ]
+    },
+    {
+      "paper_id": 191822,
+      "arxiv_id": "2609.12863",
+      "status": "work_with_institutions",
+      "strategy": "arxiv_datacite_doi+title_search",
+      "identity": "arxiv_id_in_location_url",
+      "orgs": [
+        "centre hospitalier de b\u00e9thune",
+        "universit\u00e9 d'artois"
+      ]
+    }
+  ],
+  "samples_no_work": [
+    {
+      "paper_id": 2178,
+      "arxiv_id": "2608.26178",
+      "error": "http_404",
+      "status": "no_work_found",
+      "strategy": "arxiv_datacite_doi+title_search"
+    },
+    {
+      "paper_id": 192416,
+      "arxiv_id": "2609.13692",
+      "error": "http_404",
+      "status": "no_work_found",
+      "strategy": "arxiv_datacite_doi+title_search"
+    },
+    {
+      "paper_id": 136361,
+      "arxiv_id": "2609.01679",
+      "error": "http_404",
+      "status": "no_work_found",
+      "strategy": "doi+title_search"
+    },
+    {
+      "paper_id": 183901,
+      "arxiv_id": "2506.05626",
+      "error": "http_404",
+      "status": "no_work_found",
+      "strategy": "arxiv_datacite_doi+title_search"
+    },
+    {
+      "paper_id": 186489,
+      "arxiv_id": "2509.22404",
+      "error": "http_404",
+      "status": "no_work_found",
+      "strategy": "arxiv_datacite_doi+title_search"
+    },
+    {
+      "paper_id": 192022,
+      "arxiv_id": "2605.17229",
+      "error": "http_404",
+      "status": "no_work_found",
+      "strategy": "arxiv_datacite_doi+title_search"
+    },
+    {
+      "paper_id": 192368,
+      "arxiv_id": "2609.13602",
+      "error": "http_404",
+      "status": "no_work_found",
+      "strategy": "arxiv_datacite_doi+title_search"
+    },
+    {
+      "paper_id": 192476,
+      "arxiv_id": "2609.13806",
+      "error": "http_404",
+      "status": "no_work_found",
+      "strategy": "arxiv_datacite_doi+title_search"
+    }
+  ]
+}

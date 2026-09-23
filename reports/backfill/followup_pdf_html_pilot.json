@@ -1,0 +1,416 @@
+{
+  "method": "arXiv HTML re-fetch via existing external.arxiv_html client (no PDF binary library installed; no LLM; $0)",
+  "pdf_binary_available": false,
+  "n": 20,
+  "wall_seconds": 11.081,
+  "seconds_per_paper": 0.554,
+  "reason_counts": {
+    "html_refetch_confirms_prior_html": 1,
+    "html_refetch_differs_from_stored_html": 5,
+    "html_refetch_new_affiliation_text": 13,
+    "html_refetch_empty_still_needs_pdf": 1
+  },
+  "results": [
+    {
+      "paper_id": 12243,
+      "arxiv_id": "2601.10511",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "html_before": [
+        "in some references, a default value of \u03b4 = 1 / 4 \\delta=1/4 is used; one can always obtain a desired smaller value of \u03b4 \\delta via median-amplification",
+        "national security authority"
+      ],
+      "oa_names": [
+        "national security agency",
+        "university of maryland, college park"
+      ],
+      "html_refetch": [
+        "Note: National Security Agency, pburkha@nsa.gov",
+        "Note: University of Maryland, davidgharris29@gmail.com",
+        "Note: National Security Agency, ktschm2@nsa.gov",
+        "In some references, a default value of \u03b4 = 1 / 4 \\delta=1/4 is used; one can always obtain a desired smaller value of \u03b4 \\delta via median-amplification",
+        "Note: National Security Agency, Note: University of Maryland, Note: National Security Agency"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_confirms_prior_html",
+      "evidence_url": "https://arxiv.org/html/2601.10511"
+    },
+    {
+      "paper_id": 31691,
+      "arxiv_id": "2603.02790",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "html_before": [
+        "departments of biomedical engineering and physics",
+        "informatics institute",
+        "oncode institute",
+        "radboud university",
+        "the consortium"
+      ],
+      "oa_names": [
+        "clinical research consortium"
+      ],
+      "html_refetch": [
+        "Affiliation: Department of Pathology, Radboud University Medical Center, Nijmegen, The Netherlands",
+        "Affiliation: These authors contributed equally to this work and may be listed in any order.",
+        "Affiliation: Department of Medical Imaging, Radboud University Medical Center, Nijmegen, The Netherlands",
+        "Affiliation: Oncode Institute, Utrecht, the Netherlands",
+        "Affiliation: Informatics Institute, Faculty of Science, University of Amsterdam, Amsterdam, The Netherlands",
+        "Affiliation: Departments of Biomedical Engineering and Physics, University Medical Center Amsterdam, Amsterdam, The Netherlands",
+        "Affiliation: Corresponding authors: Francesco.Ciompi@radboudumc.nl Alessa.Hering@radboudumc.nl",
+        "Affiliation: These authors contributed equally to this work."
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_differs_from_stored_html",
+      "evidence_url": "https://arxiv.org/html/2603.02790"
+    },
+    {
+      "paper_id": 75641,
+      "arxiv_id": "2605.31291",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "html_before": [
+        "epfl, lausanne, switzerland",
+        "radio t\u00e9l\u00e9vision suisse"
+      ],
+      "oa_names": [
+        "swiss broadcasting corporation",
+        "\u00e9cole polytechnique f\u00e9d\u00e9rale de lausanne"
+      ],
+      "html_refetch": [
+        "Affiliation: Radio T\u00e9l\u00e9vision Suisse, Geneva, Switzerland",
+        "Affiliation: EPFL, Lausanne, Switzerland",
+        "E-mail theo.maetz@rts.ch",
+        "E-mail luc.guillet@rts.ch",
+        "E-mail andrea.cavallaro@epfl.ch",
+        "\u2020 \u2020 footnotetext: This preprint has not undergone peer review (when applicable) or any post-submission improvements or corrections. The Version of Record of this contribution is published in Pattern Recognition: 28th International Conference, ICPR 2026, Lyon, France, August 17\u201322, 2026, Proceedings, Part XIII, and is available online at \\doi 10.1007/978-3-032-31927-2_24",
+        "Affiliation: Radio T\u00e9l\u00e9vision Suisse, Geneva, Switzerland E-mail",
+        "E-mail Affiliation: EPFL, Lausanne, Switzerland E-mail"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_differs_from_stored_html",
+      "evidence_url": "https://arxiv.org/html/2605.31291"
+    },
+    {
+      "paper_id": 137973,
+      "arxiv_id": "2609.02149",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "html_before": [
+        "baidu, inc., beijing, china",
+        "ningxia electric power engineering co"
+      ],
+      "oa_names": [
+        "baidu (china)"
+      ],
+      "html_refetch": [
+        "Affiliation: Baidu, Inc., Beijing, China;",
+        "Affiliation: Ningxia Electric Power Engineering Co., Ltd., China",
+        "\u2020 \u2020 thanks: Project lead and corresponding author",
+        "The complete implementation of the human-in-the-loop mechanism is deployed in our client\u2019s environment. For an open-source implementation, see https://github.com/ethanyxx/co-work",
+        "Affiliation: Baidu, Inc., Beijing, China"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_differs_from_stored_html",
+      "evidence_url": "https://arxiv.org/html/2609.02149"
+    },
+    {
+      "paper_id": 137254,
+      "arxiv_id": "2609.02652",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "html_before": [
+        "scub , bordeaux , france"
+      ],
+      "oa_names": [
+        "science club"
+      ],
+      "html_refetch": [
+        "Affiliation: Scub , Bordeaux , France",
+        "email: pierjean.malandrino@scub.net",
+        "\u2020 \u2020 cc-license: by"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_differs_from_stored_html",
+      "evidence_url": "https://arxiv.org/html/2609.02652"
+    },
+    {
+      "paper_id": 138035,
+      "arxiv_id": "2609.03436",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "html_before": [
+        "johannes kepler university"
+      ],
+      "oa_names": [
+        "johannes kepler university of linz"
+      ],
+      "html_refetch": [
+        "Affiliation: Johannes Kepler University Linz",
+        "\u2020 \u2020 thanks: Work conducted independently",
+        "Checkpoints google/gemma-4-E4B-it and mistralai/Ministral-3-3B-Reasoning-2512 , run as their mlx-community 4-bit conversions"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_differs_from_stored_html",
+      "evidence_url": "https://arxiv.org/html/2609.03436"
+    },
+    {
+      "paper_id": 188252,
+      "arxiv_id": "2609.11801",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "unresolved_quality_selected"
+      ],
+      "html_before": [],
+      "oa_names": [],
+      "html_refetch": [
+        "\u2020 \u2020 footnotetext: \u2217 * Work done while a visiting researcher at AITHYRA. \u2020 Equal advising"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_new_affiliation_text",
+      "evidence_url": "https://arxiv.org/html/2609.11801"
+    },
+    {
+      "paper_id": 193247,
+      "arxiv_id": "2609.14258",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "unresolved_quality_selected"
+      ],
+      "html_before": [],
+      "oa_names": [],
+      "html_refetch": [
+        "\u2020 \u2020 thanks: Corresponding author",
+        "Three criteria, tie-break rules, and full prompt: supplementary Section S7"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_new_affiliation_text",
+      "evidence_url": "https://arxiv.org/html/2609.14258"
+    },
+    {
+      "paper_id": 193485,
+      "arxiv_id": "2609.14759",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "unresolved_quality_selected"
+      ],
+      "html_before": [],
+      "oa_names": [],
+      "html_refetch": [
+        "\u2020 \u2020 thanks: Distiller Labs. Correspondence to Distiller Labs < >"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_new_affiliation_text",
+      "evidence_url": "https://arxiv.org/html/2609.14759"
+    },
+    {
+      "paper_id": 193772,
+      "arxiv_id": "2609.15309",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "unresolved_quality_selected"
+      ],
+      "html_before": [],
+      "oa_names": [],
+      "html_refetch": [
+        "Authors: Kaiyuan Liu , Qiuyang Mang , Bo Peng , Wenhao Chai , Hanchen Li , Shreyas Pimpalgaonkar , Luke Zettlemoyer , Alex Dimakis , Alvin Cheung",
+        "[Submitted on 14 Sep 2026]"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_new_affiliation_text",
+      "evidence_url": "https://arxiv.org/abs/2609.15309"
+    },
+    {
+      "paper_id": 194526,
+      "arxiv_id": "2609.15659",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "unresolved_quality_selected"
+      ],
+      "html_before": [],
+      "oa_names": [],
+      "html_refetch": [
+        "Affiliation: [",
+        "One fusion360 object crashes X-Part on the 512 512 mesh but not on the 1024 1024 one, and is dropped from this paired comparison only",
+        "Affiliation: [ Affiliation: [ Affiliation: [ Affiliation: ["
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_new_affiliation_text",
+      "evidence_url": "https://arxiv.org/html/2609.15659"
+    },
+    {
+      "paper_id": 194794,
+      "arxiv_id": "2609.16504",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "unresolved_quality_selected"
+      ],
+      "html_before": [],
+      "oa_names": [],
+      "html_refetch": [
+        "Affiliation:"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_new_affiliation_text",
+      "evidence_url": "https://arxiv.org/html/2609.16504"
+    },
+    {
+      "paper_id": 195298,
+      "arxiv_id": "2609.17372",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "unresolved_quality_selected"
+      ],
+      "html_before": [],
+      "oa_names": [],
+      "html_refetch": [
+        "We compute semantic similarity using a frozen DINOv3-Large visual encoder [ Sim\u00e9oni et al., 2025 ] . For PSNR and SSIM, inverse-depth weighting emphasizes nearby robot\u2013object interaction regions while down-weighting the background",
+        "OFS measures the average cosine similarity between optical flow fields computed using OpenCV Farneback from predicted and ground-truth videos",
+        "DINO feature similarity is computed using a DINOv3-large encoder"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_new_affiliation_text",
+      "evidence_url": "https://arxiv.org/html/2609.17372"
+    },
+    {
+      "paper_id": 53,
+      "arxiv_id": "2608.19799",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "unresolved_quality_selected"
+      ],
+      "html_before": [],
+      "oa_names": [],
+      "html_refetch": [
+        "Authors: Zhipeng Xu , Jiahao Lu , Yining Zheng , Yuxin Wang , Xipeng Qiu",
+        "[Submitted on 20 Aug 2026 ( v1 ), last revised 1 Sep 2026 (this version, v2)]"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_new_affiliation_text",
+      "evidence_url": "https://arxiv.org/abs/2608.19799"
+    },
+    {
+      "paper_id": 75,
+      "arxiv_id": "2608.20153",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "unresolved_quality_selected"
+      ],
+      "html_before": [],
+      "oa_names": [],
+      "html_refetch": [
+        "Our code and benchmark are released in https://github.com/zirui-HIT/FormalTCS"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_new_affiliation_text",
+      "evidence_url": "https://arxiv.org/html/2608.20153"
+    },
+    {
+      "paper_id": 660,
+      "arxiv_id": "2608.18607",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "unresolved_quality_selected"
+      ],
+      "html_before": [],
+      "oa_names": [],
+      "html_refetch": [],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_empty_still_needs_pdf",
+      "evidence_url": "https://arxiv.org/html/2608.18607"
+    },
+    {
+      "paper_id": 984,
+      "arxiv_id": "2608.17809",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "unresolved_quality_selected"
+      ],
+      "html_before": [],
+      "oa_names": [],
+      "html_refetch": [
+        "Affiliation: Graduate School of Data Science, KAIST",
+        "Affiliation: Corresponding author: qm.nguyen@kaist.ac.kr",
+        "Affiliation: National Taiwan University of Science and Technology Academia Sinica",
+        "Our code is available at https://github.com/ngqm/belief-fact-phrasing",
+        "Affiliation: Graduate School of Data Science, KAIST Affiliation: Corresponding author:"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_new_affiliation_text",
+      "evidence_url": "https://arxiv.org/html/2608.17809"
+    },
+    {
+      "paper_id": 1721,
+      "arxiv_id": "2608.02345",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "unresolved_quality_selected"
+      ],
+      "html_before": [],
+      "oa_names": [],
+      "html_refetch": [
+        "\u2020 \u2020 thanks: Equal contribution",
+        "footnotemark: 1"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_new_affiliation_text",
+      "evidence_url": "https://arxiv.org/html/2608.02345"
+    },
+    {
+      "paper_id": 1843,
+      "arxiv_id": "2608.13598",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "unresolved_quality_selected"
+      ],
+      "html_before": [],
+      "oa_names": [],
+      "html_refetch": [
+        "Affiliation: University of Massachusetts Amherst",
+        "Affiliation: Mantis AI Research (MIT CSAIL)",
+        "footnotemark: 1",
+        "\u2020 \u2020 thanks: Equal contribution"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_new_affiliation_text",
+      "evidence_url": "https://arxiv.org/html/2608.13598"
+    },
+    {
+      "paper_id": 42963,
+      "arxiv_id": "2603.27520",
+      "prior_outcome": "needs_pdf_review",
+      "queue_reasons": [
+        "unresolved_quality_selected"
+      ],
+      "html_before": [],
+      "oa_names": [],
+      "html_refetch": [
+        "Authors: Zhixuan Liu , Peter Schaldenbrand , Yijun Li , Long Mai , Aniruddha Mahapatra , Cusuh Ham , Jean Oh , Jui-Hsien Wang",
+        "[Submitted on 29 Mar 2026 ( v1 ), last revised 4 Sep 2026 (this version, v2)]"
+      ],
+      "refetch_error": null,
+      "disagreement_reason": "html_refetch_new_affiliation_text",
+      "evidence_url": "https://arxiv.org/abs/2603.27520"
+    }
+  ],
+  "estimated_full_295_runtime_minutes": 2.72,
+  "estimated_api_llm_cost_usd": 0.0
+}

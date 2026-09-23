@@ -1,0 +1,2645 @@
+{
+  "generated_at": "2026-09-21T12:53:26.989545+00:00",
+  "window": {
+    "from": "2026-09-01",
+    "until": "2026-09-15"
+  },
+  "judge_version": "html-oa-judge-v001",
+  "queue_summary": {
+    "generated_at": "2026-09-21T12:44:08.650613+00:00",
+    "window": {
+      "from": "2026-09-01",
+      "until": "2026-09-15"
+    },
+    "judge_version": "html-oa-judge-v001",
+    "paper_count": 12149,
+    "compare_counts": {
+      "html_only": 5554,
+      "neither": 5909,
+      "openalex_only": 411,
+      "exact_match": 143,
+      "disagreement": 132
+    },
+    "reused_paid_judgments": 6,
+    "new_judge_queue_size": 126,
+    "estimated_total_judge_cost_usd": 0.039354
+  },
+  "batch_size_requested": 50,
+  "batch_size_planned": 50,
+  "already_done_in_first_n": [
+    12036,
+    24051,
+    39564,
+    41513,
+    42086,
+    46053,
+    46805,
+    54661,
+    59259,
+    65435
+  ],
+  "spend_cap_usd": 0.1,
+  "papers": [
+    {
+      "paper_id": 66799,
+      "arxiv_id": "2605.09395",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000786,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "National University of Singapore",
+        "Sun Yat-sen University"
+      ],
+      "effective_after": [
+        "National University of Singapore",
+        "Sun Yat-sen University"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 27,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 90,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 74361,
+      "arxiv_id": "2605.20460",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000751,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Meta"
+      ],
+      "effective_after": [
+        "Meta"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 109,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 149,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 76357,
+      "arxiv_id": "2602.12972",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000626,
+      "accepted_organisation_ids": [
+        51,
+        453
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_names": [
+        "Beijing Institute of Technology",
+        "Kuaishou (China)"
+      ],
+      "rejected_names": [],
+      "effective_before": [
+        "Beijing Institute of Technology",
+        "Kuaishou (China)"
+      ],
+      "effective_after": [
+        "Beijing Institute of Technology",
+        "Kuaishou (China)"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 453,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 94,
+        "oa": 0
+      },
+      "reason": "HTML affiliation text explicitly lists both 'Kuaishou Technology' and 'Beijing Institute of Technology' for all authors. OpenAlex's 'Weihai Science and Technology Bureau' has no supporting evidence in the supplied paper text, and OpenAlex omits Kuaishou Technology entirely despite its prominent presence in the HTML affiliations."
+    },
+    {
+      "paper_id": 84757,
+      "arxiv_id": "2606.12821",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000749,
+      "accepted_organisation_ids": [
+        33,
+        251
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_names": [
+        "Johns Hopkins University",
+        "Harvard University"
+      ],
+      "rejected_names": [],
+      "effective_before": [
+        "Johns Hopkins University",
+        "Harvard University"
+      ],
+      "effective_after": [
+        "Johns Hopkins University",
+        "Harvard University"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 251,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 67,
+        "oa": 0
+      },
+      "reason": "HTML evidence explicitly shows Johns Hopkins University and Harvard University with matching institutional email domains (jhu.edu, fas.harvard.edu). OpenAlex adds unsupported claims: 'Catholic University of \u00c1vila', 'Harvard University Press' (a publisher, not an affiliation), 'Johns Hopkins Medicine', and 'Oldham Council' (implausible for this paper) \u2014 none of which appear in the HTML evidence."
+    },
+    {
+      "paper_id": 84767,
+      "arxiv_id": "2606.12852",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000659,
+      "accepted_organisation_ids": [
+        9,
+        78,
+        415
+      ],
+      "rejected_organisation_ids": [
+        291
+      ],
+      "accepted_names": [
+        "Nanjing University",
+        "Hong Kong University of Science and Technology",
+        "The Hong Kong University of Science and Technology (Guangzhou)"
+      ],
+      "rejected_names": [
+        "University of Hong Kong"
+      ],
+      "effective_before": [
+        "The Hong Kong University of Science and Technology (Guangzhou)"
+      ],
+      "effective_after": [
+        "Nanjing University",
+        "Hong Kong University of Science and Technology",
+        "The Hong Kong University of Science and Technology (Guangzhou)"
+      ],
+      "removed_ids": [],
+      "added_ids": [
+        9,
+        78
+      ],
+      "adjudication_top_org_id": 415,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 8,
+        "oa": 0
+      },
+      "reason": "All three HTML affiliation claims are explicitly supported by the supplied text evidence (institution names and email domains). OpenAlex's additional claim of 'University of Hong Kong' (org_id 291) has no supporting evidence in the paper text and appears to be a confusion with HKUST; it is unsupported."
+    },
+    {
+      "paper_id": 93066,
+      "arxiv_id": "2606.23129",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000753,
+      "accepted_organisation_ids": [
+        314,
+        339
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_names": [
+        "Ca' Foscari University of Venice",
+        "University of Bologna"
+      ],
+      "rejected_names": [],
+      "effective_before": [
+        "University of Bologna"
+      ],
+      "effective_after": [
+        "Ca' Foscari University of Venice",
+        "University of Bologna"
+      ],
+      "removed_ids": [],
+      "added_ids": [
+        314
+      ],
+      "adjudication_top_org_id": 339,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 8,
+        "oa": 0
+      },
+      "reason": "The HTML affiliation text explicitly lists only 'University of Bologna' and 'Ca' Foscari University of Venice'. OpenAlex additionally claims 'GNA University' for three authors, but this institution does not appear anywhere in the supplied HTML affiliation text, so it is unsupported by the paper evidence."
+    },
+    {
+      "paper_id": 94684,
+      "arxiv_id": "2605.24661",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000426,
+      "accepted_organisation_ids": [
+        436
+      ],
+      "rejected_organisation_ids": [
+        1359
+      ],
+      "accepted_names": [
+        "Arizona State University"
+      ],
+      "rejected_names": [
+        "Tarsus University"
+      ],
+      "effective_before": [],
+      "effective_after": [
+        "Arizona State University"
+      ],
+      "removed_ids": [],
+      "added_ids": [
+        436
+      ],
+      "adjudication_top_org_id": 436,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 3,
+        "oa": 0
+      },
+      "reason": "The HTML evidence (asu.edu email domains for all three authors) explicitly supports Arizona State University. OpenAlex additionally claims Tarsus University (Ali \u015eenol) and CRE Consulting (Poland) (Garima Agrawal), but no supplied evidence from the paper supports these extra affiliations. While the OpenAlex identity is DOI-verified, the additional institution claims lack corroborating evidence in "
+    },
+    {
+      "paper_id": 97671,
+      "arxiv_id": "2607.05613",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000753,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "University of Illinois Urbana-Champaign"
+      ],
+      "effective_after": [
+        "University of Illinois Urbana-Champaign"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 91,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 15,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 100670,
+      "arxiv_id": "2607.12726",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000743,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [],
+      "effective_after": [],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": null,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 8,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 106442,
+      "arxiv_id": "2603.14841",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000409,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Michigan Technological University"
+      ],
+      "effective_after": [
+        "Michigan Technological University"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 561,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 9,
+        "oa": 3
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 108889,
+      "arxiv_id": "2605.22660",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000717,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Institute of Informatics of the Slovak Academy of Sciences",
+        "University of Luxembourg"
+      ],
+      "effective_after": [
+        "Institute of Informatics of the Slovak Academy of Sciences",
+        "University of Luxembourg"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 242,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 2,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 111967,
+      "arxiv_id": "2608.05980",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000363,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Orange (Poland)"
+      ],
+      "effective_after": [
+        "Orange (Poland)"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 580,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 4,
+        "oa": 4
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 113254,
+      "arxiv_id": "2608.08148",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000555,
+      "accepted_organisation_ids": [
+        101
+      ],
+      "rejected_organisation_ids": [
+        291
+      ],
+      "accepted_names": [
+        "Shanghai Jiao Tong University"
+      ],
+      "rejected_names": [
+        "University of Hong Kong"
+      ],
+      "effective_before": [],
+      "effective_after": [
+        "Shanghai Jiao Tong University"
+      ],
+      "removed_ids": [],
+      "added_ids": [
+        101
+      ],
+      "adjudication_top_org_id": 101,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 6,
+        "oa": 0
+      },
+      "reason": "HTML evidence shows all six authors with sjtu.edu.cn email domains, directly supporting Shanghai Jiao Tong University for every author. OpenAlex claims of University of Hong Kong (for Li) and University of Shanghai for Science and Technology (for Hu) are contradicted by the email domain evidence and have no independent supporting evidence in the input."
+    },
+    {
+      "paper_id": 132759,
+      "arxiv_id": "2604.24622",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000757,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Tsinghua University",
+        "Southern University of Science and Technology",
+        "Nova Management (United States)",
+        "Xi'an Jiaotong University",
+        "University of Science and Technology of China",
+        "University of Chinese Academy of Sciences"
+      ],
+      "effective_after": [
+        "Tsinghua University",
+        "Southern University of Science and Technology",
+        "Nova Management (United States)",
+        "Xi'an Jiaotong University",
+        "University of Science and Technology of China",
+        "University of Chinese Academy of Sciences"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 74,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 88,
+        "oa": 11
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 135121,
+      "arxiv_id": "2405.07392",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000729,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "University of Cambridge",
+        "University of Manchester"
+      ],
+      "effective_after": [
+        "University of Cambridge",
+        "University of Manchester"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 401,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 9,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 135191,
+      "arxiv_id": "2509.06285",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000539,
+      "accepted_organisation_ids": [
+        78,
+        79
+      ],
+      "rejected_organisation_ids": [
+        80,
+        81,
+        82
+      ],
+      "accepted_names": [
+        "Hong Kong University of Science and Technology",
+        "National University of Defense Technology"
+      ],
+      "rejected_names": [
+        "University of Science and Technology Beijing",
+        "University of Toronto",
+        "Aerospace Institute (Germany)"
+      ],
+      "effective_before": [
+        "Hong Kong University of Science and Technology",
+        "National University of Defense Technology",
+        "University of Science and Technology Beijing",
+        "University of Toronto",
+        "Aerospace Institute (Germany)"
+      ],
+      "effective_after": [
+        "Hong Kong University of Science and Technology",
+        "National University of Defense Technology"
+      ],
+      "removed_ids": [
+        80,
+        81,
+        82
+      ],
+      "added_ids": [],
+      "adjudication_top_org_id": 78,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 19,
+        "oa": 7
+      },
+      "reason": "The HTML evidence explicitly and repeatedly supports only HKUST and USTB. The three OpenAlex-only institutions (Aerospace Institute Germany, National University of Defense Technology, University of Toronto) have zero supporting evidence in the supplied HTML text, and OpenAlex provides no author-institution pairs to verify them. The OpenAlex work_id is also null, further weakening confidence in its"
+    },
+    {
+      "paper_id": 135301,
+      "arxiv_id": "2603.10529",
+      "decision": "BOTH",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000482,
+      "accepted_organisation_ids": [
+        633
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_names": [
+        "Italian Institute of Technology"
+      ],
+      "rejected_names": [],
+      "effective_before": [
+        "Italian Institute of Technology"
+      ],
+      "effective_after": [
+        "Italian Institute of Technology"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 633,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 7,
+        "oa": 7
+      },
+      "reason": "HTML and OpenAlex refer to the same institution: 'Istituto Italiano di Tecnologia (IIT)' (Italian) = 'Italian Institute of Technology' (English, OpenAlex org 633). HTML provides explicit per-author affiliation evidence; OpenAlex confirms the same institution under its English name. No conflicting or distinct additional affiliations exist."
+    },
+    {
+      "paper_id": 136263,
+      "arxiv_id": "2609.01554",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000393,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "BrightSpec"
+      ],
+      "effective_after": [
+        "BrightSpec"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 700,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 4,
+        "oa": 4
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 136429,
+      "arxiv_id": "2410.10136",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000374,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Sunnyvale Public Library"
+      ],
+      "effective_after": [
+        "Sunnyvale Public Library"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 705,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 3,
+        "oa": 3
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 136463,
+      "arxiv_id": "2507.08468",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000698,
+      "accepted_organisation_ids": [
+        709
+      ],
+      "rejected_organisation_ids": [
+        802
+      ],
+      "accepted_names": [
+        "University of Applied Sciences Upper Austria"
+      ],
+      "rejected_names": [
+        "Johannes Kepler University of Linz"
+      ],
+      "effective_before": [
+        "University of Applied Sciences Upper Austria"
+      ],
+      "effective_after": [
+        "University of Applied Sciences Upper Austria"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 709,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 9,
+        "oa": 0
+      },
+      "reason": "The HTML affiliation text explicitly names both 'University of Applied Sciences Upper Austria' and 'Johannes Kepler University'. OpenAlex's 'Engineering Software Steyr (Austria)' does not appear anywhere in the paper's affiliation text and is not supported by the supplied evidence. OpenAlex omits 'University of Applied Sciences Upper Austria' entirely. The HTML claims are directly supported by the"
+    },
+    {
+      "paper_id": 136782,
+      "arxiv_id": "2608.29652",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000805,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [],
+      "effective_after": [],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": null,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 39,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 136986,
+      "arxiv_id": "2609.02095",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000568,
+      "accepted_organisation_ids": [
+        214,
+        726
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_names": [
+        "University of California, Santa Cruz",
+        "Vanderbilt University"
+      ],
+      "rejected_names": [],
+      "effective_before": [
+        "University of California, Santa Cruz",
+        "Vanderbilt University"
+      ],
+      "effective_after": [
+        "University of California, Santa Cruz",
+        "Vanderbilt University"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 726,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 108,
+        "oa": 0
+      },
+      "reason": "HTML evidence explicitly shows 'Scale AI' and 'University of California, Santa Cruz' as affiliations. OpenAlex claims 'Christ University' for all authors, which has no support whatsoever in the supplied paper evidence and appears to be a disambiguation error. Vanderbilt University appears in html_organisation_claims org_names but has no corresponding text in html_affiliation_text, so it is also un"
+    },
+    {
+      "paper_id": 137182,
+      "arxiv_id": "2609.02476",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000784,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Korea University of Science and Technology",
+        "Instituto Nacional de Tecnologia"
+      ],
+      "effective_after": [
+        "Korea University of Science and Technology",
+        "Instituto Nacional de Tecnologia"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 329,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 24,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 137254,
+      "arxiv_id": "2609.02652",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000357,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Science Club"
+      ],
+      "effective_after": [
+        "Science Club"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 749,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 1,
+        "oa": 1
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 137399,
+      "arxiv_id": "2603.11842",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000782,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "University of Coimbra",
+        "University of Oulu",
+        "University of South-Eastern Norway"
+      ],
+      "effective_after": [
+        "University of Coimbra",
+        "University of Oulu",
+        "University of South-Eastern Norway"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 393,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 3,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 137718,
+      "arxiv_id": "2412.06494",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000749,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Bansomdejchaopraya Rajabhat University"
+      ],
+      "effective_after": [
+        "Bansomdejchaopraya Rajabhat University"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 381,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 30,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 137779,
+      "arxiv_id": "2512.03070",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000733,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "P\u00f4le L\u00e9onard de Vinci",
+        "Laboratoire d\u2019informatique Parall\u00e9lisme R\u00e9seaux Algorithmes Distribu\u00e9s"
+      ],
+      "effective_after": [
+        "P\u00f4le L\u00e9onard de Vinci",
+        "Laboratoire d\u2019informatique Parall\u00e9lisme R\u00e9seaux Algorithmes Distribu\u00e9s"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 788,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 15,
+        "oa": 3
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 137973,
+      "arxiv_id": "2609.02149",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000545,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Baidu (China)"
+      ],
+      "effective_after": [
+        "Baidu (China)"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 793,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 24,
+        "oa": 1
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 137977,
+      "arxiv_id": "2609.02760",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000595,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Omron (Japan)",
+        "University of Patras"
+      ],
+      "effective_after": [
+        "Omron (Japan)",
+        "University of Patras"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 797,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 15,
+        "oa": 5
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 137999,
+      "arxiv_id": "2609.03362",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000589,
+      "accepted_organisation_ids": [
+        455
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_names": [
+        "The University of Osaka"
+      ],
+      "rejected_names": [],
+      "effective_before": [
+        "The University of Osaka"
+      ],
+      "effective_after": [
+        "The University of Osaka"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 455,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 4,
+        "oa": 0
+      },
+      "reason": "The HTML evidence contains the email domain 'sys.es.osaka-u.ac.jp', which directly supports an Osaka University affiliation. The OpenAlex claim of AIST for all three authors has no corroborating evidence in the supplied paper text. The HTML org claim 'and kensuke harada' is a parsing error (author name, not an organisation) and is rejected."
+    },
+    {
+      "paper_id": 138035,
+      "arxiv_id": "2609.03436",
+      "decision": "BOTH",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000567,
+      "accepted_organisation_ids": [
+        802
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_names": [
+        "Johannes Kepler University of Linz"
+      ],
+      "rejected_names": [],
+      "effective_before": [
+        "Johannes Kepler University of Linz"
+      ],
+      "effective_after": [
+        "Johannes Kepler University of Linz"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 802,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 1,
+        "oa": 1
+      },
+      "reason": "HTML and OpenAlex refer to the same institution. HTML gives the shortened name 'Johannes Kepler University' and OpenAlex provides the full official name 'Johannes Kepler University of Linz' with ID 802. These are not distinct affiliations but the same one with different name specificity; both are supported by the paper evidence."
+    },
+    {
+      "paper_id": 138044,
+      "arxiv_id": "2609.03450",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000426,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Institute of Glass",
+        "Central Glass (Japan)"
+      ],
+      "effective_after": [
+        "Institute of Glass",
+        "Central Glass (Japan)"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 803,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 1,
+        "oa": 2
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 138103,
+      "arxiv_id": "2609.03565",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000364,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Genecast (China)"
+      ],
+      "effective_after": [
+        "Genecast (China)"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 810,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 8,
+        "oa": 4
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 138338,
+      "arxiv_id": "2609.04024",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000381,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "United States Institute of Peace"
+      ],
+      "effective_after": [
+        "United States Institute of Peace"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 832,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 1,
+        "oa": 1
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 142196,
+      "arxiv_id": "2502.01262",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000407,
+      "accepted_organisation_ids": [
+        63
+      ],
+      "rejected_organisation_ids": [
+        527
+      ],
+      "accepted_names": [
+        "Korea University"
+      ],
+      "rejected_names": [
+        "Sejong University"
+      ],
+      "effective_before": [
+        "Korea University"
+      ],
+      "effective_after": [
+        "Korea University"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 63,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 6,
+        "oa": 0
+      },
+      "reason": "HTML evidence consistently shows Korea University for all three authors via both affiliation text and korea.ac.kr email domains. OpenAlex additionally claims Sejong University for all three authors, but no supplied evidence supports this \u2014 no Sejong affiliation text, no sejong.ac.kr emails, and no other corroborating detail. The Sejong claim is unsupported."
+    },
+    {
+      "paper_id": 142198,
+      "arxiv_id": "2502.17295",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000797,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "University of California San Diego",
+        "Cornell University",
+        "Cornell Tech",
+        "Michigan State University"
+      ],
+      "effective_after": [
+        "University of California San Diego",
+        "Cornell University",
+        "Cornell Tech",
+        "Michigan State University"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 46,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 110,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 142588,
+      "arxiv_id": "2609.04305",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000751,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "University of Illinois Urbana-Champaign"
+      ],
+      "effective_after": [
+        "University of Illinois Urbana-Champaign"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 91,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 13,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 142602,
+      "arxiv_id": "2609.04356",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000416,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [],
+      "effective_after": [],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": null,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 3,
+        "oa": 0
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 142672,
+      "arxiv_id": "2609.04500",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.00074,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [],
+      "effective_after": [],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": null,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 10,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 142697,
+      "arxiv_id": "2609.04539",
+      "decision": "BOTH",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000472,
+      "accepted_organisation_ids": [
+        105
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_names": [
+        "Amazon"
+      ],
+      "rejected_names": [],
+      "effective_before": [],
+      "effective_after": [
+        "Amazon"
+      ],
+      "removed_ids": [],
+      "added_ids": [
+        105
+      ],
+      "adjudication_top_org_id": 105,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 12,
+        "oa": 0
+      },
+      "reason": "Both HTML and OpenAlex agree on the core affiliation: all six authors are at Amazon in the United States. HTML provides additional location specificity (Seattle, WA) while OpenAlex confirms the same institution at country level. The claims are consistent and mutually supporting."
+    },
+    {
+      "paper_id": 142699,
+      "arxiv_id": "2609.04541",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000503,
+      "accepted_organisation_ids": [
+        295
+      ],
+      "rejected_organisation_ids": [
+        937
+      ],
+      "accepted_names": [
+        "Columbia University"
+      ],
+      "rejected_names": [
+        "The University of Texas at Austin"
+      ],
+      "effective_before": [],
+      "effective_after": [
+        "Columbia University"
+      ],
+      "removed_ids": [],
+      "added_ids": [
+        295
+      ],
+      "adjudication_top_org_id": 295,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 5,
+        "oa": 0
+      },
+      "reason": "The HTML evidence explicitly shows 'columbia.edu' for all five authors, including Rausch. OpenAlex claims Rausch is at The University of Texas at Austin, but no supplied evidence supports this affiliation. The UT Austin claim is unsupported by the paper evidence provided."
+    },
+    {
+      "paper_id": 142749,
+      "arxiv_id": "2609.04646",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000779,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Heidelberg University",
+        "Technische Universit\u00e4t Darmstadt"
+      ],
+      "effective_after": [
+        "Heidelberg University",
+        "Technische Universit\u00e4t Darmstadt"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 92,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 30,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 142779,
+      "arxiv_id": "2609.04706",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.00056,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [],
+      "effective_after": [],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": null,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 1,
+        "oa": 0
+      },
+      "reason": "The HTML text 'Senior Member' is a membership grade designation (likely IEEE Senior Member), not an explicit institutional affiliation. OpenAlex infers 'Institute of Electrical and Electronics Engineers' from this, but the supplied paper evidence does not explicitly name IEEE or any institution. Neither source provides a clearly supported institutional affiliation from the evidence alone."
+    },
+    {
+      "paper_id": 142821,
+      "arxiv_id": "2609.04782",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000328,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [],
+      "effective_after": [],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": null,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 1,
+        "oa": 0
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 142837,
+      "arxiv_id": "2609.04806",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000548,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "China Aerospace Science and Technology Corporation",
+        "Guangzhou Vocational College of Science and Technology"
+      ],
+      "effective_after": [
+        "China Aerospace Science and Technology Corporation",
+        "Guangzhou Vocational College of Science and Technology"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 880,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 4,
+        "oa": 3
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 142955,
+      "arxiv_id": "2609.05036",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000398,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [],
+      "effective_after": [],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": null,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 3,
+        "oa": 0
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 142981,
+      "arxiv_id": "2609.05088",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000386,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [],
+      "effective_after": [],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": null,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 3,
+        "oa": 0
+      },
+      "reason": "no_grounded_accepted_organisations"
+    },
+    {
+      "paper_id": 143021,
+      "arxiv_id": "2609.05165",
+      "decision": "BOTH",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000663,
+      "accepted_organisation_ids": [
+        110
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_names": [
+        "Microsoft"
+      ],
+      "rejected_names": [],
+      "effective_before": [
+        "Microsoft"
+      ],
+      "effective_after": [
+        "Microsoft"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 110,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 1,
+        "oa": 0
+      },
+      "reason": "Both sources agree on Microsoft as the core affiliation. HTML evidence ('microsoft.com') supports Microsoft generically. OpenAlex, with a DOI-verified work identity, provides a more specific sub-organization (Microsoft Research, United Kingdom) that is consistent with the HTML evidence but adds granularity not present in the HTML alone. Since neither contradicts the other and both are supported, b"
+    },
+    {
+      "paper_id": 143121,
+      "arxiv_id": "2609.05361",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000764,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Universitas 17 Agustus 1945 Semarang"
+      ],
+      "effective_after": [
+        "Universitas 17 Agustus 1945 Semarang"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 357,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 14,
+        "oa": 0
+      },
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 183707,
+      "arxiv_id": "2609.05725",
+      "decision": "BOTH",
+      "judge_called": true,
+      "skipped_duplicate": false,
+      "cost_usd": 0.000431,
+      "accepted_organisation_ids": [
+        916
+      ],
+      "rejected_organisation_ids": [],
+      "accepted_names": [
+        "Pozna\u0144 University of Technology"
+      ],
+      "rejected_names": [],
+      "effective_before": [
+        "Pozna\u0144 University of Technology"
+      ],
+      "effective_after": [
+        "Pozna\u0144 University of Technology"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "adjudication_top_org_id": 916,
+      "adjudication_excludes_rejected": true,
+      "original_evidence_row_counts": {
+        "htmlish": 2,
+        "oa": 2
+      },
+      "reason": "Both HTML and OpenAlex agree on the same institution (Pozna\u0144 University of Technology), differing only in diacritic encoding (\u0144 vs n). HTML explicitly lists the affiliation for both authors, and OpenAlex provides the matching institution with org_id 916."
+    },
+    {
+      "paper_id": 12036,
+      "arxiv_id": "2510.20721",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": true,
+      "resumed_from_prior_run": true,
+      "cost_usd": 0.000659,
+      "accepted_organisation_ids": [
+        39
+      ],
+      "rejected_organisation_ids": [
+        47,
+        48,
+        49
+      ],
+      "accepted_names": [
+        "Carnegie Mellon University"
+      ],
+      "rejected_names": [
+        "Fujitsu (Japan)",
+        "Fujitsu (United States)",
+        "Fujitsu (China)"
+      ],
+      "effective_before": [
+        "Carnegie Mellon University",
+        "Fujitsu (Japan)",
+        "Fujitsu (United States)",
+        "Fujitsu (China)"
+      ],
+      "effective_after": [
+        "Carnegie Mellon University"
+      ],
+      "removed_ids": [
+        47,
+        48,
+        49
+      ],
+      "added_ids": [],
+      "reason": "HTML evidence explicitly and repeatedly states 'Fujitsu Research of America' as the Fujitsu affiliation. OpenAlex claims Fujitsu (China), Fujitsu (Japan), and Fujitsu (United States) \u2014 none of which match the specific entity in the evidence. Fujitsu (China) and Fujitsu (Japan) have zero evidential support; Fujitsu (United States) is a broader/parent entity not identical to 'Fujitsu Research of Ame"
+    },
+    {
+      "paper_id": 24051,
+      "arxiv_id": "2505.15147",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": true,
+      "resumed_from_prior_run": true,
+      "cost_usd": 0.000731,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "University of Wisconsin\u2013Madison"
+      ],
+      "effective_after": [
+        "University of Wisconsin\u2013Madison"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 39564,
+      "arxiv_id": "2603.19896",
+      "decision": "OPENALEX",
+      "judge_called": true,
+      "skipped_duplicate": true,
+      "resumed_from_prior_run": true,
+      "cost_usd": 0.000625,
+      "accepted_organisation_ids": [
+        77
+      ],
+      "rejected_organisation_ids": [
+        132
+      ],
+      "accepted_names": [
+        "University of Science and Technology of China"
+      ],
+      "rejected_names": [
+        "Korea University of Science and Technology"
+      ],
+      "effective_before": [
+        "University of Science and Technology of China",
+        "Korea University of Science and Technology"
+      ],
+      "effective_after": [
+        "University of Science and Technology of China"
+      ],
+      "removed_ids": [
+        132
+      ],
+      "added_ids": [],
+      "reason": "The HTML raw affiliation text ('University of Science and Technology of') is truncated but structurally consistent with USTC ('University of Science and Technology of China') due to the 'of' preposition preceding a country name. The HTML parser's mapping to 'Korea University of Science and Technology' (org 132) is a misidentification \u2014 KUST's naming pattern places 'Korea' as a premodifier, not aft"
+    },
+    {
+      "paper_id": 41513,
+      "arxiv_id": "2603.24131",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": true,
+      "resumed_from_prior_run": true,
+      "cost_usd": 0.000627,
+      "accepted_organisation_ids": [
+        307
+      ],
+      "rejected_organisation_ids": [
+        3
+      ],
+      "accepted_names": [
+        "University of Sousse"
+      ],
+      "rejected_names": [
+        "Imperial College London"
+      ],
+      "effective_before": [
+        "University of Sousse"
+      ],
+      "effective_after": [
+        "University of Sousse"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "reason": "The supplied HTML paper evidence explicitly lists 'University of Sousse' and 'BASIRA Lab' as affiliations but contains no mention of 'Imperial College London'. Although the OpenAlex work match is strong (DOI match), the Imperial College London affiliation claim is not supported by any supplied paper evidence and cannot be accepted without it."
+    },
+    {
+      "paper_id": 42086,
+      "arxiv_id": "2603.25685",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": true,
+      "resumed_from_prior_run": true,
+      "cost_usd": 0.000739,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Institute of Informatics of the Slovak Academy of Sciences"
+      ],
+      "effective_after": [
+        "Institute of Informatics of the Slovak Academy of Sciences"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 46053,
+      "arxiv_id": "2604.03985",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": true,
+      "resumed_from_prior_run": true,
+      "cost_usd": 0.000745,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "The University of Tokyo",
+        "Tokyo Metropolitan University"
+      ],
+      "effective_after": [
+        "The University of Tokyo",
+        "Tokyo Metropolitan University"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 46805,
+      "arxiv_id": "2604.05819",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": true,
+      "resumed_from_prior_run": true,
+      "cost_usd": 0.000768,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Graz University of Technology"
+      ],
+      "effective_after": [
+        "Graz University of Technology"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 54661,
+      "arxiv_id": "2510.04772",
+      "decision": "UNCERTAIN",
+      "judge_called": true,
+      "skipped_duplicate": true,
+      "resumed_from_prior_run": true,
+      "cost_usd": 0.00098,
+      "accepted_organisation_ids": [],
+      "rejected_organisation_ids": [],
+      "accepted_names": [],
+      "rejected_names": [],
+      "effective_before": [
+        "Heidelberg University"
+      ],
+      "effective_after": [
+        "Heidelberg University"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "reason": "invalid_model_output"
+    },
+    {
+      "paper_id": 59259,
+      "arxiv_id": "2603.13824",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": true,
+      "resumed_from_prior_run": true,
+      "cost_usd": 0.000407,
+      "accepted_organisation_ids": [
+        90
+      ],
+      "rejected_organisation_ids": [
+        173
+      ],
+      "accepted_names": [
+        "Rensselaer Polytechnic Institute"
+      ],
+      "rejected_names": [
+        "Northwestern University"
+      ],
+      "effective_before": [
+        "Rensselaer Polytechnic Institute"
+      ],
+      "effective_after": [
+        "Rensselaer Polytechnic Institute"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "reason": "The HTML page provides direct, explicit evidence of affiliation with Rensselaer Polytechnic Institute (name + rpi.edu domain). OpenAlex claims Northwestern University for the same author, but no evidence from the supplied paper supports this; the DOI match only confirms paper identity, not affiliation accuracy."
+    },
+    {
+      "paper_id": 65435,
+      "arxiv_id": "2601.21174",
+      "decision": "HTML",
+      "judge_called": true,
+      "skipped_duplicate": true,
+      "resumed_from_prior_run": true,
+      "cost_usd": 0.000586,
+      "accepted_organisation_ids": [
+        9,
+        1043
+      ],
+      "rejected_organisation_ids": [
+        598
+      ],
+      "accepted_names": [
+        "Nanjing University",
+        "The University of Queensland"
+      ],
+      "rejected_names": [
+        "Nanjing University of Information Science and Technology"
+      ],
+      "effective_before": [
+        "Nanjing University",
+        "The University of Queensland"
+      ],
+      "effective_after": [
+        "Nanjing University",
+        "The University of Queensland"
+      ],
+      "removed_ids": [],
+      "added_ids": [],
+      "reason": "The HTML evidence explicitly and repeatedly supports Nanjing University and University of Queensland. OpenAlex additionally claims 'Nanjing University of Information Science and Technology' (org_id 598) for two authors, but no supplied evidence mentions this institution \u2014 it is absent from html_affiliation_text and no njuist.edu.cn domain appears. The OpenAlex-only claim is unsupported by the supp"
+    }
+  ],
+  "before_after": [
+    {
+      "paper_id": 66799,
+      "arxiv_id": "2605.09395",
+      "decision": "UNCERTAIN",
+      "before": [
+        "National University of Singapore",
+        "Sun Yat-sen University"
+      ],
+      "after": [
+        "National University of Singapore",
+        "Sun Yat-sen University"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 74361,
+      "arxiv_id": "2605.20460",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Meta"
+      ],
+      "after": [
+        "Meta"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 76357,
+      "arxiv_id": "2602.12972",
+      "decision": "HTML",
+      "before": [
+        "Beijing Institute of Technology",
+        "Kuaishou (China)"
+      ],
+      "after": [
+        "Beijing Institute of Technology",
+        "Kuaishou (China)"
+      ],
+      "accepted_ids": [
+        51,
+        453
+      ],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 84757,
+      "arxiv_id": "2606.12821",
+      "decision": "HTML",
+      "before": [
+        "Johns Hopkins University",
+        "Harvard University"
+      ],
+      "after": [
+        "Johns Hopkins University",
+        "Harvard University"
+      ],
+      "accepted_ids": [
+        33,
+        251
+      ],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 84767,
+      "arxiv_id": "2606.12852",
+      "decision": "HTML",
+      "before": [
+        "The Hong Kong University of Science and Technology (Guangzhou)"
+      ],
+      "after": [
+        "Nanjing University",
+        "Hong Kong University of Science and Technology",
+        "The Hong Kong University of Science and Technology (Guangzhou)"
+      ],
+      "accepted_ids": [
+        9,
+        78,
+        415
+      ],
+      "rejected_ids": [
+        291
+      ]
+    },
+    {
+      "paper_id": 93066,
+      "arxiv_id": "2606.23129",
+      "decision": "HTML",
+      "before": [
+        "University of Bologna"
+      ],
+      "after": [
+        "Ca' Foscari University of Venice",
+        "University of Bologna"
+      ],
+      "accepted_ids": [
+        314,
+        339
+      ],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 94684,
+      "arxiv_id": "2605.24661",
+      "decision": "HTML",
+      "before": [],
+      "after": [
+        "Arizona State University"
+      ],
+      "accepted_ids": [
+        436
+      ],
+      "rejected_ids": [
+        1359
+      ]
+    },
+    {
+      "paper_id": 97671,
+      "arxiv_id": "2607.05613",
+      "decision": "UNCERTAIN",
+      "before": [
+        "University of Illinois Urbana-Champaign"
+      ],
+      "after": [
+        "University of Illinois Urbana-Champaign"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 100670,
+      "arxiv_id": "2607.12726",
+      "decision": "UNCERTAIN",
+      "before": [],
+      "after": [],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 106442,
+      "arxiv_id": "2603.14841",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Michigan Technological University"
+      ],
+      "after": [
+        "Michigan Technological University"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 108889,
+      "arxiv_id": "2605.22660",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Institute of Informatics of the Slovak Academy of Sciences",
+        "University of Luxembourg"
+      ],
+      "after": [
+        "Institute of Informatics of the Slovak Academy of Sciences",
+        "University of Luxembourg"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 111967,
+      "arxiv_id": "2608.05980",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Orange (Poland)"
+      ],
+      "after": [
+        "Orange (Poland)"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 113254,
+      "arxiv_id": "2608.08148",
+      "decision": "HTML",
+      "before": [],
+      "after": [
+        "Shanghai Jiao Tong University"
+      ],
+      "accepted_ids": [
+        101
+      ],
+      "rejected_ids": [
+        291
+      ]
+    },
+    {
+      "paper_id": 132759,
+      "arxiv_id": "2604.24622",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Tsinghua University",
+        "Southern University of Science and Technology",
+        "Nova Management (United States)",
+        "Xi'an Jiaotong University",
+        "University of Science and Technology of China",
+        "University of Chinese Academy of Sciences"
+      ],
+      "after": [
+        "Tsinghua University",
+        "Southern University of Science and Technology",
+        "Nova Management (United States)",
+        "Xi'an Jiaotong University",
+        "University of Science and Technology of China",
+        "University of Chinese Academy of Sciences"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 135121,
+      "arxiv_id": "2405.07392",
+      "decision": "UNCERTAIN",
+      "before": [
+        "University of Cambridge",
+        "University of Manchester"
+      ],
+      "after": [
+        "University of Cambridge",
+        "University of Manchester"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 135191,
+      "arxiv_id": "2509.06285",
+      "decision": "HTML",
+      "before": [
+        "Hong Kong University of Science and Technology",
+        "National University of Defense Technology",
+        "University of Science and Technology Beijing",
+        "University of Toronto",
+        "Aerospace Institute (Germany)"
+      ],
+      "after": [
+        "Hong Kong University of Science and Technology",
+        "National University of Defense Technology"
+      ],
+      "accepted_ids": [
+        78,
+        79
+      ],
+      "rejected_ids": [
+        80,
+        81,
+        82
+      ]
+    },
+    {
+      "paper_id": 135301,
+      "arxiv_id": "2603.10529",
+      "decision": "BOTH",
+      "before": [
+        "Italian Institute of Technology"
+      ],
+      "after": [
+        "Italian Institute of Technology"
+      ],
+      "accepted_ids": [
+        633
+      ],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 136263,
+      "arxiv_id": "2609.01554",
+      "decision": "UNCERTAIN",
+      "before": [
+        "BrightSpec"
+      ],
+      "after": [
+        "BrightSpec"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 136429,
+      "arxiv_id": "2410.10136",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Sunnyvale Public Library"
+      ],
+      "after": [
+        "Sunnyvale Public Library"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 136463,
+      "arxiv_id": "2507.08468",
+      "decision": "HTML",
+      "before": [
+        "University of Applied Sciences Upper Austria"
+      ],
+      "after": [
+        "University of Applied Sciences Upper Austria"
+      ],
+      "accepted_ids": [
+        709
+      ],
+      "rejected_ids": [
+        802
+      ]
+    },
+    {
+      "paper_id": 136782,
+      "arxiv_id": "2608.29652",
+      "decision": "UNCERTAIN",
+      "before": [],
+      "after": [],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 136986,
+      "arxiv_id": "2609.02095",
+      "decision": "HTML",
+      "before": [
+        "University of California, Santa Cruz",
+        "Vanderbilt University"
+      ],
+      "after": [
+        "University of California, Santa Cruz",
+        "Vanderbilt University"
+      ],
+      "accepted_ids": [
+        214,
+        726
+      ],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 137182,
+      "arxiv_id": "2609.02476",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Korea University of Science and Technology",
+        "Instituto Nacional de Tecnologia"
+      ],
+      "after": [
+        "Korea University of Science and Technology",
+        "Instituto Nacional de Tecnologia"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 137254,
+      "arxiv_id": "2609.02652",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Science Club"
+      ],
+      "after": [
+        "Science Club"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 137399,
+      "arxiv_id": "2603.11842",
+      "decision": "UNCERTAIN",
+      "before": [
+        "University of Coimbra",
+        "University of Oulu",
+        "University of South-Eastern Norway"
+      ],
+      "after": [
+        "University of Coimbra",
+        "University of Oulu",
+        "University of South-Eastern Norway"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 137718,
+      "arxiv_id": "2412.06494",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Bansomdejchaopraya Rajabhat University"
+      ],
+      "after": [
+        "Bansomdejchaopraya Rajabhat University"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 137779,
+      "arxiv_id": "2512.03070",
+      "decision": "UNCERTAIN",
+      "before": [
+        "P\u00f4le L\u00e9onard de Vinci",
+        "Laboratoire d\u2019informatique Parall\u00e9lisme R\u00e9seaux Algorithmes Distribu\u00e9s"
+      ],
+      "after": [
+        "P\u00f4le L\u00e9onard de Vinci",
+        "Laboratoire d\u2019informatique Parall\u00e9lisme R\u00e9seaux Algorithmes Distribu\u00e9s"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 137973,
+      "arxiv_id": "2609.02149",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Baidu (China)"
+      ],
+      "after": [
+        "Baidu (China)"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 137977,
+      "arxiv_id": "2609.02760",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Omron (Japan)",
+        "University of Patras"
+      ],
+      "after": [
+        "Omron (Japan)",
+        "University of Patras"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 137999,
+      "arxiv_id": "2609.03362",
+      "decision": "HTML",
+      "before": [
+        "The University of Osaka"
+      ],
+      "after": [
+        "The University of Osaka"
+      ],
+      "accepted_ids": [
+        455
+      ],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 138035,
+      "arxiv_id": "2609.03436",
+      "decision": "BOTH",
+      "before": [
+        "Johannes Kepler University of Linz"
+      ],
+      "after": [
+        "Johannes Kepler University of Linz"
+      ],
+      "accepted_ids": [
+        802
+      ],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 138044,
+      "arxiv_id": "2609.03450",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Institute of Glass",
+        "Central Glass (Japan)"
+      ],
+      "after": [
+        "Institute of Glass",
+        "Central Glass (Japan)"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 138103,
+      "arxiv_id": "2609.03565",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Genecast (China)"
+      ],
+      "after": [
+        "Genecast (China)"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 138338,
+      "arxiv_id": "2609.04024",
+      "decision": "UNCERTAIN",
+      "before": [
+        "United States Institute of Peace"
+      ],
+      "after": [
+        "United States Institute of Peace"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 142196,
+      "arxiv_id": "2502.01262",
+      "decision": "HTML",
+      "before": [
+        "Korea University"
+      ],
+      "after": [
+        "Korea University"
+      ],
+      "accepted_ids": [
+        63
+      ],
+      "rejected_ids": [
+        527
+      ]
+    },
+    {
+      "paper_id": 142198,
+      "arxiv_id": "2502.17295",
+      "decision": "UNCERTAIN",
+      "before": [
+        "University of California San Diego",
+        "Cornell University",
+        "Cornell Tech",
+        "Michigan State University"
+      ],
+      "after": [
+        "University of California San Diego",
+        "Cornell University",
+        "Cornell Tech",
+        "Michigan State University"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 142588,
+      "arxiv_id": "2609.04305",
+      "decision": "UNCERTAIN",
+      "before": [
+        "University of Illinois Urbana-Champaign"
+      ],
+      "after": [
+        "University of Illinois Urbana-Champaign"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 142602,
+      "arxiv_id": "2609.04356",
+      "decision": "UNCERTAIN",
+      "before": [],
+      "after": [],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 142672,
+      "arxiv_id": "2609.04500",
+      "decision": "UNCERTAIN",
+      "before": [],
+      "after": [],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 142697,
+      "arxiv_id": "2609.04539",
+      "decision": "BOTH",
+      "before": [],
+      "after": [
+        "Amazon"
+      ],
+      "accepted_ids": [
+        105
+      ],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 142699,
+      "arxiv_id": "2609.04541",
+      "decision": "HTML",
+      "before": [],
+      "after": [
+        "Columbia University"
+      ],
+      "accepted_ids": [
+        295
+      ],
+      "rejected_ids": [
+        937
+      ]
+    },
+    {
+      "paper_id": 142749,
+      "arxiv_id": "2609.04646",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Heidelberg University",
+        "Technische Universit\u00e4t Darmstadt"
+      ],
+      "after": [
+        "Heidelberg University",
+        "Technische Universit\u00e4t Darmstadt"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 142779,
+      "arxiv_id": "2609.04706",
+      "decision": "UNCERTAIN",
+      "before": [],
+      "after": [],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 142821,
+      "arxiv_id": "2609.04782",
+      "decision": "UNCERTAIN",
+      "before": [],
+      "after": [],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 142837,
+      "arxiv_id": "2609.04806",
+      "decision": "UNCERTAIN",
+      "before": [
+        "China Aerospace Science and Technology Corporation",
+        "Guangzhou Vocational College of Science and Technology"
+      ],
+      "after": [
+        "China Aerospace Science and Technology Corporation",
+        "Guangzhou Vocational College of Science and Technology"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 142955,
+      "arxiv_id": "2609.05036",
+      "decision": "UNCERTAIN",
+      "before": [],
+      "after": [],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 142981,
+      "arxiv_id": "2609.05088",
+      "decision": "UNCERTAIN",
+      "before": [],
+      "after": [],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 143021,
+      "arxiv_id": "2609.05165",
+      "decision": "BOTH",
+      "before": [
+        "Microsoft"
+      ],
+      "after": [
+        "Microsoft"
+      ],
+      "accepted_ids": [
+        110
+      ],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 143121,
+      "arxiv_id": "2609.05361",
+      "decision": "UNCERTAIN",
+      "before": [
+        "Universitas 17 Agustus 1945 Semarang"
+      ],
+      "after": [
+        "Universitas 17 Agustus 1945 Semarang"
+      ],
+      "accepted_ids": [],
+      "rejected_ids": []
+    },
+    {
+      "paper_id": 183707,
+      "arxiv_id": "2609.05725",
+      "decision": "BOTH",
+      "before": [
+        "Pozna\u0144 University of Technology"
+      ],
+      "after": [
+        "Pozna\u0144 University of Technology"
+      ],
+      "accepted_ids": [
+        916
+      ],
+      "rejected_ids": []
+    }
+  ],
+  "decision_counts": {
+    "UNCERTAIN": 38,
+    "HTML": 16,
+    "BOTH": 5,
+    "OPENALEX": 1
+  },
+  "paid_calls": 60,
+  "actual_cost_usd": 0.036317,
+  "errors": [],
+  "idempotency": [
+    {
+      "paper_id": 66799,
+      "skipped_duplicate": true,
+      "no_new_rows": true
+    },
+    {
+      "paper_id": 74361,
+      "skipped_duplicate": true,
+      "no_new_rows": true
+    },
+    {
+      "paper_id": 76357,
+      "skipped_duplicate": true,
+      "no_new_rows": true
+    },
+    {
+      "paper_id": 84757,
+      "skipped_duplicate": true,
+      "no_new_rows": true
+    },
+    {
+      "paper_id": 84767,
+      "skipped_duplicate": true,
+      "no_new_rows": true
+    }
+  ],
+  "remaining_unjudged": 66,
+  "remaining_unjudged_paper_ids": [
+    183815,
+    183855,
+    183860,
+    184474,
+    184498,
+    184518,
+    184581,
+    184771,
+    184924,
+    184988,
+    185008,
+    185602,
+    185639,
+    185694,
+    185710,
+    185746,
+    185821,
+    185842,
+    185915,
+    186180,
+    186425,
+    186427,
+    186440,
+    186444,
+    186928,
+    187067,
+    187209,
+    187328,
+    187336,
+    187797,
+    187983,
+    188127,
+    188189,
+    188253,
+    188273,
+    189704,
+    191277,
+    191305,
+    191695,
+    191774,
+    191832,
+    191946,
+    192358,
+    192367,
+    192409,
+    192540,
+    192550,
+    192651,
+    192784,
+    192909,
+    193162,
+    193178,
+    193230,
+    193342,
+    193390,
+    193453,
+    193556,
+    193562,
+    193733,
+    194514,
+    194839,
+    194921,
+    194949,
+    195029,
+    195098,
+    195173
+  ],
+  "partial": false,
+  "idempotent": true
+}

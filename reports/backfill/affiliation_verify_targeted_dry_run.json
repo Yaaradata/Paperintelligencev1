@@ -1,0 +1,63 @@
+{
+  "generated_at": "2026-09-21T08:13:54.578376+00:00",
+  "args": {
+    "workers": 8,
+    "verification_version": "html-oa-v001",
+    "date_from": "2026-09-01",
+    "date_until": "2026-09-15",
+    "set": "none",
+    "resume": false,
+    "dry_run": false,
+    "allow_openalex_network": false
+  },
+  "targeted": {
+    "bucket_sizes": {
+      "quality_selected": 1661,
+      "notable_ooi": 748,
+      "newsletter_pool": 4272,
+      "linkedin_pool": 4272,
+      "low_confidence": 5026,
+      "ambiguous_ror": 150,
+      "affiliation_conflict_prior": 2,
+      "random_audit": 50
+    },
+    "total_candidates": 6504,
+    "already_verified": 45,
+    "html_available": 5116,
+    "oa_pi_evidence": 82,
+    "oa_cached_among_remaining": 5908,
+    "oa_lookup_required_among_remaining": 514,
+    "pdf_likely_required": 1388,
+    "remaining_to_verify": 6459,
+    "paper_id_count": 6504,
+    "recommended_workers": 4,
+    "runtime_projections": {
+      "1": {
+        "papers_per_minute": 1177.96,
+        "estimated_minutes": 5.48,
+        "source": "measured"
+      },
+      "4": {
+        "papers_per_minute": 2297.07,
+        "estimated_minutes": 2.81,
+        "source": "measured"
+      },
+      "8": {
+        "papers_per_minute": 2033.02,
+        "estimated_minutes": 3.18,
+        "source": "measured"
+      },
+      "16": {
+        "papers_per_minute": 2297.07,
+        "estimated_minutes": 2.81,
+        "source": "capped_at_best_measured_w4"
+      }
+    },
+    "estimated_external_api_calls": 514,
+    "measured_ppm_inputs": {
+      "1": 1177.96,
+      "4": 2297.07,
+      "8": 2033.02
+    }
+  }
+}

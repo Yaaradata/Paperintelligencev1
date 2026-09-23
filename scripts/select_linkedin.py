@@ -32,6 +32,7 @@ if str(SRC) not in sys.path:
 
 from paper_intelligence.common.llm_stage import parse_json_object, strip_json_fences
 from paper_intelligence.db import connect
+from paper_intelligence.editorial.seats import linkedin_seats_section
 from paper_intelligence.openrouter import LLMRequest, complete
 
 # Reuse pool loaders from the newsletter script without importing as a package.
@@ -51,7 +52,8 @@ window_label = _newsletter.window_label
 
 DEFAULT_MODEL = "anthropic/claude-opus-5"
 DEFAULT_REASONING = "medium"
-PROMPT_VERSION = "linkedin_selection_v1"
+PROMPT_VERSION = "linkedin_select_v002"
+SEATS_POLICY_VERSION = "v001"
 
 SYSTEM_PROMPT = """\
 You are an editorial selector for LinkedIn posts aimed at senior technology and \
@@ -70,8 +72,10 @@ Return ONLY a single JSON object matching the schema in the user message. \
 No markdown fences, no preamble.
 """
 
-USER_RUBRIC = """\
-Use the SAME decision-value philosophy as the newsletter selection.
+USER_RUBRIC_LENS = """\
+Use the SAME decision-value philosophy and seat definitions as the newsletter
+selection. Seat definitions are loaded from the shared editorial seats policy
+and appear below.
 
 Governing question:
 "What does this paper change for me, my team, my product, or my organisation?"
@@ -127,6 +131,18 @@ but that is not a hard rule.
 For each LinkedIn seat also identify ONE runner-up.
 Winner IDs must differ from BOTH newsletter winners.
 """
+
+
+def build_user_rubric(*, seats_version: str = SEATS_POLICY_VERSION) -> str:
+    return (
+        USER_RUBRIC_LENS.strip()
+        + "\n\n"
+        + linkedin_seats_section(seats_version)
+        + "\n"
+    )
+
+
+USER_RUBRIC = build_user_rubric()
 
 OUTPUT_SCHEMA = """\
 Return JSON with this exact shape:
@@ -435,7 +451,7 @@ def main(argv: list[str] | None = None) -> int:
         f"date_until: {date_until.isoformat()}\n"
         f"Select from papers published in this inclusive window only.\n"
         f"</selection_window>\n\n"
-        + USER_RUBRIC
+        + build_user_rubric()
         + "\n"
         + OUTPUT_SCHEMA
         + "\n\n<newsletter_winners_hard_exclude>\n"

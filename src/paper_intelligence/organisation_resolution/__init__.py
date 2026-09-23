@@ -18,7 +18,9 @@ from paper_intelligence.organisation_resolution.repository import (
     find_organisation_by_openalex,
     find_organisation_by_ror,
     get_organisation,
+    is_member_society_email_domain,
     is_public_email_domain,
+    member_society_email_domains,
     seed_watchlist_organisations,
 )
 from paper_intelligence.organisation_resolution.watchlist import (
@@ -43,8 +45,10 @@ __all__ = [
     "find_organisation_by_openalex",
     "find_organisation_by_ror",
     "get_organisation",
+    "is_member_society_email_domain",
     "is_public_email_domain",
     "load_watchlist",
+    "member_society_email_domains",
     "normalise_key",
     "seed_watchlist_organisations",
 ]

@@ -1,0 +1,2291 @@
+{
+  "stats": {
+    "total_august_papers": 22643,
+    "relevant_papers": 251,
+    "papers_with_quality_result": 47,
+    "papers_eligible_for_editorial_selection": 47,
+    "window": {
+      "from": "2026-08-01",
+      "until": "2026-08-31"
+    },
+    "note": "August PI funnel coverage is concentrated on 2026-08-23 E2E; eligible set = quality-scored + adjudicated current state.",
+    "generated_at": "2026-09-18T11:55:04.230814+00:00"
+  },
+  "candidates": [
+    {
+      "content_item_id": 172395,
+      "arxiv_id": "2608.17485",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.17485",
+      "title": "KeyPooling: Measuring Where LLM API Relay Paths Collapse Prompt Cache Isolation",
+      "abstract": "Large language model (LLM) API relays authenticate customers separately but often forward requests through shared provider credentials. Providers scope prompt caches to upstream principals and namespaces, so relay customers mapped to one cache identity can observe each other's cache state. Prior work showed cache sharing at selected endpoints but did not identify which credential, pool, adapter, or nested hop controls the finalidentity. We present KeyPooling, a measurement method that traces customer identity through cache lookup and write, verifies runtime transformations, and tests one predicted identity component at a time. Across five open-source gateways connected to OpenAI and Anthropic, none bound customers to upstream credentials by default; under a shared credential, all five exposed cross-customer cache reads for both providers. Principal and namespace splits, pool associations, and adapter and nested-relay contrasts localized the controlling transformations. In an outcome-independent weekly OpenRouter frame, tests covered 80.5% of eligible token volume and found cross-account reads for 12 of 28 labels carrying 33.7% of volume. On one production route, a controlled procedure recovered eight consecutive target positions without target access. Broader tests identify cache granularity, routing, rate limits, attribution, and budget as conditions for token-by-token recovery, not security controls. We derive a defense contract: every customer must enter a provider-enforced domain, or a namespace derived from authenticated identity must survive every final cache lookup and write. Placing this split after reusable public prefixes preserved most modeled reuse at a 1.7-2.5% cost increase.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 7.5,
+      "quality_status": "scored",
+      "quality_score": 8.8,
+      "final_score": 8.6,
+      "screen_score": 7.3,
+      "org_boost": 0.128,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership",
+        "enterprise_adoption"
+      ],
+      "domain": "efficient_inference",
+      "subdomains": [
+        "caching",
+        "serving"
+      ],
+      "application_domains": [
+        "cybersecurity"
+      ],
+      "so_what": "It demonstrates that shared relay credentials can collapse prompt-cache isolation across customers and provides a concrete identity-preserving defense contract with modest modeled cost.",
+      "reason_not_higher": "The measurements cover five open-source gateways, two providers, and a bounded production sample; prevalence across proprietary relay implementations and the full practical impact of token recovery remain less certain.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Johns Hopkins University",
+          "organisation_id": 33,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "Johns Hopkins University",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 172652,
+      "arxiv_id": "2608.22476",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22476",
+      "title": "JetStream: Generating Query Accelerators for Existing Database Systems",
+      "abstract": "Recent work has shown that LLMs can synthesize highly specialized database systems for fixed workloads, but existing approaches typically assume static data and replace the database's native storage with generated representations. We present JetStream, a system for generating query-specific accelerators that instead extend an existing DBMS. JetStream consists of three parts. First, a staged, measurement-driven agentic workflow generates and optimizes query-specific accelerators, including persistent auxiliary state when beneficial. Second, a fixed, engine-neutral substrate provides the common interfaces for execution, transaction coordination, state management, and maintenance. Third, a separate synthesis workflow generates engine-specific backend adapters that connect the substrate to the underlying engine. For stateful accelerators, JetStream also generates maintenance logic and uses a runtime policy to choose among incremental maintenance, rebuilds, and lazy repair as the database changes. On TPC-H at SF=20, stateful accelerators generated by JetStream achieve an 833x geomean read-only speedup over DuckDB, compared with 34.07x for GenDB and 12.35x for Bespoke OLAP. Under TPC-H refreshes every 60 seconds, JetStream maintains a 375x geomean workload speedup. We also show that JetStream generalizes to new, unseen workloads, achieving geomean read-only speedups of 102x over DuckDB and 486x over PostgreSQL. These results show that aggressive generated specialization can be integrated seamlessly with existing DBMSes and support dynamic workloads.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 7.5,
+      "quality_status": "scored",
+      "quality_score": 8.7,
+      "final_score": 8.4,
+      "screen_score": 7.3,
+      "org_boost": 0.128,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "systems_infrastructure",
+      "subdomains": [],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "JetStream could bring workload-specific, generated acceleration to established DBMSs without sacrificing native storage, transaction handling, or support for changing data.",
+      "reason_not_higher": "The exceptional speedups are demonstrated primarily on TPC-H, and the abstract does not establish robustness across broader transactional workloads, complex update patterns, accelerator-generation costs, or direct production deployment.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "Massachusetts Institute of Technology",
+          "organisation_id": 7,
+          "is_org_of_interest": true
+        },
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "MIT Computer Science and Artificial Intelligence Laboratory",
+          "organisation_id": 100,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "MIT Computer Science and Artificial Intelligence Laboratory",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120504,
+      "arxiv_id": "2608.01575",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.01575",
+      "title": "Measuring in-context algorithmic reasoning in language models against an exact Bayes-optimal reference",
+      "abstract": "Whether large language models perform algorithmic inference or pattern completion is hard to test, because most benchmarks supply answers but no distributional reference for what the shown evidence licenses. F-ICL supplies one exactly: we exhaustively enumerate the 86 million valid programs of length at most 13 on a Turing-complete machine F, complement-symmetrised to remove output-polarity bias, and compute the exact posterior under a declared bounded Levin--Solomonoff prior. It is Bayes-optimal for that stated prior rather than universal, and models are never told it exists, so the score reads the inductive prior their served distribution already encodes. Across 105 serving configurations spanning open models from 0.8B to 675B and frontier systems, models answer up to 92% of queries correctly, yet 45 of the 46 exposing distributions sit farther from the F reference than a keystroke reference. This is not an artefact of task selection: on the bit coordinate, the half the length quota cannot distort, 69 of 80 runs stay below the anchor. Fidelity is inert to scale, which accuracy tracks; continuation improves late without converging; and models un-solve a solved task once per two gains, where the F reference does so once per nine and always repairs it. Because absolute distances are reference-dependent, we prove sequential bounds holding for rival priors: any predictor whose prior gives the reference positive weight has bounded cumulative excess loss, and, in a loss never invoking the reference, any Bayesian mixture giving the realised truth positive mass has a bounded truth-loss budget. On 23,998 trajectories, 86.7% already spend over 10 bits of it. Sequences ending by position nine cannot exclude an arbitrarily large finite constant, so these are lower bounds on what a rival prior must already pay. F-ICL is an open benchmark and toolkit.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 9.0,
+      "quality_status": "scored",
+      "quality_score": 8.6,
+      "final_score": 8.4,
+      "screen_score": 8.0,
+      "org_boost": 0.128,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "evaluation_benchmarking",
+      "subdomains": [
+        "benchmark_design",
+        "eval_methodology"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Provides an unusually rigorous, exact Bayesian reference for testing whether language-model predictions resemble principled in-context inference rather than merely achieving high task accuracy.",
+      "reason_not_higher": "The reference is necessarily tied to a bounded program space, machine, and declared prior, while distance from that reference cannot by itself establish what algorithm or inference process a model uses; practical use is also more diagnostic than deployment-oriented.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Bansomdejchaopraya Rajabhat University",
+          "organisation_id": 381,
+          "is_org_of_interest": false
+        },
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "University of Oxford",
+          "organisation_id": 11,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "University of Oxford",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120560,
+      "arxiv_id": "2608.17445",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.17445",
+      "title": "Decomposition Attacks Across Unlinkable Identities: Limits of Stateful Defenses for LLM Services",
+      "abstract": "Most large language model services use stateless defenses, which judge only the current request, to refuse harmful tasks. Decomposition attacks exploit this limitation by splitting a harmful task into individually permissible requests and combining their answers. Defending against them therefore requires a stateful monitor that considers requests together. If it can group all requests for one attacker task, it can stop the attack. However, attackers can use unlinkable identities and combine answers elsewhere, leaving no reliable grouping signal. We ask whether decomposition attacks can still be stopped under this setting. For a fixed attack strategy without retries, we prove that the achievable security and utility tradeoff depends entirely on how benign requests for the same capabilities are grouped. Persistent, recognizable groups permit a useful defense; fresh, indistinguishable groups do not. When attackers can retry and learn from Allow/Block decisions, this useful operating point disappears: the feedback reveals what passes but not whether a block was correct. Experiments on 91 executable tasks and 11,393 capability-matched benign requests support these results. Under a 1% denial cap for these requests and a 0.5% cap for unrelated background traffic, all ten tested policies, including one privileged policy with an exact request-to-operation map, either fail to stop attacks or exceed the budget. On defense-unseen task families, attack success is at least 99% after one attempt and 100% after two. Effective defenses therefore require additional evidence or mechanisms tied to grouping, such as reliable identity linkage, costs for fresh identities, or control over answer use.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.0,
+      "quality_status": "scored",
+      "quality_score": 8.7,
+      "final_score": 8.3,
+      "screen_score": 7.7,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership",
+        "enterprise_adoption"
+      ],
+      "domain": "alignment_safety",
+      "subdomains": [
+        "jailbreak_robustness",
+        "content_safety"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "It shows that stateful request monitoring alone cannot reliably stop decomposed harmful tasks when attackers can rotate identities and learn from blocking feedback, clarifying which additional controls are necessary.",
+      "reason_not_higher": "The formal result assumes specified attack and grouping models, while the empirical scope covers a finite task set and policy family; real services may possess side signals, economic controls, or usage constraints outside that model.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "no_evidence_supplied",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120807,
+      "arxiv_id": "2608.22301",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22301",
+      "title": "The Imitator Game: Benchmarking Robot Imitative Ability Beyond Action Prediction",
+      "abstract": "Humans imitate at the level of intent: given a demonstration, we infer its goal and carry it out with whatever tools, objects, and layouts are at hand. Current robot policies instead learn observation-to-action mappings from visual inputs and language instructions, without explicitly inferring the demonstrated task. Learning from human video thus remains largely trajectory-level: models can replay motions in near-identical scenes, but still struggle to imitate what the demonstrator intends rather than merely what they do. We introduce The Imitator Game, a four-level benchmark (L0-L3) that progressively widens the gap between the human demonstration and the robot's own scene, isolating where trajectory replay ceases to suffice and task understanding becomes necessary. We pair it with IG-10K, the largest environment-aligned paired human-robot dataset to date and the only one instantiated across all four levels in both real and simulated settings (20,000+ paired episodes, 50+ tasks, 6 domains), and Imitator Arena, an open platform for blind A/B human evaluation. Across nine state-of-the-art models, performance is stable from L0 to L2 but collapses at L3, identifying functional substitution - achieving the same intent through a different object affordance - as the decisive barrier to intent-level imitation. Human-video-conditioned models outperform caption-conditioned ones, yet every model falls below 13% zero-shot success on unseen tasks; fine-tuning IG-10K-pretrained models with only $10$ paired human-robot demonstrations yields large gains that grow with pretraining scale. The project website and access to Imitator Arena are available at https://imitator-game.github.io.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.0,
+      "quality_status": "scored",
+      "quality_score": 8.5,
+      "final_score": 8.2,
+      "screen_score": 7.3,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "robotics_embodied",
+      "subdomains": [
+        "manipulation"
+      ],
+      "application_domains": [
+        "autonomous_systems"
+      ],
+      "so_what": "The benchmark exposes whether robots understand demonstrated intent rather than merely replay trajectories, identifying functional substitution as a concrete barrier to general-purpose imitation.",
+      "reason_not_higher": "This is primarily a benchmark and dataset contribution rather than a demonstrated solution to intent-level imitation, and even the evaluated models remain below 13% zero-shot success on unseen tasks.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "no_evidence_supplied",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120294,
+      "arxiv_id": "2511.02208",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2511.02208",
+      "title": "Training Proactive and Personalized LLM Agents",
+      "abstract": "Despite rapid progress, current AI agents are primarily optimized for isolated task completion. We argue for a paradigm shift toward training agents as collaborators that communicate and adapt to people. To facilitate this shift in real-world complex applications, we first formalize three dimensions of collaborative AI agents: Productivity, Proactivity, and Personalization (PPP). We introduce UserVille, an interactive environment with configurable LLM-based user simulators and user-centric feedback to evaluate these dimensions, and propose a multi-objective reinforcement learning framework that optimizes them using rewards from task outcomes, question effort, and preference adherence. On two real-world agentic tasks (SWE-Bench and BrowseComp-Plus), PPP-trained agents outperform strong LLM baselines (including GPT-5) by an average of 16.7 points, ask more targeted questions, and generalize to unseen preferences and tasks. A follow-up user study further highlights the importance of user-centric feedback for training collaborative agents that are both more effective and easier to supervise.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 9.0,
+      "quality_status": "scored",
+      "quality_score": 8.4,
+      "final_score": 8.2,
+      "screen_score": 7.5,
+      "org_boost": 0.255,
+      "organisation_score": 6.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "reinforcement_learning",
+      "subdomains": [
+        "rlhf"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Training agents to ask useful questions and adapt to individual preferences could make them substantially more effective, controllable, and usable as real collaborators.",
+      "reason_not_higher": "The approach depends on LLM-based user simulation and multi-objective reward design, creating open questions about simulator bias, reward trade-offs, deployment cost, and generalization to sustained interactions with diverse real users.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Carnegie Mellon University",
+          "organisation_id": 39,
+          "is_org_of_interest": true
+        }
+      ],
+      "top_organisation": "Carnegie Mellon University",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 3568,
+      "arxiv_id": "2602.13106",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2602.13106",
+      "title": "Which Algorithms Can Graph Neural Networks Learn?",
+      "abstract": "In recent years, there has been growing interest in understanding neural architectures' ability to learn to execute discrete algorithms, a line of work often referred to as neural algorithmic reasoning. The goal is to integrate algorithmic reasoning capabilities into larger neural pipelines. Many such architectures are based on (message-passing) graph neural networks (MPNNs), owing to their permutation equivariance and ability to deal with sparsity and variable-sized inputs. However, existing work is either largely empirical and lacks formal guarantees or it focuses solely on expressivity, leaving open the question of when and how such architectures generalize beyond a finite training set. In this work, we propose a general theoretical framework that characterizes the sufficient conditions under which MPNNs can learn an algorithm from a training set of small instances and provably approximate its behavior on inputs of arbitrary size. Our framework applies to a broad class of algorithms, including single-source shortest paths, minimum spanning trees, and general dynamic programming problems, such as the $0$-$1$ knapsack problem. In addition, we establish impossibility results for a wide range of algorithmic tasks, showing that standard MPNNs cannot learn them, and we derive more expressive MPNN-like architectures that overcome these limitations. Finally, we refine our analysis for the Bellman-Ford algorithm, yielding a substantially smaller required training set and significantly extending the recent work of Nerem et al. [2025] by allowing for a differentiable regularization loss. Empirical results largely support our theoretical findings.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 9.5,
+      "quality_status": "scored",
+      "quality_score": 8.5,
+      "final_score": 8.1,
+      "screen_score": 8.3,
+      "org_boost": 0.135,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "graph_learning",
+      "subdomains": [
+        "graph_neural_networks"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "A general account of which algorithms MPNNs can learn and extrapolate could turn neural algorithmic reasoning from an empirical practice into a discipline with actionable guarantees and architectural design principles.",
+      "reason_not_higher": "The practical reach of the guarantees may depend on restrictive assumptions about algorithms, training distributions, optimization, and approximation, while deployment relevance beyond canonical algorithmic tasks remains uncertain.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "RWTH Aachen University",
+          "organisation_id": 695,
+          "is_org_of_interest": false
+        },
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "University of Antwerp",
+          "organisation_id": 1106,
+          "is_org_of_interest": false
+        },
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "University of California San Diego",
+          "organisation_id": 25,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "RWTH Aachen University",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 3611,
+      "arxiv_id": "2607.12550",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2607.12550",
+      "title": "A JoLT for the KV cache: Near-lossless KV cache compression via joint Lagrangian allocation of Tucker ranks and a rotated residual for llms",
+      "abstract": "The key-value (KV) cache has become the dominant memory cost of transformer inference: it grows with batch size, context length, and depth, and at long context it, rather than the model weights, sets the throughput ceiling. Existing reductions fall into two families. Low-rank methods factor two-dimensional slices of the cache, either per-head matrices or cross-layer feature blocks, and quantization methods lower the bit-width of every entry. Neither exploits the fact that the cache at a layer is naturally a third-order tensor whose three axes, the heads, the tokens, and the features, carry very different amounts of redundancy. We take this tensor view directly. Our method, JoLT (Joint Lagrangian Tucker), applies a partial Tucker decomposition that compresses only the token and feature axes while leaving the head and layer axes intact, then restores the energy that truncation discards with a rotated low-bit residual: a random orthogonal rotation followed by low-bit quantization. A single Lagrangian dual allocates the Tucker ranks and the residual bit-widths together, per layer group and separately for keys and values, under one byte budget. The result is a near-lossless 2-3x compression. Perplexity stays near-lossless on both a grouped-query-attention model (Mistral-7B-v0.3) and a multi-head-attention model (LLaMA-2-13B), and GSM8K accuracy and needle-in-a-haystack retrieval hold at the uncompressed baseline at 2x on both architectures and through 3x on the GQA model. At 2x, JoLT reconstructs the cache to relative Frobenius error 0.009 (K) and 0.006 (V) on both architectures. A randomized-SVD variant, FlashJoLT, delivers a 5-13x compression-time speedup at 1024-token context and matched quality.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 8.5,
+      "final_score": 8.1,
+      "screen_score": 7.7,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "efficient_inference",
+      "subdomains": [
+        "caching"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Near-lossless 2\u20133x KV-cache compression could materially increase long-context inference capacity and throughput without sacrificing model quality.",
+      "reason_not_higher": "The reported validation covers only two model families and selected tasks, and real-world impact still depends on end-to-end kernel efficiency, runtime memory overhead, hardware behavior, and performance at substantially longer contexts.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "unresolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 3223,
+      "arxiv_id": "2608.23626",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.23626",
+      "title": "A survey detection channel overrides the pixels in an astronomical foundation model, and biases tomographic mean redshifts",
+      "abstract": "Foundation models for astronomy are trained on survey pixels together with the catalogue products derived from those pixels. Those catalogues are incomplete at a measurable rate, and a model trained on both inherits that incompleteness as a systematic. We audit AION-1, a 39-modality transformer trained on more than 200 million objects, using causal interventions on its inputs. Holding the image tokens byte-identical and editing only the survey segmentation map changes every quantity the model reports -- flux, size, ellipticity, redshift -- by 110-4400 times a matched placebo. The mechanism is detection gating, presence at the field centre (r = 0.47), not the light the mask encloses (r = 0.30); across 322 real blends the model ignores how the pipeline partitioned the light (R = -0.006). Nor is the preference specific to that channel: contradicted catalogue photometry leaves the model nine times worse than supplying no metadata at all. The Legacy Survey pipeline leaves 3.68% of targets with no segment covering their position. Propagating that rate, with a miss represented by the fields the pipeline actually returns, shifts tomographic mean redshifts by a median 0.71 times the LSST DESC requirement over 40 assignments and exceeds it in 12; observed positional errors take the worst bin to 8.3 times. Drawing the misses by their measured magnitude dependence rather than uniformly does not change it. Spectroscopy removes the effect, withholding the detection channel removes it at no measurable cost, and the effect grows with model scale. Two further limits lie in the tokeniser: its image codec resolves 28 effective states on source patches against 934 for the spectrum codec, and the redshift readout is quantisation-limited. Sparse dictionaries are unreliable causal handles: across 15, recovery spans 26-75% and moves up to 18 points on the seed alone.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 7.5,
+      "quality_status": "scored",
+      "quality_score": 8.4,
+      "final_score": 8.0,
+      "screen_score": 8.0,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "interpretability",
+      "subdomains": [
+        "attribution"
+      ],
+      "application_domains": [
+        "scientific_research"
+      ],
+      "so_what": "It identifies a concrete, removable input-channel failure that can turn astronomical foundation-model predictions into survey-scale redshift biases exceeding operational requirements.",
+      "reason_not_higher": "The strongest causal and downstream results center on one foundation model and survey pipeline, so broader generality across architectures, training regimes, and surveys remains uncertain.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "unresolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120264,
+      "arxiv_id": "2508.07173",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2508.07173",
+      "title": "Omni-SafetyBench: A Benchmark for Safety Evaluation of Audio-Visual Large Language Models",
+      "abstract": "Omni-modal Large Language Models (OLLMs) that integrate visual, auditory, and textual processing face severe safety risks. They exhibit fragile defenses against audio-visual joint harmful inputs and demonstrate inconsistent safety performance across different modalities, enabling simple modality-switching jailbreaks. However, existing safety benchmarks fail to comprehensively assess these risks due to the absence of audio-visual joint samples, limited modality coverage, and lack of parallel test cases for cross-modal consistency evaluation. To address these gaps, we introduce Omni-SafetyBench, the first comprehensive parallel benchmark for OLLM safety evaluation, featuring 23,328 test instances across 24 modality variations derived from 972 seed samples. Recognizing that complex inputs pose comprehension challenges and that cross-modal consistency is critical for OLLM safety, we propose tailored metrics: a Safety-score based on Conditional Attack Success Rate (C-ASR) and Conditional Refusal Rate (C-RR), and a Cross-Modal Safety Consistency score (CMSC-score). Evaluating 11 state-of-the-art OLLMs reveals severe vulnerabilities: only 3 models exceed 0.6 in both metrics, with safety degrading sharply for audio-visual inputs. Furthermore, evaluation of existing safety alignment methods on Omni-SafetyBench identifies fundamental challenges in OLLM safety alignment, highlighting urgent needs for enhanced research in this domain.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 8.2,
+      "final_score": 8.0,
+      "screen_score": 7.2,
+      "org_boost": 0.255,
+      "organisation_score": 6.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "alignment_safety",
+      "subdomains": [
+        "jailbreak_robustness",
+        "content_safety"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Omni-SafetyBench makes cross-modal and audio-visual safety failures measurable, exposing vulnerabilities that text- or single-modality evaluations can miss.",
+      "reason_not_higher": "As a benchmark, it diagnoses rather than resolves the underlying safety problems, and its coverage is ultimately bounded by 972 seed samples and the representativeness of the selected modality transformations, harms, and metrics.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "Tsinghua University",
+          "organisation_id": 42,
+          "is_org_of_interest": true
+        },
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Alibaba Group (China)",
+          "organisation_id": 31,
+          "is_org_of_interest": false
+        },
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Peking University",
+          "organisation_id": 50,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "Tsinghua University",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 1470,
+      "arxiv_id": "2608.15584",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.15584",
+      "title": "GraniKV: Asymmetric Granularity KV-Cache Paging for Multi-Agent Systems with Long Shared Prefix",
+      "abstract": "Production paged-serving engines apply uniform paging granularity to the KV cache, even though the two regions of a multi-agent workload have opposite storage requirements: a long shared prefix demands contiguity, while the per-request suffix demands fine-grained allocation. We present \\textbf{GraniKV}, a KV-cache layer that allocates the shared prefix in a contiguous HOT pool and the suffix in a token-level COLD pool, combined with a per-step dispatcher which selects the appropriate backend among dual backends for each regime (compute-, memory-, or communication-bound). To the best of our knowledge, GraniKV is the first system to apply asymmetric paging granularity to the KV cache of a production paged-serving engine. At $L_p{=}16$\\,K shared tokens GraniKV reaches $\\mathbf{2.16\\times}$, $\\mathbf{1.98\\times}$, and $\\mathbf{1.57\\times}$ output-token throughput over the production baseline on Llama-3.1-8B/TP=1, Qwen-2.5-14B/TP=2, and Qwen-2.5-32B/TP=4. The gain decomposes: cascade attention integration contributes the majority at saturation; the asymmetric storage layer adds $1.05$--$1.15\\times$ end-to-end while being what makes the batched-GEMM prefix backend possible at all. Under heterogeneous multi-agent serving with \\emph{distinct} prompts of different lengths, the attribution inverts: GraniKV sustains $\\mathbf{1.95\\times}$ while batch-global cascade collapses to parity --- the storage layer alone carries the win in the regime that motivates the paper.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.0,
+      "quality_status": "scored",
+      "quality_score": 8.3,
+      "final_score": 7.9,
+      "screen_score": 7.2,
+      "org_boost": 0.128,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "efficient_inference",
+      "subdomains": [
+        "serving",
+        "caching"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Asymmetric KV-cache allocation could substantially increase throughput for long-prefix, multi-agent LLM serving while handling heterogeneous prompts better than globally shared-prefix optimizations.",
+      "reason_not_higher": "The contribution targets a specialized serving regime, and the abstract does not establish performance across broader workloads, hardware platforms, latency objectives, or memory-pressure conditions.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Seoul National University",
+          "organisation_id": 21,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "Seoul National University",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 3854,
+      "arxiv_id": "2608.22368",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22368",
+      "title": "DiD It in 87 Minutes: A Label-Free Softmax-to-Linear Adaptation of Vision Transformers for Object Detection",
+      "abstract": "While linear attention is a compelling mechanism for high-resolution object detection due to its reduced cost for global token mixing, converting the Softmax-attention ViT backbone of a trained detector into a linear-attention one is not a trivial drop-in replacement. Directly swapping the attention operator leads to severe performance degradation, and generic label-free distillation, though effective for classification, often fails on detection tasks. We argue that the central challenge is \\textit{detector-interface preservation}: the converted backbone must reproduce the exact feature tensors expected by the fixed downstream detector, rather than merely imitating internal Softmax hidden states. To address this, we introduce Detector-Interface Distillation (DiD), a label-free conversion method that exclusively trains the linear-attention backbone by aligning detector-facing interface tensors with those of a frozen Softmax teacher. On DOTA-v1.5, DiD substantially outperforms established baselines and matches supervised, fully trained linear models. Adaptation completes in roughly 87 minutes on 4 GPUs, and the linearized backbone cuts inference latency by ~62% and peak memory by ~49%. We hope our findings offer the community a simple, label-free route to reusing trained Softmax detectors as efficient linear ones, and encourage interface-aware objectives in future architecture-conversion work.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 9.0,
+      "quality_status": "scored",
+      "quality_score": 8.3,
+      "final_score": 7.9,
+      "screen_score": 7.3,
+      "org_boost": 0.113,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "computer_vision",
+      "subdomains": [
+        "object_detection"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Detector-interface distillation offers a fast, label-free way to convert existing softmax-attention detectors into substantially cheaper linear-attention models without sacrificing reported accuracy.",
+      "reason_not_higher": "The evidence described is concentrated on DOTA-v1.5, so generality across detector families, natural-image datasets, resolutions, hardware, and linear-attention variants is not yet established in the abstract.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "Nanyang Technological University",
+          "organisation_id": 10,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "Nanyang Technological University",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120883,
+      "arxiv_id": "2608.22533",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22533",
+      "title": "CONTRAMEM: Learning Self-Evolving Procedural Memory from Contrasting Multi-Model Trajectories",
+      "abstract": "Autonomous computer-use agents are increasingly applied to long-horizon tasks requiring coordinated application calls, persistent state tracking, and verifier-sensitive writes, yet they remain prone to procedural failures: misreading application state, tool semantics, or task progress. Procedural memory promises more consistent decisions and less redundant exploration, but constructing high-quality memory without model training remains challenging. We introduce CONTRAMEM, a source-flexible, training-free framework for self-evolving procedural memory that treats same-task outcome variation as supervision: differences in correctness, efficiency, recovery, and failure modes expose outcome-relevant procedural distinctions, distilled into a compact bank of app-level Function Cards and task-level Skill Cards that evolves through localized curation rather than append-only accumulation or whole-bank rewriting. On held-out GAIA2/ARE computer-use tasks, CONTRAMEM more than doubles the success rate across the three source-model targets (26.2% to 55.3%), with consistent per-model gains (GPT-5.5: 27.5 to 61.0; Claude Sonnet 4.6: 28.0 to 52.5; DeepSeek V4 Pro: 23.0 to 52.5). The same bank transfers unchanged to the unseen Qwen3.7 Plus (18.5 to 35.5), indicating transferable procedural knowledge rather than model-specific behavior. The same construction carries over unchanged to AppWorld, beating both no memory and its own single-source self-memory variant for all three mid-tier agents on both public test splits. Under a matched trajectory budget, heterogeneous multi-model trajectories yield stronger memory than self- or same-model multi-rollout memory: the margin comes from contrastive behavioral diversity, not stronger source agents or more sampling.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 8.3,
+      "final_score": 7.9,
+      "screen_score": 7.2,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "natural_language_processing",
+      "subdomains": [],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Contrasting successful and failed trajectories from diverse models can create transferable procedural memory that more than doubles computer-use agent success without model training.",
+      "reason_not_higher": "The approach depends on collecting and curating multiple trajectories, and the evidence described is still confined to a small set of computer-use benchmarks and agent families rather than sustained real-world operation.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "no_evidence_supplied",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 3560,
+      "arxiv_id": "2608.22244",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22244",
+      "title": "Improving Few-Step Language Flows with Untied Self-Conditioning",
+      "abstract": "Flow-matching language models refine all token positions in parallel and can trade sampling steps for latency, yet generation quality still degrades sharply with few sampling steps. We trace a source of this degradation to a train--inference mismatch in previous-prediction self-conditioning: during training, the self-conditioning input is computed from the current noisy state with no intervening solver step; during sampling, the solver folds the previous prediction into the latent before that same prediction reappears as the explicit self-conditioning input. This coupling, absent during training, creates redundancy that grows with step width. We show that the mismatch degrades both the self-conditioning input and the solver update, and derive a correction for each from the model's own structure. From the frozen projection weights we identify directions along which the self-conditioning input is redundant with the latent and dampen them; from the solver's integration structure we derive that a step-average prediction is needed and approximate it from prediction history, with scale set by offline trajectory statistics. The resulting sampler, Untied Self-Conditioning, requires no retraining and uses one evaluation per step. At 8 sampling steps on LangFlow, it reduces OpenWebText generative perplexity from $531$ to~$62$ ($8.6\\times$); under an adapted Arena-Hard-Auto~v2 protocol, its outputs are preferred in $96\\%$ of pairwise comparisons. On ELF-B it reduces generative perplexity from $71$ to~$43$. Improvements hold from 8 to 256 sampling steps.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 8.2,
+      "final_score": 7.9,
+      "screen_score": 7.8,
+      "org_boost": 0.128,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "natural_language_processing",
+      "subdomains": [
+        "language_modeling"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "A training-free sampler correction substantially improves low-step flow-based language generation, potentially making parallel token refinement much more competitive at low latency.",
+      "reason_not_higher": "The reported gains are compelling but are demonstrated on a limited set of flow-language-model settings, and broader validation is needed across model scales, architectures, generation tasks, and end-to-end latency conditions.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.6,
+          "evidence_type": "ror_canonical_match",
+          "canonical_name": "Korea University of Science and Technology",
+          "organisation_id": 132,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "Korea University of Science and Technology",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120421,
+      "arxiv_id": "2605.29708",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2605.29708",
+      "title": "RASET: Router-Agnostic Safety-Critical Expert Tuning Exposes Localized Safety Enforcement Failures in Mixture-of-Experts LLMs",
+      "abstract": "Mixture-of-Experts (MoE) LLMs rely on sparse, router-driven expert activation, yet how safety alignment interacts with routed expert specialization remains underexplored. A common intuition is that safety behavior may be controlled by routing harmful requests to distinct refusal-oriented experts. In this work, we provide empirical evidence for a different picture: routing patterns in aligned MoE LLMs are largely topic-driven, while safety behavior can be altered with little change to the model's intrinsic routing path. Motivated by this observation, we present RASET (Router-Agnostic Safety-Critical Expert Tuning), a red-teaming framework that probes safety enforcement that is localized in a small subset of experts while preserving the model's intrinsic routing behavior. RASET identifies safety-critical experts via a contrastive routing-sensitivity criterion and applies parameter-efficient tuning only to the selected experts, minimizing semantic disruption relative to router-steering interventions. Across five open-weight MoE backbones, RASET achieves high-quality safety-bypass yield (50.5% average $ASR_{hq}$, +37.6 points over the strongest baseline). These results reveal a distinct MoE safety risk, highlighting the need for expert-aware alignment mechanisms.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 9.0,
+      "quality_status": "scored",
+      "quality_score": 8.2,
+      "final_score": 7.8,
+      "screen_score": 7.3,
+      "org_boost": 0.113,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "alignment_safety",
+      "subdomains": [
+        "jailbreak_robustness"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "RASET shows that MoE safety enforcement may be concentrated in a few experts even when routing remains topic-driven, revealing a concrete attack surface and a target for expert-aware defenses.",
+      "reason_not_higher": "The method is primarily an offensive diagnostic with dual-use risk, and the abstract does not establish whether the identified localization persists across closed models, alternative alignment methods, post-training regimes, or realistic attacker access constraints.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "Huazhong University of Science and Technology",
+          "organisation_id": 237,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "Huazhong University of Science and Technology",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120829,
+      "arxiv_id": "2608.22347",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22347",
+      "title": "Where Cognition Lives: Dissecting Emergent from Computed Function in a Minimal Complete Cognitive Architecture",
+      "abstract": "A cognitive architecture is more than the module that reasons: it must also decide how long to think and what deserves the effort. We built a minimal but complete system - a recurrent reasoner with adaptive halting, a homeostatic control field, and a value module - and asked of each part: does this function emerge from gradient descent, or must it be computed? Competence emerges. Stopping appears to emerge too, and to be worth more than everything decidable in advance, but that appearance is instrumentation: payoff at matched mean compute climbs from 0.467 (uniform) through 0.546 (difficulty) to 0.698 (ex-ante value), and the further climb to 0.921 (posterior self-observation) does not survive audit. PonderNet-style halting returns a halting-weighted mixture of hidden states while forced-depth baselines return one, and the language head is trained on the mixture alone; equalizing the readout annihilates the apparent advantage of native execution (residual +0.000 [0.000, 0.000]). Value does not emerge: trained couplings capture zero of a payoff an explicit allocator captures completely (+0.151, routing correlation +0.79), so the second-order decisions that pay must be computed, at least where value is orthogonal to content, as here by construction. On a frozen LLM actuator the same instruments show self-consistency voting to be a measured bound (+0.0236 [+0.0150, +0.0326]) and inter-sample agreement nearly worthless as a stopping signal, its mass concentrating on wrong answers. Every null we assert carries a mechanism and a positive control, and the protocol is part of the contribution. Executing our own falsifiable prediction, value under commitment pays +0.1312 [+0.1124, +0.1502] in a cliff-cost family, some seven times the smooth-family estimate - not because the cliff shifts information ex ante, but because it multiplies the attainable range fivefold (5.1x [3.4, 8.2]).",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.0,
+      "quality_status": "scored",
+      "quality_score": 8.1,
+      "final_score": 7.8,
+      "screen_score": 7.2,
+      "org_boost": 0.128,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "theory_foundations",
+      "subdomains": [],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "It provides a mechanism-focused framework for distinguishing genuinely emergent cognitive functions from artifacts of training, instrumentation, and readout design, with implications for compute allocation in reasoning systems.",
+      "reason_not_higher": "The strongest conclusions appear partly grounded in deliberately constructed settings, and it remains unclear how broadly the competence-versus-control decomposition generalizes to diverse architectures and real-world agent tasks.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.637,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "University of Almer\u00eda",
+          "organisation_id": 1076,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "University of Almer\u00eda",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120492,
+      "arxiv_id": "2607.23458",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2607.23458",
+      "title": "Two Regimes of Chain-of-Thought Unfaithfulness: Metric-Based Detection Fails Where Models Are Wrong",
+      "abstract": "Chain-of-thought (CoT) explanations support oversight only if they are faithful: the stated reasoning must actually produce the answer. Auditing black-box (behavioral) detection of unfaithful CoT against FaithCoT-Bench's human annotations, we find answer correctness structures the problem at every level. Answer incorrectness alone (an oracle diagnostic, not a deployable detector) outperforms every purpose-built signal (AUROC 0.696), because 69% of annotated unfaithfulness occurs on incorrect answers. Stratifying by correctness splits detection into two regimes: on correct answers, behavioral signals moderately separate faithful from post-hoc reasoning (0.63-0.67); on incorrect answers, where most unfaithfulness lives, no tested signal is detectably above chance (replicated on all four models for benchmark-wide signals). The standard step-removal metric anti-correlates with human labels; this inversion reproduces on the benchmark's released scores and on hint-dependent counterfactually labeled traces. Linear probes decode the behaviorally blind regime in Llama-3.1-8B and the correct-answer regime in Qwen-2.5-7B, with no shared, positively aligned direction detected across regimes; instructed answer-first traces (7 models) transfer to neither annotated regime, while hint-induced unverbalized answer flips do, in model- and source-dependent settings. We also independently verify and resolve a documentation-data mismatch in the benchmark's label semantics.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 9.0,
+      "quality_status": "scored",
+      "quality_score": 8.0,
+      "final_score": 7.8,
+      "screen_score": 7.7,
+      "org_boost": 0.135,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "alignment_safety",
+      "subdomains": [],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "It shows that behavioral chain-of-thought faithfulness detectors fail precisely in the incorrect-answer regime where most annotated unfaithfulness occurs, challenging their usefulness for model oversight.",
+      "reason_not_higher": "The work diagnoses existing signals more strongly than it supplies a deployable replacement, and the generality of the two-regime finding beyond the studied benchmark, models, and elicitation procedures remains uncertain.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "University of Southern Mississippi",
+          "organisation_id": 1360,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "University of Southern Mississippi",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120912,
+      "arxiv_id": "2608.22646",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22646",
+      "title": "CAI-DLLM: Convergence Aware Inference for Diffusion Language Models",
+      "abstract": "Diffusion language models can generate many tokens in parallel, but they still require repeated denoising steps during inference. This makes generation costly, especially when the model continues to recompute tokens that are already stable. To address these limitations, we propose CAI-DLLM, a training-free inference method that uses first-step confidence to guide denoising and reduce inference time. Specifically, CAI-DLLM commits easy tokens earlier, allocates more denoising steps to harder tokens, and adjusts decoding schedules across output blocks. As it relies only on first-step confidence signals, it does not require retraining, extra predictors, or weight updates. We evaluate CAI-DLLM on LLaDA-8B-Instruct and Dream-7B-Instruct across math, code, reasoning, commonsense, and long-context tasks. CAI-DLLM achieves up to 18.2x wall clock inference speedup on LLaDA GSM8K while improving accuracy from 76.27% to 77.41%, and up to 13.1x speedup on Dream HumanEval while achieving higher pass@1 than no-cache inference, 48.17% compared with 46.95%. On harder reasoning tasks, speedups reach 44.8x, with a largest accuracy drop of 4.4 points, while energy consumption is reduced by up to 95.3%.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 8.0,
+      "final_score": 7.8,
+      "screen_score": 7.2,
+      "org_boost": 0.128,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "efficient_inference",
+      "subdomains": [
+        "caching"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "A training-free confidence-based schedule could make diffusion language models dramatically faster and more energy-efficient without routinely sacrificing output quality.",
+      "reason_not_higher": "Confidence-guided early commitment and adaptive computation are conceptually incremental, the largest figures are best-case results, and validation is limited to two model families with some harder tasks still losing accuracy.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "Virginia Tech",
+          "organisation_id": 495,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "Virginia Tech",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120218,
+      "arxiv_id": "2412.06769",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2412.06769",
+      "title": "Training Large Language Models to Reason in a Continuous Latent Space",
+      "abstract": "Large language models (LLMs) are typically constrained to reason in the language space, where they express the reasoning process through a chain-of-thought (CoT) to solve complex problems. However, the language space may not always be optimal for reasoning. Most word tokens primarily ensure textual coherence and are not essential for reasoning, while some critical tokens require complex planning and pose challenges to LLMs. To explore the potential of reasoning beyond language, we introduce a new paradigm called Coconut (Chain of Continuous Thought). Coconut utilizes the last hidden state of the LLM as a representation of the reasoning state, termed \"continuous thought.\" Instead of decoding this state into words, we feed it back to the model as the next input embedding directly in the continuous space. This latent reasoning paradigm enables an advanced reasoning pattern, where continuous thoughts can encode multiple alternative next steps, allowing the model to perform a breadth-first search (BFS) rather than committing prematurely to a single deterministic path as in CoT. Coconut outperforms CoT on logical reasoning tasks that require substantial search during planning and achieves a better trade-off between accuracy and efficiency.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 9.0,
+      "quality_status": "scored",
+      "quality_score": 8.3,
+      "final_score": 7.7,
+      "screen_score": 7.7,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "natural_language_processing",
+      "subdomains": [
+        "language_modeling"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Latent-space reasoning could let language models explore complex solution paths more efficiently without forcing every intermediate state into natural-language tokens.",
+      "reason_not_higher": "The demonstrated scope appears concentrated on search-heavy logical reasoning, while the scalability, interpretability, and robustness of the claimed breadth-first behavior across broader tasks remain unclear.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "unresolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 3496,
+      "arxiv_id": "2604.16242",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2604.16242",
+      "title": "Detecting and Suppressing Reward Hacking with Gradient Fingerprints",
+      "abstract": "Reinforcement learning with verifiable rewards (RLVR) typically optimizes for outcome rewards without imposing constraints on intermediate reasoning. This leaves training susceptible to reward hacking, where models exploit loopholes (e.g., spurious patterns in training data) in the reward function to achieve high scores without solving the intended task. These reward-hacking behaviors are often implicit, as the intermediate chain-of-thought (CoT) may appear plausible on the surface, limiting the effectiveness of purely text-based monitoring. We propose Gradient Fingerprint (GRIFT), a method for detecting reward hacking using models' internal computations. Given a prompt and a model-generated CoT, GRIFT computes gradients of the CoT conditioned on the prompt and compresses them into a compact representation, which is then used to assess whether the CoT reflects reward hacking behavior. Across verifiable reasoning benchmarks spanning math, code, and logical reasoning, GRIFT substantially outperforms strong baselines, including CoT Monitor and TRACE, achieving over 25% relative improvement in detecting reward hacking behavior. Moreover, integrating GRIFT into the rejection fine-tuning pipeline for reasoning tasks reduces reward hacking and improves performance on the true task objective. Our results highlight a promising direction of leveraging gradient level representations for assessing the quality of CoT reasoning traces. Our code is available at: https://github.com/songtao-x/reward_hack.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 9.0,
+      "quality_status": "scored",
+      "quality_score": 8.2,
+      "final_score": 7.7,
+      "screen_score": 7.5,
+      "org_boost": 0.128,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "alignment_safety",
+      "subdomains": [],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Gradient-level fingerprints offer a way to detect reward hacking that remains hidden behind plausible reasoning traces and can be used during fine-tuning to improve the true objective.",
+      "reason_not_higher": "Gradient extraction may be computationally expensive and requires white-box model access; the abstract also leaves open robustness to adaptive reward hacking, architecture changes, and realistic large-scale RLVR pipelines.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Ludwig-Maximilians-Universit\u00e4t M\u00fcnchen",
+          "organisation_id": 288,
+          "is_org_of_interest": false
+        },
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "New York University",
+          "organisation_id": 28,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "New York University",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 3488,
+      "arxiv_id": "2608.22516",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22516",
+      "title": "TRACE: Temporal Retrieval with Anchored and Convergent Evidence for Long-Horizon Video Understanding",
+      "abstract": "A long-video answer is evidence-supported only when the frames decoded from the video cover every event the answer depends on. Existing evaluations score final-answer correctness or predicted evidence intervals, but the frames a method decodes before answering are rarely audited, so correct answers can still rest on incomplete observation. We introduce VES-Bench, a 600-question benchmark of Temporal Ordering and Event Counting items over 348 public long videos. Each item carries a jointly necessary set of evidence intervals, letting us audit at three strictness levels whether a method's decoded frames cover every one of them. We also propose TRACE, a training-free agent that grounds answers in raw visual clips, builds an evidence bundle round by round, and stops only when the answer stabilises as the bundle grows and a final pass over the same clips returns the same answer. Under a same-backbone audit, TRACE answers 50.7% of questions correctly with at least two decoded frames inside every evidence interval, at 98.7 frames per question: over 10 points above uniform decoding at 128 frames (40.2%), and within 2.6 points of uniform decoding at 256 frames at 0.39x its frame cost, while reaching the highest answer accuracy in the audit (63.5%). TRACE also stays competitive on Video-MME (86.1), LVBench (75.6), and LongVideoBench (75.1).",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 8.1,
+      "final_score": 7.7,
+      "screen_score": 7.2,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "computer_vision",
+      "subdomains": [
+        "video_understanding"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "It makes long-video QA auditable at the level of actually observed evidence and offers a substantially more frame-efficient retrieval strategy.",
+      "reason_not_higher": "The benchmark is moderate in size and narrowly centered on ordering and counting; broader event types, backbone diversity, and external validation would be needed to establish generality.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "no_evidence_supplied",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 2184,
+      "arxiv_id": "2608.26188",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.26188",
+      "title": "Is Your Neighborhood Safe? Place-based Stigma in Large Language Models' Urban Safety Judgments",
+      "abstract": "Large language models are increasingly used to inform safety decisions in cities, such as where it is safe to walk, rent, or travel. We ask whether such judgments track measured risk or the patterns attached to an urban neighborhood's name. We probe seven instruct-tuned models under three conditions that dissociate name from geography: coordinates-only, name-only, and name+coordinates, across 186 neighborhoods in Los Angeles and Chicago, joined to violent crime and American Community Survey data. First, ratings are nearly flat under coordinates for six of seven models, while names carry most between neighborhood variation and are moderately calibrated to violent crime; only at frontier scale does the coordinate channel show appreciable variation. Second, names lower safety ratings more for neighborhoods with higher shares of the locally dominant marginalized group (percent Black in Chicago, percent Hispanic in Los Angeles), and this name effect tracks demographic share in all seven models and both cities. In Los Angeles, where demographic share and crime are more separable, the effect survives controls for crime and income and is confirmed by crime-matched pairs. An enforcement-elasticity analysis further shows that over-caution tracks near-fully-reported homicide rather than discretionary, deployment-driven offenses. Third, the effect scales with geographic knowledge: models that better distinguish real neighborhoods apply more demographic stereotype to them. Because neighborhood names carry both genuine crime signal and demographic stereotype, removing names reduces both bias and accuracy. We discuss implications for deploying LLMs in advice and decision-support settings.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.0,
+      "quality_status": "scored",
+      "quality_score": 7.9,
+      "final_score": 7.7,
+      "screen_score": 7.3,
+      "org_boost": 0.128,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership",
+        "enterprise_adoption"
+      ],
+      "domain": "natural_language_processing",
+      "subdomains": [],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "The study shows that LLM urban-safety advice can encode place-based demographic stigma even when neighborhood names also contain legitimate risk information, creating a consequential bias\u2013accuracy tradeoff.",
+      "reason_not_higher": "The analysis is limited to two US cities and seven models, and observational associations cannot fully identify the mechanisms behind models' judgments or predict downstream harm in real deployments.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "University of Illinois Urbana-Champaign",
+          "organisation_id": 91,
+          "is_org_of_interest": false
+        },
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Augustana University",
+          "organisation_id": 372,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "Augustana University",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120815,
+      "arxiv_id": "2608.22321",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22321",
+      "title": "Semantics or Structure? Auditing Text Sensitivity in Multimodal Time-Series Forecasting",
+      "abstract": "Multimodal time-series forecasting has emerged as a promising paradigm in which natural-language context is expected to improve predictive performance. Recent multimodal foundation models, including Aurora, as well as early- and late-fusion approaches such as MM-TSFlib and TaTS, report substantial gains over unimodal baselines on the Time-MMD benchmark, attributing these improvements to textual information. However, whether these models are actually sensitive to the semantic content of the text remains unverified. We address this question through controlled text perturbations, attribution analyses, and probes of Aurora's text pathway. On Time-MMD, swapping each row's text for any other real text (empty, constant, within-domain shuffled, or cross-domain) moves mean MSE by less than $0.5\\%$ on all three architectures. The improvement reported in the literature is recovered when a co-shipped numeric column is removed without touching text. We conclude that, on this benchmark and within this family of frozen-encoder architectures, text content is not the operative signal behind the reported gains. To support future work on text integration in multimodal foundation models for structured data, we release our perturbation protocol and evaluation harness as a reusable diagnostic toolkit.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.0,
+      "quality_status": "scored",
+      "quality_score": 7.9,
+      "final_score": 7.7,
+      "screen_score": 7.5,
+      "org_boost": 0.128,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "evaluation_benchmarking",
+      "subdomains": [
+        "eval_methodology"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "The audit shows that reported multimodal forecasting gains may come from benchmark structure or numeric leakage rather than textual meaning, preventing misleading claims and guiding better evaluations.",
+      "reason_not_higher": "The conclusion is bounded to Time-MMD and the tested frozen-encoder architecture family; it does not show that language semantics are broadly unhelpful for time-series forecasting under better datasets or jointly trained models.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Birla Institute of Technology and Science, Pilani",
+          "organisation_id": 1129,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "Birla Institute of Technology and Science, Pilani",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 172621,
+      "arxiv_id": "2608.22403",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22403",
+      "title": "LD4WAM: Learning Latent Dynamics from Human Videos for World Action Models",
+      "abstract": "Human video is playing an increasingly central role in training World Action Models (WAMs), owing to its diversity and low collection cost relative to teleoperated robot data. However, most WAMs learn from such video only by predicting pixel-level future frames, giving dynamics that are not directly actionable, whereas motion retargeting recovers directly actionable actions but leaves a large visual gap across embodiments. We therefore propose motion-aligned latent dynamics as an embodiment-agnostic representation to bridge video priors and low-level actions. We further present LD4WAM, which pairs a Latent Dynamics Model trained with semantic reconstruction and real motion alignment with a World Dynamics Action Model built as a mixture-of-transformers (MoT), which preserves full future-video generation and uses learnable queries to distill these latent dynamics from generated futures for action conditioning. Pretrained on our curated unified dataset of over 5{,}000 hours of human and robot data, LD4WAM performs strongly in RoboTwin simulation and on real robots equipped with both grippers and dexterous hands, while generalizing well to unseen objects and backgrounds.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 8.6,
+      "final_score": 7.6,
+      "screen_score": 7.2,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "robotics_embodied",
+      "subdomains": [
+        "manipulation",
+        "world_models"
+      ],
+      "application_domains": [
+        "autonomous_systems"
+      ],
+      "so_what": "It proposes an actionable latent bridge between abundant human video and robot control, potentially reducing dependence on costly embodiment-specific demonstrations.",
+      "reason_not_higher": "The abstract supplies no quantitative results, baseline comparisons, success rates, or ablations demonstrating how much the latent alignment, mixture architecture, and large dataset each contribute.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "no_evidence_supplied",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120380,
+      "arxiv_id": "2604.08169",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2604.08169",
+      "title": "Activation Steering for Aligned Open-ended Generation without Sacrificing Coherence",
+      "abstract": "Alignment in LLMs is more brittle than commonly assumed: misalignment can be induced by adversarial prompts, benign fine-tuning, emergent misalignment, and goal misgeneralization. Recent evidence suggests that some misalignment behaviors are encoded as linear structure in activation space, making it tractable via activation steering, which could be used as a lightweight runtime defense. We implement three methods: Steer-With-Fixed-Coefficient (SwFC), which applies uniform additive steering, and two novel projection-aware methods, Steer-to-Target-Projection (StTP) and Steer-to-Mirror-Projection (StMP), that use a logistic regression decision boundary to selectively intervene only on tokens whose activations fall below the threshold. We evaluate these methods on two threat models, dishonesty and dismissiveness, using malicious system prompts as a controlled proxy for misalignment. We conduct our experiments on two architectures (Llama-3.3-70B-Instruct and Qwen3.6-27B). All methods substantially recover alignment. StTP and StMP preserve general capabilities (MMLU, MT-Bench, AlpacaEval) better than uniform steering. Finally, we show that our honesty steering generalizes to out-of-distribution scenarios: a single honesty direction extracted from the aligned model significantly raises scores on the MASK benchmark, suppresses deception in multi-agent settings (Among Us), doubles the hidden-behavior discovery rate on AuditBench, and restores honesty in an emergently misaligned model.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 9.5,
+      "quality_status": "scored",
+      "quality_score": 7.8,
+      "final_score": 7.6,
+      "screen_score": 7.2,
+      "org_boost": 0.255,
+      "organisation_score": 6.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "alignment_safety",
+      "subdomains": [
+        "jailbreak_robustness",
+        "preference_alignment"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Selective, projection-aware activation steering offers a lightweight runtime defense that may restore aligned behavior while avoiding the capability degradation caused by indiscriminate steering.",
+      "reason_not_higher": "Activation steering and linear representations of behavioral traits are established ideas, the primary controlled threats use malicious prompts as proxies for broader misalignment, and testing on two architectures does not establish robustness against adaptive attacks or diverse real-world failure modes.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.6,
+          "evidence_type": "ror_canonical_match",
+          "canonical_name": "Mila - Quebec Artificial Intelligence Institute",
+          "organisation_id": 20,
+          "is_org_of_interest": true
+        },
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Technical University of Munich",
+          "organisation_id": 2,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "Mila - Quebec Artificial Intelligence Institute",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120349,
+      "arxiv_id": "2602.18422",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2602.18422",
+      "title": "Generated Reality: Human-centric World Simulation using Interactive Video Generation with Hand and Camera Control",
+      "abstract": "Extended reality (XR) demands generative models that respond to users' tracked real-world motion, yet current video world models accept only coarse control signals such as text or keyboard input, limiting their utility for embodied interaction. We introduce a human-centric video world model that is conditioned on both tracked head pose and joint-level hand poses. For this purpose, we evaluate existing diffusion transformer conditioning strategies and propose an effective mechanism for 3D head and hand control, enabling dexterous hand--object interactions. We train a bidirectional video diffusion model teacher using this strategy and distill it into a causal, interactive system that generates egocentric virtual environments. We evaluate this generated reality system with human subjects and demonstrate improved task performance as well as a significantly higher level of perceived amount of control over the performed actions compared with relevant baselines.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 8.2,
+      "final_score": 7.5,
+      "screen_score": 7.2,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "generative_models",
+      "subdomains": [
+        "diffusion"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Direct head- and joint-level hand control could make generative video worlds responsive enough for embodied XR interaction rather than passive or coarsely controlled viewing.",
+      "reason_not_higher": "The abstract omits quantitative results, system latency, generation duration, visual and physical consistency metrics, study size, and deployment requirements, leaving the degree of real-time robustness and generalization unclear.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "unresolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120477,
+      "arxiv_id": "2607.14935",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2607.14935",
+      "title": "VideoChat3: Fully Open Video MLLM for Efficient and Generalist Video Understanding",
+      "abstract": "Recent advances in video understanding have spanned motion, long video, and streaming interaction, driving this field toward real-world applications. Despite this progress, current open-source models remain limited in several ways. They often struggle to generalize across diverse video types, making them effective only in specific domains. High computational demands further restrict their efficiency and scalability. Moreover, most models are only partially open, with key components such as training code, strategy, or datasets unavailable, which hinders reproducibility and slows community-driven development. To address these issues, we introduce VideoChat3, a fully open, efficient, and generalist video-centric MLLM. VideoChat3 advances video understanding through two complementary designs. For efficiency, we introduce Inflated 3D Vision Transformer (I3D-ViT) and Adaptive Frame Resolution for Streaming Video Perception, which enables efficient spatiotemporal representation and reduces the cost of processing video inputs during training and inference. For effectiveness, we develop a scalable video data synthesis pipeline that curates three diverse, high-quality training datasets: VideoChat3-Academic2M, VideoChat3-LV116K, and VideoChat3-OL617K, covering general, long-form, and streaming video scenarios, improving the model's generalization across domains. By integrating these designs, VideoChat3 achieves a rare balance of broad generalization and computational efficiency. Experiments across general, long-form, and streaming benchmarks demonstrate that VideoChat3 surpasses prior open-source models with equal or larger parameter counts with only 4B parameters and higher efficiency.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 9.5,
+      "quality_status": "scored",
+      "quality_score": 8.1,
+      "final_score": 7.5,
+      "screen_score": 7.2,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "computer_vision",
+      "subdomains": [
+        "video_understanding"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "A fully open video model, training pipeline, and datasets could make capable long-form and streaming video understanding substantially more reproducible and accessible.",
+      "reason_not_higher": "The contribution appears to combine several valuable architectural and data-engineering advances rather than establish a wholly new paradigm, while the abstract provides no numerical efficiency, accuracy, or ablation results to quantify the gains.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "no_evidence_supplied",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120769,
+      "arxiv_id": "2608.22188",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22188",
+      "title": "Unveiling the Depth-Performance Dilemma in Split-Federated Fine-tuning of LLMs",
+      "abstract": "Split Federated Fine-tuning (SFF) is a promising paradigm for scaling Large Language Models (LLMs) by partitioning model depth between resource-constrained clients and a centralized server. While system incentives for throughput and privacy favor deep partitions, the impact of such configurations on model utility remains poorly understood. In this work, we identify and characterize the Depth-Performance Dilemma: the regime that maximizes system efficiency is precisely where fine-tuning quality collapses. Through a comprehensive audit across four model scales (GPT-2 to Llama-3-8B) and diverse benchmarks, we demonstrate that deeper partitions provide monotonic gains in throughput and privacy at the cost of catastrophic performance plateaus. We evaluate a suite of state-of-the-art federated adapter aggregation methods including AVG, STACK, SVD, and FREEZE, revealing that while these techniques are effective in standard Federated Learning, they fail to mitigate the artifacts unique to split architectures. Finally, we provide a mechanistic diagnosis for this failure, tracing the collapse to the near-isometric topology of Transformers, which allows aggregation noise to propagate without attenuation until it triggers Attention Collapse in the server partition. Our findings challenge the prevailing assumption that partition depth is a utility-neutral tuning knob and provide a structural foundation for stable distributed LLM fine-tuning.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 8.1,
+      "final_score": 7.5,
+      "screen_score": 7.2,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "systems_infrastructure",
+      "subdomains": [
+        "distributed_training",
+        "training_systems"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "It identifies a consequential systems trade-off in split-federated LLM tuning and offers a mechanistic explanation that can guide safer partitioning and aggregation designs.",
+      "reason_not_higher": "The abstract does not quantify the efficiency, privacy, or utility trade-offs, and the proposed near-isometry-to-attention-collapse mechanism may require stronger causal validation and testing across more architectures, tasks, and real federated heterogeneity.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "unresolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120869,
+      "arxiv_id": "2608.22490",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22490",
+      "title": "Who Pays More for Safety? Measuring the Disparate Cost of Safety Alignment across Languages",
+      "abstract": "Safety alignment helps models adhere to human values, but it often reduces response utility. We ask a critical but understudied question: Does safety alignment impose the cost equally across language groups? To answer this, we introduce a rigorous protocol to measure the utility loss imposed solely by safety alignment, which we term Safety Cost. Through direct pairwise comparisons between safety-aligned models and their unaligned counterparts, we find a systematic inequity: non-English users consistently bear a higher Safety Cost than English users. We further identify three underlying patterns. First, multiple languages lie in a double-penalty zone, experiencing both weaker safety protection and larger utility loss. Second, certain languages exhibit apparent utility gains that are in fact a consequence of safety filters failing to engage. Third, even high-resource languages pay a larger Safety Cost than English to reach the same level of safety. We show that these disparities arise from both explicit refusals and implicit qualitative differences across multiple dimensions. By accurately measuring the disparate effects of safety alignment, our findings expose a systematic disparity in current safety alignment practices.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 7.9,
+      "final_score": 7.5,
+      "screen_score": 7.2,
+      "org_boost": 0.113,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "alignment_safety",
+      "subdomains": [
+        "preference_alignment",
+        "content_safety"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "The work reveals that safety alignment can impose unequal utility losses across languages, giving developers a concrete way to detect and address multilingual safety inequities.",
+      "reason_not_higher": "The abstract does not establish how broadly the findings generalize across model families, alignment methods, languages, domains, or alternative definitions of utility and safety.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "Korea University",
+          "organisation_id": 63,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "Korea University",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120863,
+      "arxiv_id": "2608.22467",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22467",
+      "title": "The Variance of Thought: Policy Variance, Critical Forks, and Local Credit Assignment",
+      "abstract": "Long-horizon language-model tasks --- multi-step reasoning and tool-using agents alike --- are limited by credit assignment. We analyze it through the policy variance $\u03c3_\u03c0^2(s)=\\operatorname{Var}_{a\\sim\u03c0}[Q_\u03c0(s,a)]$, which in a deterministic MDP is the sole source of return variance and is injected in discrete pulses at states we call critical forks. Three results follow. (i) Policy variance is a discovery budget: observing an action of advantage $c$ requires $\u03a9(c^2/\u03c3_\u03c0^2(s))$ draws, a bound that is exact on the canonical two-point fork. (ii) Policy variance is bounded by the policy's Gini dispersion, $\u03c3_\u03c0^2(s)\\le 1-\\|\u03c0(\\cdot|s)\\|_2^2$, a rollout-free necessary condition for criticality computable from logits alone. (iii) The remaining horizon sets the estimation cost: at a fork whose downstream success probability is $P$, the Monte Carlo advantage estimate has signal-to-noise ratio of order $\\sqrt{P}$, so its sample cost scales as $1/P$ --- a cost that branched sampling shares. Bootstrapping removes it by converting a product of survival probabilities into a sum, provided the value representation is multiplicatively accurate, which argues for log-value parameterization.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 8.2,
+      "final_score": 7.4,
+      "screen_score": 7.2,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "reinforcement_learning",
+      "subdomains": [],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "The critical-fork framework connects policy stochasticity, exploration cost, horizon-dependent credit assignment, and value representation in a compact theory relevant to reasoning and agent training.",
+      "reason_not_higher": "The immediate practical prescription is limited, several conclusions depend on deterministic-MDP or accuracy assumptions, and the abstract does not report empirical tests showing that the proposed diagnostics or log-value parameterization improve real language-model agents.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "unresolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 3550,
+      "arxiv_id": "2608.22152",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22152",
+      "title": "The Collaboration Tax: How Much LLM Multi-Agent Systems Pay to Coordinate",
+      "abstract": "Multi-agent systems built from large language models are deployed widely, yet how much performance is lost when two LLMs must coordinate rather than act alone remains unclear. We formulate the collaboration tax as the team-decentralisation loss of a two-player cooperative game with private information, with two propositions characterising its sign and its equivalence to a max-superadditivity violation. We operationalise this definition on 32 solo-tractable tasks grouped by source of grounding friction and measure it on 11 models from 7 providers. The tax is structured along two no-exception axes: a category ordering across every model and a monotonic decrease with capability. The proximate mechanism is not a reasoning deficit but a four-stage conversational cascade in which agents make ungrounded claims, fail to query the partner, skip integrating both views, and accept the answer without re-derivation. The tax is mechanically predictable from conversation features and partly tractable: a prompt intervention targeting all four stages closes a substantial fraction of the gap, with the dominant bottleneck differing across categories. In heterogeneous pairs the tax is pulled toward the stronger partner rather than the additive midpoint, empirically realising the max-superadditivity violation predicted by our framework. Together these results recast collaboration in LLM systems as a measurable, predictable, and partly tractable cost.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 7.9,
+      "final_score": 7.4,
+      "screen_score": 7.0,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "natural_language_processing",
+      "subdomains": [
+        "language_modeling"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "It provides a formal and empirically broad way to quantify, predict, and reduce the hidden performance cost of coordination in LLM agent systems.",
+      "reason_not_higher": "The framework appears limited to two-player cooperative settings and solo-tractable tasks; broader agent topologies, long-horizon environments, and deployment conditions may exhibit different coordination failures, while the proposed mitigation is only partial.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "unresolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 3556,
+      "arxiv_id": "2608.22229",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22229",
+      "title": "Grounded Normative Rule Generation with Structured Search",
+      "abstract": "Normative rules like institutional charters and workplace policies must be both human-readable and operationally verifiable against actual environment records. However, current language generation and structured-output benchmarks primarily reward surface fluency or schema compliance, leaving operational grounding weakly tested. This creates a critical vulnerability where standard language models generate plausible-sounding policies that fail during enforcement because they rely on unavailable data logs or misaligned scopes. To address this challenge, we formalize the problem as Grounded Normative Rule Synthesis (GNRS) and introduce GNRS-Search, a framework that utilizes Markov Chain Monte Carlo (MCMC) sampling to optimize a discrete, five-slot And-Or Graph (AOG). By explicitly decoupling intermediate operational structure from final prose generation, this method isolates executable feasibility from writing style and allows rule failures to be localized prior to surface realization. We evaluate our approach on GNRS-Bench, a benchmark spanning 116 controlled goals across eight scene families, and RealCharter-Bench, which evaluates transfer to 53 real-derived policy tasks with hidden source clauses. GNRS-Search raises average rubric quality from 68.8% to 81.0% and ranks first under a disclosed executable composite metric, while systematic slot interventions confirm that performance gains stem from robust operational logic rather than rhetorical tuning. Ultimately, by transforming automated rule drafting into an inspectable search problem, this work provides a foundational paradigm for deploying verifiable and compliance-ready personal agents within regulated environments.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 7.5,
+      "quality_status": "scored",
+      "quality_score": 7.8,
+      "final_score": 7.4,
+      "screen_score": 7.0,
+      "org_boost": 0.128,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "enterprise_adoption"
+      ],
+      "domain": "natural_language_processing",
+      "subdomains": [
+        "language_modeling"
+      ],
+      "application_domains": [
+        "legal_compliance"
+      ],
+      "so_what": "Turning policy drafting into structured, inspectable search could reduce the risk of producing fluent rules that cannot actually be checked or enforced with available records.",
+      "reason_not_higher": "The five-slot controlled formalism may limit coverage of complex, ambiguous, conflicting, or legally contextualized policies, while the reported benchmarks do not by themselves establish compliance readiness in live regulated settings.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Peking University",
+          "organisation_id": 50,
+          "is_org_of_interest": false
+        },
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "University of Chinese Academy of Sciences",
+          "organisation_id": 142,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "Peking University",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120825,
+      "arxiv_id": "2608.22339",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22339",
+      "title": "When Not to Imitate: Boundary-Aware Skill Memory for Reliable Tool-Use LLM Agents",
+      "abstract": "Extracting skills from past successes is critical for the efficient evolution of Large Language Model (LLM) agents. Prevailing agent self-evolution paradigms typically rely on a core assumption: equipping LLMs with skill memories derived from successful trajectories will monotonically improve their problem-solving capabilities. However, probe analyses reveal that extracting skills solely from successful trajectories traps the model in a \\textbf{Skill Imitation Trap}. For tasks that resemble past successes but require different tools, retrieving more skills paradoxically increases the model's confidence in wrong tool calls---procedure skills raise the wrong-tool margin by $47\\%$ over a memory-free baseline. To overcome this limitation, we propose \\textbf{Boundary-Aware Skill Memory} (BASM), which augments each skill with explicit boundary fields---applicability conditions, risk cues, avoidance rules, and recovery notes. These fields transform each retrieved skill from an unconditional action template into state-conditioned guidance: the agent applies the skill when its conditions hold, suppresses inapplicable tool calls when they do not, and issues targeted repairs when execution fails. Across three agent benchmarks and four model scales, BASM consistently outperforms success-distilled skill-memory baselines: it improves task success rate by up to $23.8\\%$ on AppWorld, accuracy by up to $5.0\\%$ on BFCL, and reduces attack success rate by $4.6\\%$ on AgentDojo, while simultaneously reducing average AppWorld steps by up to $6.6\\%$ relative to the memory-free baseline.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 9.0,
+      "quality_status": "scored",
+      "quality_score": 7.8,
+      "final_score": 7.4,
+      "screen_score": 7.2,
+      "org_boost": 0.128,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "natural_language_processing",
+      "subdomains": [
+        "retrieval"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "It makes skill memory safer and more reliable by recording when a learned procedure should not be applied, reducing harmful over-imitation in tool-using agents.",
+      "reason_not_higher": "Boundary annotations are an intuitive extension of procedural memories rather than a deep architectural advance, and their extraction cost, robustness to noisy memories, and scalability to large evolving skill libraries are not established in the abstract.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Chinese Academy of Sciences",
+          "organisation_id": 740,
+          "is_org_of_interest": false
+        },
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Institute of Automation",
+          "organisation_id": 246,
+          "is_org_of_interest": false
+        },
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "University of Chinese Academy of Sciences",
+          "organisation_id": 142,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "University of Chinese Academy of Sciences",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 172250,
+      "arxiv_id": "2606.01027",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2606.01027",
+      "title": "$\u00cf\u0084_0$-WM: A Unified Video-Action World Model for Robotic Manipulation",
+      "abstract": "Robotic manipulation requires models that generate executable actions while anticipating and evaluating their future consequences before physical execution. We present $\u00cf\u0084_0$-World Model ($\u00cf\u0084_0$-WM), a unified video-action world model that integrates policy learning, video prediction, and action evaluation within a single future-predictive framework. Built on a shared video diffusion backbone, $\u00cf\u0084_0$-WM provides two complementary interfaces. First, a video action model jointly predicts future visual latents and continuous action chunks from multi-view observations, language instructions, and robot state. Second, an action-conditioned video simulator rolls out candidate action chunks into multi-view futures and predicts dense task-progress scores. The model is trained on approximately $27{,}300$ hours of real-robot teleoperation, UMI-style interaction, egocentric human videos, and rollout or failure trajectories using modality-specific supervision masks. At inference time, $\u00cf\u0084_0$-WM uses test-time computation to sample action candidates, rank them with re-denoising consistency, and invoke simulator-based rectification for low-quality candidates. On challenging long-horizon and fine-grained robotic manipulation tasks, $\u00cf\u0084_0$-WM shows superior performance over other relevant baselines.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 8.4,
+      "final_score": 7.3,
+      "screen_score": 7.3,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "robotics_embodied",
+      "subdomains": [
+        "manipulation",
+        "world_models"
+      ],
+      "application_domains": [
+        "autonomous_systems"
+      ],
+      "so_what": "Unifying action generation, future-video prediction, candidate evaluation, and corrective test-time search could improve planning and reliability for difficult long-horizon robot manipulation.",
+      "reason_not_higher": "The abstract gives no quantitative results, benchmark details, efficiency costs, ablations, or evidence isolating the benefits of the unified design, and the approach appears to require exceptional data and compute resources.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "no_evidence_supplied",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 3234,
+      "arxiv_id": "2608.23635",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.23635",
+      "title": "ToolRobustBench: Stage-Wise Perturbation Evaluation and Failure Diagnosis for Tool-Calling Agents",
+      "abstract": "Large language models (LLMs) rely on tool calling as a fundamental agent capability, enabling them to invoke external systems and complete tasks beyond text generation. However, clean end-to-end (E2E) success cannot identify where a tool-use failure originates or how it propagates through a call. We introduce ToolRobustBench, a stage-wise diagnostic benchmark for tool-calling agents, where a tool-calling agent is an LLM system that selects a tool, supplies structured arguments, and interprets its returned feedback. ToolRobustBench aligns four perturbation families with the tool-use pipeline: tool-interface, user-intent, tool-output/observation, and runtime-environment perturbations. It attributes failures to tool selection, schema grounding, argument binding, tool-output/runtime-feedback handling, and E2E task success. Experiments on 15,456 single-family instances across 7 models, 16 sampled local tools, 4 perturbation families, and 14 subtypes show high but non-uniform clean performance and substantial robustness degradation, with tool-output/observation perturbation the dominant bottleneck. Mixed-family experiments reveal non-additive failure patterns that are not explained by isolated single-family results. Thus, ToolRobustBench provides a deterministic and cascade-aware benchmark for diagnosing robustness beyond clean tool-calling accuracy;",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 7.7,
+      "final_score": 7.3,
+      "screen_score": 7.0,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "evaluation_benchmarking",
+      "subdomains": [
+        "benchmark_design",
+        "eval_methodology"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "It enables developers to locate where tool-calling systems fail under realistic perturbations rather than relying on an opaque end-to-end success score.",
+      "reason_not_higher": "The evaluation is limited to seven models and sampled local tools, and the abstract does not establish how well the perturbations represent complex, stateful, or production tool ecosystems.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "no_evidence_supplied",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120867,
+      "arxiv_id": "2608.22483",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22483",
+      "title": "Claim-Level Confidence Calibration for Reliable Decision Making with Large Language Models",
+      "abstract": "Large Language Models (LLMs) increasingly support decision-making in high-stakes domains, but they often hallucinate and express confidence that is misaligned with factual correctness. Response-level confidence is a coarse signal: a single generation can mix correct and incorrect statements, so a single number is not actionable for users that must accept, reject, or verify individual pieces of information. We study claim-level confidence calibration as a decision-relevant uncertainty signal: each response is decomposed into atomic, verifiable claims, and each claim is assigned a calibrated confidence using inference-time signals from consistency across samples and self-verification. Our framework operates in closed-box settings (no logits, no fine-tuning) and applies post-hoc calibration directly at the claim level, enabling selective intervention such as evidence retrieval or human review for low-confidence claims. Across TriviaQA and TruthfulQA we evaluate seven baselines on six recent models (Llama-3.1, Mistral, Qwen2.5, DeepSeek-R1, GPT-4, GPT-4o), and show that claim-level decomposition combined with post-hoc calibration reduces expected calibration error on factual questions while exposing failure modes on adversarial false-premise questions where decision-makers most need reliable uncertainty estimates.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 7.4,
+      "final_score": 7.3,
+      "screen_score": 6.2,
+      "org_boost": 0.45,
+      "organisation_score": 10.0,
+      "audiences": [
+        "practitioner",
+        "enterprise_adoption"
+      ],
+      "domain": "natural_language_processing",
+      "subdomains": [
+        "language_modeling"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Claim-level calibration could make LLM-assisted decisions safer by directing verification or human review to specific uncertain statements rather than rejecting entire responses.",
+      "reason_not_higher": "The framework is evaluated primarily on factual QA, and its broader value depends on reliable claim decomposition, verification labels, and manageable inference-time overhead in more complex decision settings.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "Tsinghua University",
+          "organisation_id": 42,
+          "is_org_of_interest": true
+        },
+        {
+          "confidence": 0.9,
+          "evidence_type": "email_domain",
+          "canonical_name": "IEEE Standards Association",
+          "organisation_id": 128,
+          "is_org_of_interest": true
+        }
+      ],
+      "top_organisation": "IEEE Standards Association",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120260,
+      "arxiv_id": "2507.23220",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2507.23220",
+      "title": "Model Directions, Not Words: Mechanistic Topic Models Using Sparse Autoencoders",
+      "abstract": "Traditional topic models are effective at uncovering latent themes in large text collections. However, due to their reliance on bag-of-words representations, they struggle to capture semantically abstract features. While some neural variants use richer representations, they are similarly constrained by expressing topics as word lists, which limits their ability to articulate complex topics. We introduce Mechanistic Topic Models (MTMs), a class of topic models that operate on interpretable features learned by sparse autoencoders (SAEs). By defining topics over this semantically rich space, MTMs can reveal deeper conceptual themes with expressive feature descriptions. Moreover, uniquely among topic models, MTMs enable controllable text generation using topic steering vectors. To properly evaluate MTM topics against word list approaches, we propose \\textit{topic judge}, an LLM-based pairwise comparison evaluation framework. Across eight datasets, MTMs match or exceed traditional and neural baselines on coherence metrics, are consistently preferred by topic judge, and enable effective LLM steering.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.5,
+      "quality_status": "scored",
+      "quality_score": 7.8,
+      "final_score": 7.2,
+      "screen_score": 7.2,
+      "org_boost": 0.0,
+      "organisation_score": 0.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "interpretability",
+      "subdomains": [
+        "mechanistic_interpretability"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Defining topics over interpretable model features rather than words may uncover more abstract themes and turns topic models into mechanisms for controllable generation.",
+      "reason_not_higher": "The quality and interpretability of SAE features can vary, the LLM-based topic judge may introduce evaluator bias, and the abstract does not establish scalability or reliability for high-stakes analytical use.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [],
+      "top_organisation": null,
+      "affiliation_resolution_status": "unresolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 3739,
+      "arxiv_id": "2606.24747",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2606.24747",
+      "title": "Scaling Laws for Task-Specific LLM Distillation",
+      "abstract": "Large Language Models (LLMs) achieve strong performance across a growing range of domains, yet their scale poses deployment challenges in applications where latency and cost constraints are critical. This paper derives empirical scaling laws for domain-specific LLM compression, quantifying how in-domain and general knowledge performance scale with dataset size, compression ratio, supervision format, and iterative pruning schedule. Using quantitative finance as our application domain, we compare logit-based and LoRA-based distillation under iterative structural pruning, introducing a blended chain-of-thought supervision loss that stabilizes KL-divergence distillation over reasoning traces. In-domain task quality degrades predictably under compression while general-knowledge benchmarks collapse well before the same point; supervision format is the key driver of this tradeoff, with chain-of-thought supervision actively recovering general knowledge that pruning erases. We release the headline dataset FinHeadlineMix, scaling law results, and practical recommendations to provide a reusable framework for domain-specific compression decisions.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.0,
+      "quality_status": "scored",
+      "quality_score": 7.7,
+      "final_score": 7.2,
+      "screen_score": 6.2,
+      "org_boost": 0.255,
+      "organisation_score": 6.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "model_compression",
+      "subdomains": [
+        "distillation",
+        "pruning"
+      ],
+      "application_domains": [
+        "financial_services"
+      ],
+      "so_what": "Empirical scaling laws could help practitioners choose compression levels and supervision strategies that preserve domain performance while controlling deployment cost and general-capability loss.",
+      "reason_not_higher": "The claimed laws appear grounded in one application domain, and the abstract does not establish how consistently they transfer across model families, scales, pruning methods, domains, or reasoning benchmarks.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "NVIDIA",
+          "organisation_id": 112,
+          "is_org_of_interest": true
+        }
+      ],
+      "top_organisation": "NVIDIA",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120443,
+      "arxiv_id": "2606.11119",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2606.11119",
+      "title": "TRACE: A Unified Rollout Budget Allocation Framework for Efficient Agentic Reinforcement Learning",
+      "abstract": "Reinforcement learning with verifiable rewards (RLVR) is a promising approach for enhancing reasoning and agentic behavior in large language models. However, rollout-intensive policy optimization is often limited by insufficient reward contrast, arising when overly simple or complex prompts generate low-variance feedback and when outcome-only rewards assign the same terminal assessment to every decision in a multi-turn rollout. Past efforts have focused on allocating available rollout resources to promising prompts, yet they only leverage sample informativeness at the prompt level and neglect variation in prefix-level informativeness across turns within the same rollout. This work targets multi-turn agentic RL by modeling each ReAct-style thought-action-observation turn as a semantically distinct node, allowing budget allocation to extend from prompt roots to turn-level prefixes with further continuations, which naturally forms tree-structured rollouts. We introduce Tree Rollout Allocation for Contrastive Exploration (TRACE), a unified rollout allocation framework that enhances reward contrast within a fixed sampling budget. Technically, TRACE allocates rollout budget to both prompt roots and intermediate prefixes that are most likely to yield mixed terminal rewards. A shared generalizable predictor estimates conditional success probability at these anchors from prefix histories to guide this allocation. The resulting adaptive tree structure enriches outcome-only feedback and amplifies the policy-update signal. Empirically, TRACE achieves competitive performance and efficiency gains on typical agentic benchmarks, e.g., improving Qwen3-14B Multi-Hop QA average accuracy by 2.8 points over competitive baselines at equal sampling cost.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 9.0,
+      "quality_status": "scored",
+      "quality_score": 7.7,
+      "final_score": 7.2,
+      "screen_score": 6.8,
+      "org_boost": 0.225,
+      "organisation_score": 6.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "reinforcement_learning",
+      "subdomains": [
+        "rlhf"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Allocating rollouts at both prompt and intermediate-prefix levels could extract stronger RL signals from the same expensive agent-training budget.",
+      "reason_not_higher": "The core approach extends adaptive sampling into rollout trees rather than establishing an entirely new learning paradigm, and the abstract provides only a limited representative result without broad quantitative detail.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "Tsinghua University",
+          "organisation_id": 42,
+          "is_org_of_interest": true
+        }
+      ],
+      "top_organisation": "Tsinghua University",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120761,
+      "arxiv_id": "2608.22154",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22154",
+      "title": "More accurate behavioral predictions with hybrid Bayesian-connectionist models",
+      "abstract": "Researchers must often choose between Bayesian or neural network models of behavior, two paradigms with complementary strengths and weaknesses. An ideal paradigm would facilitate testing many kinds of representations and inductive biases; Bayesian models make this easy, while neural networks do not. Similarly, an ideal paradigm would avoid over-simplifications; neural networks make this easy, while Bayesian models do not. Here, we introduce Bayesian distillation with Behavioral Tuning (BBT) as an approach to getting the best of both traditions. BBT offers a simple recipe for model building: first, a neural network is trained to mimic a Bayesian model through synthetic data, and second, the network is fine-tuned on human behavior to capture additional structure and nuance. Across four case studies in human concept learning, we find that BBT outperforms traditional approaches at predicting human behavior while also revealing psychological insights, resulting in models that can both mimic Bayesian priors and capture heuristics and biases that violate simple modeling assumptions.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 7.0,
+      "quality_status": "scored",
+      "quality_score": 7.5,
+      "final_score": 7.2,
+      "screen_score": 6.0,
+      "org_boost": 0.255,
+      "organisation_score": 6.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "theory_foundations",
+      "subdomains": [
+        "representation_learning"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Distilling structured Bayesian assumptions into flexible neural models may yield more accurate behavioral predictions while retaining interpretable links to psychological theories.",
+      "reason_not_higher": "The contribution is demonstrated on four concept-learning case studies, leaving unclear whether its predictive and interpretive advantages generalize to other behavioral domains or remain robust under alternative Bayesian teachers and neural architectures.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Massachusetts Institute of Technology",
+          "organisation_id": 7,
+          "is_org_of_interest": true
+        },
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Princeton University",
+          "organisation_id": 342,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "Massachusetts Institute of Technology",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120819,
+      "arxiv_id": "2608.22331",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22331",
+      "title": "Noise Floor Audit for Agent Benchmarks",
+      "abstract": "We audit measurement variability for 3 native tool-calling endpoints across 2 providers on the official BFCL multiple and parallel categories, using matched AST grading. At temperature 0, reruns are nearly deterministic across Groq endpoints and a thinking-enabled Gemini setting: ever-flip fractions are 0.7%, 2.0%, and 2.7%, with mean run correlations of 0.997, 0.966, and 0.961. Semantics-preserving prompt perturbations create the larger floor on all endpoints, with median perturbation paired SDs 11x to 58x larger than rerun paired SDs. The failure character also shifts: malformed-output failures account for 30%, 7%, and <1% of task failures, so marginal accuracy hides not only stability but also failure mode.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 7.5,
+      "quality_status": "scored",
+      "quality_score": 7.3,
+      "final_score": 7.1,
+      "screen_score": 5.5,
+      "org_boost": 0.225,
+      "organisation_score": 6.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "evaluation_benchmarking",
+      "subdomains": [
+        "eval_methodology",
+        "benchmark_design"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Agent benchmark differences may reflect prompt sensitivity and changing failure modes rather than meaningful capability gains, so benchmark results need uncertainty and robustness reporting.",
+      "reason_not_higher": "The audit is technically narrow, covering only three endpoints, two providers, and selected BFCL categories, which limits conclusions about agent benchmarks generally.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "Carnegie Mellon University",
+          "organisation_id": 39,
+          "is_org_of_interest": true
+        }
+      ],
+      "top_organisation": "Carnegie Mellon University",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 3967,
+      "arxiv_id": "2602.02408",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2602.02408",
+      "title": "ReasonEdit: Editing Vision-Language Models using Human Reasoning",
+      "abstract": "Model editing aims to correct errors in large, pretrained models without altering unrelated behaviors. While some recent works have edited vision-language models (VLMs), no existing editors tackle reasoning-heavy tasks, which typically require humans and models to reason about images. We therefore propose ReasonEdit, the first VLM editor to let users explain their reasoning during editing, introducing a new, practical model editing setup. ReasonEdit continuously stores human reasoning in a codebook, and retrieves only relevant facts during inference using a novel topology-balanced multimodal embedding method inspired by network science. Across four VLMs on multiple rationale-based visual question answering datasets, ReasonEdit achieves state-of-the-art editing performance, ultimately showing that using human reasoning during editing greatly improves edit generalization.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.0,
+      "quality_status": "scored",
+      "quality_score": 7.5,
+      "final_score": 7.0,
+      "screen_score": 6.7,
+      "org_boost": 0.135,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "multimodal_learning",
+      "subdomains": [
+        "vision_language"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "ReasonEdit offers a way to use human rationales to make targeted VLM corrections generalize beyond isolated facts while limiting changes to unrelated behavior.",
+      "reason_not_higher": "Its operational scalability depends on the quality and maintenance of a growing human-reasoning codebook, and the abstract gives neither quantitative improvements nor detailed evidence about locality, inference overhead, or robustness to erroneous rationales.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "Stanford University",
+          "organisation_id": 68,
+          "is_org_of_interest": true
+        },
+        {
+          "confidence": 0.85,
+          "evidence_type": "explicit_paper_affiliation",
+          "canonical_name": "University of Virginia",
+          "organisation_id": 24,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "University of Virginia",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 121302,
+      "arxiv_id": "2412.02520",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2412.02520",
+      "title": "Highway Congestion Reduction through Reinforcement Learning Based Eulerian Headway Control",
+      "abstract": "Connected automated vehicles (CAVs) equipped with adaptive cruise control (ACC) create new opportunities for highway congestion mitigation. Traditional practice relies on Eulerian variable speed limits (VSL) which regulate traffic through roadside signs, but suffer from infrequent updates and limited driver compliance. Recent research explored Lagrangian strategies that directly control individual vehicles, offering high reactivity and compliance, yet in realistic multi-lane settings they depend on drivers' latent lane-change intentions, making robust vehicle-level decisions difficult. Hence, we propose an Eulerian control system optimized through reinforcement learning, that (i) leverages ACC for reactivity and compliance, and (ii) obviates dependence on latent driver intentions by regulating aggregate density near bottlenecks, crucially via headway commands rather than speed commands. We evaluate two variants of our system, time-headway and distance-headway control, in large-scale simulations across a range of traffic conditions. Both variants outperform baselines, improving traffic flow by up to 10.6% over human traffic and 6.7% over traditional VSL. To strengthen evaluation, we propose a novel boundary-aware speed metric addressing a recognized flaw in simulation studies with dynamic vehicle entry and exit. The empirical results, together with our emphasis on deployable system design, suggest a path towards practical, safe, and scalable highway congestion mitigation.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 6.5,
+      "quality_status": "scored",
+      "quality_score": 7.5,
+      "final_score": 7.0,
+      "screen_score": 5.7,
+      "org_boost": 0.128,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "enterprise_adoption"
+      ],
+      "domain": "reinforcement_learning",
+      "subdomains": [],
+      "application_domains": [
+        "transport_logistics"
+      ],
+      "so_what": "Headway commands could use connected vehicles as responsive aggregate traffic actuators, improving bottleneck flow without requiring prediction of individual lane-change intentions.",
+      "reason_not_higher": "The reported gains are simulation-based, leaving field performance, safety certification, communication failures, heterogeneous ACC behavior, driver acceptance, and effectiveness at realistic CAV penetration rates unresolved.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.6,
+          "evidence_type": "ror_canonical_match",
+          "canonical_name": "General Co., Ltd. (Japan)",
+          "organisation_id": 1361,
+          "is_org_of_interest": false
+        },
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "University of California, Berkeley",
+          "organisation_id": 124,
+          "is_org_of_interest": true
+        }
+      ],
+      "top_organisation": "General Co., Ltd. (Japan)",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120411,
+      "arxiv_id": "2605.14486",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2605.14486",
+      "title": "Reduce the Artifacts Bias for More Generalizable AI-Generated Image Detection",
+      "abstract": "As the misuse of AI-generated images grows, generalizable image detection techniques are urgently needed. Recent state-of-the-art (SOTA) methods adopt aligned training datasets to reduce content, size, and format biases, empowering models to capture robust forgery cues. A common strategy employs reconstruction techniques, e.g., VAE and DDIM, to construct aligned synthetic negatives. However, relying on a single reconstruction process yields a narrow and homogeneous artifact distribution, leaving forensic traces from other artifact-forming mechanisms underrepresented. To broaden artifact coverage without sacrificing alignment, we construct adversarial restoration-based negatives with SRGAN, whose learned upsampling and texture restoration yield traces complementary to VAE reconstruction while preserving content, size, and format. Directly mixing the two aligned fake domains is nontrivial because their artifact manifolds and optimization directions can conflict. We therefore propose Artifact-Complementary Expert Fusion (ACEF), a two-stage framework for robust AIGC detection. ACEF first constructs two artifact-specific experts via LoRA adaptation on a frozen foundation backbone. It then freezes them and introduces Layer-wise Artifact-Complementary Fusion (LACF) to integrate multi-layer source-specific and cross-artifact evidence through an adaptive gate. Extensive experiments on 13 diverse benchmarks demonstrate the effectiveness of our method.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 7.0,
+      "quality_status": "scored",
+      "quality_score": 7.2,
+      "final_score": 6.9,
+      "screen_score": 6.0,
+      "org_boost": 0.27,
+      "organisation_score": 6.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "computer_vision",
+      "subdomains": [],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Broader modeling and fusion of complementary generation artifacts could make AI-image detectors more reliable across unseen generators and processing pipelines.",
+      "reason_not_higher": "The contribution appears to extend established aligned-negative, expert-adaptation, and gated-fusion ideas, and the abstract does not quantify gains, computational costs, or robustness under real-world post-processing and adversarial conditions.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.9,
+          "evidence_type": "email_domain",
+          "canonical_name": "Tsinghua University",
+          "organisation_id": 42,
+          "is_org_of_interest": true
+        }
+      ],
+      "top_organisation": "Tsinghua University",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120325,
+      "arxiv_id": "2601.16890",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2601.16890",
+      "title": "LLM-Based Adversarial Persuasion Attacks on Fact-Checking Systems",
+      "abstract": "Automated fact-checking (AFC) systems are susceptible to adversarial attacks, enabling false claims to evade detection. Existing adversarial frameworks typically rely on injecting noise or altering semantics, yet no existing framework exploits the adversarial potential of persuasion techniques against AFC systems, which are widely used in disinformation campaigns to manipulate audiences. In this paper, we introduce a novel class of persuasive adversarial attacks on AFCs by employing an LLM to rephrase claims using persuasion techniques. Considering $15$ techniques grouped into $5$ categories, we study the effects of persuasion on both claim verification and evidence retrieval using a decoupled evaluation strategy. Experiments on the FEVER and FEVEROUS benchmarks show that persuasion attacks can substantially degrade both verification performance and evidence retrieval. Our analysis identifies persuasion techniques as a potent class of adversarial attacks, highlighting the need for more robust AFC systems.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 9.0,
+      "quality_status": "scored",
+      "quality_score": 7.3,
+      "final_score": 6.7,
+      "screen_score": 7.2,
+      "org_boost": 0.128,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "natural_language_processing",
+      "subdomains": [
+        "retrieval",
+        "question_answering"
+      ],
+      "application_domains": [
+        "content_moderation"
+      ],
+      "so_what": "It identifies persuasive rephrasing as a realistic attack surface that can undermine both evidence retrieval and verdict prediction in automated fact-checking pipelines.",
+      "reason_not_higher": "The attack idea is conceptually straightforward, and the abstract provides limited quantitative detail about effect sizes, semantic preservation, baseline strength, transferability, and defenses against the proposed attacks.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "University of Sheffield",
+          "organisation_id": 717,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "University of Sheffield",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 3565,
+      "arxiv_id": "2608.22295",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22295",
+      "title": "LLM Evaluation on Unseen Questions: Contextual Multidimensional IRT Model",
+      "abstract": "Evaluation of large language models (LLMs) increasingly requires predicting how a model will perform on new questions or tasks before collecting large amounts of new annotations. This problem is challenging because question difficulty, scenario, and underlying capability demands can vary substantially. Simple retrospective averages may confound model ability with item characteristics. In this paper, we study a model-based evaluation framework that combines multidimensional item response theory model with question contexts to predict LLM performance on unseen questions. The framework represents LLMs through latent capability profiles while using question content to inform item characteristics, allowing information to transfer beyond previously observed items. Empirically, we find that for within-scenario evaluation, incorporating question embeddings improves prediction relative to model-free baselines, and that multidimensional latent structure provides a richer description of capability variation than unidimensional alternatives. At the same time, our results reveal an important limitation that the generalizability does not necessarily translate into reliable prediction under cross-scenario shift. These findings suggest that context-aware psychometric modeling is a promising direction for efficient and interpretable LLM evaluation, while also highlighting cross-scenario generalization as a central open challenge.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 8.0,
+      "quality_status": "scored",
+      "quality_score": 6.9,
+      "final_score": 6.3,
+      "screen_score": 6.2,
+      "org_boost": 0.135,
+      "organisation_score": 3.0,
+      "audiences": [
+        "practitioner",
+        "technical_leadership"
+      ],
+      "domain": "evaluation_benchmarking",
+      "subdomains": [
+        "eval_methodology"
+      ],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Predicting performance on unseen questions could make LLM evaluation cheaper and more diagnostic while separating model capabilities from item difficulty.",
+      "reason_not_higher": "The combination of contextual embeddings and multidimensional IRT is a measured extension of established methods, and the reported failure under cross-scenario shift limits its immediate use for robust prospective evaluation.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "Carnegie Mellon University",
+          "organisation_id": 39,
+          "is_org_of_interest": true
+        },
+        {
+          "confidence": 0.9,
+          "evidence_type": "email_domain",
+          "canonical_name": "University of Wisconsin\u2013Madison",
+          "organisation_id": 34,
+          "is_org_of_interest": false
+        }
+      ],
+      "top_organisation": "University of Wisconsin\u2013Madison",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    },
+    {
+      "content_item_id": 120830,
+      "arxiv_id": "2608.22356",
+      "doi": null,
+      "canonical_url": "https://arxiv.org/abs/2608.22356",
+      "title": "Addressing the Selection Problem in Explainable AI",
+      "abstract": "Explainable AI (XAI) research has produced a plethora of explanation techniques, yet user studies repeatedly show that available explanations are not effective in practice. We argue that, given the siloed nature of conventional XAI, users are struggling to select the appropriate XAI technique. Viewing XAI through a philosophical lens, we offer a formalization of what we call the selection problem: the systematic failure of XAI interfaces to bridge the gap between a user's natural-language uncertainty and the explanation technique that resolves it. Following a logical premise-conclusion format, we show that conventional interfaces require users to translate their uncertainty into a technique selection, a challenging prerequisite to meet. We also propose a structural solution: a multi-agent LLM orchestration tool that translates the user's query to the proper XAI explanation technique. We provide an example of how this structural solution could be instantiated to address the selection problem.",
+      "published_at": "2026-08-23T00:00:00+00:00",
+      "status": "RELEVANT",
+      "screen_passed": true,
+      "ai_relevance": 6.5,
+      "quality_status": "scored",
+      "quality_score": 6.3,
+      "final_score": 5.5,
+      "screen_score": 4.0,
+      "org_boost": 0.255,
+      "organisation_score": 6.0,
+      "audiences": [
+        "practitioner"
+      ],
+      "domain": "interpretability",
+      "subdomains": [],
+      "application_domains": [
+        "general_method"
+      ],
+      "so_what": "Framing explanation choice as an explicit interface-selection problem could help XAI systems respond to users' actual uncertainties rather than forcing technique-level expertise.",
+      "reason_not_higher": "The proposed LLM-based orchestration is conceptually plausible but technically underspecified and apparently illustrated only through an example, without user studies or evidence that routing produces more useful explanations.",
+      "quality_summary": null,
+      "score_components": null,
+      "organisations": [
+        {
+          "confidence": 0.75,
+          "evidence_type": "email_domain",
+          "canonical_name": "Carnegie Mellon University",
+          "organisation_id": 39,
+          "is_org_of_interest": true
+        }
+      ],
+      "top_organisation": "Carnegie Mellon University",
+      "affiliation_resolution_status": "resolved",
+      "hf_featured": false,
+      "hf_featured_date": null,
+      "hf_upvotes": null,
+      "has_quality_result": true,
+      "eligible": true
+    }
+  ]
+}

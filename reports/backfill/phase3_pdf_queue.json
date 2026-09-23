@@ -1,0 +1,4170 @@
+{
+  "queue_size": 295,
+  "reason_counts": {
+    "unresolved_quality_selected": 254,
+    "partial_extra_orgs": 6,
+    "newsletter_linkedin_uncertainty": 25,
+    "oa_primary_notable_no_html": 16,
+    "disjoint_html_oa": 19,
+    "notable_org_uncertainty": 2
+  },
+  "papers": [
+    {
+      "paper_id": 188252,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.11801",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 193247,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.14258",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 193485,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.14759",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 193772,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.15309",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 194526,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.15659",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 194794,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.16504",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 195298,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.17372",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 53,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.19799",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 75,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.20153",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 660,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.18607",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 984,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.17809",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 1721,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.02345",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 1843,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.13598",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 42963,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2603.27520",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 2178,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.26178",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 2268,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.27406",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 2310,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.27296",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 2390,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.26632",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 2590,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.24979",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 3140,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.23873",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 3455,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.23200",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 4317,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.20974",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 9160,
+      "outcome": "partial_agreement",
+      "reasons": [
+        "partial_extra_orgs",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2601.03163",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 10195,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2512.23243",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": false
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 11649,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2509.18159",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": false
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 12243,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2601.10511",
+      "flags": {
+        "quality": false,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 12036,
+      "outcome": "partial_agreement",
+      "reasons": [
+        "partial_extra_orgs",
+        "notable_org_uncertainty",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2510.20721",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 12797,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2512.03994",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 28031,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2602.19600",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 26685,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2602.16365",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 27977,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2602.19381",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 31691,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2603.02790",
+      "flags": {
+        "quality": false,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 32656,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2603.04949",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 46609,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2604.05460",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 38952,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2603.18614",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 39788,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2603.20278",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 39878,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2603.20589",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 40374,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2603.21235",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 40814,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2603.22714",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 42046,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2603.25579",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 53108,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2604.18510",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 53419,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2604.18616",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 59137,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2605.03338",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 61869,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2604.14345",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 117251,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.15475",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 62334,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2605.09055",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 62455,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2509.12635",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 116123,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2607.14616",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 69481,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2605.21049",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 73920,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2605.28703",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 75641,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2605.31291",
+      "flags": {
+        "quality": false,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 75667,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2605.31363",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 77857,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2606.03043",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 78633,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2512.14177",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 79172,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2606.05035",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 83725,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2606.10581",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 86008,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2605.27284",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 87445,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2606.17995",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 87842,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2606.18524",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 93197,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2606.29054",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 94254,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2606.31184",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 95988,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2607.02525",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 100541,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2607.09791",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 100645,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2607.12590",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 191955,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2504.08075",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 104006,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2607.19704",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 104960,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2607.19686",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 106677,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2607.25130",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 109451,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.01397",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 109573,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2509.17920",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 110166,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2607.24741",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 112226,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2607.11953",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 113668,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2607.15434",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 117261,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.15520",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 117734,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.16578",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 118878,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.18768",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 120564,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.17906",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 120565,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.18234",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 120854,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.22432",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 121904,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.24674",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 122800,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.26204",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 123815,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2606.29150",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 125254,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2212.14857",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 125388,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2410.16004",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 132759,
+      "outcome": "partial_agreement",
+      "reasons": [
+        "partial_extra_orgs",
+        "notable_org_uncertainty",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2604.24622",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 132953,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.12564",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 135191,
+      "outcome": "partial_agreement",
+      "reasons": [
+        "partial_extra_orgs",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2509.06285",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 135579,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.30607",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 135557,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2608.29242",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 135755,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.00549",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 135814,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.00663",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 135991,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.00982",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 135993,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.00986",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136028,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.01050",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136090,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.01182",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136097,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.01194",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136119,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.01244",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136120,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.01245",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136134,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.01276",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142586,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04303",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": false
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136247,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.01519",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136377,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.01730",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137526,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02964",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136623,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2605.17193",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136692,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2607.08448",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136797,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.00474",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137973,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.02149",
+      "flags": {
+        "quality": false,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 136842,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.01807",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136938,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02006",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136952,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2609.02035",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136974,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02075",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 136980,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02088",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137012,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02140",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137052,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02217",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137079,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02265",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137099,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02304",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137143,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02393",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137176,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02465",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137219,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02564",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137251,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02647",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137254,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.02652",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 137289,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02734",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137305,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02771",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137332,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02846",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137334,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02849",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 183970,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2511.09057",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137529,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02967",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137538,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02986",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137546,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.02998",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 137590,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.03129",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 138004,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.03376",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 138035,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.03436",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 138103,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.03565",
+      "flags": {
+        "quality": false,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 138124,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.03602",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 138330,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04010",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 138368,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04098",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 138333,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04014",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 138337,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04022",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 138338,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.04024",
+      "flags": {
+        "quality": false,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 138371,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04105",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 138395,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04167",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 138412,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04198",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142211,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2506.07309",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142382,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2606.29629",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": false
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142554,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04256",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": false
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142559,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04262",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": false
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142565,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04269",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142581,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04290",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142582,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04292",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142584,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2609.04298",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142587,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04304",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142598,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04348",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142601,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04355",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142614,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04382",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142698,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2609.04540",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142678,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2609.04511",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": false
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142710,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04557",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142709,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04556",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": false
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142711,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04559",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142739,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04629",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142790,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04721",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142798,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04748",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142831,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04799",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142837,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.04806",
+      "flags": {
+        "quality": false,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 142855,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04837",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": false
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142877,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04875",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142888,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.04893",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142976,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.05075",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": false
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142977,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.05079",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 142986,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.05094",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 143017,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.05157",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 143076,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.05269",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 143099,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.05318",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 143126,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.05370",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 183436,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2504.05161",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 183657,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.05571",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 183691,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.05676",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 183718,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.05743",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 183728,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.05761",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 183754,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.05802",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 183805,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.05903",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 183910,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2507.05134",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": false
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 183917,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2507.20901",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184426,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.05968",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184449,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.06008",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184472,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.06055",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184474,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.06058",
+      "flags": {
+        "quality": false,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 184475,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.06059",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184489,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.06080",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184518,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.06129",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 184547,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.06190",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184556,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.06207",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184607,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.06323",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184708,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.06539",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184752,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.06649",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184819,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.06809",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184903,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.06986",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184905,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.06991",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184928,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.07048",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184942,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.07072",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184959,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.07103",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184961,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.07108",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 184988,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.07152",
+      "flags": {
+        "quality": false,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 185012,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.07204",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 185018,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.07216",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 185096,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.07398",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 185159,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2409.09903",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 185175,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2502.00858",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 185231,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2509.25180",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 185581,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.07479",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 185605,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.07532",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 185627,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2609.07581",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 185761,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.07901",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 185880,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.08156",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 185883,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.08162",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 185932,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.08250",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 185991,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.08373",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 186032,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2609.08475",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 186107,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.08672",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 186163,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.08832",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 186203,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.08936",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 186194,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.08905",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 186213,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.08949",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 186292,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.09158",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 186279,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.09130",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 186350,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.09218",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 186351,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.09219",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 186461,
+      "outcome": "partial_agreement",
+      "reasons": [
+        "partial_extra_orgs",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2504.00285",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 186871,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.09609",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 186891,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.09659",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 186944,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.09776",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 186983,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.09848",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187079,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.10036",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187086,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2609.10054",
+      "flags": {
+        "quality": true,
+        "ooi": true,
+        "newsletter": false
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187190,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.10308",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187192,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.10315",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187209,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.10357",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 187243,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.10445",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187282,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2310.10092",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187325,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2510.04060",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187337,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2512.10147",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187513,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.10712",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187565,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.10830",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187624,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.10962",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187629,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.10980",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187650,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.11028",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187655,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.11042",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187713,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.11147",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187721,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.11163",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 187745,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2501.12299",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 188127,
+      "outcome": "partial_agreement",
+      "reasons": [
+        "partial_extra_orgs",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.11486",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 193047,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.08306",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 193068,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.11024",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 188253,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.11804",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 188256,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.11808",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 188265,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.11838",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 188308,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.11929",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 191242,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.12303",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 191539,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.10706",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 191582,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.12367",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 191588,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.12378",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 191681,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.12552",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 191735,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.12663",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 191774,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.12748",
+      "flags": {
+        "quality": false,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 191806,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.12822",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 191934,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2206.10397",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 192279,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.13445",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 192298,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.13478",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 192360,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.13585",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 192416,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.13692",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 192550,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.13940",
+      "flags": {
+        "quality": false,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 193031,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.06424",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 193040,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.07534",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 193351,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.14493",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 195340,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.17464",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 193586,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.14935",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 193733,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.15219",
+      "flags": {
+        "quality": false,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 193808,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.15383",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 193986,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.15539",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 194037,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.15660",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 194077,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2609.15740",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 194091,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.15781",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 194098,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.15803",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 194130,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.15870",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 194489,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.12394",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 195299,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.17376",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 194497,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.13677",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 194525,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.15570",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 194597,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.16085",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 194655,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.16247",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 194772,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.16459",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 194836,
+      "outcome": "verified_openalex_primary",
+      "reasons": [
+        "oa_primary_notable_no_html"
+      ],
+      "arxiv_id": "2609.16597",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    },
+    {
+      "paper_id": 195029,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.16964",
+      "flags": {
+        "quality": false,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 195098,
+      "outcome": "conflict",
+      "reasons": [
+        "disjoint_html_oa",
+        "newsletter_linkedin_uncertainty"
+      ],
+      "arxiv_id": "2609.17118",
+      "flags": {
+        "quality": false,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": true
+    },
+    {
+      "paper_id": 195120,
+      "outcome": "unresolved",
+      "reasons": [
+        "unresolved_quality_selected"
+      ],
+      "arxiv_id": "2609.17172",
+      "flags": {
+        "quality": true,
+        "ooi": false,
+        "newsletter": true
+      },
+      "html_has_orgs": false
+    }
+  ]
+}

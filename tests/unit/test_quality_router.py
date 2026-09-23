@@ -23,6 +23,7 @@ class _FakeCur:
         text = " ".join(sql.split())
         if "paper_author_affiliations" in text and "is_org_of_interest" in text:
             survivors = set(params[0])
+            # params[1] = FAST evidence types; params[2] = society email domains
             self._rows = [
                 {
                     "content_item_id": cid,

@@ -8,6 +8,7 @@ from paper_intelligence.audience_domain.stage import (
     STAGE_VERSION,
     build_user_prompt,
     parse_response,
+    render_system_prompt,
     run_window,
     validate_entry,
 )
@@ -19,6 +20,7 @@ __all__ = [
     "STAGE_VERSION",
     "build_user_prompt",
     "parse_response",
+    "render_system_prompt",
     "run_window",
     "validate_entry",
     "vocabulary",

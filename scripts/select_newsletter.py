@@ -31,11 +31,13 @@ if str(SRC) not in sys.path:
 from paper_intelligence.common.llm_stage import parse_json_object, strip_json_fences
 from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
 from paper_intelligence.db import connect
+from paper_intelligence.editorial.seats import newsletter_rubric_body
 from paper_intelligence.openrouter import LLMRequest, complete
 
 DEFAULT_MODEL = "anthropic/claude-opus-5"
 DEFAULT_REASONING = "medium"
-PROMPT_VERSION = "newsletter_selection_v1"
+PROMPT_VERSION = "newsletter_select_v002"
+SEATS_POLICY_VERSION = "v001"
 
 SYSTEM_PROMPT = """\
 You are the paper-selection editor for a weekly AI newsletter for senior \
@@ -55,102 +57,7 @@ Return ONLY a single JSON object matching the schema in the user message. \
 No markdown fences, no preamble.
 """
 
-USER_RUBRIC = """\
-<newsletter_context>
-The newsletter is read primarily by senior working professionals in India,
-with a smaller international audience.
-
-Readers skim on mobile between meetings. They are practitioners, not academic
-researchers.
-
-The governing question is:
-"What does this paper change for me, my team, my product, or my organisation?"
-
-We favour application-oriented research.
-
-A paper does not have to be immediately deployable. Frontier or experimental
-research can qualify if its evidence changes a decision an enterprise leader
-can realistically make.
-</newsletter_context>
-
-<selection_principle>
-Select for DECISION VALUE, not academic importance, prestige, novelty alone,
-or leaderboard performance.
-
-The final choice is an editorial judgment, not the result of a formula.
-
-A winning paper should cause a credible reader to change, test, question,
-measure, review, or decide something.
-
-If the paper is merely interesting but produces no credible practical
-consequence for the specified audience, it should not win.
-</selection_principle>
-
-<seat name="TECH">
-Reader:
-Senior engineering managers, directors, GMs, heads of engineering, AI/ML,
-platform, architecture, or technical strategy.
-
-Strong candidates affect decisions involving:
-- architecture or technical design
-- evaluation
-- reliability or failure modes
-- security or safety
-- cost, latency, or performance
-- model/tool/vendor choice
-- engineering practices
-- whether a technical claim is credible
-
-Prefer:
-- measurable evidence
-- reproducible or adaptable methods
-- useful comparisons
-- explicit limitations or failure modes
-- lessons transferable to an enterprise engineering environment
-
-A frontier-scale experiment may still qualify if its result changes a decision
-that a normal enterprise engineering organisation can make.
-
-Do not select a paper whose only value is theoretical novelty or a benchmark
-improvement with no meaningful engineering consequence.
-</seat>
-
-<seat name="PRODUCT">
-Reader:
-Senior product managers, product directors, heads of product, and adjacent
-business/process/risk leaders.
-
-Strong candidates affect decisions involving:
-- what to build or not build
-- feature scope
-- workflow or process design
-- user behaviour, adoption, or trust
-- human-AI interaction
-- commercial model or pricing
-- governance, compliance, or risk
-- deployment or operating model
-
-Prefer:
-- user or deployment evidence
-- measurable behavioural or business outcomes
-- workflow implications
-- human factors
-- risks that alter product design
-- findings transferable beyond the exact experiment
-
-Do not select a paper merely because a product leader can understand it.
-It must change a plausible product, process, commercial, or governance decision.
-</seat>
-
-<application_gate>
-For a paper to win a seat, there must be a credible answer to:
-"What decision, experiment, review, or operating change could this reader
-initiate within the next 3–6 months because of this evidence?"
-
-If no strong answer exists, the paper should not win that seat.
-The action can be a test or review. It does not need to be a production rollout.
-</application_gate>
-
+USER_RUBRIC_TAIL = """\
 <candidate_provenance>
 Interpret candidate fields as follows:
 
@@ -224,6 +131,15 @@ Use an empty string when both winners genuinely clear the application gate.
 Otherwise state which seat was weak and why.
 </output_guidance>
 """
+
+
+def build_user_rubric(*, seats_version: str = SEATS_POLICY_VERSION) -> str:
+    """Assemble USER_RUBRIC with seats from the shared policy file."""
+    return newsletter_rubric_body(seats_version) + "\n\n" + USER_RUBRIC_TAIL
+
+
+# Backward-compatible name for importers / dry-run inspection.
+USER_RUBRIC = build_user_rubric()
 
 OUTPUT_SCHEMA = """\
 Return JSON with this exact shape:
@@ -722,7 +638,7 @@ def main(argv: list[str] | None = None) -> int:
         f"date_until: {date_until.isoformat()}\n"
         f"Select from papers published in this inclusive window only.\n"
         f"</selection_window>\n\n"
-        + USER_RUBRIC
+        + build_user_rubric()
         + "\n"
         + OUTPUT_SCHEMA
         + "\n\n<shortlist>\n"

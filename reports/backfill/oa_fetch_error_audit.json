@@ -1,0 +1,87 @@
+{
+  "api_signal_rows": 973,
+  "fetch_error_count": 66,
+  "buckets": {
+    "not_found_404": 66
+  },
+  "unique_errors": [
+    {
+      "error": "http_404",
+      "count": 66
+    }
+  ],
+  "samples": {
+    "not_found_404": [
+      {
+        "paper_id": 193116,
+        "outcome": "unresolved",
+        "arxiv_id": "2609.14005",
+        "doi": null,
+        "title": "StepAudio 3 Realtime Technical Report",
+        "source": "fetch_empty_or_error",
+        "cache_hit": false,
+        "api_called": true,
+        "fetch_error": "http_404",
+        "strategy": "arxiv_datacite_doi",
+        "org_names": [],
+        "refresh_attempted": true
+      },
+      {
+        "paper_id": 193209,
+        "outcome": "unresolved",
+        "arxiv_id": "2609.14180",
+        "doi": null,
+        "title": "A Machine Learning Framework for Fault Detection, Isolation, and Severity Predic",
+        "source": "fetch_empty_or_error",
+        "cache_hit": false,
+        "api_called": true,
+        "fetch_error": "http_404",
+        "strategy": "arxiv_datacite_doi",
+        "org_names": [],
+        "refresh_attempted": true
+      },
+      {
+        "paper_id": 2178,
+        "outcome": "unresolved",
+        "arxiv_id": "2608.26178",
+        "doi": null,
+        "title": "AI Revealed Preferences",
+        "source": "fetch_empty_or_error",
+        "cache_hit": false,
+        "api_called": true,
+        "fetch_error": "http_404",
+        "strategy": "arxiv_datacite_doi",
+        "org_names": [],
+        "refresh_attempted": true
+      },
+      {
+        "paper_id": 138395,
+        "outcome": "unresolved",
+        "arxiv_id": "2609.04167",
+        "doi": null,
+        "title": "SWE-Gate: Passing Functional Tests Is Not Enough for Software Engineering Agents",
+        "source": "fetch_empty_or_error",
+        "cache_hit": false,
+        "api_called": true,
+        "fetch_error": "http_404",
+        "strategy": "arxiv_datacite_doi",
+        "org_names": [],
+        "refresh_attempted": true
+      },
+      {
+        "paper_id": 185231,
+        "outcome": "unresolved",
+        "arxiv_id": "2509.25180",
+        "doi": null,
+        "title": "DC-Gen: Post-Training Diffusion Acceleration with Deeply Compressed Latent Space",
+        "source": "fetch_empty_or_error",
+        "cache_hit": false,
+        "api_called": true,
+        "fetch_error": "http_404",
+        "strategy": "arxiv_datacite_doi",
+        "org_names": [],
+        "refresh_attempted": true
+      }
+    ]
+  }
+}

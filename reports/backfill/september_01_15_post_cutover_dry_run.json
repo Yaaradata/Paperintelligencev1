@@ -1,0 +1,468 @@
+{
+  "generated_at": "2026-09-21T07:29:48.917585+00:00",
+  "window": {
+    "from": "2026-09-01",
+    "until": "2026-09-15",
+    "inclusive": true
+  },
+  "health": {
+    "PI_USE_PAPERS_CATALOG": true,
+    "PI_WRITE_RADAR_COMPAT": false,
+    "radar_fks_remaining": 0,
+    "migrations": {
+      "006_papers": true,
+      "007_archive_records": true,
+      "008_pi_fks": true,
+      "009_radar_fks_dropped": true
+    },
+    "dup_arxiv": 0,
+    "dup_doi": 0,
+    "orphans": 0,
+    "selector_depends_on_radar_status": false,
+    "models": {
+      "SCREEN_MODEL": "z-ai/glm-5.3-flash",
+      "CLASSIFY_MODEL": "z-ai/glm-4.6",
+      "QUALITY_MODEL": "openai/gpt-5.6-sol",
+      "GATE_PERCENTILE": 15.0
+    },
+    "versions": {
+      "relevance": "v001",
+      "screen": {
+        "stage": "v001",
+        "prompt": "v001",
+        "policy": "v001",
+        "model": "z-ai/glm-5.3-flash"
+      },
+      "audience_domain": {
+        "stage": "v001",
+        "prompt": "v002",
+        "policy": "v001",
+        "model": "z-ai/glm-4.6"
+      },
+      "quality": {
+        "stage": "v001",
+        "prompt": "v001",
+        "policy": "v001",
+        "model": "openai/gpt-5.6-sol"
+      },
+      "affiliation_fast": "v002",
+      "affiliation_deep": "v002"
+    },
+    "ok": true
+  },
+  "backlog": {
+    "A_total_pi_papers": 12149,
+    "B_no_relevance": 295,
+    "C_relevance_keep": 7548,
+    "D_relevance_reject": 4306,
+    "relevance_other_decision": 0,
+    "E_keep_missing_current_screen": 27,
+    "E_breakdown": {
+      "never_screened": 27,
+      "old_version_only": 0
+    },
+    "F_screen_passed": 7315,
+    "screen_gate_failed": 206,
+    "G_screen_passed_missing_fast_affiliation_current": 7308,
+    "G_breakdown": {
+      "never_fast_isr": 7295,
+      "non_current_fast_isr": 13,
+      "have_affiliation_rows": 5860
+    },
+    "H_screen_passed_missing_current_audience": 7315,
+    "H_breakdown": {
+      "never": 3064,
+      "old_version_or_model_mismatch": 4251
+    },
+    "I_quality_router_selected": 1661,
+    "J_selected_reusable_current_quality": 1208,
+    "K_selected_need_new_paid_quality": 453,
+    "K_breakdown": {
+      "never": 453,
+      "old_version_or_model_mismatch": 0
+    },
+    "L_deep_pool_missing_current": 2275,
+    "L_selected_missing_deep": 1649,
+    "M_papers_missing_hf_row": 11834,
+    "M_papers_with_hf_row": 315,
+    "N_screened_missing_current_projection": 0,
+    "O_failed_item_stage_runs": 0,
+    "failed_by_stage": [],
+    "router_reason_counts": {
+      "selected_top_slice": 925,
+      "not_selected_below_gate_percentile": 5654,
+      "selected_top_slice_and_notable_org": 172,
+      "blocked_screen_gate_failed": 206,
+      "selected_notable_org": 564
+    },
+    "keep_relevance_methods": {
+      "migrated_legacy_state": 7548
+    },
+    "no_relevance_radar_status_forensic": {
+      "INGESTED": 295
+    }
+  },
+  "root_causes": {
+    "B_relevance": {
+      "count": 295,
+      "classification": "never_processed",
+      "detail": "No paper_relevance_results. Previously many were Radar INGESTED and invisible to status-gated relevance; PI path can score them now. Forensic Radar status counts are informational only.",
+      "forensic_radar_status": {
+        "INGESTED": 295
+      },
+      "bug": false
+    },
+    "E_screen": {
+      "count": 27,
+      "never_processed": 27,
+      "old_stage_version": 0,
+      "classification": "never_processed",
+      "bug": false
+    },
+    "G_affiliation_fast": {
+      "count": 7308,
+      "classification": "never_processed / incomplete historical fast coverage on screen survivors",
+      "bug": false
+    },
+    "H_audience": {
+      "count": 7315,
+      "never_processed": 3064,
+      "old_version_or_model_mismatch": 4251,
+      "classification": "mostly_model_or_version_mismatch",
+      "note": "Reusable requires model=z-ai/glm-4.6",
+      "bug": false
+    },
+    "K_quality": {
+      "count": 453,
+      "never_processed": 453,
+      "old_version_or_model_mismatch": 0,
+      "classification": "ordinary_historical_backlog",
+      "supersedes_estimates": {
+        "38": false,
+        "468": false,
+        "use": 453
+      },
+      "bug": false
+    },
+    "L_deep": {
+      "count": 1649,
+      "classification": "never_processed on quality-selected set",
+      "bug": false
+    },
+    "M_hf": {
+      "count": 11834,
+      "classification": "skipped_legitimately_or_never_matched",
+      "detail": "Absence of HF row is normal for non-featured papers. Completeness = stage run attempted for window, not a row per paper.",
+      "bug": false
+    },
+    "N_adjudication": {
+      "count": 0,
+      "classification": "never_processed or needs refresh after new results",
+      "bug": false
+    },
+    "O_failures": {
+      "count": 0,
+      "classification": "n/a",
+      "by_stage": [],
+      "bug": false
+    }
+  },
+  "execution_plan": [
+    {
+      "order": 1,
+      "stage": "relevance",
+      "candidates": 295,
+      "already_complete_reusable": 11854,
+      "new_work": 295,
+      "paid": false,
+      "projected_cost_usd": 0.0,
+      "wall_h": 0.01
+    },
+    {
+      "order": 2,
+      "stage": "screen",
+      "candidates": 27,
+      "already_complete_reusable": 7521,
+      "new_work": 27,
+      "paid": true,
+      "projected_cost_usd": 0.0022,
+      "wall_h": 0.07
+    },
+    {
+      "order": 3,
+      "stage": "affiliation_fast",
+      "candidates": 7308,
+      "already_complete_reusable": 7,
+      "new_work": 7308,
+      "paid": false,
+      "projected_cost_usd": 0.0,
+      "wall_h": 4.87
+    },
+    {
+      "order": 4,
+      "stage": "audience_domain",
+      "candidates": 7315,
+      "already_complete_reusable": 0,
+      "new_work": 7315,
+      "paid": true,
+      "projected_cost_usd": 0.0,
+      "wall_h": 24.38
+    },
+    {
+      "order": 5,
+      "stage": "quality_routing",
+      "candidates": 7315,
+      "already_complete_reusable": 7315,
+      "new_work": 0,
+      "paid": false,
+      "projected_cost_usd": 0.0,
+      "wall_h": 0.01,
+      "note": "deterministic"
+    },
+    {
+      "order": 6,
+      "stage": "quality",
+      "candidates": 453,
+      "already_complete_reusable": 1208,
+      "new_work": 453,
+      "paid": true,
+      "projected_cost_usd": 3.4336,
+      "wall_h": 5.66
+    },
+    {
+      "order": 7,
+      "stage": "affiliation_deep",
+      "candidates": 1649,
+      "already_complete_reusable": 12,
+      "new_work": 1649,
+      "paid": false,
+      "projected_cost_usd": 0.0,
+      "wall_h": 8.24
+    },
+    {
+      "order": 8,
+      "stage": "hf_signals",
+      "candidates": "window_daily_match",
+      "already_complete_reusable": 315,
+      "new_work": "pull+match",
+      "paid": false,
+      "projected_cost_usd": 0.0,
+      "wall_h": 0.5
+    },
+    {
+      "order": 9,
+      "stage": "adjudication",
+      "candidates": 7315,
+      "already_complete_reusable": 7315,
+      "new_work": 0,
+      "paid": false,
+      "projected_cost_usd": 0.0,
+      "wall_h": 0.73
+    }
+  ],
+  "costs": {
+    "by_stage": {
+      "relevance": {
+        "n": 295,
+        "paid": false,
+        "expected": 0.0
+      },
+      "screen": {
+        "n": 27,
+        "low": 0.0015,
+        "expected": 0.0022,
+        "high": 0.0033,
+        "per_paper_empirical": 0.000156,
+        "dry_run_usd": 0.0022
+      },
+      "audience": {
+        "n": 7315,
+        "low": 1.0523,
+        "expected": 1.5032,
+        "high": 2.2548,
+        "per_paper_empirical": 0.0002055,
+        "dry_run_usd": 0.0,
+        "note": "dry_run returned 0 for glm-4.6 price table miss; using empirical"
+      },
+      "quality": {
+        "n": 453,
+        "low": 2.4035,
+        "expected": 3.4336,
+        "high": 5.1504,
+        "per_paper_empirical": 0.002632,
+        "dry_run_usd": 3.4336
+      },
+      "affiliation_fast": {
+        "n": 7308,
+        "paid": false,
+        "expected": 0.0
+      },
+      "affiliation_deep": {
+        "n": 1649,
+        "paid": false,
+        "expected": 0.0,
+        "note": "ROR/OpenAlex quota"
+      },
+      "hf": {
+        "papers_without_hf_row": 11834,
+        "papers_with_hf_row": 315,
+        "paid": false
+      },
+      "adjudication": {
+        "n": 0,
+        "paid": false
+      }
+    },
+    "paid_total": {
+      "low": 3.4573,
+      "expected": 4.939,
+      "high": 7.4085
+    },
+    "recommended_hard_budget_cap_usd": 9.94,
+    "new_paid_calls": {
+      "relevance": 0,
+      "screen": 27,
+      "audience": 7315,
+      "quality": 453,
+      "total": 7795
+    },
+    "paid_total_if_audience_aligned_to_screen_model": {
+      "low": 3.1419,
+      "expected": 4.4884,
+      "high": 6.7326,
+      "recommended_hard_budget_cap_usd": 9.49,
+      "new_paid_calls": {
+        "screen": 27,
+        "audience": 5122,
+        "quality": 453,
+        "total": 5602
+      }
+    }
+  },
+  "wall_time": {
+    "relevance_h": 0.01,
+    "screen_h": 0.07,
+    "affiliation_fast_h": 4.87,
+    "audience_h": 24.38,
+    "quality_h": 5.66,
+    "affiliation_deep_h": 8.24,
+    "hf_h": 0.5,
+    "adjudication_h": 0.73,
+    "total_sequential_h": 44.46,
+    "audience_h_aligned": 17.07,
+    "audience_h_strict": 24.38,
+    "total_sequential_h_aligned": 37.15
+  },
+  "paper_137619": {
+    "found": true,
+    "paper_id": 137619,
+    "arxiv_id": "2609.03181",
+    "title": "Jina-OCR-v1: Efficient Document Parsing with Speculative Decoding and Dense Verifiable Rewards",
+    "published_at": "2026-09-02 00:00:00+00:00",
+    "legacy_content_item_id": 137619,
+    "relevance": {
+      "paper_id": 137619,
+      "decision": "keep",
+      "score": 5.2,
+      "method": "migrated_legacy_state",
+      "stage_version": "v001"
+    },
+    "screen_present": true,
+    "screen_gate_passed": true,
+    "screen_rank_mean": null,
+    "normal_router": {
+      "content_item_id": 137619,
+      "decision": "not_selected",
+      "reason": "not_selected_below_gate_percentile",
+      "rank_mean": 6.6667,
+      "rank_position": 199,
+      "survivors_in_window": 556,
+      "top_slice_keep": 83,
+      "gate_percentile": 15.0
+    },
+    "quality_current_version": false,
+    "quality_any_version": false,
+    "editorial_nomination": {
+      "already_quality_scored": false,
+      "exclusion_reason": "outside quality router on 2026-09-02 (top 15.0% \u222a notable-org/person); screen_rank_mean=6.666666666666667",
+      "would_require_paid_call": true,
+      "estimated_cost_usd": 0.0026,
+      "prepared_route": "editorial_nomination",
+      "executed": false
+    },
+    "note": "Keep outside normal top-percentile forcing; score only via editorial_nomination if approved."
+  },
+  "completion_definition": {
+    "window": "2026-09-01 inclusive through 2026-09-15 inclusive",
+    "criteria": [
+      "Every PI paper has relevance keep/reject OR listed relevance failure",
+      "Every relevance-keep has current-version screen (model/stage/prompt/policy) OR listed failure",
+      "Every screen-passed has affiliation_fast attempt at stage_version v002 recorded",
+      "Every screen-passed has current-version audience/domain OR listed failure",
+      "Quality routing decision available for every latest screen row",
+      "Every quality-selected paper has current-version quality OR listed failure",
+      "Every quality-selected paper has affiliation_deep attempt at v002",
+      "HF stage completed for window (matches recorded; non-match OK)",
+      "paper_intelligence_current present for all screened papers",
+      "No unexplained skips; failures explicit; counts reproducible from PI",
+      "0 duplicate arxiv/doi; 0 orphan PI rows"
+    ]
+  },
+  "validation_plan": {
+    "recompute_A_to_O": true,
+    "integrity": [
+      "dup arxiv/doi",
+      "orphans",
+      "FK to papers"
+    ],
+    "quality_routing_histogram": true,
+    "org_coverage_7_15d": "from paper_author_affiliations + organisations",
+    "openalex_comparison": "cached/free only unless approved",
+    "newsletter_linkedin_pool": "PI loaders with catalog ON",
+    "do_not_rerun_paid_for_validation": true
+  },
+  "proposed_commands": [
+    "export PI_USE_PAPERS_CATALOG=1 PI_WRITE_RADAR_COMPAT=0",
+    "PYTHONPATH=src python3 scripts/run_stage.py --stage relevance --from 2026-09-01 --until 2026-09-15",
+    "# PAID \u2014 approval required:",
+    "PYTHONPATH=src python3 scripts/run_stage.py --stage screen --from 2026-09-01 --until 2026-09-15 --allow-paid",
+    "PYTHONPATH=src python3 scripts/run_pipeline.py --from 2026-09-01 --until 2026-09-15 --stages affiliation_fast",
+    "PYTHONPATH=src python3 scripts/run_stage.py --stage audience_domain --from 2026-09-01 --until 2026-09-15 --allow-paid",
+    "PYTHONPATH=src python3 scripts/run_stage.py --stage quality --from 2026-09-01 --until 2026-09-15 --allow-paid --gate-percentile 15.0",
+    "PYTHONPATH=src python3 scripts/run_pipeline.py --from 2026-09-01 --until 2026-09-15 --stages affiliation_deep,hf_signals,adjudication,reports",
+    "# Optional separate (not normal router): editorial_nomination for 137619 \u2014 DO NOT RUN until approved"
+  ],
+  "approvals_required": [
+    "DECIDE audience model: keep CLASSIFY=z-ai/glm-4.6 (forces 7315 rescores) OR align CLASSIFY to z-ai/glm-5.3-flash (5122 new; 2193 reusable)",
+    "Paid screen: 27 calls/papers (~$0.0022)",
+    "Paid audience: 7315 papers (~$0.0)",
+    "Paid quality: 453 papers (~$3.4336)",
+    "Hard budget cap $8.44",
+    "Optional editorial_nomination for 137619 (separate)",
+    "Confirm HF policy: stage match attempt vs require row per paper"
+  ],
+  "historical_estimates_superseded": {
+    "38": "ignored",
+    "468": "ignored",
+    "recomputed_K": 453
+  },
+  "paid_bulk_executed": false,
+  "audience_model_scenarios": {
+    "strict_env_CLASSIFY_MODEL": {
+      "model": "z-ai/glm-4.6",
+      "missing": 7315,
+      "note": "Env CLASSIFY_MODEL=z-ai/glm-4.6 matches ZERO existing domain rows \u2192 full rescore of screen-passed"
+    },
+    "aligned_to_historical_SCREEN_MODEL": {
+      "model": "z-ai/glm-5.3-flash",
+      "screen_passed": 7315,
+      "reusable_current": 2193,
+      "missing_new_paid": 5122,
+      "projected_cost_usd": 1.0526,
+      "low": 0.7368,
+      "high": 1.5789,
+      "note": "Recommended unless intentionally migrating audience to glm-4.6",
+      "method": "empirical_per_paper_from_canary"
+    }
+  }
+}

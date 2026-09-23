@@ -117,9 +117,9 @@ def insert_affiliation(
     evidence_type + evidence_value. Returns the new row id, or None when the
     evidence was already recorded.
 
-    When the same evidence is re-emitted with a higher confidence (e.g. after a
-    stage_version bump that fixed org-on-paper semantics), upgrade the stored
-    confidence in place so adjudication sees the corrected value.
+    When the same evidence is re-emitted, stamp ``stage_version`` (so a FAST
+    re-pass marks rows it also resolved) and upgrade confidence in place when
+    the new value is higher.
     """
     with conn.cursor() as cur:
         cur.execute(
@@ -127,34 +127,38 @@ def insert_affiliation(
             (content_item_id, paper_author_id, organisation_id, evidence_type, evidence_value),
         )
         if cur.fetchone() is not None:
-            if confidence is not None:
-                cur.execute(
-                    """
-                    UPDATE paper_intelligence.paper_author_affiliations
-                    SET confidence = %s,
-                        run_id = COALESCE(%s, run_id),
-                        stage_version = %s,
-                        policy_version = COALESCE(%s, policy_version)
-                    WHERE content_item_id = %s
-                      AND paper_author_id = %s
-                      AND organisation_id IS NOT DISTINCT FROM %s
-                      AND evidence_type = %s
-                      AND evidence_value IS NOT DISTINCT FROM %s
-                      AND (confidence IS NULL OR confidence < %s)
-                    """,
-                    (
-                        confidence,
-                        run_id,
-                        stage_version,
-                        policy_version,
-                        content_item_id,
-                        paper_author_id,
-                        organisation_id,
-                        evidence_type,
-                        evidence_value,
-                        confidence,
-                    ),
-                )
+            cur.execute(
+                """
+                UPDATE paper_intelligence.paper_author_affiliations
+                SET confidence = CASE
+                        WHEN %s::float IS NOT NULL
+                             AND (confidence IS NULL OR confidence < %s::float)
+                        THEN %s::float
+                        ELSE confidence
+                    END,
+                    run_id = COALESCE(%s, run_id),
+                    stage_version = %s,
+                    policy_version = COALESCE(%s, policy_version)
+                WHERE content_item_id = %s
+                  AND paper_author_id = %s
+                  AND organisation_id IS NOT DISTINCT FROM %s
+                  AND evidence_type = %s
+                  AND evidence_value IS NOT DISTINCT FROM %s
+                """,
+                (
+                    confidence,
+                    confidence,
+                    confidence,
+                    run_id,
+                    stage_version,
+                    policy_version,
+                    content_item_id,
+                    paper_author_id,
+                    organisation_id,
+                    evidence_type,
+                    evidence_value,
+                ),
+            )
             return None
         cur.execute(
             INSERT_SQL,

@@ -1,0 +1,17 @@
+{
+  "local_version": "html-oa-targeted-local-v002",
+  "oa_version": "html-oa-targeted-oa-v001",
+  "queue_size": 992,
+  "raw_store_cache_hits_peek": 924,
+  "estimated_api_calls_if_miss": 68,
+  "by_priority_bucket": {
+    "quality_selected": 259,
+    "notable_ooi": 0,
+    "newsletter_linkedin": 669,
+    "affiliation_conflict": 0,
+    "ambiguous_ror": 0,
+    "low_confidence": 38,
+    "other": 26
+  },
+  "paper_id_count": 992
+}

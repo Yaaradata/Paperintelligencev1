@@ -1,0 +1,11 @@
+{
+  "classify_model": "z-ai/glm-5.3-flash",
+  "sep16_21_screen_passed": 2535,
+  "sep16_21_audience_v003_dry_run_usd": 0.3546,
+  "sep16_21_calls": 169,
+  "sep1_15_screen_passed": 7315,
+  "sep1_15_audience_v003_dry_run_usd": 1.0233,
+  "sep1_15_calls": 488,
+  "7b_validation_sample_n": 130,
+  "7b_validation_est_usd": 0.0182
+}

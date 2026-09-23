@@ -39,9 +39,33 @@ _PUBLIC_EMAIL_DOMAINS = frozenset(
     }
 )
 
+# Member / professional-society alias domains. An @ieee.org address means
+# society membership, not employment at IEEE — never treat as affiliation.
+_MEMBER_SOCIETY_EMAIL_DOMAINS = frozenset(
+    {
+        "ieee.org",
+        "standards.ieee.org",
+        "acm.org",
+        "iso.org",
+        "usenix.org",
+        "aaai.org",
+        "siam.org",
+        "acm-dl.org",
+    }
+)
+
 
 def is_public_email_domain(domain: str) -> bool:
     return (domain or "").strip().lower().lstrip(".") in _PUBLIC_EMAIL_DOMAINS
+
+
+def is_member_society_email_domain(domain: str) -> bool:
+    """True for professional-society member-alias domains (ieee.org, acm.org, …)."""
+    return (domain or "").strip().lower().lstrip(".") in _MEMBER_SOCIETY_EMAIL_DOMAINS
+
+
+def member_society_email_domains() -> frozenset[str]:
+    return _MEMBER_SOCIETY_EMAIL_DOMAINS
 
 
 def domain_of(email: str) -> str | None:
@@ -113,11 +137,17 @@ def find_organisation_by_alias(
 
 
 def find_organisation_by_email_domain(conn: Connection, email_or_domain: str) -> int | None:
-    """Deterministic match of an email (or bare domain) against existing 'domain' aliases."""
+    """Deterministic match of an email (or bare domain) against existing 'domain' aliases.
+
+    Professional-society member domains (ieee.org, acm.org, …) never resolve:
+    they are membership aliases, not employer affiliations.
+    """
     domain = domain_of(email_or_domain) or (email_or_domain or "").strip().lower().strip(".")
     if not domain or is_public_email_domain(domain):
         return None
     for candidate in domain_candidates(domain):
+        if is_member_society_email_domain(candidate):
+            return None
         organisation_id = find_organisation_by_alias(conn, candidate, alias_type="domain")
         if organisation_id is not None:
             return organisation_id

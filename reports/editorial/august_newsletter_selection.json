@@ -1,0 +1,149 @@
+{
+  "window": {
+    "from": "2026-08-01",
+    "until": "2026-08-31"
+  },
+  "eligible_n": 47,
+  "selection_principle": "decision_value_not_prestige_or_score",
+  "editor_warning": "",
+  "tech": {
+    "seat": "TECH",
+    "role": "winner",
+    "why_this_paper": "Forces engineering leaders using LLM API relays/gateways to treat shared upstream credentials as a prompt-cache isolation failure mode, not a billing convenience.",
+    "decision_it_changes": "Whether to keep shared provider credentials/namespaces on the relay path, and what identity-preserving cache contract must be required of vendors/internal gateways.",
+    "action_for_reader": "This quarter: inventory every LLM relay/gateway in production; for each, document whether provider credentials/namespaces are shared across customers or tenants; run a cache-timing isolation probe on one non-prod path; require an identity-preserving cache contract in the next vendor/security review.",
+    "talking_point": "If your LLM relay maps many customers onto one provider cache identity, prompt-cache isolation can collapse even when customer auth looks separate.",
+    "caveat": "Evidence covers five open-source gateways, two providers, and a bounded production sample; prevalence on proprietary relays and full token-recovery impact are less certain.",
+    "why_not_runner_up": "Clearer immediate enterprise architecture decision and a concrete defense contract than the multi-agent collaboration-tax analysis, which is important but more diagnostic of agent design trade-offs than of a security control you can require this quarter.",
+    "content_item_id": 172395,
+    "arxiv_id": "2608.17485",
+    "title": "KeyPooling: Measuring Where LLM API Relay Paths Collapse Prompt Cache Isolation",
+    "canonical_url": "https://arxiv.org/abs/2608.17485",
+    "published_at": "2026-08-23T00:00:00+00:00",
+    "quality_score": 8.8,
+    "final_score": 8.6,
+    "domain": "efficient_inference",
+    "audiences": [
+      "practitioner",
+      "technical_leadership",
+      "enterprise_adoption"
+    ],
+    "application_domains": [
+      "cybersecurity"
+    ],
+    "organisations": [
+      "Johns Hopkins University"
+    ],
+    "top_organisation": "Johns Hopkins University",
+    "hf_featured": false,
+    "so_what": "It demonstrates that shared relay credentials can collapse prompt-cache isolation across customers and provides a concrete identity-preserving defense contract with modest modeled cost.",
+    "reason_not_higher": "The measurements cover five open-source gateways, two providers, and a bounded production sample; prevalence across proprietary relay implementations and the full practical impact of token recovery remain less certain."
+  },
+  "tech_runner_up": {
+    "seat": "TECH",
+    "role": "runner_up",
+    "why_this_paper": "Quantifies the hidden performance cost of making LLMs coordinate as a multi-agent team versus acting alone\u2014useful when teams are defaulting to multi-agent architectures.",
+    "decision_it_changes": "Whether a proposed multi-agent design is worth the coordination overhead for tasks that a single agent could already handle.",
+    "action_for_reader": "Pick one production multi-agent workflow; measure end-to-end quality/cost against a strong single-agent baseline on the same task set; only keep multi-agent if the gain exceeds the measured collaboration tax.",
+    "talking_point": "Multi-agent LLM systems can lose performance to coordination itself; the collaboration tax should be measured, not assumed away.",
+    "caveat": "Framework is framed around two-player cooperative settings and solo-tractable tasks; larger topologies may behave differently.",
+    "content_item_id": 3550,
+    "arxiv_id": "2608.22152",
+    "title": "The Collaboration Tax: How Much LLM Multi-Agent Systems Pay to Coordinate",
+    "canonical_url": "https://arxiv.org/abs/2608.22152",
+    "published_at": "2026-08-23T00:00:00+00:00",
+    "quality_score": 7.9,
+    "final_score": 7.4,
+    "domain": "natural_language_processing",
+    "audiences": [
+      "practitioner",
+      "technical_leadership"
+    ],
+    "application_domains": [
+      "general_method"
+    ],
+    "organisations": [],
+    "top_organisation": null,
+    "hf_featured": false,
+    "so_what": "It provides a formal and empirically broad way to quantify, predict, and reduce the hidden performance cost of coordination in LLM agent systems.",
+    "reason_not_higher": "The framework appears limited to two-player cooperative settings and solo-tractable tasks; broader agent topologies, long-horizon environments, and deployment conditions may exhibit different coordination failures, while the proposed mitigation is only partial."
+  },
+  "product": {
+    "seat": "PRODUCT",
+    "role": "winner",
+    "why_this_paper": "Shows that LLM \u201cis this neighborhood safe?\u201d style advice can encode place-based demographic stigma even when names also carry real risk signal\u2014changing how products should use LLMs for location/risk guidance.",
+    "decision_it_changes": "Whether to ship LLM-generated location/safety/risk recommendations without place-name stigma audits, and how to trade off accuracy against demographic bias when neighborhood identity is an input.",
+    "action_for_reader": "If any product surface uses LLMs for location, travel, housing, or local-risk guidance: run a name-vs-coordinates probe on your model for 20\u201350 places; require a bias review before launch; default to coordinates/features over evocative place names where possible.",
+    "talking_point": "LLM urban-safety judgments can track neighborhood stigma attached to a name, not just measured risk.",
+    "caveat": "Limited to two US cities and seven models; observational associations do not fully identify mechanisms or predict downstream harm in every deployment.",
+    "why_not_runner_up": "Stronger immediate product/governance decision for consumer and enterprise location-advice surfaces than claim-level confidence calibration, which is powerful but more of an answer-UX control than a go/no-go on a whole class of LLM advice features.",
+    "content_item_id": 2184,
+    "arxiv_id": "2608.26188",
+    "title": "Is Your Neighborhood Safe? Place-based Stigma in Large Language Models' Urban Safety Judgments",
+    "canonical_url": "https://arxiv.org/abs/2608.26188",
+    "published_at": "2026-08-23T00:00:00+00:00",
+    "quality_score": 7.9,
+    "final_score": 7.7,
+    "domain": "natural_language_processing",
+    "audiences": [
+      "practitioner",
+      "technical_leadership",
+      "enterprise_adoption"
+    ],
+    "application_domains": [
+      "general_method"
+    ],
+    "organisations": [
+      "University of Illinois Urbana-Champaign",
+      "Augustana University"
+    ],
+    "top_organisation": "Augustana University",
+    "hf_featured": false,
+    "so_what": "The study shows that LLM urban-safety advice can encode place-based demographic stigma even when neighborhood names also contain legitimate risk information, creating a consequential bias\u2013accuracy tradeoff.",
+    "reason_not_higher": "The analysis is limited to two US cities and seven models, and observational associations cannot fully identify the mechanisms behind models' judgments or predict downstream harm in real deployments."
+  },
+  "product_runner_up": {
+    "seat": "PRODUCT",
+    "role": "runner_up",
+    "why_this_paper": "Makes LLM confidence actionable at claim level so high-stakes products can route verification to uncertain statements instead of accepting/rejecting whole answers.",
+    "decision_it_changes": "How review/escalation UX is designed for LLM answers in decision-support products.",
+    "action_for_reader": "Prototype claim-level confidence on one high-stakes QA/decision flow; measure whether reviewers spend time on the uncertain claims rather than whole-response sampling.",
+    "talking_point": "A single response-level confidence score is too coarse when one answer mixes correct and incorrect claims.",
+    "caveat": "Evaluated primarily on factual QA; depends on reliable claim decomposition and manageable inference overhead in richer decision settings.",
+    "content_item_id": 120867,
+    "arxiv_id": "2608.22483",
+    "title": "Claim-Level Confidence Calibration for Reliable Decision Making with Large Language Models",
+    "canonical_url": "https://arxiv.org/abs/2608.22483",
+    "published_at": "2026-08-23T00:00:00+00:00",
+    "quality_score": 7.4,
+    "final_score": 7.3,
+    "domain": "natural_language_processing",
+    "audiences": [
+      "practitioner",
+      "enterprise_adoption"
+    ],
+    "application_domains": [
+      "general_method"
+    ],
+    "organisations": [
+      "Tsinghua University",
+      "IEEE Standards Association"
+    ],
+    "top_organisation": "IEEE Standards Association",
+    "hf_featured": false,
+    "so_what": "Claim-level calibration could make LLM-assisted decisions safer by directing verification or human review to specific uncertain statements rather than rejecting entire responses.",
+    "reason_not_higher": "The framework is evaluated primarily on factual QA, and its broader value depends on reliable claim decomposition, verification labels, and manageable inference-time overhead in more complex decision settings."
+  },
+  "cross_check": {
+    "tech_product_ids_differ": true,
+    "four_ids_unique": true,
+    "ids": [
+      172395,
+      3550,
+      2184,
+      120867
+    ],
+    "prestige_not_used_as_selector": true,
+    "application_gate_cleared": true
+  }
+}

@@ -256,6 +256,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--queue-only", action="store_true", help="Classify + estimate only")
     parser.add_argument("--execute", action="store_true", help="Run paid batch after queue")
+    parser.add_argument(
+        "--use-existing-queue",
+        action="store_true",
+        help="Load --queue-output JSON instead of re-classifying all papers",
+    )
     parser.add_argument("--batch-size", type=int, default=DEFAULT_BATCH)
     parser.add_argument("--spend-cap-usd", type=float, default=HARD_SPEND_CAP_USD)
     parser.add_argument("--judge-version", default=JUDGE_VERSION_DEFAULT)
@@ -264,6 +269,9 @@ def main() -> int:
         action="store_true",
         help="Permit OA HTTP on cache miss (default: PI/cache only)",
     )
+    parser.add_argument("--call-pause-seconds", type=float, default=8.0)
+    parser.add_argument("--rate-limit-sleep-seconds", type=float, default=90.0)
+    parser.add_argument("--per-paper-retries", type=int, default=4)
     parser.add_argument(
         "--queue-output",
         default=str(ROOT / "reports/backfill/affiliation_judge_sep_queue.json"),
@@ -286,14 +294,22 @@ def main() -> int:
     if mig_rc:
         return mig_rc
 
+    from paper_intelligence.openrouter import OpenRouterError  # local import
+    import time
+
     with connect() as conn:
-        queue = build_queue(
-            conn,
-            judge_version=args.judge_version,
-            allow_openalex_network=args.allow_openalex_network,
-        )
-        Path(args.queue_output).parent.mkdir(parents=True, exist_ok=True)
-        Path(args.queue_output).write_text(json.dumps(queue, indent=2, default=str))
+        queue_path = Path(args.queue_output)
+        if args.use_existing_queue and queue_path.exists():
+            queue = json.loads(queue_path.read_text())
+            print(f"Loaded existing queue from {queue_path}")
+        else:
+            queue = build_queue(
+                conn,
+                judge_version=args.judge_version,
+                allow_openalex_network=args.allow_openalex_network,
+            )
+            queue_path.parent.mkdir(parents=True, exist_ok=True)
+            queue_path.write_text(json.dumps(queue, indent=2, default=str))
         summary = {
             k: queue[k]
             for k in queue
@@ -301,7 +317,7 @@ def main() -> int:
         }
         print("=== SEPTEMBER QUEUE ===")
         print(json.dumps(summary, indent=2, default=str))
-        print(f"wrote {args.queue_output}")
+        print(f"wrote/using {args.queue_output}")
         print(
             f"\nNEW paid judge calls: {queue['new_judge_queue_size']}  "
             f"est. ${queue['estimated_total_judge_cost_usd']:.4f}"
@@ -315,7 +331,34 @@ def main() -> int:
         if args.queue_only and not args.execute:
             return 0
 
-        batch = queue["new_judge_queue"][: args.batch_size]
+        # Take first N queue items; skip those already paid for this judge version.
+        planned = queue["new_judge_queue"][: args.batch_size]
+        batch: list[dict] = []
+        already_done: list[int] = []
+        for item in planned:
+            existing = get_existing_judgment(
+                conn, int(item["paper_id"]), judge_version=args.judge_version
+            )
+            if existing and existing.get("judge_called"):
+                already_done.append(int(item["paper_id"]))
+                continue
+            batch.append(item)
+        # If some of the first-50 already done, pull more from the full queue to fill.
+        if len(batch) < args.batch_size:
+            planned_ids = {int(x["paper_id"]) for x in planned}
+            for item in queue["new_judge_queue"]:
+                if len(batch) >= args.batch_size:
+                    break
+                pid = int(item["paper_id"])
+                if pid in planned_ids:
+                    continue
+                existing = get_existing_judgment(
+                    conn, pid, judge_version=args.judge_version
+                )
+                if existing and existing.get("judge_called"):
+                    continue
+                batch.append(item)
+
         report: dict = {
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "window": queue["window"],
@@ -323,15 +366,21 @@ def main() -> int:
             "queue_summary": summary,
             "batch_size_requested": args.batch_size,
             "batch_size_planned": len(batch),
+            "already_done_in_first_n": already_done,
             "spend_cap_usd": args.spend_cap_usd,
             "papers": [],
             "before_after": [],
             "decision_counts": Counter(),
             "paid_calls": 0,
             "actual_cost_usd": 0.0,
+            "errors": [],
             "idempotency": [],
-            "remaining_unjudged": max(0, queue["new_judge_queue_size"] - len(batch)),
+            "remaining_unjudged": max(0, queue["new_judge_queue_size"] - args.batch_size),
         }
+        print(
+            f"Resume: {len(already_done)} already judged in first-{args.batch_size}; "
+            f"will call {len(batch)} remaining"
+        )
 
         for item in batch:
             if report["actual_cost_usd"] >= args.spend_cap_usd:
@@ -346,15 +395,36 @@ def main() -> int:
                 rows_before, min_confidence=MIN_CONFIDENCE
             )
 
-            out = process_paper_affiliation_judge(
-                conn,
-                pid,
-                dry_run=False,
-                allow_openalex_network=args.allow_openalex_network,
-                judge_version=args.judge_version,
-                persist=True,
-                force=False,
-            )
+            out: dict | None = None
+            last_err: str | None = None
+            for attempt in range(1, args.per_paper_retries + 1):
+                try:
+                    out = process_paper_affiliation_judge(
+                        conn,
+                        pid,
+                        dry_run=False,
+                        allow_openalex_network=args.allow_openalex_network,
+                        judge_version=args.judge_version,
+                        persist=True,
+                        force=False,
+                    )
+                    last_err = None
+                    break
+                except OpenRouterError as exc:
+                    last_err = str(exc)
+                    print(
+                        f"paper {pid} attempt {attempt}/{args.per_paper_retries}: {exc}",
+                        file=sys.stderr,
+                    )
+                    if attempt < args.per_paper_retries:
+                        time.sleep(args.rate_limit_sleep_seconds)
+                    else:
+                        report["errors"].append(
+                            {"paper_id": pid, "error": last_err[:500]}
+                        )
+            if out is None:
+                continue
+
             # Stamp evidence_version onto judgment result
             jrow = get_existing_judgment(conn, pid, judge_version=args.judge_version)
             if jrow and not out.get("skipped_duplicate"):
@@ -364,7 +434,7 @@ def main() -> int:
                         result = json.loads(result)
                     except Exception:  # noqa: BLE001
                         result = {}
-                result["evidence_version"] = item["evidence_version"]
+                result["evidence_version"] = item.get("evidence_version")
                 conn.execute(
                     """
                     UPDATE paper_intelligence.affiliation_judgments
@@ -383,7 +453,11 @@ def main() -> int:
                 report["paid_calls"] += 1
                 llm = ((out.get("judge") or {}).get("llm") or {})
                 cost = float(llm.get("estimated_cost") or 0)
+                if cost <= 0 and jrow and jrow.get("estimated_cost_usd") is not None:
+                    cost = float(jrow["estimated_cost_usd"])
                 report["actual_cost_usd"] += cost
+                if args.call_pause_seconds > 0:
+                    time.sleep(args.call_pause_seconds)
 
             decision = out.get("decision")
             report["decision_counts"][str(decision)] += 1
@@ -402,7 +476,6 @@ def main() -> int:
                 judge_called=bool(out.get("judge_called")),
                 min_confidence=MIN_CONFIDENCE,
             )
-            # Adjudication path check
             scored = organisation_score(
                 rows_after,
                 rejected_organisation_ids=rejected,
@@ -414,7 +487,6 @@ def main() -> int:
                 sorted(set(before_ids) | set(after_ids) | set(accepted) | set(rejected)),
             )
 
-            # Preserve original evidence: count HTML/OA rows still present
             evidence_preserved = conn.execute(
                 """
                 SELECT
@@ -464,6 +536,71 @@ def main() -> int:
                     "rejected_ids": rejected,
                 }
             )
+            # Checkpoint after each paper so a later crash keeps progress.
+            Path(args.execute_output).write_text(
+                json.dumps(
+                    {
+                        **report,
+                        "decision_counts": dict(report["decision_counts"]),
+                        "actual_cost_usd": round(report["actual_cost_usd"], 6),
+                        "partial": True,
+                    },
+                    indent=2,
+                    default=str,
+                )
+            )
+            print(
+                f"progress {report['paid_calls']}/{len(batch)} "
+                f"pid={pid} decision={decision} cost=${report['actual_cost_usd']:.4f}"
+            )
+
+        # Include already-done first-N papers in the report for completeness.
+        for pid in already_done:
+            jrow = get_existing_judgment(conn, pid, judge_version=args.judge_version)
+            if not jrow:
+                continue
+            rows = load_affiliation_rows(conn, pid)
+            rejected = list(jrow.get("rejected_organisation_ids") or [])
+            accepted = list(jrow.get("accepted_organisation_ids") or [])
+            after_ids = effective_organisation_ids(
+                rows,
+                rejected_organisation_ids=rejected,
+                decision=jrow.get("decision"),
+                judge_called=True,
+                min_confidence=MIN_CONFIDENCE,
+            )
+            before_ids = effective_organisation_ids(rows, min_confidence=MIN_CONFIDENCE)
+            name_map = org_names(
+                conn, sorted(set(before_ids) | set(after_ids) | set(accepted) | set(rejected))
+            )
+            cost = float(jrow["estimated_cost_usd"] or 0)
+            report["decision_counts"][str(jrow.get("decision"))] += 1
+            report["paid_calls"] += 1
+            report["actual_cost_usd"] += cost
+            paper = conn.execute(
+                "SELECT arxiv_id FROM paper_intelligence.papers WHERE paper_id=%s",
+                (pid,),
+            ).fetchone()
+            report["papers"].append(
+                {
+                    "paper_id": pid,
+                    "arxiv_id": (paper or {}).get("arxiv_id"),
+                    "decision": jrow.get("decision"),
+                    "judge_called": True,
+                    "skipped_duplicate": True,
+                    "resumed_from_prior_run": True,
+                    "cost_usd": cost,
+                    "accepted_organisation_ids": accepted,
+                    "rejected_organisation_ids": rejected,
+                    "accepted_names": [name_map.get(i, str(i)) for i in accepted],
+                    "rejected_names": [name_map.get(i, str(i)) for i in rejected],
+                    "effective_before": [name_map.get(i, str(i)) for i in before_ids],
+                    "effective_after": [name_map.get(i, str(i)) for i in after_ids],
+                    "removed_ids": sorted(set(before_ids) - set(after_ids)),
+                    "added_ids": sorted(set(after_ids) - set(before_ids)),
+                    "reason": (jrow.get("reason") or "")[:400],
+                }
+            )
 
         # Idempotency: re-run first few judged papers
         for paper_rec in report["papers"][:5]:
@@ -498,20 +635,30 @@ def main() -> int:
                 }
             )
 
-        # Recount remaining unjudged after batch
+        judged_ids = {int(p["paper_id"]) for p in report["papers"]}
         remaining = [
             q
             for q in queue["new_judge_queue"]
-            if q["paper_id"] not in {p["paper_id"] for p in report["papers"]}
+            if int(q["paper_id"]) not in judged_ids
         ]
-        report["remaining_unjudged"] = len(remaining)
-        report["remaining_unjudged_paper_ids"] = [q["paper_id"] for q in remaining[:100]]
+        # Also exclude any other paid judgments in the full new queue
+        still = []
+        for q in remaining:
+            ex = get_existing_judgment(
+                conn, int(q["paper_id"]), judge_version=args.judge_version
+            )
+            if ex and ex.get("judge_called"):
+                continue
+            still.append(q)
+        report["remaining_unjudged"] = len(still)
+        report["remaining_unjudged_paper_ids"] = [q["paper_id"] for q in still[:100]]
         report["decision_counts"] = dict(report["decision_counts"])
         report["actual_cost_usd"] = round(report["actual_cost_usd"], 6)
+        report["partial"] = False
         report["idempotent"] = all(
             i.get("skipped_duplicate") and i.get("no_new_rows")
             for i in report["idempotency"]
-        )
+        ) if report["idempotency"] else None
 
         Path(args.execute_output).write_text(json.dumps(report, indent=2, default=str))
         print("\n=== BATCH EXECUTE ===")

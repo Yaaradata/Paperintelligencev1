@@ -14,6 +14,7 @@ from __future__ import annotations
 from typing import Any, Sequence
 
 from paper_intelligence.quality.stage import MAX_ORG_BOOST
+from paper_intelligence.organisation_resolution import is_member_society_email_domain
 
 # Paper-specific evidence carries full weight. Author-profile evidence says
 # where a person usually works, not who backed THIS paper, so it is halved.
@@ -41,6 +42,13 @@ UNLISTED_RESOLVED_SCORE = 3.0
 
 def _evidence_weight(evidence_type: str | None) -> float:
     return EVIDENCE_WEIGHTS.get((evidence_type or "").strip().lower(), 0.5)
+
+
+def _is_society_email_only(row: dict[str, Any]) -> bool:
+    """Member-society @ieee.org / @acm.org matches are not affiliations."""
+    if (row.get("evidence_type") or "").strip().lower() != "email_domain":
+        return False
+    return is_member_society_email_domain(str(row.get("evidence_value") or ""))
 
 
 def _org_standing(row: dict[str, Any]) -> float:
@@ -86,6 +94,8 @@ def organisation_score(
     considered = 0
 
     for row in rows:
+        if _is_society_email_only(row):
+            continue
         confidence = row.get("confidence")
         confidence = float(confidence) if confidence is not None else 1.0
         if confidence < MIN_CONFIDENCE:

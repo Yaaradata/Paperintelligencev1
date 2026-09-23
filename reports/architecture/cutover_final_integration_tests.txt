@@ -1,0 +1,10 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+E   AssertionError: assert 'failed' == 'success'
+      
+      - success
+      + failed
+/home/ubuntu/Paperintelligencev1/worktrees/subha/tests/integration/test_normalize_authors.py:86: AssertionError: assert 'failed' == 'success'
+=========================== short test summary info ============================
+FAILED tests/integration/test_normalize_authors.py::test_empty_authors_succeeds_cleanly
+1 failed, 1 passed in 0.38s

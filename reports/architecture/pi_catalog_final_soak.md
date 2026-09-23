@@ -58,13 +58,13 @@
 | catalog_window | 5645 | 5645 | 5645 | 0 | 0 | match |
 | relevance_keep | 3427 | 3427 | 3427 | 0 | 0 | match |
 | screen_candidates | 3427 | 3427 | 3427 | 0 | 0 | match |
-| screen_survivors | 3286 | 3286 | 3286 | 0 | 0 | match |
+| screen_survivors | 3293 | 3293 | 3293 | 0 | 0 | match |
 | audience_candidates | 3427 | 3427 | 3427 | 0 | 0 | match |
 | normalize_candidates | 3427 | 3427 | 3427 | 0 | 0 | match |
-| quality_scored | 795 | 795 | 795 | 0 | 0 | match |
-| hf_signals | 124 | 124 | 124 | 0 | 0 | match |
-| affiliation_rows | 2742 | 2742 | 2742 | 0 | 0 | match |
-| adjudication_current | 3384 | 3384 | 3384 | 0 | 0 | match |
+| quality_scored | 805 | 805 | 805 | 0 | 0 | match |
+| hf_signals | 125 | 125 | 125 | 0 | 0 | match |
+| affiliation_rows | 2744 | 2744 | 2744 | 0 | 0 | match |
+| adjudication_current | 3391 | 3391 | 3391 | 0 | 0 | match |
 | relevance_reject_pi | None | 1988 | None | None | None | match |
 
 ## 15d (2026-09-01 → 2026-09-15)
@@ -74,12 +74,12 @@
 | catalog_window | 12149 | 12149 | 12149 | 0 | 0 | match |
 | relevance_keep | 7548 | 7548 | 7548 | 0 | 0 | match |
 | screen_candidates | 7548 | 7548 | 7548 | 0 | 0 | match |
-| screen_survivors | 7300 | 7300 | 7300 | 0 | 0 | match |
+| screen_survivors | 7307 | 7307 | 7307 | 0 | 0 | match |
 | audience_candidates | 7548 | 7548 | 7548 | 0 | 0 | match |
 | normalize_candidates | 7548 | 7548 | 7548 | 0 | 0 | match |
-| quality_scored | 1820 | 1820 | 1820 | 0 | 0 | match |
-| hf_signals | 313 | 313 | 313 | 0 | 0 | match |
-| affiliation_rows | 6040 | 6040 | 6040 | 0 | 0 | match |
-| adjudication_current | 7505 | 7505 | 7505 | 0 | 0 | match |
+| quality_scored | 1830 | 1830 | 1830 | 0 | 0 | match |
+| hf_signals | 314 | 314 | 314 | 0 | 0 | match |
+| affiliation_rows | 6042 | 6042 | 6042 | 0 | 0 | match |
+| adjudication_current | 7512 | 7512 | 7512 | 0 | 0 | match |
 | relevance_reject_pi | None | 4306 | None | None | None | match |
 

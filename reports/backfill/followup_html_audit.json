@@ -1,0 +1,181 @@
+{
+  "html_primary_papers": 5430,
+  "evidence_rows_total": 111256,
+  "paper_counts_primary_bucket": {
+    "canonical_organisation_id_linked": 4638,
+    "valid_organisation_text_unlinked": 605,
+    "provisional_normalised_name_only": 187
+  },
+  "evidence_row_counts": {
+    "canonical_organisation_id_linked": 62914,
+    "valid_organisation_text": 32394,
+    "provisional_normalised_name_only": 43741,
+    "ambiguous_institution_name": 8363,
+    "truncated_affiliation_text": 1378,
+    "non_organisation_text": 3486,
+    "department_only": 2721
+  },
+  "note": "HTML-primary means HTML is the primary evidence source, NOT that canonical org identity is verified correct.",
+  "top_unlinked_valid_strings": [
+    [
+      "University of California",
+      424
+    ],
+    [
+      "The Chinese University of Hong Kong",
+      300
+    ],
+    [
+      "University of Science and Technology of",
+      280
+    ],
+    [
+      "The University of Hong Kong",
+      252
+    ],
+    [
+      "Imperial College",
+      233
+    ],
+    [
+      "The Hong Kong University of Science and Technology",
+      227
+    ],
+    [
+      "Purdue University",
+      211
+    ],
+    [
+      "The University of Texas",
+      188
+    ],
+    [
+      "University of Maryland",
+      179
+    ],
+    [
+      "The Hong Kong Polytechnic",
+      168
+    ],
+    [
+      "These authors contributed equally to this work",
+      149
+    ],
+    [
+      "University of Electronic Science and Technology",
+      146
+    ],
+    [
+      "Xi\u2019an Jiaotong University",
+      130
+    ],
+    [
+      "Zayed University of Artificial Intelligence",
+      122
+    ],
+    [
+      "University of Texas",
+      117
+    ],
+    [
+      "Technische Universit\u00e4t",
+      115
+    ],
+    [
+      "Shenzhen University",
+      115
+    ],
+    [
+      "Munich Center for Machine Learning (MCML)",
+      109
+    ],
+    [
+      "Shanghai Innovation Institute",
+      107
+    ],
+    [
+      "Adobe Research",
+      103
+    ],
+    [
+      "Pengcheng Laboratory",
+      97
+    ],
+    [
+      "affiliation: ByteDance Seed",
+      96
+    ],
+    [
+      "affiliation: M-A-P",
+      96
+    ],
+    [
+      "University of North Carolina",
+      86
+    ],
+    [
+      "Huawei Technologies Co",
+      85
+    ],
+    [
+      "Zhongguancun Academy",
+      83
+    ],
+    [
+      "ELLIS Institute",
+      82
+    ],
+    [
+      "Vrije Universiteit",
+      78
+    ],
+    [
+      "Shenzhen Loop Area Institute",
+      77
+    ],
+    [
+      "Berlin Institute for the Foundations of Learning",
+      77
+    ],
+    [
+      "Hangzhou Dianzi University",
+      76
+    ],
+    [
+      "Adam Mickiewicz University",
+      76
+    ],
+    [
+      "Republic of Korea",
+      74
+    ],
+    [
+      "University of Notre Dame",
+      72
+    ],
+    [
+      "Starknet Foundation",
+      72
+    ],
+    [
+      "Trail of Bits",
+      72
+    ],
+    [
+      "affiliation: TokenWave.AI",
+      68
+    ],
+    [
+      "Institute of Artificial Intelligence",
+      67
+    ],
+    [
+      "Universit\u00e9 de Montr\u00e9al",
+      67
+    ],
+    [
+      "United Kingdom",
+      66
+    ]
+  ]
+}

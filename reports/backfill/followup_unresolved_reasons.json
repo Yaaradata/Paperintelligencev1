@@ -1,0 +1,8 @@
+{
+  "n": 698,
+  "counts": {
+    "openalex_valid_work_but_no_institutions": 678,
+    "openalex_no_matching_work": 16,
+    "openalex_lookup_failed": 4
+  }
+}

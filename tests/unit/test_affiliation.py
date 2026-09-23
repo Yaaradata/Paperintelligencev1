@@ -184,6 +184,8 @@ class FakeCursor:
         elif "UPDATE paper_intelligence.paper_author_affiliations" in text:
             (
                 confidence,
+                _confidence2,
+                _confidence3,
                 run_id,
                 stage_version,
                 policy_version,
@@ -192,7 +194,6 @@ class FakeCursor:
                 organisation_id,
                 etype,
                 evalue,
-                _min_confidence,
             ) = params
             for row in self.db.affiliations:
                 if (
@@ -201,9 +202,12 @@ class FakeCursor:
                     and row["organisation_id"] == organisation_id
                     and row["evidence_type"] == etype
                     and row["evidence_value"] == evalue
-                    and (row.get("confidence") is None or float(row["confidence"]) < float(confidence))
                 ):
-                    row["confidence"] = confidence
+                    if confidence is not None and (
+                        row.get("confidence") is None
+                        or float(row["confidence"]) < float(confidence)
+                    ):
+                        row["confidence"] = confidence
                     if run_id is not None:
                         row["run_id"] = run_id
                     row["stage_version"] = stage_version
@@ -316,12 +320,12 @@ def test_no_evidence_supplied_when_nothing_to_work_with() -> None:
 def test_fast_mode_uses_oai_structured_affiliation_without_html(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """FAST affiliation resolves local/OAI evidence and never calls HTML/ROR/OpenAlex."""
+    """FAST affiliation resolves local/OAI evidence and skips HTML when OAI is present."""
     html_calls: list[str] = []
 
     def mark_html(*args: Any, **kwargs: Any) -> Any:
         html_calls.append("called")
-        raise AssertionError("FAST mode must not fetch arXiv HTML")
+        raise AssertionError("FAST mode must not fetch arXiv HTML when OAI evidence exists")
 
     monkeypatch.setattr(
         "paper_intelligence.author_affiliation.stage.arxiv_html_client.fetch_affiliations",
@@ -365,6 +369,56 @@ def test_fast_mode_uses_oai_structured_affiliation_without_html(
 
     result = AffiliationStage(db, mode="fast").process(1, RUN)
     assert html_calls == []
+    assert result.status == "success"
+    assert result.data["outcome"] == OUTCOME_RESOLVED
+    assert any(row["organisation_id"] == stanford for row in db.affiliations)
+
+
+def test_fast_mode_fetches_html_when_oai_empty(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """FAST may call arXiv HTML (no ROR/OpenAlex) when local/OAI evidence is empty."""
+    html_calls: list[str] = []
+
+    def fake_html(arxiv_id: str, **kwargs: Any) -> Any:
+        html_calls.append(arxiv_id)
+        return type(
+            "Page",
+            (),
+            {
+                "error": None,
+                "affiliations": ["Affiliation: Stanford University"],
+                "emails": [],
+                "evidence_url": f"https://arxiv.org/html/{arxiv_id}",
+            },
+        )()
+
+    monkeypatch.setattr(
+        "paper_intelligence.author_affiliation.stage.arxiv_html_client.fetch_affiliations",
+        fake_html,
+    )
+    monkeypatch.setattr(
+        "paper_intelligence.author_affiliation.stage.load_watchlist",
+        lambda: type(
+            "W",
+            (),
+            {"match": lambda *a, **k: None, "entries": []},
+        )(),
+    )
+
+    db = FakeDB(
+        paper=make_paper(affiliation_text=[], arxiv_id="2609.00001"),
+        authors=make_authors("Ada Lovelace"),
+    )
+    stanford = db.add_organisation(
+        "Stanford University", priority=8, is_org_of_interest=True
+    )
+    db.aliases.append(
+        {"organisation_id": stanford, "alias": "Stanford University", "alias_type": "name"}
+    )
+
+    result = AffiliationStage(db, mode="fast").process(1, RUN)
+    assert html_calls == ["2609.00001"]
     assert result.status == "success"
     assert result.data["outcome"] == OUTCOME_RESOLVED
     assert any(row["organisation_id"] == stanford for row in db.affiliations)
@@ -711,6 +765,23 @@ def test_public_email_domain_is_never_used_as_an_organisation() -> None:
     )
     organisation_id = db.add_organisation("Gmail Inc")
     db.add_domain(organisation_id, "gmail.com")
+
+    result = AffiliationStage(db, allow_ror=False, allow_openalex=False).process(1, RUN)
+
+    assert result.status == "unresolved"
+    assert all(row["organisation_id"] is None for row in db.affiliations)
+
+
+def test_society_member_email_domain_is_not_affiliation() -> None:
+    """@ieee.org / @acm.org are membership aliases, not employer affiliation."""
+    db = FakeDB(
+        paper=make_paper(extracted_emails=["ada@ieee.org", "grace@acm.org"]),
+        authors=make_authors("Ada Lovelace", "Grace Hopper"),
+    )
+    ieee = db.add_organisation("IEEE Standards Association", is_org_of_interest=True)
+    acm = db.add_organisation("ACM", is_org_of_interest=True)
+    db.add_domain(ieee, "ieee.org")
+    db.add_domain(acm, "acm.org")
 
     result = AffiliationStage(db, allow_ror=False, allow_openalex=False).process(1, RUN)
 

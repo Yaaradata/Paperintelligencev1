@@ -119,9 +119,10 @@ INSERT INTO paper_intelligence.paper_intelligence_current
      domain_confidence, audience_confidence, screen_score, quality_score,
      organisation_score, org_boost, person_boost, final_score,
      top_organisation_id, author_resolution_status, affiliation_resolution_status,
-     quality_status, adjudication_json, run_id, updated_at)
+     quality_status, tech_relevance, product_relevance, audience_policy_version,
+     adjudication_json, run_id, updated_at)
 VALUES (%s, %s, %s::jsonb, %s::jsonb, %s::jsonb, %s, %s, %s, %s, %s, %s, %s, %s,
-        %s, %s, %s, %s, %s::jsonb, %s, NOW())
+        %s, %s, %s, %s, %s, %s, %s, %s::jsonb, %s, NOW())
 ON CONFLICT (content_item_id) DO UPDATE SET
     domain = EXCLUDED.domain,
     subdomains = EXCLUDED.subdomains,
@@ -139,10 +140,51 @@ ON CONFLICT (content_item_id) DO UPDATE SET
     author_resolution_status = EXCLUDED.author_resolution_status,
     affiliation_resolution_status = EXCLUDED.affiliation_resolution_status,
     quality_status = EXCLUDED.quality_status,
+    tech_relevance = EXCLUDED.tech_relevance,
+    product_relevance = EXCLUDED.product_relevance,
+    audience_policy_version = EXCLUDED.audience_policy_version,
     adjudication_json = EXCLUDED.adjudication_json,
     run_id = EXCLUDED.run_id,
     updated_at = NOW()
 """
+
+
+def _seat_scores_from_results(
+    results: dict[str, Any],
+) -> tuple[float | None, float | None, str | None]:
+    """Fill seat scores only from latest v002 / prompt-v003 classification rows.
+
+    Never map legacy audience labels to seat scores. Leave null when absent.
+    """
+    tech_meta = results.get("tech_relevance") or {}
+    product_meta = results.get("product_relevance") or {}
+
+    def _is_v002(meta: dict[str, Any]) -> bool:
+        if not meta:
+            return False
+        return (
+            str(meta.get("policy_version") or "") == "v002"
+            or str(meta.get("prompt_version") or "") == "v003"
+        )
+
+    tech_relevance = None
+    product_relevance = None
+    if _is_v002(tech_meta):
+        raw = (tech_meta.get("result") or {}).get("tech_relevance")
+        try:
+            tech_relevance = float(raw) if raw is not None else None
+        except (TypeError, ValueError):
+            tech_relevance = None
+    if _is_v002(product_meta):
+        raw = (product_meta.get("result") or {}).get("product_relevance")
+        try:
+            product_relevance = float(raw) if raw is not None else None
+        except (TypeError, ValueError):
+            product_relevance = None
+
+    if tech_relevance is None and product_relevance is None:
+        return None, None, None
+    return tech_relevance, product_relevance, "v002"
 
 SCREEN_DIMENSIONS = ("technical_significance", "apparent_novelty", "evidence_strength")
 
@@ -337,6 +379,10 @@ def run_window(
         if quality_status == "stale_content":
             stats["stale_content"] += 1
 
+        tech_relevance, product_relevance, audience_policy_version = (
+            _seat_scores_from_results(results)
+        )
+
         rows.append(
             (
                 content_id,
@@ -356,6 +402,9 @@ def run_window(
                 "resolved" if author_counts.get(content_id) else "no_authors",
                 affiliation_status,
                 quality_status,
+                tech_relevance,
+                product_relevance,
+                audience_policy_version,
                 json.dumps(
                     {
                         "screen_dimensions": {k: screen.get(k) for k in SCREEN_DIMENSIONS},
@@ -390,6 +439,9 @@ def run_window(
                         if excl
                         else None,
                         "author_count": author_counts.get(content_id, 0),
+                        "tech_relevance": tech_relevance,
+                        "product_relevance": product_relevance,
+                        "audience_policy_version": audience_policy_version,
                         "stage_version": STAGE_VERSION,
                         "policy_version": POLICY_VERSION,
                     },
