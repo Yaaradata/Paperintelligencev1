@@ -83,6 +83,10 @@ _DEFAULT_PRICES: dict[str, tuple[float, float]] = {
     # https://openrouter.ai/openai/gpt-5.6-terra — list $2 / $12 (post-cutover
     # quality model per policies/quality_models/v001.yaml).
     "openai/gpt-5.6-terra": (2.00, 12.00),
+    # https://openrouter.ai/typesafe/jev-1.13 — System One; $0.042 / $0 input,
+    # output free. Verified 2026-09-23 against OpenRouter/TypeSafe docs.
+    # Pin typesafe/jev-1.13 only — never ~typesafe/jev-latest in runs.
+    "typesafe/jev-1.13": (0.042, 0.00),
 }
 
 

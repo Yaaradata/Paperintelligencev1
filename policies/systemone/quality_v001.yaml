@@ -1,0 +1,125 @@
+# System One quality rubric policy — six score dimensions only.
+# version: v001
+# Rubric text aligned with prompts/quality/v001.md and v002.md.
+# No so_what / reason_not_higher (Jev cannot produce editorial prose).
+# State: title + abstract only. Model: typesafe/jev-1.13 (pinned).
+#
+# Score criteria: 10 levels (0..9) → mapped to 0–10 via score*(10/9).
+
+version: v001
+stage: quality
+model: typesafe/jev-1.13
+state_fields: [title, abstract]
+prompt_source: prompts/quality/v002.md
+composite:
+  # Applied in evaluation code (same as quality stage).
+  weights:
+    technical_significance: 0.28
+    apparent_novelty: 0.24
+    practical_applicability: 0.20
+    professional_value: 0.16
+    learning_value: 0.12
+  evidence_factor: "0.70 + 0.03 * evidence_strength"
+
+questions:
+  technical_significance:
+    type: score
+    instructions: >
+      Score the claimed technical contribution of this paper on its own terms
+      (ignore author prestige). Put thin-evidence uncertainty only into
+      evidence_strength — do not double-penalise contribution here.
+    criteria:
+      - Trivial or no technical contribution
+      - Very weak technical contribution
+      - Weak technical contribution
+      - Below-average technical contribution
+      - Mild technical contribution
+      - Ordinary competent technical contribution
+      - Clear solid technical contribution
+      - Strong technical contribution
+      - Very strong technical contribution
+      - Exceptional technical contribution
+
+  apparent_novelty:
+    type: score
+    instructions: >
+      How new does the claimed idea or approach appear from the title and abstract?
+      Score claimed novelty honestly; put evidence doubt into evidence_strength only.
+    criteria:
+      - Entirely routine / no novelty
+      - Almost no novelty
+      - Weak novelty
+      - Below-average novelty
+      - Mild novelty
+      - Ordinary incremental novelty
+      - Clear novelty
+      - Strong novelty
+      - Very strong novelty
+      - Exceptional novelty
+
+  practical_applicability:
+    type: score
+    instructions: >
+      How applicable is the claimed contribution to real systems, products, or
+      practitioner workflows? Score the claim; thin evidence goes in evidence_strength.
+    criteria:
+      - Not applicable in practice
+      - Almost no practical path
+      - Weak practical applicability
+      - Below-average practicality
+      - Mild practical applicability
+      - Ordinary incremental practical applicability
+      - Clear practical applicability
+      - Strong practical applicability
+      - Very strong practical applicability
+      - Exceptional practical applicability
+
+  professional_value:
+    type: score
+    instructions: >
+      How valuable would this paper be to a senior working professional deciding
+      architecture, product, evaluation, or operations? Decision value, not prestige.
+    criteria:
+      - No professional decision value
+      - Almost no decision value
+      - Weak professional value
+      - Below-average professional value
+      - Mild professional value
+      - Ordinary professional interest
+      - Clear professional decision value
+      - Strong professional decision value
+      - Very strong professional value
+      - Exceptional professional decision value
+
+  learning_value:
+    type: score
+    instructions: >
+      How much would a skilled practitioner learn that transfers beyond this exact paper?
+    criteria:
+      - Nothing transferable to learn
+      - Almost no learning value
+      - Weak learning value
+      - Below-average learning value
+      - Mild learning value
+      - Ordinary incremental learning value
+      - Clear transferable learning
+      - Strong learning value
+      - Very strong learning value
+      - Exceptional learning value
+
+  evidence_strength:
+    type: score
+    instructions: >
+      How well are the claims supported by evidence described in the abstract?
+      This is the only place to put thin-evidence uncertainty.
+    criteria:
+      - Unsupported or no evidence described
+      - Very weak evidence
+      - Weak evidence
+      - Below-average evidence
+      - Mild evidence
+      - Ordinary competent evidence
+      - Clear solid evidence
+      - Strong evidence
+      - Very strong evidence
+      - Exceptional evidence strength

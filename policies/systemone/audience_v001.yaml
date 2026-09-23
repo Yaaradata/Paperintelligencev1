@@ -1,0 +1,92 @@
+# System One audience / seat policy.
+# version: v001
+# Seat text sourced from policies/editorial_seats/v001.yaml.
+# Domain / application_domain vocabulary from policies/classification/v002.yaml.
+# State: title + abstract only. Model: typesafe/jev-1.13 (pinned).
+
+version: v001
+stage: audience_domain
+model: typesafe/jev-1.13
+state_fields:
+- title
+- abstract
+seat_policy: policies/editorial_seats/v001.yaml
+vocabulary_policy: policies/classification/v002.yaml
+notes: tech_relevance and product_relevance mirror AUDIENCE_POLICY=v002 seat scores. domain and application_domain
+  use the closed vocabulary. application_domain choice is single-label for Jev; general_method means method-only.
+questions:
+  tech_relevance:
+    type: score
+    instructions: 'Score how relevant this paper is for the TECH editorial seat (0–10 style). Reader:
+      Senior engineering managers, directors, GMs, heads of engineering, AI/ML, platform, architecture,
+      or technical strategy. Decision areas: architecture or technical design; evaluation; reliability
+      or failure modes; security or safety; cost, latency, or performance; model/tool/vendor choice; engineering
+      practices; whether a technical claim is credible. A high score means a credible reader could say
+      one of: "I can have my team try this on our stack this quarter and report back." / "This changes
+      an architecture / eval / cost / safety bet I am about to make." / "I can use this to judge whether
+      a vendor or internal claim is real.". Reject for this seat: pure theory with no implementable path,
+      or a finding whose only action is "interesting".'
+    criteria: &id001
+    - Irrelevant to this seat / no decision value
+    - Barely relevant; almost no actionable consequence
+    - Weak relevance for this seat
+    - Below-average seat relevance
+    - Mild seat relevance
+    - Ordinary seat relevance (interesting but weak decision value)
+    - Clear decision value for this seat
+    - Strong decision value for this seat
+    - Very strong decision value for this seat
+    - Exceptional decision value for this seat
+  product_relevance:
+    type: score
+    instructions: 'Score how relevant this paper is for the PRODUCT editorial seat (0–10 style). Reader:
+      Senior product managers, product directors, heads of product, and adjacent business/process/risk
+      leaders. Decision areas: what to build or not build; feature scope; workflow or process design;
+      user behaviour, adoption, or trust; human-AI interaction; commercial model or pricing; governance,
+      compliance, or risk; deployment or operating model. A high score means a credible reader could say
+      one of: "This changes what we should build or how we should scope an AI feature." / "This tells
+      me something real about user behaviour, trust, adoption, or risk." / "This affects go-to-market,
+      pricing, compliance, or process design for AI.". Reject for this seat: papers whose contribution
+      is only a kernel, a training trick, or a benchmark number with no product or process consequence.'
+    criteria: *id001
+  domain:
+    type: choice
+    instructions: Choose exactly one primary research domain for this paper from the closed vocabulary.
+    criteria:
+      computer_vision: computer vision
+      natural_language_processing: natural language processing
+      speech_audio: speech audio
+      reinforcement_learning: reinforcement learning
+      graph_learning: graph learning
+      generative_models: generative models
+      multimodal_learning: multimodal learning
+      model_compression: model compression
+      efficient_inference: efficient inference
+      interpretability: interpretability
+      alignment_safety: alignment safety
+      evaluation_benchmarking: evaluation benchmarking
+      robotics_embodied: robotics embodied
+      systems_infrastructure: systems infrastructure
+      theory_foundations: theory foundations
+  application_domain:
+    type: choice
+    instructions: Choose the primary application domain. Use general_method when the paper is a general
+      method without a specific sector focus.
+    criteria:
+      healthcare_life_sciences: healthcare life sciences
+      financial_services: financial services
+      mining_resources: mining resources
+      manufacturing: manufacturing
+      energy_utilities: energy utilities
+      agriculture_food: agriculture food
+      legal_compliance: legal compliance
+      education: education
+      cybersecurity: cybersecurity
+      drug_discovery: drug discovery
+      autonomous_systems: autonomous systems
+      hardware_design: hardware design
+      content_moderation: content moderation
+      enterprise_workforce: enterprise workforce
+      scientific_research: scientific research
+      transport_logistics: transport logistics
+      general_method: general method

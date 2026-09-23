@@ -1,0 +1,96 @@
+# System One screen policy — maps the current screen gate + four dimensions.
+# version: v001
+# Model: typesafe/jev-1.13 (pinned in client; never jev-latest)
+# State: title + abstract only
+#
+# Score criteria use 10 ordered levels (System One max). Raw scores are on
+# 0..9; code maps to the pipeline 0–10 scale via score * (10/9), snapped to 0.5.
+
+version: v001
+stage: screen
+model: typesafe/jev-1.13
+state_fields: [title, abstract]
+gate:
+  noul_question: gate_ai_relevance
+  noul_threshold: 0.5
+  # Alternate numeric gate after scale mapping (matches SCREEN_MIN_AI_RELEVANCE).
+  score_question: ai_relevance
+  score_threshold_0_10: 5.0
+
+rank_dimensions:
+  - technical_significance
+  - apparent_novelty
+  - evidence_strength
+
+questions:
+  gate_ai_relevance:
+    type: noul
+    instructions: >
+      Is this paper at least moderately relevant to AI/ML research or practice
+      — enough to pass a relevance gate of 5 out of 10?
+
+  ai_relevance:
+    type: score
+    instructions: >
+      How relevant is this paper to AI/ML research and practice?
+      Score independently of novelty or evidence quality.
+    criteria:
+      - Off-topic or not about AI/ML
+      - Barely related to AI/ML
+      - Weak AI/ML connection
+      - Below-average AI/ML relevance
+      - Mild AI/ML relevance
+      - Ordinary AI/ML relevance (competent incremental AI work)
+      - Clear AI/ML relevance
+      - Strong AI/ML relevance
+      - Core AI/ML contribution area
+      - Exceptional AI/ML centrality
+
+  technical_significance:
+    type: score
+    instructions: >
+      How strong is the technical contribution of this paper?
+      Do not lower the score merely because the topic is off-domain.
+    criteria:
+      - Trivial or no technical contribution
+      - Very weak technical contribution
+      - Weak technical contribution
+      - Below-average technical contribution
+      - Mild technical contribution
+      - Ordinary competent technical contribution
+      - Clear solid technical contribution
+      - Strong technical contribution
+      - Very strong technical contribution
+      - Exceptional technical contribution
+
+  apparent_novelty:
+    type: score
+    instructions: >
+      How new does the claimed idea or approach appear, based on the title and abstract?
+    criteria:
+      - Entirely routine / no novelty
+      - Almost no novelty
+      - Weak novelty
+      - Below-average novelty
+      - Mild novelty
+      - Ordinary incremental novelty
+      - Clear novelty
+      - Strong novelty
+      - Very strong novelty
+      - Exceptional novelty
+
+  evidence_strength:
+    type: score
+    instructions: >
+      How well do the claimed results appear supported by evidence described in the abstract?
+    criteria:
+      - Unsupported or no evidence described
+      - Very weak evidence
+      - Weak evidence
+      - Below-average evidence
+      - Mild evidence
+      - Ordinary competent evidence
+      - Clear solid evidence
+      - Strong evidence
+      - Very strong evidence
+      - Exceptional evidence strength
