@@ -1,0 +1,628 @@
+{
+  "generated_at": "2026-09-24T08:14:48.924559+00:00",
+  "run_id": "866234e7-fb27-4ecd-a881-318cca1bf72e",
+  "pipeline_name": "golden_g3b_gate_drop_eval",
+  "model": "openai/gpt-5.6-terra",
+  "cost_usd": 0.06831949999999999,
+  "n_gate_drop": 24,
+  "n_scored": 24,
+  "n_existing_terra_golden": 167,
+  "pool_n": 191,
+  "human_shortlist_or_winner_n": 6,
+  "human_shortlist_or_winner": [
+    {
+      "paper_id": 137619,
+      "stratum": "flagged",
+      "verdict": "winner_material",
+      "h_final": 9.5
+    },
+    {
+      "paper_id": 194089,
+      "stratum": "flagged",
+      "verdict": "winner_material",
+      "h_final": 9.0
+    },
+    {
+      "paper_id": 197726,
+      "stratum": "flagged",
+      "verdict": "winner_material",
+      "h_final": 9.0
+    },
+    {
+      "paper_id": 196256,
+      "stratum": "screen_failed",
+      "verdict": "shortlist",
+      "h_final": 8.5
+    },
+    {
+      "paper_id": 196694,
+      "stratum": "screen_failed",
+      "verdict": "winner_material",
+      "h_final": 9.0
+    },
+    {
+      "paper_id": 196699,
+      "stratum": "screen_failed",
+      "verdict": "shortlist",
+      "h_final": 8.0
+    }
+  ],
+  "interesting_ranks": [
+    {
+      "paper_id": 137619,
+      "arxiv_id": "2609.03181",
+      "sample_stratum": "flagged",
+      "h_verdict": "winner_material",
+      "h_final_score": 9.5,
+      "terra_composite": 7.62,
+      "terra_final": 7.0485,
+      "terra_dims": {
+        "technical_significance": 8.0,
+        "apparent_novelty": 6.5,
+        "practical_applicability": 8.5,
+        "professional_value": 8.0,
+        "learning_value": 7.0,
+        "evidence_strength": 7.5
+      },
+      "rank_among_golden_with_terra": 64,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 194089,
+      "arxiv_id": "2609.15779",
+      "sample_stratum": "flagged",
+      "h_verdict": "winner_material",
+      "h_final_score": 9.0,
+      "terra_composite": 7.1,
+      "terra_final": 6.461,
+      "terra_dims": {
+        "technical_significance": 7.0,
+        "apparent_novelty": 7.0,
+        "practical_applicability": 7.5,
+        "professional_value": 7.0,
+        "learning_value": 7.0,
+        "evidence_strength": 7.0
+      },
+      "rank_among_golden_with_terra": 110,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 197726,
+      "arxiv_id": "2609.20519",
+      "sample_stratum": "flagged",
+      "h_verdict": "winner_material",
+      "h_final_score": 9.0,
+      "terra_composite": 6.72,
+      "terra_final": 5.8128,
+      "terra_dims": {
+        "technical_significance": 6.5,
+        "apparent_novelty": 6.5,
+        "practical_applicability": 7.5,
+        "professional_value": 7.0,
+        "learning_value": 6.0,
+        "evidence_strength": 5.5
+      },
+      "rank_among_golden_with_terra": 134,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196256,
+      "arxiv_id": "2609.17965",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "shortlist",
+      "h_final_score": 8.5,
+      "terra_composite": 7.62,
+      "terra_final": 6.9342,
+      "terra_dims": {
+        "technical_significance": 7.5,
+        "apparent_novelty": 7.0,
+        "practical_applicability": 8.0,
+        "professional_value": 8.0,
+        "learning_value": 8.0,
+        "evidence_strength": 7.0
+      },
+      "rank_among_golden_with_terra": 65,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196694,
+      "arxiv_id": "2609.18888",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "winner_material",
+      "h_final_score": 9.0,
+      "terra_composite": 7.82,
+      "terra_final": 7.2335,
+      "terra_dims": {
+        "technical_significance": 8.0,
+        "apparent_novelty": 7.5,
+        "practical_applicability": 8.0,
+        "professional_value": 8.0,
+        "learning_value": 7.5,
+        "evidence_strength": 7.5
+      },
+      "rank_among_golden_with_terra": 42,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196699,
+      "arxiv_id": "2609.18900",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "shortlist",
+      "h_final_score": 8.0,
+      "terra_composite": 6.62,
+      "terra_final": 5.8256,
+      "terra_dims": {
+        "technical_significance": 6.5,
+        "apparent_novelty": 6.0,
+        "practical_applicability": 7.0,
+        "professional_value": 7.0,
+        "learning_value": 7.0,
+        "evidence_strength": 6.0
+      },
+      "rank_among_golden_with_terra": 136,
+      "pool_n": 191
+    }
+  ],
+  "per_paper": [
+    {
+      "paper_id": 137619,
+      "arxiv_id": "2609.03181",
+      "sample_stratum": "flagged",
+      "h_verdict": "winner_material",
+      "h_final_score": 9.5,
+      "terra_composite": 7.62,
+      "terra_final": 7.0485,
+      "terra_dims": {
+        "technical_significance": 8.0,
+        "apparent_novelty": 6.5,
+        "practical_applicability": 8.5,
+        "professional_value": 8.0,
+        "learning_value": 7.0,
+        "evidence_strength": 7.5
+      },
+      "rank_among_golden_with_terra": 64,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 194089,
+      "arxiv_id": "2609.15779",
+      "sample_stratum": "flagged",
+      "h_verdict": "winner_material",
+      "h_final_score": 9.0,
+      "terra_composite": 7.1,
+      "terra_final": 6.461,
+      "terra_dims": {
+        "technical_significance": 7.0,
+        "apparent_novelty": 7.0,
+        "practical_applicability": 7.5,
+        "professional_value": 7.0,
+        "learning_value": 7.0,
+        "evidence_strength": 7.0
+      },
+      "rank_among_golden_with_terra": 110,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 195234,
+      "arxiv_id": "2609.15983",
+      "sample_stratum": "flagged",
+      "h_verdict": "maybe",
+      "h_final_score": 7.0,
+      "terra_composite": 7.86,
+      "terra_final": 6.7989,
+      "terra_dims": {
+        "technical_significance": 8.5,
+        "apparent_novelty": 7.5,
+        "practical_applicability": 7.5,
+        "professional_value": 8.0,
+        "learning_value": 7.5,
+        "evidence_strength": 5.5
+      },
+      "rank_among_golden_with_terra": 39,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 197726,
+      "arxiv_id": "2609.20519",
+      "sample_stratum": "flagged",
+      "h_verdict": "winner_material",
+      "h_final_score": 9.0,
+      "terra_composite": 6.72,
+      "terra_final": 5.8128,
+      "terra_dims": {
+        "technical_significance": 6.5,
+        "apparent_novelty": 6.5,
+        "practical_applicability": 7.5,
+        "professional_value": 7.0,
+        "learning_value": 6.0,
+        "evidence_strength": 5.5
+      },
+      "rank_among_golden_with_terra": 134,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196256,
+      "arxiv_id": "2609.17965",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "shortlist",
+      "h_final_score": 8.5,
+      "terra_composite": 7.62,
+      "terra_final": 6.9342,
+      "terra_dims": {
+        "technical_significance": 7.5,
+        "apparent_novelty": 7.0,
+        "practical_applicability": 8.0,
+        "professional_value": 8.0,
+        "learning_value": 8.0,
+        "evidence_strength": 7.0
+      },
+      "rank_among_golden_with_terra": 65,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196310,
+      "arxiv_id": "2609.18073",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "reject",
+      "h_final_score": 5.0,
+      "terra_composite": 6.96,
+      "terra_final": 6.1248,
+      "terra_dims": {
+        "technical_significance": 6.5,
+        "apparent_novelty": 7.0,
+        "practical_applicability": 7.5,
+        "professional_value": 7.0,
+        "learning_value": 7.0,
+        "evidence_strength": 6.0
+      },
+      "rank_among_golden_with_terra": 116,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196315,
+      "arxiv_id": "2609.18082",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "maybe",
+      "h_final_score": 6.0,
+      "terra_composite": 7.32,
+      "terra_final": 6.6612,
+      "terra_dims": {
+        "technical_significance": 7.5,
+        "apparent_novelty": 7.0,
+        "practical_applicability": 7.5,
+        "professional_value": 7.5,
+        "learning_value": 7.0,
+        "evidence_strength": 7.0
+      },
+      "rank_among_golden_with_terra": 83,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196387,
+      "arxiv_id": "2609.18223",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "reject",
+      "h_final_score": 5.5,
+      "terra_composite": 6.18,
+      "terra_final": 5.3457,
+      "terra_dims": {
+        "technical_significance": 6.5,
+        "apparent_novelty": 5.5,
+        "practical_applicability": 6.5,
+        "professional_value": 6.0,
+        "learning_value": 6.5,
+        "evidence_strength": 5.5
+      },
+      "rank_among_golden_with_terra": 160,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196391,
+      "arxiv_id": "2609.18231",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "reject",
+      "h_final_score": 4.0,
+      "terra_composite": 6.44,
+      "terra_final": 5.7638,
+      "terra_dims": {
+        "technical_significance": 6.5,
+        "apparent_novelty": 6.0,
+        "practical_applicability": 6.5,
+        "professional_value": 6.5,
+        "learning_value": 7.0,
+        "evidence_strength": 6.5
+      },
+      "rank_among_golden_with_terra": 139,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196393,
+      "arxiv_id": "2609.18234",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "reject",
+      "h_final_score": 5.5,
+      "terra_composite": 6.16,
+      "terra_final": 5.5132,
+      "terra_dims": {
+        "technical_significance": 6.0,
+        "apparent_novelty": 5.5,
+        "practical_applicability": 7.0,
+        "professional_value": 6.5,
+        "learning_value": 6.0,
+        "evidence_strength": 6.5
+      },
+      "rank_among_golden_with_terra": 163,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196398,
+      "arxiv_id": "2609.18245",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "reject",
+      "h_final_score": 4.5,
+      "terra_composite": 4.98,
+      "terra_final": 4.3824,
+      "terra_dims": {
+        "technical_significance": 4.5,
+        "apparent_novelty": 4.0,
+        "practical_applicability": 5.5,
+        "professional_value": 5.5,
+        "learning_value": 6.5,
+        "evidence_strength": 6.0
+      },
+      "rank_among_golden_with_terra": 188,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196413,
+      "arxiv_id": "2609.18278",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "reject",
+      "h_final_score": 5.5,
+      "terra_composite": 5.72,
+      "terra_final": 4.7762,
+      "terra_dims": {
+        "technical_significance": 5.5,
+        "apparent_novelty": 4.0,
+        "practical_applicability": 7.0,
+        "professional_value": 6.5,
+        "learning_value": 6.5,
+        "evidence_strength": 4.5
+      },
+      "rank_among_golden_with_terra": 181,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196483,
+      "arxiv_id": "2609.18434",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "maybe",
+      "h_final_score": 7.0,
+      "terra_composite": 6.24,
+      "terra_final": 5.3976,
+      "terra_dims": {
+        "technical_significance": 5.5,
+        "apparent_novelty": 5.5,
+        "practical_applicability": 7.5,
+        "professional_value": 6.5,
+        "learning_value": 7.0,
+        "evidence_strength": 5.5
+      },
+      "rank_among_golden_with_terra": 158,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196542,
+      "arxiv_id": "2609.18549",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "maybe",
+      "h_final_score": 6.0,
+      "terra_composite": 7.9,
+      "terra_final": 7.189,
+      "terra_dims": {
+        "technical_significance": 8.0,
+        "apparent_novelty": 8.0,
+        "practical_applicability": 7.5,
+        "professional_value": 8.0,
+        "learning_value": 8.0,
+        "evidence_strength": 7.0
+      },
+      "rank_among_golden_with_terra": 38,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196552,
+      "arxiv_id": "2609.18576",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "reject",
+      "h_final_score": 5.5,
+      "terra_composite": 7.84,
+      "terra_final": 7.252,
+      "terra_dims": {
+        "technical_significance": 8.0,
+        "apparent_novelty": 8.0,
+        "practical_applicability": 7.5,
+        "professional_value": 8.0,
+        "learning_value": 7.5,
+        "evidence_strength": 7.5
+      },
+      "rank_among_golden_with_terra": 40,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196607,
+      "arxiv_id": "2609.18697",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "reject",
+      "h_final_score": 4.0,
+      "terra_composite": 6.54,
+      "terra_final": 5.9514,
+      "terra_dims": {
+        "technical_significance": 6.5,
+        "apparent_novelty": 6.5,
+        "practical_applicability": 6.0,
+        "professional_value": 7.0,
+        "learning_value": 7.0,
+        "evidence_strength": 7.0
+      },
+      "rank_among_golden_with_terra": 138,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196608,
+      "arxiv_id": "2609.18700",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "reject",
+      "h_final_score": 5.5,
+      "terra_composite": 5.36,
+      "terra_final": 4.6364,
+      "terra_dims": {
+        "technical_significance": 5.0,
+        "apparent_novelty": 5.5,
+        "practical_applicability": 5.5,
+        "professional_value": 5.5,
+        "learning_value": 5.5,
+        "evidence_strength": 5.5
+      },
+      "rank_among_golden_with_terra": 185,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196652,
+      "arxiv_id": "2609.18802",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "reject",
+      "h_final_score": 4.5,
+      "terra_composite": 7.42,
+      "terra_final": 7.0861,
+      "terra_dims": {
+        "technical_significance": 8.0,
+        "apparent_novelty": 7.5,
+        "practical_applicability": 6.0,
+        "professional_value": 8.0,
+        "learning_value": 7.5,
+        "evidence_strength": 8.5
+      },
+      "rank_among_golden_with_terra": 79,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196659,
+      "arxiv_id": "2609.18819",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "maybe",
+      "h_final_score": 6.5,
+      "terra_composite": 7.82,
+      "terra_final": 7.1162,
+      "terra_dims": {
+        "technical_significance": 8.0,
+        "apparent_novelty": 7.5,
+        "practical_applicability": 8.0,
+        "professional_value": 8.0,
+        "learning_value": 7.5,
+        "evidence_strength": 7.0
+      },
+      "rank_among_golden_with_terra": 41,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196692,
+      "arxiv_id": "2609.18881",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "maybe",
+      "h_final_score": 6.0,
+      "terra_composite": 6.44,
+      "terra_final": 5.8604,
+      "terra_dims": {
+        "technical_significance": 6.5,
+        "apparent_novelty": 6.0,
+        "practical_applicability": 6.5,
+        "professional_value": 6.5,
+        "learning_value": 7.0,
+        "evidence_strength": 7.0
+      },
+      "rank_among_golden_with_terra": 140,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196694,
+      "arxiv_id": "2609.18888",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "winner_material",
+      "h_final_score": 9.0,
+      "terra_composite": 7.82,
+      "terra_final": 7.2335,
+      "terra_dims": {
+        "technical_significance": 8.0,
+        "apparent_novelty": 7.5,
+        "practical_applicability": 8.0,
+        "professional_value": 8.0,
+        "learning_value": 7.5,
+        "evidence_strength": 7.5
+      },
+      "rank_among_golden_with_terra": 42,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196699,
+      "arxiv_id": "2609.18900",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "shortlist",
+      "h_final_score": 8.0,
+      "terra_composite": 6.62,
+      "terra_final": 5.8256,
+      "terra_dims": {
+        "technical_significance": 6.5,
+        "apparent_novelty": 6.0,
+        "practical_applicability": 7.0,
+        "professional_value": 7.0,
+        "learning_value": 7.0,
+        "evidence_strength": 6.0
+      },
+      "rank_among_golden_with_terra": 136,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196708,
+      "arxiv_id": "2609.18918",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "reject",
+      "h_final_score": 3.5,
+      "terra_composite": 8.58,
+      "terra_final": 8.1939,
+      "terra_dims": {
+        "technical_significance": 9.0,
+        "apparent_novelty": 8.5,
+        "practical_applicability": 8.5,
+        "professional_value": 8.5,
+        "learning_value": 8.0,
+        "evidence_strength": 8.5
+      },
+      "rank_among_golden_with_terra": 3,
+      "pool_n": 191
+    },
+    {
+      "paper_id": 196776,
+      "arxiv_id": "2609.19073",
+      "sample_stratum": "screen_failed",
+      "h_verdict": "reject",
+      "h_final_score": 5.5,
+      "terra_composite": 7.08,
+      "terra_final": 6.4428,
+      "terra_dims": {
+        "technical_significance": 7.0,
+        "apparent_novelty": 7.0,
+        "practical_applicability": 7.0,
+        "professional_value": 7.5,
+        "learning_value": 7.0,
+        "evidence_strength": 7.0
+      },
+      "rank_among_golden_with_terra": 112,
+      "pool_n": 191
+    }
+  ],
+  "notes": [
+    "Scores written under dedicated pipeline run; excluded from current-quality comparison via reports/golden/g3b_run.json.",
+    "Rank is among all golden papers that have a Terra quality composite (gate drops + previously scored non-gate; pool_n=191)."
+  ]
+}

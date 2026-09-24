@@ -1,0 +1,872 @@
+{
+  "generated_at": "2026-09-24T08:12:10.079634+00:00",
+  "phase": "G3a",
+  "labeller": "subha",
+  "label_round": "v1",
+  "n_labelled": 200,
+  "n_intersection": 151,
+  "min_cell_n": 25,
+  "gate_min_rows": 150,
+  "cannot_be_determined": false,
+  "engine_coverage_full": {
+    "terra": 167,
+    "jev_v001": 169,
+    "jev_v002": 153
+  },
+  "engine_coverage_intersection": {
+    "terra": 151,
+    "jev_v001": 151,
+    "jev_v002": 151
+  },
+  "notes": [
+    "ai_relevance REMOVED from all comparison tables. It was backfilled from pipeline screen scores for this labelling round; a Spearman of 1.000 vs Terra was circular (not independent human agreement) and would be misread.",
+    "Headline metrics use the INTERSECTION of papers scored by all three engines (Terra + Jev v001 + Jev v002) with full six quality dimensions (n=151).",
+    "Any stratum or cell with n < 25 is suppressed (noise, not a finding).",
+    "Secondary table reports per-engine full coverage on the labelled set, with n per cell.",
+    "Seat scores (tech_relevance / product_relevance) remain unscored by engines \u2014 omitted.",
+    "Composite comparison uses human h_final_score vs engine quality composite.",
+    "G3b evaluation run_ids listed in reports/golden/g3b_run.json are excluded from Terra loads here (gate-drop eval must not pollute current quality)."
+  ],
+  "overall_intersection": {
+    "n": 151,
+    "dims": {
+      "technical_significance": {
+        "terra": {
+          "n": 151,
+          "spearman": 0.43198911990328587,
+          "mae": 0.7019867549668874,
+          "suppressed": false
+        },
+        "jev_v001": {
+          "n": 151,
+          "spearman": 0.24771755437247997,
+          "mae": 0.6589403973509934,
+          "suppressed": false
+        },
+        "jev_v002": {
+          "n": 151,
+          "spearman": 0.28880779394594186,
+          "mae": 1.2582781456953642,
+          "suppressed": false
+        },
+        "closer_to_human": "terra"
+      },
+      "apparent_novelty": {
+        "terra": {
+          "n": 151,
+          "spearman": 0.42607520518993197,
+          "mae": 0.6754966887417219,
+          "suppressed": false
+        },
+        "jev_v001": {
+          "n": 151,
+          "spearman": 0.3207905378089703,
+          "mae": 0.6059602649006622,
+          "suppressed": false
+        },
+        "jev_v002": {
+          "n": 151,
+          "spearman": 0.28035907443150015,
+          "mae": 1.5927152317880795,
+          "suppressed": false
+        },
+        "closer_to_human": "terra"
+      },
+      "practical_applicability": {
+        "terra": {
+          "n": 151,
+          "spearman": 0.5877880093166914,
+          "mae": 1.2019867549668874,
+          "suppressed": false
+        },
+        "jev_v001": {
+          "n": 151,
+          "spearman": 0.5392918018614411,
+          "mae": 1.1158940397350994,
+          "suppressed": false
+        },
+        "jev_v002": {
+          "n": 151,
+          "spearman": 0.4125765416256369,
+          "mae": 2.2450331125827816,
+          "suppressed": false
+        },
+        "closer_to_human": "terra"
+      },
+      "professional_value": {
+        "terra": {
+          "n": 151,
+          "spearman": 0.30203638509739683,
+          "mae": 1.2086092715231789,
+          "suppressed": false
+        },
+        "jev_v001": {
+          "n": 151,
+          "spearman": 0.6151158869050639,
+          "mae": 0.9503311258278145,
+          "suppressed": false
+        },
+        "jev_v002": {
+          "n": 151,
+          "spearman": 0.695520113519234,
+          "mae": 2.066225165562914,
+          "suppressed": false
+        },
+        "closer_to_human": "jev_v002"
+      },
+      "learning_value": {
+        "terra": {
+          "n": 151,
+          "spearman": 0.2316093317731074,
+          "mae": 0.7748344370860927,
+          "suppressed": false
+        },
+        "jev_v001": {
+          "n": 151,
+          "spearman": 0.1871156508623656,
+          "mae": 0.7450331125827815,
+          "suppressed": false
+        },
+        "jev_v002": {
+          "n": 151,
+          "spearman": 0.3087260473461006,
+          "mae": 2.443708609271523,
+          "suppressed": false
+        },
+        "closer_to_human": "jev_v002"
+      },
+      "evidence_strength": {
+        "terra": {
+          "n": 151,
+          "spearman": 0.5167674180205356,
+          "mae": 0.9900662251655629,
+          "suppressed": false
+        },
+        "jev_v001": {
+          "n": 151,
+          "spearman": 0.39381605135860115,
+          "mae": 1.8940397350993377,
+          "suppressed": false
+        },
+        "jev_v002": {
+          "n": 151,
+          "spearman": 0.36996096437291437,
+          "mae": 1.695364238410596,
+          "suppressed": false
+        },
+        "closer_to_human": "terra"
+      }
+    },
+    "composite": {
+      "terra": {
+        "n": 151,
+        "spearman": 0.21899653524830404,
+        "mae": 1.2349668874172184,
+        "suppressed": false
+      },
+      "jev_v001": {
+        "n": 151,
+        "spearman": 0.36741741803984207,
+        "mae": 1.311807284768212,
+        "suppressed": false
+      },
+      "jev_v002": {
+        "n": 151,
+        "spearman": 0.42697626060842936,
+        "mae": 2.1228251655629142,
+        "suppressed": false
+      },
+      "closer_to_human": "jev_v002"
+    },
+    "verdict_recall": {
+      "terra": {
+        "top_20": {
+          "winner_material_n": 22,
+          "top_n": 20,
+          "hits": 4,
+          "recall": 0.18181818181818182,
+          "engine_scored_n": 151
+        },
+        "top_50": {
+          "winner_material_n": 22,
+          "top_n": 50,
+          "hits": 11,
+          "recall": 0.5,
+          "engine_scored_n": 151
+        }
+      },
+      "jev_v001": {
+        "top_20": {
+          "winner_material_n": 22,
+          "top_n": 20,
+          "hits": 4,
+          "recall": 0.18181818181818182,
+          "engine_scored_n": 151
+        },
+        "top_50": {
+          "winner_material_n": 22,
+          "top_n": 50,
+          "hits": 13,
+          "recall": 0.5909090909090909,
+          "engine_scored_n": 151
+        }
+      },
+      "jev_v002": {
+        "top_20": {
+          "winner_material_n": 22,
+          "top_n": 20,
+          "hits": 8,
+          "recall": 0.36363636363636365,
+          "engine_scored_n": 151
+        },
+        "top_50": {
+          "winner_material_n": 22,
+          "top_n": 50,
+          "hits": 17,
+          "recall": 0.7727272727272727,
+          "engine_scored_n": 151
+        }
+      }
+    }
+  },
+  "overall_full_coverage": {
+    "n": 200,
+    "dims": {
+      "technical_significance": {
+        "terra": {
+          "n": 167,
+          "spearman": 0.49428225115503616,
+          "mae": 0.7095808383233533,
+          "suppressed": false
+        },
+        "jev_v001": {
+          "n": 169,
+          "spearman": 0.32898566293580656,
+          "mae": 0.6538461538461539,
+          "suppressed": false
+        },
+        "jev_v002": {
+          "n": 153,
+          "spearman": 0.29635679152855626,
+          "mae": 1.2679738562091503,
+          "suppressed": false
+        },
+        "closer_to_human": "terra"
+      },
+      "apparent_novelty": {
+        "terra": {
+          "n": 167,
+          "spearman": 0.47813963820139954,
+          "mae": 0.688622754491018,
+          "suppressed": false
+        },
+        "jev_v001": {
+          "n": 169,
+          "spearman": 0.37076597806169265,
+          "mae": 0.6449704142011834,
+          "suppressed": false
+        },
+        "jev_v002": {
+          "n": 153,
+          "spearman": 0.28359353553925803,
+          "mae": 1.6143790849673203,
+          "suppressed": false
+        },
+        "closer_to_human": "terra"
+      },
+      "practical_applicability": {
+        "terra": {
+          "n": 167,
+          "spearman": 0.5793125528713461,
+          "mae": 1.215568862275449,
+          "suppressed": false
+        },
+        "jev_v001": {
+          "n": 169,
+          "spearman": 0.5717335677478793,
+          "mae": 1.0976331360946745,
+          "suppressed": false
+        },
+        "jev_v002": {
+          "n": 153,
+          "spearman": 0.4197480264658491,
+          "mae": 2.2450980392156863,
+          "suppressed": false
+        },
+        "closer_to_human": "terra"
+      },
+      "professional_value": {
+        "terra": {
+          "n": 167,
+          "spearman": 0.33464781834584567,
+          "mae": 1.218562874251497,
+          "suppressed": false
+        },
+        "jev_v001": {
+          "n": 169,
+          "spearman": 0.6316447996253839,
+          "mae": 0.9437869822485208,
+          "suppressed": false
+        },
+        "jev_v002": {
+          "n": 153,
+          "spearman": 0.6883985421400326,
+          "mae": 2.076797385620915,
+          "suppressed": false
+        },
+        "closer_to_human": "jev_v002"
+      },
+      "learning_value": {
+        "terra": {
+          "n": 167,
+          "spearman": 0.26466102328557445,
+          "mae": 0.781437125748503,
+          "suppressed": false
+        },
+        "jev_v001": {
+          "n": 169,
+          "spearman": 0.21188460604555612,
+          "mae": 0.7337278106508875,
+          "suppressed": false
+        },
+        "jev_v002": {
+          "n": 153,
+          "spearman": 0.29254622058882446,
+          "mae": 2.454248366013072,
+          "suppressed": false
+        },
+        "closer_to_human": "jev_v002"
+      },
+      "evidence_strength": {
+        "terra": {
+          "n": 167,
+          "spearman": 0.5461795068334948,
+          "mae": 0.9880239520958084,
+          "suppressed": false
+        },
+        "jev_v001": {
+          "n": 169,
+          "spearman": 0.416106591426985,
+          "mae": 1.8964497041420119,
+          "suppressed": false
+        },
+        "jev_v002": {
+          "n": 153,
+          "spearman": 0.377000416509527,
+          "mae": 1.6862745098039216,
+          "suppressed": false
+        },
+        "closer_to_human": "terra"
+      }
+    },
+    "composite": {
+      "terra": {
+        "n": 167,
+        "spearman": 0.2780822242543709,
+        "mae": 1.2289820359281436,
+        "suppressed": false
+      },
+      "jev_v001": {
+        "n": 169,
+        "spearman": 0.4034682223173859,
+        "mae": 1.3346,
+        "suppressed": false
+      },
+      "jev_v002": {
+        "n": 153,
+        "spearman": 0.41319539903300245,
+        "mae": 2.1359228758169935,
+        "suppressed": false
+      },
+      "closer_to_human": "jev_v002"
+    },
+    "verdict_recall": {
+      "terra": {
+        "top_20": {
+          "winner_material_n": 33,
+          "top_n": 20,
+          "hits": 5,
+          "recall": 0.15151515151515152,
+          "engine_scored_n": 167
+        },
+        "top_50": {
+          "winner_material_n": 33,
+          "top_n": 50,
+          "hits": 13,
+          "recall": 0.3939393939393939,
+          "engine_scored_n": 167
+        }
+      },
+      "jev_v001": {
+        "top_20": {
+          "winner_material_n": 33,
+          "top_n": 20,
+          "hits": 5,
+          "recall": 0.15151515151515152,
+          "engine_scored_n": 169
+        },
+        "top_50": {
+          "winner_material_n": 33,
+          "top_n": 50,
+          "hits": 15,
+          "recall": 0.45454545454545453,
+          "engine_scored_n": 169
+        }
+      },
+      "jev_v002": {
+        "top_20": {
+          "winner_material_n": 33,
+          "top_n": 20,
+          "hits": 8,
+          "recall": 0.24242424242424243,
+          "engine_scored_n": 153
+        },
+        "top_50": {
+          "winner_material_n": 33,
+          "top_n": 50,
+          "hits": 17,
+          "recall": 0.5151515151515151,
+          "engine_scored_n": 153
+        }
+      }
+    }
+  },
+  "by_stratum_intersection": {
+    "max_disagreement": {
+      "n": 56,
+      "dims": {
+        "technical_significance": {
+          "terra": {
+            "n": 56,
+            "spearman": 0.15320526826294953,
+            "mae": 0.7232142857142857,
+            "suppressed": false
+          },
+          "jev_v001": {
+            "n": 56,
+            "spearman": 0.01774356567889511,
+            "mae": 0.6428571428571429,
+            "suppressed": false
+          },
+          "jev_v002": {
+            "n": 56,
+            "spearman": 0.11614898944564081,
+            "mae": 1.2678571428571428,
+            "suppressed": false
+          },
+          "closer_to_human": "terra"
+        },
+        "apparent_novelty": {
+          "terra": {
+            "n": 56,
+            "spearman": 0.4117692061817168,
+            "mae": 0.6160714285714286,
+            "suppressed": false
+          },
+          "jev_v001": {
+            "n": 56,
+            "spearman": 0.222768814551675,
+            "mae": 0.6339285714285714,
+            "suppressed": false
+          },
+          "jev_v002": {
+            "n": 56,
+            "spearman": 0.3434390208695205,
+            "mae": 1.5803571428571428,
+            "suppressed": false
+          },
+          "closer_to_human": "terra"
+        },
+        "practical_applicability": {
+          "terra": {
+            "n": 56,
+            "spearman": 0.5424113548943938,
+            "mae": 1.3392857142857142,
+            "suppressed": false
+          },
+          "jev_v001": {
+            "n": 56,
+            "spearman": 0.5171462659406417,
+            "mae": 1.1607142857142858,
+            "suppressed": false
+          },
+          "jev_v002": {
+            "n": 56,
+            "spearman": 0.5144682644314283,
+            "mae": 2.169642857142857,
+            "suppressed": false
+          },
+          "closer_to_human": "terra"
+        },
+        "professional_value": {
+          "terra": {
+            "n": 56,
+            "spearman": -0.003907383265823,
+            "mae": 1.3125,
+            "suppressed": false
+          },
+          "jev_v001": {
+            "n": 56,
+            "spearman": 0.5484486447082283,
+            "mae": 0.9910714285714286,
+            "suppressed": false
+          },
+          "jev_v002": {
+            "n": 56,
+            "spearman": 0.6944536364042003,
+            "mae": 2.2410714285714284,
+            "suppressed": false
+          },
+          "closer_to_human": "jev_v002"
+        },
+        "learning_value": {
+          "terra": {
+            "n": 56,
+            "spearman": -0.16689511855792868,
+            "mae": 0.9196428571428571,
+            "suppressed": false
+          },
+          "jev_v001": {
+            "n": 56,
+            "spearman": -0.08510034499102932,
+            "mae": 0.75,
+            "suppressed": false
+          },
+          "jev_v002": {
+            "n": 56,
+            "spearman": 0.19580561863061552,
+            "mae": 2.544642857142857,
+            "suppressed": false
+          },
+          "closer_to_human": "jev_v002"
+        },
+        "evidence_strength": {
+          "terra": {
+            "n": 56,
+            "spearman": 0.38266512006611736,
+            "mae": 0.9910714285714286,
+            "suppressed": false
+          },
+          "jev_v001": {
+            "n": 56,
+            "spearman": 0.31708354836756425,
+            "mae": 2.0625,
+            "suppressed": false
+          },
+          "jev_v002": {
+            "n": 56,
+            "spearman": 0.3957513013886347,
+            "mae": 2.0535714285714284,
+            "suppressed": false
+          },
+          "closer_to_human": "jev_v002"
+        }
+      },
+      "composite": {
+        "terra": {
+          "n": 56,
+          "spearman": -0.1263992919484871,
+          "mae": 1.3696428571428572,
+          "suppressed": false
+        },
+        "jev_v001": {
+          "n": 56,
+          "spearman": 0.20894903199586728,
+          "mae": 1.4521678571428573,
+          "suppressed": false
+        },
+        "jev_v002": {
+          "n": 56,
+          "spearman": 0.380181960922813,
+          "mae": 2.265082142857143,
+          "suppressed": false
+        },
+        "closer_to_human": "jev_v002"
+      },
+      "verdict_recall": {
+        "terra": {
+          "top_20": {
+            "winner_material_n": 12,
+            "top_n": 20,
+            "hits": 5,
+            "recall": 0.4166666666666667,
+            "engine_scored_n": 56
+          },
+          "top_50": {
+            "winner_material_n": 12,
+            "top_n": 50,
+            "hits": 10,
+            "recall": 0.8333333333333334,
+            "engine_scored_n": 56
+          }
+        },
+        "jev_v001": {
+          "top_20": {
+            "winner_material_n": 12,
+            "top_n": 20,
+            "hits": 6,
+            "recall": 0.5,
+            "engine_scored_n": 56
+          },
+          "top_50": {
+            "winner_material_n": 12,
+            "top_n": 50,
+            "hits": 12,
+            "recall": 1.0,
+            "engine_scored_n": 56
+          }
+        },
+        "jev_v002": {
+          "top_20": {
+            "winner_material_n": 12,
+            "top_n": 20,
+            "hits": 7,
+            "recall": 0.5833333333333334,
+            "engine_scored_n": 56
+          },
+          "top_50": {
+            "winner_material_n": 12,
+            "top_n": 50,
+            "hits": 11,
+            "recall": 0.9166666666666666,
+            "engine_scored_n": 56
+          }
+        }
+      }
+    },
+    "score_strata": {
+      "n": 95,
+      "dims": {
+        "technical_significance": {
+          "terra": {
+            "n": 95,
+            "spearman": 0.45328792735232826,
+            "mae": 0.6894736842105263,
+            "suppressed": false
+          },
+          "jev_v001": {
+            "n": 95,
+            "spearman": 0.2810835535782368,
+            "mae": 0.6684210526315789,
+            "suppressed": false
+          },
+          "jev_v002": {
+            "n": 95,
+            "spearman": 0.2406320650301547,
+            "mae": 1.2526315789473683,
+            "suppressed": false
+          },
+          "closer_to_human": "terra"
+        },
+        "apparent_novelty": {
+          "terra": {
+            "n": 95,
+            "spearman": 0.3861576844754433,
+            "mae": 0.7105263157894737,
+            "suppressed": false
+          },
+          "jev_v001": {
+            "n": 95,
+            "spearman": 0.2910939601233266,
+            "mae": 0.5894736842105263,
+            "suppressed": false
+          },
+          "jev_v002": {
+            "n": 95,
+            "spearman": 0.18343934514577023,
+            "mae": 1.6,
+            "suppressed": false
+          },
+          "closer_to_human": "terra"
+        },
+        "practical_applicability": {
+          "terra": {
+            "n": 95,
+            "spearman": 0.6295260624977418,
+            "mae": 1.1210526315789473,
+            "suppressed": false
+          },
+          "jev_v001": {
+            "n": 95,
+            "spearman": 0.5537670767314042,
+            "mae": 1.0894736842105264,
+            "suppressed": false
+          },
+          "jev_v002": {
+            "n": 95,
+            "spearman": 0.3572984760375046,
+            "mae": 2.289473684210526,
+            "suppressed": false
+          },
+          "closer_to_human": "terra"
+        },
+        "professional_value": {
+          "terra": {
+            "n": 95,
+            "spearman": 0.4165805688434968,
+            "mae": 1.1473684210526316,
+            "suppressed": false
+          },
+          "jev_v001": {
+            "n": 95,
+            "spearman": 0.6642331920199679,
+            "mae": 0.9263157894736842,
+            "suppressed": false
+          },
+          "jev_v002": {
+            "n": 95,
+            "spearman": 0.7018025117654135,
+            "mae": 1.9631578947368422,
+            "suppressed": false
+          },
+          "closer_to_human": "jev_v002"
+        },
+        "learning_value": {
+          "terra": {
+            "n": 95,
+            "spearman": 0.3621467533970422,
+            "mae": 0.6894736842105263,
+            "suppressed": false
+          },
+          "jev_v001": {
+            "n": 95,
+            "spearman": 0.2807886897329997,
+            "mae": 0.7421052631578947,
+            "suppressed": false
+          },
+          "jev_v002": {
+            "n": 95,
+            "spearman": 0.34399933636000246,
+            "mae": 2.3842105263157896,
+            "suppressed": false
+          },
+          "closer_to_human": "terra"
+        },
+        "evidence_strength": {
+          "terra": {
+            "n": 95,
+            "spearman": 0.5574985543540277,
+            "mae": 0.9894736842105263,
+            "suppressed": false
+          },
+          "jev_v001": {
+            "n": 95,
+            "spearman": 0.46407856730360264,
+            "mae": 1.7947368421052632,
+            "suppressed": false
+          },
+          "jev_v002": {
+            "n": 95,
+            "spearman": 0.34325629283016085,
+            "mae": 1.4842105263157894,
+            "suppressed": false
+          },
+          "closer_to_human": "terra"
+        }
+      },
+      "composite": {
+        "terra": {
+          "n": 95,
+          "spearman": 0.34613151274002124,
+          "mae": 1.155578947368421,
+          "suppressed": false
+        },
+        "jev_v001": {
+          "n": 95,
+          "spearman": 0.4393541678809683,
+          "mae": 1.2290684210526315,
+          "suppressed": false
+        },
+        "jev_v002": {
+          "n": 95,
+          "spearman": 0.4195235204166984,
+          "mae": 2.0389684210526315,
+          "suppressed": false
+        },
+        "closer_to_human": "jev_v001"
+      },
+      "verdict_recall": {
+        "terra": {
+          "top_20": {
+            "winner_material_n": 10,
+            "top_n": 20,
+            "hits": 6,
+            "recall": 0.6,
+            "engine_scored_n": 95
+          },
+          "top_50": {
+            "winner_material_n": 10,
+            "top_n": 50,
+            "hits": 7,
+            "recall": 0.7,
+            "engine_scored_n": 95
+          }
+        },
+        "jev_v001": {
+          "top_20": {
+            "winner_material_n": 10,
+            "top_n": 20,
+            "hits": 6,
+            "recall": 0.6,
+            "engine_scored_n": 95
+          },
+          "top_50": {
+            "winner_material_n": 10,
+            "top_n": 50,
+            "hits": 9,
+            "recall": 0.9,
+            "engine_scored_n": 95
+          }
+        },
+        "jev_v002": {
+          "top_20": {
+            "winner_material_n": 10,
+            "top_n": 20,
+            "hits": 6,
+            "recall": 0.6,
+            "engine_scored_n": 95
+          },
+          "top_50": {
+            "winner_material_n": 10,
+            "top_n": 50,
+            "hits": 8,
+            "recall": 0.8,
+            "engine_scored_n": 95
+          }
+        }
+      }
+    }
+  },
+  "strata_suppressed": [
+    {
+      "stratum": "editorial_pick",
+      "n": 0,
+      "n_labelled": 12,
+      "reason": "intersection n < 25"
+    },
+    {
+      "stratum": "flagged",
+      "n": 0,
+      "n_labelled": 4,
+      "reason": "intersection n < 25"
+    },
+    {
+      "stratum": "screen_failed",
+      "n": 0,
+      "n_labelled": 20,
+      "reason": "intersection n < 25"
+    }
+  ],
+  "verdict_counts_labelled": {
+    "maybe": 77,
+    "shortlist": 35,
+    "winner_material": 33,
+    "reject": 55
+  },
+  "verdict_counts_intersection": {
+    "maybe": 65,
+    "winner_material": 22,
+    "reject": 40,
+    "shortlist": 24
+  }
+}

@@ -1,0 +1,233 @@
+{
+  "seed": 42,
+  "n": 30,
+  "labeller_target": "ranjith",
+  "label_round": "v1",
+  "stratum_counts": {
+    "editorial_pick": 4,
+    "flagged": 2,
+    "max_disagreement": 6,
+    "score_strata": 14,
+    "screen_failed": 4
+  },
+  "subha_verdict_counts": {
+    "maybe": 7,
+    "winner_material": 8,
+    "shortlist": 8,
+    "reject": 7
+  },
+  "sample_paper_ids": [
+    3556,
+    3611,
+    120560,
+    172395,
+    195234,
+    197726,
+    197187,
+    197269,
+    197492,
+    197732,
+    199957,
+    200009,
+    89119,
+    105913,
+    142692,
+    196467,
+    196681,
+    197254,
+    197416,
+    197556,
+    197952,
+    198217,
+    199756,
+    200552,
+    200596,
+    200714,
+    196542,
+    196694,
+    196699,
+    196776
+  ],
+  "subha_labels_hidden": [
+    {
+      "paper_id": 3556,
+      "stratum": "editorial_pick",
+      "verdict": "maybe",
+      "h_final": 7.5
+    },
+    {
+      "paper_id": 3611,
+      "stratum": "editorial_pick",
+      "verdict": "winner_material",
+      "h_final": 9.0
+    },
+    {
+      "paper_id": 120560,
+      "stratum": "editorial_pick",
+      "verdict": "shortlist",
+      "h_final": 8.5
+    },
+    {
+      "paper_id": 172395,
+      "stratum": "editorial_pick",
+      "verdict": "winner_material",
+      "h_final": 9.5
+    },
+    {
+      "paper_id": 195234,
+      "stratum": "flagged",
+      "verdict": "maybe",
+      "h_final": 7.0
+    },
+    {
+      "paper_id": 197726,
+      "stratum": "flagged",
+      "verdict": "winner_material",
+      "h_final": 9.0
+    },
+    {
+      "paper_id": 197187,
+      "stratum": "max_disagreement",
+      "verdict": "shortlist",
+      "h_final": 8.0
+    },
+    {
+      "paper_id": 197269,
+      "stratum": "max_disagreement",
+      "verdict": "shortlist",
+      "h_final": 8.0
+    },
+    {
+      "paper_id": 197492,
+      "stratum": "max_disagreement",
+      "verdict": "reject",
+      "h_final": 4.5
+    },
+    {
+      "paper_id": 197732,
+      "stratum": "max_disagreement",
+      "verdict": "maybe",
+      "h_final": 6.0
+    },
+    {
+      "paper_id": 199957,
+      "stratum": "max_disagreement",
+      "verdict": "shortlist",
+      "h_final": 7.5
+    },
+    {
+      "paper_id": 200009,
+      "stratum": "max_disagreement",
+      "verdict": "winner_material",
+      "h_final": 9.5
+    },
+    {
+      "paper_id": 89119,
+      "stratum": "score_strata",
+      "verdict": "winner_material",
+      "h_final": 9.5
+    },
+    {
+      "paper_id": 105913,
+      "stratum": "score_strata",
+      "verdict": "shortlist",
+      "h_final": 8.0
+    },
+    {
+      "paper_id": 142692,
+      "stratum": "score_strata",
+      "verdict": "winner_material",
+      "h_final": 9.5
+    },
+    {
+      "paper_id": 196467,
+      "stratum": "score_strata",
+      "verdict": "maybe",
+      "h_final": 6.0
+    },
+    {
+      "paper_id": 196681,
+      "stratum": "score_strata",
+      "verdict": "shortlist",
+      "h_final": 8.0
+    },
+    {
+      "paper_id": 197254,
+      "stratum": "score_strata",
+      "verdict": "reject",
+      "h_final": 5.5
+    },
+    {
+      "paper_id": 197416,
+      "stratum": "score_strata",
+      "verdict": "maybe",
+      "h_final": 6.0
+    },
+    {
+      "paper_id": 197556,
+      "stratum": "score_strata",
+      "verdict": "winner_material",
+      "h_final": 9.5
+    },
+    {
+      "paper_id": 197952,
+      "stratum": "score_strata",
+      "verdict": "shortlist",
+      "h_final": 7.5
+    },
+    {
+      "paper_id": 198217,
+      "stratum": "score_strata",
+      "verdict": "reject",
+      "h_final": 5.0
+    },
+    {
+      "paper_id": 199756,
+      "stratum": "score_strata",
+      "verdict": "maybe",
+      "h_final": 6.0
+    },
+    {
+      "paper_id": 200552,
+      "stratum": "score_strata",
+      "verdict": "reject",
+      "h_final": 5.5
+    },
+    {
+      "paper_id": 200596,
+      "stratum": "score_strata",
+      "verdict": "reject",
+      "h_final": 3.5
+    },
+    {
+      "paper_id": 200714,
+      "stratum": "score_strata",
+      "verdict": "reject",
+      "h_final": 5.5
+    },
+    {
+      "paper_id": 196542,
+      "stratum": "screen_failed",
+      "verdict": "maybe",
+      "h_final": 6.0
+    },
+    {
+      "paper_id": 196694,
+      "stratum": "screen_failed",
+      "verdict": "winner_material",
+      "h_final": 9.0
+    },
+    {
+      "paper_id": 196699,
+      "stratum": "screen_failed",
+      "verdict": "shortlist",
+      "h_final": 8.0
+    },
+    {
+      "paper_id": 196776,
+      "stratum": "screen_failed",
+      "verdict": "reject",
+      "h_final": 5.5
+    }
+  ]
+}

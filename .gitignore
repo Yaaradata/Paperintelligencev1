@@ -34,3 +34,6 @@ shared_data/
 
 # Local raw response dumps if ever placed under the repo
 raw/
+
+# Golden set: model scores must never be merged into the labelling sheet
+golden/model_scores_hidden.csv
