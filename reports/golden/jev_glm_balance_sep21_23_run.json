@@ -1,0 +1,26 @@
+{
+  "pipeline_name": "jev_glm_balance_sep21_23",
+  "purpose": "Complete pipeline for balance papers after relevance catch-up",
+  "date_from": "2026-09-21",
+  "date_until": "2026-09-23",
+  "quality_engine": "jev_glm",
+  "stages": [
+    "normalize_authors",
+    "screen",
+    "affiliation_fast",
+    "audience_domain",
+    "quality",
+    "affiliation_deep",
+    "hf_signals",
+    "adjudication",
+    "reports"
+  ],
+  "note": "skip-done; screen pending was 1083 new keeps; relevance already done",
+  "max_cost_usd": 5.0,
+  "dry_run_paid_projected_usd_underestimate": 0.2,
+  "dry_run_note": "audience/quality projection undercounts until new screens land",
+  "status": "running",
+  "created_at": "2026-09-24T09:56:03.609560+00:00",
+  "pipeline_pid": 1738289,
+  "pipeline_started_at": "2026-09-24T09:56:03.672784+00:00"
+}

@@ -1,9 +1,9 @@
 # PaperIntelligenceV1 — Project
 
-**Updated:** 2026-09-17  
+**Updated:** 2026-09-24 (partial — see drift note)  
 **Worktree:** `worktrees/subha` (`dev/subha`)
 
-Single project source of truth (Context/State/Backlog point here).
+> **Drift note (2026-09-24):** This file is **behind the repo**. Day-to-day decisions, live state, and backlog now live in **`Context.md`**, **`State.md`**, **`Backlog.md`**, **`BacklogClosed.md`**. Quality engine flag (`QUALITY_ENGINE=terra|jev_glm`), affiliation LLM judge after deep, and golden dataset `quality_scoring_golden_v1` are documented there and in `docs/pipeline_flow.md` / `golden/README.md` — not fully reflected in the sections below. Do not treat this file alone as current.
 
 ---
 
@@ -12,11 +12,11 @@ Single project source of truth (Context/State/Backlog point here).
 ```
 ingest → relevance → normalize → screen
   → affiliation_fast → audience_domain → quality
-  → affiliation_deep → hf_signals → adjudication → reports
+  → affiliation_deep → affiliation_judge → hf_signals → adjudication → reports
 ```
 
-Quality stays author/org-blind. FAST affiliation feeds the quality router. HF does **not** affect `final_score`.
-
+Quality stays author/org-blind. FAST affiliation feeds the quality router. HF does **not** affect `final_score`.  
+See **`docs/pipeline_flow.md`** for models/engines and affiliation evidence hierarchy.
 ---
 
 ## This cycle (funnel correction) — Done
@@ -53,5 +53,6 @@ Quality stays author/org-blind. FAST affiliation feeds the quality router. HF do
 ## Notes
 
 - arXiv OAI rarely emits `<affiliation>`; capture is still required when present. FAST also uses existing `paper_metadata.affiliation_text` + local aliases.
-- Golden assets sourced from Research Radar reports; see `data/golden/README.md`.
+- **Quality-scoring golden:** `quality_scoring_golden_v1` — `golden/quality_scoring_golden_v1.xlsx` / `.csv`; table `golden_human_scores`; baseline `reports/golden/baseline_v1.md`. Older Radar golden assets: `data/golden/README.md`.
 - Measured HF validation still recommends **no** HF weight in `final_score` yet.
+- **Open (2026-09-24):** composite weight refit, screen-gate policy, default `QUALITY_ENGINE` — see `Context.md`.

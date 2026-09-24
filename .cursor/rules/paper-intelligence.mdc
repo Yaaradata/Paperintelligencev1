@@ -10,14 +10,18 @@ Repository: `~/Paperintelligencev1/repo` · Prefer worktree `worktrees/subha` on
 ## Stage diagram
 
 ```
-normalize_authors → screen → GATE(ai_relevance) → classify
-                                      ├→ quality (top GATE_PERCENTILE)
-                                      └→ affiliation
-                                           ↓
-                                      adjudication → paper_intelligence_current
+ingest → relevance → normalize_authors → screen → GATE(ai_relevance)
+  → affiliation_fast → audience_domain → quality (QUALITY_ENGINE=terra|jev_glm)
+  → affiliation_deep (HTML→ROR→OpenAlex) → affiliation_judge → hf_signals
+  → adjudication → reports
 ```
 
-Ingestion / `content_items` / `paper_metadata` are **existing** — do not rebuild or modify.
+See `docs/pipeline_flow.md`. Ingestion / shared Radar tables are **existing** — do not rebuild.
+
+## Golden scoring rule
+
+**Dataset:** `quality_scoring_golden_v1` (`golden/quality_scoring_golden_v1.xlsx`).  
+Scoring changes are measured against **human** labels in `golden_human_scores`, **never** against another model's scores. Baseline: `reports/golden/baseline_v1.md`.
 
 ## Invariants
 

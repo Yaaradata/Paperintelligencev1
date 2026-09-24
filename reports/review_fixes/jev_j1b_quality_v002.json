@@ -1,0 +1,526 @@
+{
+  "generated_at": "2026-09-24T05:57:23.163973+00:00",
+  "model": "typesafe/jev-1.13",
+  "policy": "quality_v002",
+  "budget": {
+    "cap": 2.0,
+    "spent": 0.21411398400000026,
+    "stopped": false
+  },
+  "timing": {
+    "quality_wall_s": 271.5184154000599,
+    "n": 3366
+  },
+  "per_1000": {
+    "cost_usd": 0.06361080926916228,
+    "wall_s": 80.66500754606652
+  },
+  "v002": {
+    "sol": {
+      "label": "sol_sep1_15",
+      "n_eligible": 1779,
+      "n_ok": 1779,
+      "per_dim": {
+        "technical_significance": {
+          "spearman": 0.3218146483510628,
+          "mae": 1.7192242833052276,
+          "n": 1779
+        },
+        "apparent_novelty": {
+          "spearman": 0.37483574711405143,
+          "mae": 1.9173693086003372,
+          "n": 1779
+        },
+        "practical_applicability": {
+          "spearman": 0.5826048531639477,
+          "mae": 3.5567734682405847,
+          "n": 1779
+        },
+        "professional_value": {
+          "spearman": 0.42860994390356166,
+          "mae": 3.1184654300168635,
+          "n": 1779
+        },
+        "learning_value": {
+          "spearman": 0.47471228606583526,
+          "mae": 2.9631815626756604,
+          "n": 1779
+        },
+        "evidence_strength": {
+          "spearman": 0.5701962061020586,
+          "mae": 1.1725688589094998,
+          "n": 1779
+        }
+      },
+      "composite_spearman": 0.38760598956821374,
+      "composite_mae": 3.0048085441259134,
+      "overlaps": {
+        "top_20": {
+          "overlap": 2,
+          "of": 20
+        },
+        "top_50": {
+          "overlap": 9,
+          "of": 50
+        }
+      },
+      "confidence_bands": [
+        {
+          "lo": 0.0,
+          "hi": 0.6,
+          "n": 12,
+          "composite_mae": 3.556641666666667
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.7,
+          "n": 165,
+          "composite_mae": 3.380466666666667
+        },
+        {
+          "lo": 0.7,
+          "hi": 0.8,
+          "n": 750,
+          "composite_mae": 3.0720588
+        },
+        {
+          "lo": 0.8,
+          "hi": 0.9,
+          "n": 831,
+          "composite_mae": 2.8702813477737665
+        },
+        {
+          "lo": 0.9,
+          "hi": 1.01,
+          "n": 21,
+          "composite_mae": 2.6595142857142857
+        }
+      ],
+      "max_confidence": 0.9428571428571428,
+      "any_confidence_ge_0_9": true
+    },
+    "terra": {
+      "label": "terra_sep16_21",
+      "n_eligible": 1587,
+      "n_ok": 1587,
+      "per_dim": {
+        "technical_significance": {
+          "spearman": 0.3334019652999082,
+          "mae": 1.262129804662886,
+          "n": 1587
+        },
+        "apparent_novelty": {
+          "spearman": 0.46625115481898227,
+          "mae": 1.4688090737240076,
+          "n": 1587
+        },
+        "practical_applicability": {
+          "spearman": 0.543774854258213,
+          "mae": 3.0122873345935726,
+          "n": 1587
+        },
+        "professional_value": {
+          "spearman": 0.38151102967105144,
+          "mae": 2.656899810964083,
+          "n": 1587
+        },
+        "learning_value": {
+          "spearman": 0.4827115959065662,
+          "mae": 2.7057340894770006,
+          "n": 1587
+        },
+        "evidence_strength": {
+          "spearman": 0.5292454056822261,
+          "mae": 1.1584751102709514,
+          "n": 1587
+        }
+      },
+      "composite_spearman": 0.44802412254068735,
+      "composite_mae": 2.535630686830498,
+      "overlaps": {
+        "top_20": {
+          "overlap": 6,
+          "of": 20
+        },
+        "top_50": {
+          "overlap": 16,
+          "of": 50
+        }
+      },
+      "confidence_bands": [
+        {
+          "lo": 0.0,
+          "hi": 0.6,
+          "n": 11,
+          "composite_mae": 3.7239636363636364
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.7,
+          "n": 116,
+          "composite_mae": 2.761210344827586
+        },
+        {
+          "lo": 0.7,
+          "hi": 0.8,
+          "n": 640,
+          "composite_mae": 2.5918748437500003
+        },
+        {
+          "lo": 0.8,
+          "hi": 0.9,
+          "n": 799,
+          "composite_mae": 2.4458466833541928
+        },
+        {
+          "lo": 0.9,
+          "hi": 1.01,
+          "n": 21,
+          "composite_mae": 2.369071428571429
+        }
+      ],
+      "max_confidence": 0.9257142857142857,
+      "any_confidence_ge_0_9": true
+    },
+    "all": {
+      "label": "all_run",
+      "n_eligible": 3366,
+      "n_ok": 3366,
+      "per_dim": {
+        "technical_significance": {
+          "spearman": 0.3343770507638312,
+          "mae": 1.5037136066547832,
+          "n": 3366
+        },
+        "apparent_novelty": {
+          "spearman": 0.41294474124440583,
+          "mae": 1.7058823529411764,
+          "n": 3366
+        },
+        "practical_applicability": {
+          "spearman": 0.5284470585335963,
+          "mae": 3.3000594177064766,
+          "n": 3366
+        },
+        "professional_value": {
+          "spearman": 0.3887424616600154,
+          "mae": 2.9008467023172906,
+          "n": 3366
+        },
+        "learning_value": {
+          "spearman": 0.49970043735834635,
+          "mae": 2.841800356506239,
+          "n": 3366
+        },
+        "evidence_strength": {
+          "spearman": 0.5243828540834793,
+          "mae": 1.16592394533571,
+          "n": 3366
+        }
+      },
+      "composite_spearman": 0.40783126533589487,
+      "composite_mae": 2.7836008021390377,
+      "overlaps": {
+        "top_20": {
+          "overlap": 0,
+          "of": 20
+        },
+        "top_50": {
+          "overlap": 9,
+          "of": 50
+        }
+      },
+      "confidence_bands": [
+        {
+          "lo": 0.0,
+          "hi": 0.6,
+          "n": 23,
+          "composite_mae": 3.6366652173913048
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.7,
+          "n": 281,
+          "composite_mae": 3.1248306049822063
+        },
+        {
+          "lo": 0.7,
+          "hi": 0.8,
+          "n": 1390,
+          "composite_mae": 2.85096690647482
+        },
+        {
+          "lo": 0.8,
+          "hi": 0.9,
+          "n": 1630,
+          "composite_mae": 2.662230245398773
+        },
+        {
+          "lo": 0.9,
+          "hi": 1.01,
+          "n": 42,
+          "composite_mae": 2.5142928571428573
+        }
+      ],
+      "max_confidence": 0.9428571428571428,
+      "any_confidence_ge_0_9": true
+    }
+  },
+  "v001_reference": {
+    "sol": {
+      "label": "sol_sep1_15",
+      "n_eligible": 1779,
+      "n_ok": 1779,
+      "per_dim": {
+        "technical_significance": {
+          "spearman": 0.5389519670108864,
+          "mae": 0.5705452501405284,
+          "n": 1779
+        },
+        "apparent_novelty": {
+          "spearman": 0.5941529835412186,
+          "mae": 0.938167509836987,
+          "n": 1779
+        },
+        "practical_applicability": {
+          "spearman": 0.7132247810573576,
+          "mae": 1.595559302979202,
+          "n": 1779
+        },
+        "professional_value": {
+          "spearman": 0.4975823786811549,
+          "mae": 1.021079258010118,
+          "n": 1779
+        },
+        "learning_value": {
+          "spearman": 0.3779988451931225,
+          "mae": 0.3552557616638561,
+          "n": 1779
+        },
+        "evidence_strength": {
+          "spearman": 0.6837235638927734,
+          "mae": 1.53513209668353,
+          "n": 1779
+        }
+      },
+      "composite_spearman": 0.44461147802788575,
+      "composite_mae": 1.677938392355256,
+      "overlaps": {
+        "top_20": {
+          "overlap": 2,
+          "of": 20,
+          "pct": 0.1
+        },
+        "top_50": {
+          "overlap": 11,
+          "of": 50,
+          "pct": 0.22
+        }
+      },
+      "confidence_bands": [
+        {
+          "lo": 0.0,
+          "hi": 0.6,
+          "n": 80,
+          "composite_mae": 2.6286137500000004
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.7,
+          "n": 368,
+          "composite_mae": 2.1166258152173913
+        },
+        {
+          "lo": 0.7,
+          "hi": 0.8,
+          "n": 1162,
+          "composite_mae": 1.547153786574871
+        },
+        {
+          "lo": 0.8,
+          "hi": 0.9,
+          "n": 169,
+          "composite_mae": 1.1719071005917163
+        },
+        {
+          "lo": 0.9,
+          "hi": 1.01,
+          "n": 0,
+          "composite_mae": null,
+          "mean_dim_spearman": null
+        }
+      ]
+    },
+    "terra": {
+      "label": "terra_sep16_21",
+      "n_eligible": 1587,
+      "n_ok": 1587,
+      "per_dim": {
+        "technical_significance": {
+          "spearman": 0.5628183942850766,
+          "mae": 0.39571518588531823,
+          "n": 1587
+        },
+        "apparent_novelty": {
+          "spearman": 0.6102506255950971,
+          "mae": 0.47101449275362317,
+          "n": 1587
+        },
+        "practical_applicability": {
+          "spearman": 0.7057022846874658,
+          "mae": 1.1146817895400125,
+          "n": 1587
+        },
+        "professional_value": {
+          "spearman": 0.4572001538842384,
+          "mae": 0.7388153749212351,
+          "n": 1587
+        },
+        "learning_value": {
+          "spearman": 0.4351809469006267,
+          "mae": 0.4231253938248267,
+          "n": 1587
+        },
+        "evidence_strength": {
+          "spearman": 0.6846098288678285,
+          "mae": 1.1159420289855073,
+          "n": 1587
+        }
+      },
+      "composite_spearman": 0.5330860666856927,
+      "composite_mae": 1.2440536862003784,
+      "overlaps": {
+        "top_20": {
+          "overlap": 5,
+          "of": 20,
+          "pct": 0.25
+        },
+        "top_50": {
+          "overlap": 15,
+          "of": 50,
+          "pct": 0.3
+        }
+      },
+      "confidence_bands": [
+        {
+          "lo": 0.0,
+          "hi": 0.6,
+          "n": 42,
+          "composite_mae": 2.023895238095238
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.7,
+          "n": 314,
+          "composite_mae": 1.6659035031847136
+        },
+        {
+          "lo": 0.7,
+          "hi": 0.8,
+          "n": 1051,
+          "composite_mae": 1.1605545195052334
+        },
+        {
+          "lo": 0.8,
+          "hi": 0.9,
+          "n": 180,
+          "composite_mae": 0.8137394444444447
+        },
+        {
+          "lo": 0.9,
+          "hi": 1.01,
+          "n": 0,
+          "composite_mae": null,
+          "mean_dim_spearman": null
+        }
+      ]
+    },
+    "all": {
+      "label": "all_run",
+      "n_eligible": 3366,
+      "n_ok": 3366,
+      "per_dim": {
+        "technical_significance": {
+          "spearman": 0.572371503820326,
+          "mae": 0.488116458704694,
+          "n": 3366
+        },
+        "apparent_novelty": {
+          "spearman": 0.58690383995991,
+          "mae": 0.7179144385026738,
+          "n": 3366
+        },
+        "practical_applicability": {
+          "spearman": 0.6763405782177616,
+          "mae": 1.36883541295306,
+          "n": 3366
+        },
+        "professional_value": {
+          "spearman": 0.45818533766756625,
+          "mae": 0.8879976232917409,
+          "n": 3366
+        },
+        "learning_value": {
+          "spearman": 0.43455145506961124,
+          "mae": 0.3872549019607843,
+          "n": 3366
+        },
+        "evidence_strength": {
+          "spearman": 0.6516657990418125,
+          "mae": 1.3374925727866904,
+          "n": 3366
+        }
+      },
+      "composite_spearman": 0.46844400835415223,
+      "composite_mae": 1.4733706476530009,
+      "overlaps": {
+        "top_20": {
+          "overlap": 2,
+          "of": 20,
+          "pct": 0.1
+        },
+        "top_50": {
+          "overlap": 10,
+          "of": 50,
+          "pct": 0.2
+        }
+      },
+      "confidence_bands": [
+        {
+          "lo": 0.0,
+          "hi": 0.6,
+          "n": 122,
+          "composite_mae": 2.420431967213115
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.7,
+          "n": 682,
+          "composite_mae": 1.9091085043988272
+        },
+        {
+          "lo": 0.7,
+          "hi": 0.8,
+          "n": 2213,
+          "composite_mae": 1.3635497062810666
+        },
+        {
+          "lo": 0.8,
+          "hi": 0.9,
+          "n": 349,
+          "composite_mae": 0.9871787965616048
+        },
+        {
+          "lo": 0.9,
+          "hi": 1.01,
+          "n": 0,
+          "composite_mae": null,
+          "mean_dim_spearman": null
+        }
+      ]
+    },
+    "spend_quality": 0.19333229999999935
+  },
+  "winner_for_csv": "v001",
+  "n_ok": 3366
+}

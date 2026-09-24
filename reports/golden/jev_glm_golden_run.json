@@ -1,0 +1,15 @@
+{
+  "run_id": "750f86d6-fc86-445a-b6bb-7a57e9bcae35",
+  "stage_run_id": "1123346f-9783-4114-923b-ddc261818064",
+  "pipeline_name": "golden_jev_glm_eval",
+  "quality_engine": "jev_glm",
+  "scoring_model": "typesafe/jev-1.13",
+  "generated_at": "2026-09-24T09:17:24.364972+00:00",
+  "n": 200,
+  "not_current_quality": true,
+  "status": "done",
+  "cost_usd": 0.048342438,
+  "papers_succeeded": 200,
+  "papers_failed": 0,
+  "finished_at": "2026-09-24T09:49:44.330609+00:00"
+}

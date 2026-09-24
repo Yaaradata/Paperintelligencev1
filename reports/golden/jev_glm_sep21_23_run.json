@@ -1,0 +1,38 @@
+{
+  "pipeline_name": "jev_glm_sep21_23",
+  "quality_engine": "jev_glm",
+  "scoring_model": "typesafe/jev-1.13",
+  "scoring_policy": "quality_v001",
+  "prose_model": "z-ai/glm-5.3-flash",
+  "prose_prompt": "prompts/quality_prose/v001.md",
+  "date_from": "2026-09-21",
+  "date_until": "2026-09-23",
+  "window_note": "PARTIAL \u2014 Sep 22-23 inside arXiv announcement lag",
+  "max_cost_usd": 1.5,
+  "hard_cap_total_usd": 2.0,
+  "projected_paid_usd": 0.29,
+  "projected_breakdown": {
+    "screen": 0.0396,
+    "audience_domain": 0.1695,
+    "quality_jev": 0.0226,
+    "quality_glm_prose": 0.0606,
+    "quality_total": 0.0832
+  },
+  "stages": [
+    "screen",
+    "affiliation_fast",
+    "audience_domain",
+    "quality",
+    "affiliation_deep",
+    "hf_signals",
+    "adjudication",
+    "reports"
+  ],
+  "classify_model": "z-ai/glm-5.3-flash",
+  "status": "finished",
+  "created_at": "2026-09-24T08:43:59.233461+00:00",
+  "pipeline_pid": 1725154,
+  "pipeline_started_at": "2026-09-24T08:43:59.281876+00:00",
+  "pipeline_exit_code": 1,
+  "pipeline_finished_at": "2026-09-24T09:24:30.962295+00:00"
+}
