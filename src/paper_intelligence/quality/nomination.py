@@ -239,7 +239,8 @@ def describe_targets(
             if int(cid) not in selected:
                 router_exclusion = (
                     f"outside quality router on {day} "
-                    f"(top {GATE_PERCENTILE}% ∪ notable-org/person); "
+                    f"(blocked or missing rank dims; GATE_PERCENTILE={GATE_PERCENTILE} "
+                    f"is label-only under ROUTER_SCORE_ALL_SURVIVORS); "
                     f"screen_rank_mean={mean}"
                 )
         exclusion = "; ".join(reasons) if reasons else router_exclusion

@@ -11,7 +11,7 @@ from typing import Any
 
 import yaml
 
-from paper_intelligence.common.config import POLICIES_DIR
+from paper_intelligence.common.config import POLICIES_DIR, QUALITY_ENGINE
 
 POLICY_VERSION = "v001"
 _POLICY_PATH = POLICIES_DIR / "quality_models" / f"{POLICY_VERSION}.yaml"
@@ -70,7 +70,14 @@ def mapped_quality_model(
     *,
     policy: dict[str, Any] | None = None,
 ) -> str:
-    """Model required for a paper given its published_at (UTC date)."""
+    """Model required for a paper given its published_at (UTC date).
+
+    When QUALITY_ENGINE=jev_glm, returns the pinned Jev model (scoring stamp).
+    """
+    if QUALITY_ENGINE == "jev_glm":
+        from paper_intelligence.systemone.client import JEV_MODEL_PINNED
+
+        return JEV_MODEL_PINNED
     pol = policy or load_quality_model_policy()
     pub = _as_utc_date(published_at)
     if pub is None:

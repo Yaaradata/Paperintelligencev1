@@ -17,18 +17,37 @@ OPENROUTER_API_BASE = os.getenv("OPENROUTER_API_BASE", "https://openrouter.ai/ap
 
 SCREEN_MODEL = os.getenv("SCREEN_MODEL", "z-ai/glm-5.3-flash")
 CLASSIFY_MODEL = os.getenv("CLASSIFY_MODEL", SCREEN_MODEL)
-QUALITY_MODEL = os.getenv("QUALITY_MODEL", "openai/gpt-5.6-sol")
+QUALITY_MODEL = os.getenv("QUALITY_MODEL", "openai/gpt-5.6-terra")
 # Note: QUALITY_MODEL env is a one-off override. Prefer
 # policies/quality_models/v001.yaml (mapped_quality_model) for currentness.
 # quality_model_env_override() is True only when the var is actually set.
+
+# Quality stage engine. Default terra (unchanged). jev_glm = Jev scores + GLM prose.
+_QUALITY_ENGINE_RAW = os.getenv("QUALITY_ENGINE", "terra").strip().lower()
+QUALITY_ENGINE = (
+    _QUALITY_ENGINE_RAW if _QUALITY_ENGINE_RAW in {"terra", "jev_glm"} else "terra"
+)
+QUALITY_PROSE_MODEL = os.getenv("QUALITY_PROSE_MODEL", "z-ai/glm-5.3-flash")
 
 SCREEN_BATCH_SIZE = int(os.getenv("SCREEN_BATCH_SIZE", "15"))
 CLASSIFY_BATCH_SIZE = int(os.getenv("CLASSIFY_BATCH_SIZE", "15"))
 QUALITY_BATCH_SIZE = int(os.getenv("QUALITY_BATCH_SIZE", "5"))
 
+
+def _env_flag(name: str, default: str = "0") -> bool:
+    return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "on"}
+
+
 SCREEN_MIN_AI_RELEVANCE = float(os.getenv("SCREEN_MIN_AI_RELEVANCE", "5.0"))
+# Legacy top-slice keep % — retained for would-have-been labels / reporting only.
+# Selection no longer gates on this when ROUTER_SCORE_ALL_SURVIVORS is on (default).
 GATE_PERCENTILE = float(os.getenv("GATE_PERCENTILE", "75"))
-# Quality top-slice scope: "window" (legacy / default) or "day" (per UTC published_at date).
+# When true (default): every screen-passed paper is a quality candidate
+# (reason selected_all_survivors). GATE_PERCENTILE / product-slice stay computed
+# as reporting labels only (would_have_been_top_slice, notable_org, …).
+ROUTER_SCORE_ALL_SURVIVORS = _env_flag("ROUTER_SCORE_ALL_SURVIVORS", "1")
+# Quality top-slice scope: "window" (legacy) or "day". Used for would-have-been
+# top-slice labels when ROUTER_SCORE_ALL_SURVIVORS is on.
 _ROUTER_SCOPE_RAW = os.getenv("ROUTER_PERCENTILE_SCOPE", "day").strip().lower()
 ROUTER_PERCENTILE_SCOPE = (
     _ROUTER_SCOPE_RAW if _ROUTER_SCOPE_RAW in {"window", "day"} else "day"
@@ -45,9 +64,8 @@ AUDIENCE_POLICY = (
 TECH_POOL_MIN = float(os.getenv("TECH_POOL_MIN", "6.0"))
 PRODUCT_POOL_MIN = float(os.getenv("PRODUCT_POOL_MIN", "6.0"))
 
-# Optional quality-router product slice (Phase 7 amendments). 0 = off.
-# When >0, screen-passed papers in the top N% by product_relevance join quality
-# candidates as selected_product_slice. Flag off → routing identical to today.
+# Optional product-slice % — OFF by default (0). Retained for reporting labels
+# only when ROUTER_SCORE_ALL_SURVIVORS is on; does not gate selection.
 ROUTER_PRODUCT_SLICE_PCT = float(os.getenv("ROUTER_PRODUCT_SLICE_PCT", "0"))
 
 STAGE_CONCURRENCY = int(os.getenv("PI_STAGE_CONCURRENCY", "6"))
@@ -55,10 +73,6 @@ STAGE_CONCURRENCY = int(os.getenv("PI_STAGE_CONCURRENCY", "6"))
 QUALITY_REASONING_EFFORT = os.getenv("QUALITY_REASONING_EFFORT", "medium")
 
 # Catalog cutover flags (default OFF until canary approved).
-def _env_flag(name: str, default: str = "0") -> bool:
-    return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "on"}
-
-
 # Final cutover: PI catalog is permanently authoritative.
 # Radar dual-write is OFF by default after soak; re-enable only for
 # optional one-way PI→Radar projection (never as a rollback source of truth).

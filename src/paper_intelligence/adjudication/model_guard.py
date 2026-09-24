@@ -11,9 +11,9 @@ from paper_intelligence.quality.model_policy import (
     quality_model_env_override,
 )
 from paper_intelligence.quality.stage import (
-    POLICY_VERSION as QUALITY_POLICY_VERSION,
-    PROMPT_VERSION as QUALITY_PROMPT_VERSION,
     STAGE_VERSION as QUALITY_STAGE_VERSION,
+    active_policy_version,
+    active_prompt_version,
 )
 
 
@@ -22,9 +22,9 @@ def count_quality_rows_staled_by_model(
     *,
     date_from: str,
     date_until: str,
-    stage_version: str = QUALITY_STAGE_VERSION,
-    prompt_version: str = QUALITY_PROMPT_VERSION,
-    policy_version: str = QUALITY_POLICY_VERSION,
+    stage_version: str | None = None,
+    prompt_version: str | None = None,
+    policy_version: str | None = None,
 ) -> dict[str, int | str | None]:
     """Compare latest version-matched quality rows to the date→model mapping.
 
@@ -34,6 +34,9 @@ def count_quality_rows_staled_by_model(
 
     Returns counts plus whether an env override is active.
     """
+    stage_version = stage_version or QUALITY_STAGE_VERSION
+    prompt_version = prompt_version or active_prompt_version()
+    policy_version = policy_version or active_policy_version()
     policy = load_quality_model_policy()
     if PI_USE_PAPERS_CATALOG:
         sql = """

@@ -1,0 +1,122 @@
+# System One quality rubric policy — v002 (observable criteria).
+# Fixes vs v001 (TypeSafe scoring guidance):
+# - 5–6 levels per dimension, each an observable abstract property (no adverb ladders)
+# - No cross-question instructions (questions are independent)
+# - professional_value split into eng + product decision relevance; combined in code
+# - No "ignore author prestige" (state has no authors)
+#
+# State: title + abstract only. Model: typesafe/jev-1.13 (pinned).
+# Score criteria: N levels (0..N-1) → mapped to 0–10 via score*(10/(N-1)).
+# Composite weights unchanged from quality stage / v001.
+
+version: v002
+stage: quality
+model: typesafe/jev-1.13
+state_fields: [title, abstract]
+prompt_source: prompts/quality/v002.md
+composite:
+  weights:
+    technical_significance: 0.28
+    apparent_novelty: 0.24
+    practical_applicability: 0.20
+    professional_value: 0.16  # mean(decision_relevance_eng, decision_relevance_product)
+    learning_value: 0.12
+  evidence_factor: "0.70 + 0.03 * evidence_strength"
+  # Separation of concerns is enforced here, not in question text:
+  # evidence_strength only scales the composite via evidence_factor;
+  # other dims are scored on claimed contribution / applicability / novelty alone.
+  professional_value_from:
+    - decision_relevance_eng
+    - decision_relevance_product
+
+questions:
+  technical_significance:
+    type: score
+    instructions: >
+      From the title and abstract alone, what technical contribution does this
+      paper claim? Score the substance of the claimed method, result, or system.
+    criteria:
+      - No technical method or result claimed; opinion, survey framing, or empty claim
+      - Minor tweak of a known method with no new mechanism described
+      - One clear technical mechanism or result, narrowly scoped
+      - A substantial new method, architecture, or analysis with stated scope
+      - A general technique that applies across tasks or model classes
+      - A foundational result or system that would change how the field builds
+
+  apparent_novelty:
+    type: score
+    instructions: >
+      From the title and abstract alone, how new does the claimed idea or
+      approach appear relative to standard practice in the area?
+    criteria:
+      - Re-applies a well-known method to a familiar setting with no new idea
+      - Incremental parameter, data, or tuning change on a known approach
+      - Combines known pieces in a non-obvious way, or applies to a new domain
+      - Introduces a distinct method or framing not described as prior art here
+      - Claims a new problem formulation or capability class
+      - Claims a paradigm shift (new objective, architecture family, or theory)
+
+  practical_applicability:
+    type: score
+    instructions: >
+      From the title and abstract alone, how usable is the claimed contribution
+      in a real product, system, or practitioner workflow?
+    criteria:
+      - Purely theoretical or toy setting; no path to a deployed system
+      - Requires unavailable data, models, or infrastructure to use
+      - Usable in a research prototype or offline evaluation pipeline
+      - Clear drop-in for an existing production or product workflow
+      - Designed for production constraints (latency, cost, scale, or safety)
+      - Already framed as deployment-ready with operational guidance
+
+  decision_relevance_eng:
+    type: score
+    instructions: >
+      From the title and abstract alone, how useful would this paper be to an
+      engineering leader choosing architecture, evaluation methods, or
+      operational practices?
+    criteria:
+      - No bearing on engineering architecture, eval, or ops choices
+      - Background interest only; would not change a current engineering decision
+      - Informs a narrow engineering choice (one component or metric)
+      - Would change how a team designs or evaluates a core subsystem
+      - Would change platform-wide engineering standards or defaults
+      - Would force a revisit of the organisation's technical strategy
+
+  decision_relevance_product:
+    type: score
+    instructions: >
+      From the title and abstract alone, how useful would this paper be to a
+      product leader choosing what to build, ship, or measure for users?
+    criteria:
+      - No bearing on product scope, UX, or go-to-market choices
+      - Background interest only; would not change a current product decision
+      - Informs a narrow product feature or metric
+      - Would change how a product team prioritises or measures a core surface
+      - Would change product strategy across a line of products
+      - Would force a revisit of the organisation's product thesis
+
+  learning_value:
+    type: score
+    instructions: >
+      From the title and abstract alone, how much would a skilled practitioner
+      learn that transfers beyond this exact paper?
+    criteria:
+      - No transferable lesson; paper-specific claim only
+      - One narrow tip that applies only in the same setting
+      - A reusable technique or checklist for a common class of problems
+      - A mental model that changes how practitioners approach a domain
+      - A general principle with examples spanning multiple domains
+      - A teaching-grade result that becomes standard practitioner knowledge
+
+  evidence_strength:
+    type: score
+    instructions: >
+      How strong is the evidence described in this abstract for the claims it makes?
+    criteria:
+      - No results reported; claims are asserted or purely conceptual
+      - Illustrative example or demo only; no systematic measurement
+      - Measured results on one setting, no baseline comparison
+      - Measured results with baselines on a standard benchmark
+      - Multiple settings or models, with ablations or error analysis
+      - Large-scale or real-deployment evidence, with stated limitations

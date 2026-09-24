@@ -333,6 +333,7 @@ def test_router_invariant_when_product_slice_pct_zero(monkeypatch):
         gate_percentile=50,
         percentile_scope="window",
         product_slice_pct=0,
+        score_all_survivors=False,
     )
     # 4 screen-passed survivors; 50% => keep 2 (ids 1,2). No product slice.
     assert base == [1, 2]
@@ -364,6 +365,7 @@ def test_product_slice_grows_union_when_flag_on(monkeypatch):
         gate_percentile=50,
         percentile_scope="window",
         product_slice_pct=0,
+        score_all_survivors=False,
     )
     on = select_quality_candidates(
         conn,
@@ -372,6 +374,7 @@ def test_product_slice_grows_union_when_flag_on(monkeypatch):
         gate_percentile=50,
         percentile_scope="window",
         product_slice_pct=25,  # of 4 scored survivors → keep 1 → id 5
+        score_all_survivors=False,
     )
     assert set(off).issubset(set(on))
     assert set(on) - set(off)  # union grew
@@ -386,6 +389,7 @@ def test_product_slice_grows_union_when_flag_on(monkeypatch):
             gate_percentile=50,
             percentile_scope="window",
             product_slice_pct=25,
+            score_all_survivors=False,
         )
     }
     assert decisions[5].decision == "selected"

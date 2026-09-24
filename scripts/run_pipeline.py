@@ -283,8 +283,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--max-cost-usd",
         type=float,
-        default=None,
-        help="cumulative cap across all paid stages (also env PI_MAX_COST_USD)",
+        default=25.0,
+        help="cumulative cap across all paid stages (default 25; also env PI_MAX_COST_USD)",
     )
     parser.add_argument(
         "--force-over-projection",

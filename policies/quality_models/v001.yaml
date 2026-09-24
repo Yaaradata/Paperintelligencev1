@@ -1,5 +1,8 @@
 # Quality model by published_at (UTC calendar date of papers.published_at).
-# Cutover CONFIRMED 2026-09-22: 2026-09-16 inclusive start of Terra.
+#
+# Terra-only (2026-09-23): Sol removed from the date map. Every published_at
+# resolves to openai/gpt-5.6-terra. Existing Sol rows remain in DB until
+# re-scored; new scoring always uses Terra.
 #
 # QUALITY_MODEL env is an explicit one-off override only. When unset, this file
 # is the source of truth for which model is "current" for a paper.
@@ -7,14 +10,14 @@
 policy_version: v001
 policy_name: quality_models
 
-# Inclusive start of Terra (and later) windows.
-cutover_date: "2026-09-16"
+# Inclusive start of the post-cutover model. With both sides Terra, cutover is
+# irrelevant for model choice; kept so the loader schema stays stable.
+cutover_date: "2000-01-01"
 
-pre_cutover_model: "openai/gpt-5.6-sol"
+pre_cutover_model: "openai/gpt-5.6-terra"
 post_cutover_model: "openai/gpt-5.6-terra"
 
 notes: |
-  CONFIRMED 2026-09-22. Sep 1–15 keeps existing Sol scores (do not fill the
-  remaining Sol-pending candidates on that window). New windows from
-  cutover_date onward use openai/gpt-5.6-terra. Do not set QUALITY_MODEL
-  for routine runs — use this map.
+  Terra-only as of 2026-09-23. Sol (openai/gpt-5.6-sol) is no longer mapped.
+  Re-score remaining Sep 1–21 screen survivors on Terra under
+  ROUTER_SCORE_ALL_SURVIVORS. Do not set QUALITY_MODEL for routine runs.

@@ -2,11 +2,20 @@
 
 from __future__ import annotations
 
+import pytest
+
 from paper_intelligence.quality.stage import (
     explain_quality_routing,
     select_quality_candidates,
 )
 
+
+@pytest.fixture(autouse=True)
+def _legacy_router_default(monkeypatch):
+    """Pin legacy top-slice union unless a test opts into score-all."""
+    monkeypatch.setattr(
+        "paper_intelligence.quality.stage.ROUTER_SCORE_ALL_SURVIVORS", False
+    )
 
 class _FakeCur:
     def __init__(self, db):
@@ -514,3 +523,52 @@ def test_version_aware_skip_sql_includes_versions(monkeypatch):
     monkeypatch.setenv("PI_USE_PAPERS_CATALOG", "1")
     importlib.reload(cfg)
     importlib.reload(results_mod)
+
+
+def test_score_all_survivors_selects_every_rankable(monkeypatch):
+    monkeypatch.setattr(
+        "paper_intelligence.quality.stage.ROUTER_SCORE_ALL_SURVIVORS", True
+    )
+    screens = _screens_for_router()[:4]
+    conn = _FakeConn(screens, notable_org=[3])
+    monkeypatch.setattr(
+        "paper_intelligence.quality.stage.latest_screen_scores",
+        lambda *a, **k: screens,
+    )
+    ids = select_quality_candidates(
+        conn, date_from="2026-09-01", date_until="2026-09-02", gate_percentile=50
+    )
+    # survivors 1,2,3 (4 blocked) — all selected regardless of GATE_PERCENTILE
+    assert ids == [1, 2, 3]
+    by_id = {
+        d.content_item_id: d
+        for d in explain_quality_routing(
+            conn, date_from="2026-09-01", date_until="2026-09-02", gate_percentile=50
+        )
+    }
+    assert by_id[1].reason == "selected_all_survivors"
+    assert by_id[1].would_have_been_top_slice is True
+    assert by_id[3].reason == "selected_all_survivors"
+    assert by_id[3].would_have_been_top_slice is False
+    assert by_id[3].notable_org is True
+    assert by_id[4].decision == "blocked"
+
+
+def test_score_all_survivors_param_overrides_config(monkeypatch):
+    monkeypatch.setattr(
+        "paper_intelligence.quality.stage.ROUTER_SCORE_ALL_SURVIVORS", False
+    )
+    screens = _screens_for_router()[:4]
+    conn = _FakeConn(screens)
+    monkeypatch.setattr(
+        "paper_intelligence.quality.stage.latest_screen_scores",
+        lambda *a, **k: screens,
+    )
+    ids = select_quality_candidates(
+        conn,
+        date_from="2026-09-01",
+        date_until="2026-09-02",
+        gate_percentile=50,
+        score_all_survivors=True,
+    )
+    assert ids == [1, 2, 3]

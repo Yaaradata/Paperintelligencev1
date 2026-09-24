@@ -34,9 +34,9 @@ from paper_intelligence.quality.model_policy import (
     warn_quality_model_override,
 )
 from paper_intelligence.quality.stage import (
-    POLICY_VERSION as QUALITY_POLICY_VERSION,
-    PROMPT_VERSION as QUALITY_PROMPT_VERSION,
     STAGE_VERSION as QUALITY_STAGE_VERSION,
+    active_policy_version,
+    active_prompt_version,
     composite_score,
     quality_selection_reason_map,
 )
@@ -249,8 +249,8 @@ def run_window(
         conn,
         list(by_paper.keys()),
         stage_version=QUALITY_STAGE_VERSION,
-        prompt_version=QUALITY_PROMPT_VERSION,
-        policy_version=QUALITY_POLICY_VERSION,
+        prompt_version=active_prompt_version(),
+        policy_version=active_policy_version(),
         model=None,
     )
 
@@ -304,8 +304,8 @@ def run_window(
         has_current_quality = quality_result_is_current(
             quality_meta if quality else None,
             stage_version=QUALITY_STAGE_VERSION,
-            prompt_version=QUALITY_PROMPT_VERSION,
-            policy_version=QUALITY_POLICY_VERSION,
+            prompt_version=active_prompt_version(),
+            policy_version=active_policy_version(),
             model=expected_model,
             paper_content_hash=paper_hash,
         )
@@ -316,9 +316,9 @@ def run_window(
                 if (
                     str(quality_meta.get("stage_version") or "") == QUALITY_STAGE_VERSION
                     and str(quality_meta.get("prompt_version") or "")
-                    == QUALITY_PROMPT_VERSION
+                    == active_prompt_version()
                     and str(quality_meta.get("policy_version") or "")
-                    == QUALITY_POLICY_VERSION
+                    == active_policy_version()
                     and result_content_is_stale(quality_meta, paper_content_hash=paper_hash)
                 ):
                     content_stale = True

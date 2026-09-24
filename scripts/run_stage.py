@@ -47,14 +47,15 @@ def main(argv: list[str] | None = None) -> int:
         "--gate-percentile",
         type=float,
         default=None,
-        help="quality only: top %% of screen survivors to score (default GATE_PERCENTILE)",
+        help="quality only: legacy label for would-have-been top-slice %% "
+        "(selection uses ROUTER_SCORE_ALL_SURVIVORS; default GATE_PERCENTILE)",
     )
     parser.add_argument(
         "--max-cost-usd",
         type=float,
-        default=None,
+        default=25.0,
         help="refuse / stop paid work when projected or actual spend would exceed this "
-        "(also env PI_MAX_COST_USD)",
+        "(default 25; also env PI_MAX_COST_USD when CLI omitted via None override)",
     )
     parser.add_argument(
         "--force-over-projection",
@@ -724,7 +725,9 @@ def _run_quality_paid(
     from paper_intelligence.common.config import (
         CLASSIFY_MODEL,
         GATE_PERCENTILE,
+        QUALITY_ENGINE,
         SCREEN_MODEL,
+        require_model_priced,
     )
     from paper_intelligence.db import fetch_papers, ids_with_result
     from paper_intelligence.observability import (
@@ -738,6 +741,14 @@ def _run_quality_paid(
         group_ids_by_quality_model,
         quality_model_env_override,
     )
+    from paper_intelligence.quality.stage import (
+        active_policy_version,
+        active_prompt_version,
+    )
+    from paper_intelligence.systemone.client import JEV_MODEL_PINNED
+
+    prompt_version = active_prompt_version()
+    policy_version = active_policy_version()
 
     if args.content_item_id is not None:
         candidate_ids = [args.content_item_id]
@@ -755,7 +766,12 @@ def _run_quality_paid(
     # Preserve candidate order within each model group.
     paper_by_id = {int(p["content_item_id"]): p for p in papers}
     ordered_papers = [paper_by_id[i] for i in candidate_ids if i in paper_by_id]
-    groups = group_ids_by_quality_model(ordered_papers)
+    if QUALITY_ENGINE == "jev_glm":
+        require_model_priced(JEV_MODEL_PINNED)
+        require_model_priced("z-ai/glm-5.3-flash")
+        groups = {JEV_MODEL_PINNED: [int(p["content_item_id"]) for p in ordered_papers]}
+    else:
+        groups = group_ids_by_quality_model(ordered_papers)
 
     pending_by_model: dict[str, list[int]] = {}
     skipped_done = 0
@@ -768,8 +784,8 @@ def _run_quality_paid(
             ids,
             "quality",
             stage_version=module.STAGE_VERSION,
-            prompt_version=module.PROMPT_VERSION,
-            policy_version=module.POLICY_VERSION,
+            prompt_version=prompt_version,
+            policy_version=policy_version,
             model=model,
         )
         pending = [i for i in ids if i not in done]
@@ -780,11 +796,13 @@ def _run_quality_paid(
     total_pending = sum(len(v) for v in pending_by_model.values())
     override = quality_model_env_override()
     print(
-        f"stage=quality models={dict((m, len(ids)) for m, ids in pending_by_model.items())} "
+        f"stage=quality engine={QUALITY_ENGINE} "
+        f"models={dict((m, len(ids)) for m, ids in pending_by_model.items())} "
         f"candidates={len(candidate_ids)} pending={total_pending} "
         f"skipped_done={skipped_done} from={args.date_from} until={args.date_until} "
         f"dry_run={args.dry_run} env_override={override!r} "
-        f"cutover={q_policy['cutover_date']}",
+        f"cutover={q_policy['cutover_date']} "
+        f"prompt_version={prompt_version} policy_version={policy_version}",
         flush=True,
     )
     if not total_pending:
@@ -813,6 +831,9 @@ def _run_quality_paid(
             f"~{stats.calls} calls, ~${stats.cost_usd:.4f}",
             flush=True,
         )
+        for w in stats.warnings:
+            if "est_usd" in w:
+                print(f"    {w}", flush=True)
     print(
         f"PROJECTION quality: {total_pending} papers, ~{projected_calls} calls, "
         f"~{projected_in} in / ~{projected_out} out tokens, ~${projected_cost:.2f}",
@@ -860,6 +881,7 @@ def _run_quality_paid(
         metadata={
             "date_from": args.date_from,
             "date_until": args.date_until,
+            "quality_engine": QUALITY_ENGINE,
             "models": {
                 "screen": SCREEN_MODEL,
                 "classify": CLASSIFY_MODEL,
@@ -903,8 +925,8 @@ def _run_quality_paid(
             run_id,
             stage_name="quality",
             stage_version=module.STAGE_VERSION,
-            prompt_version=module.PROMPT_VERSION,
-            policy_version=module.POLICY_VERSION,
+            prompt_version=prompt_version,
+            policy_version=policy_version,
             items_input=len(ids),
         )
         stats = module.run_window(
@@ -976,6 +998,7 @@ def _run_quality_paid(
             "calls": total_calls,
             "stopped_budget_cap": stopped,
             "papers_skipped_budget": papers_skipped_budget,
+            "quality_engine": QUALITY_ENGINE,
             "quality_models": {m: len(ids) for m, ids in pending_by_model.items()},
         },
     )

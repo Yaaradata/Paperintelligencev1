@@ -1,12 +1,13 @@
-"""Stage: quality (Pass 2) — PAID, reasoning on, top slice of screen survivors.
+"""Stage: quality (Pass 2) — PAID, reasoning on, all screen survivors by default.
 
 The model never sees authors, affiliations or organisations: the payload is
 title, categories and abstract only. Institutional standing enters later as a
 capped additive boost, after scoring.
 
 Quality *routing* eligibility is based on PI screen results (gate.passed), not
-on research_radar.content_items.status. A screen pass enters the router; it does
-not automatically imply a paid quality score.
+on research_radar.content_items.status. With ROUTER_SCORE_ALL_SURVIVORS (default),
+every screen pass is a quality candidate (selected_all_survivors). GATE_PERCENTILE
+and notable-org / product-slice remain as reporting labels only.
 """
 
 from __future__ import annotations
@@ -21,10 +22,12 @@ from paper_intelligence.common.budget import BudgetCap
 from paper_intelligence.common.config import (
     GATE_PERCENTILE,
     QUALITY_BATCH_SIZE,
+    QUALITY_ENGINE,
     QUALITY_MODEL,
     QUALITY_REASONING_EFFORT,
     ROUTER_PERCENTILE_SCOPE,
     ROUTER_PRODUCT_SLICE_PCT,
+    ROUTER_SCORE_ALL_SURVIVORS,
     estimate_cost_usd,
     read_prompt,
 )
@@ -64,6 +67,29 @@ STAGE_NAME = "quality"
 STAGE_VERSION = "v001"
 PROMPT_VERSION = "v001"
 POLICY_VERSION = "v001"
+
+# When QUALITY_ENGINE=jev_glm, skip-done / adjudication currentness use these
+# stamps (distinct from Terra) so engines do not overwrite each other.
+_JEV_GLM_PROMPT_VERSION = "prose_v001"
+_JEV_GLM_POLICY_VERSION = "systemone_v001"
+
+
+def active_prompt_version() -> str:
+    return _JEV_GLM_PROMPT_VERSION if QUALITY_ENGINE == "jev_glm" else PROMPT_VERSION
+
+
+def active_policy_version() -> str:
+    return _JEV_GLM_POLICY_VERSION if QUALITY_ENGINE == "jev_glm" else POLICY_VERSION
+
+
+def active_quality_model_for_stamp() -> str | None:
+    """Model id stamped on quality rows for the active engine (None → use date map)."""
+    if QUALITY_ENGINE == "jev_glm":
+        from paper_intelligence.systemone.client import JEV_MODEL_PINNED
+
+        return JEV_MODEL_PINNED
+    return None
+
 
 RUBRIC_DIMENSIONS = (
     "technical_significance",
@@ -447,8 +473,23 @@ def select_quality_candidates(
     percentile_scope: str = ROUTER_PERCENTILE_SCOPE,
     apply_judge_effective: bool = True,
     product_slice_pct: float | None = None,
+    score_all_survivors: bool | None = None,
 ) -> list[int]:
-    """Quality router: top screen slice ∪ notable org ∪ notable person ∪ product slice."""
+    """Quality router candidate ids for paid scoring.
+
+    Default (ROUTER_SCORE_ALL_SURVIVORS): every rankable screen survivor.
+    Legacy (score_all_survivors=False): top screen slice ∪ notable org ∪
+    notable person ∪ product slice.
+    """
+    all_survivors = (
+        ROUTER_SCORE_ALL_SURVIVORS if score_all_survivors is None else score_all_survivors
+    )
+    if all_survivors:
+        ranked, _, _, _, _ = _rank_screen_survivors(
+            latest_screen_scores(conn, date_from=date_from, date_until=date_until)
+        )
+        return [cid for _, cid in ranked]
+
     selected = set(
         select_top_slice(
             conn,
@@ -494,6 +535,11 @@ class QualityRoutingDecision:
     top_slice_keep: int | None = None
     gate_percentile: float | None = None
     percentile_scope: str | None = None
+    # Reporting labels only (do not gate selection when score-all is on).
+    would_have_been_top_slice: bool = False
+    notable_org: bool = False
+    notable_person: bool = False
+    product_slice: bool = False
 
     def as_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -508,17 +554,24 @@ def explain_quality_routing(
     percentile_scope: str = ROUTER_PERCENTILE_SCOPE,
     apply_judge_effective: bool = True,
     product_slice_pct: float | None = None,
+    score_all_survivors: bool | None = None,
 ) -> list[QualityRoutingDecision]:
     """Record a routing decision for every latest PI screen result in the window.
 
-    Decisions:
-    - selected / selected_top_slice | selected_notable_org | selected_notable_person
-      | selected_product_slice
+    Default (ROUTER_SCORE_ALL_SURVIVORS): every rankable survivor is
+    ``selected`` / ``selected_all_survivors``. GATE_PERCENTILE top-slice and
+    notable-org / person / product-slice are recorded as labels only.
+
+    Legacy (score_all_survivors=False):
+    - selected / selected_top_slice | selected_notable_org | …
     - not_selected / not_selected_below_gate_percentile
     - blocked / blocked_screen_gate_failed | blocked_missing_rank_dimensions
 
     Does not call the LLM. Does not mutate scores.
     """
+    all_survivors = (
+        ROUTER_SCORE_ALL_SURVIVORS if score_all_survivors is None else score_all_survivors
+    )
     scope = percentile_scope if percentile_scope in {"window", "day"} else "window"
     screens = latest_screen_scores(conn, date_from=date_from, date_until=date_until)
     ranked, rank_means, gate_by_id, missing_dims, pub_day_by_id = _rank_screen_survivors(
@@ -582,6 +635,30 @@ def explain_quality_routing(
         pos = position.get(cid)
         survivors_n = survivors_n_by_id.get(cid)
         keep_n = keep_n_by_id.get(cid)
+        labels = dict(
+            would_have_been_top_slice=cid in top_ids,
+            notable_org=cid in notable_org,
+            notable_person=cid in notable_person,
+            product_slice=cid in product_slice,
+        )
+
+        if all_survivors:
+            decisions.append(
+                QualityRoutingDecision(
+                    content_item_id=cid,
+                    decision="selected",
+                    reason="selected_all_survivors",
+                    rank_mean=round(mean, 4) if mean is not None else None,
+                    rank_position=pos,
+                    survivors_in_window=survivors_n,
+                    top_slice_keep=keep_n,
+                    gate_percentile=gate_percentile,
+                    percentile_scope=scope,
+                    **labels,
+                )
+            )
+            continue
+
         if cid in top_ids:
             reason = "selected_top_slice"
             if cid in notable_org:
@@ -601,6 +678,7 @@ def explain_quality_routing(
                     top_slice_keep=keep_n,
                     gate_percentile=gate_percentile,
                     percentile_scope=scope,
+                    **labels,
                 )
             )
         elif cid in notable_org:
@@ -615,6 +693,7 @@ def explain_quality_routing(
                     top_slice_keep=keep_n,
                     gate_percentile=gate_percentile,
                     percentile_scope=scope,
+                    **labels,
                 )
             )
         elif cid in notable_person:
@@ -629,6 +708,7 @@ def explain_quality_routing(
                     top_slice_keep=keep_n,
                     gate_percentile=gate_percentile,
                     percentile_scope=scope,
+                    **labels,
                 )
             )
         elif cid in product_slice:
@@ -643,6 +723,7 @@ def explain_quality_routing(
                     top_slice_keep=keep_n,
                     gate_percentile=gate_percentile,
                     percentile_scope=scope,
+                    **labels,
                 )
             )
         else:
@@ -657,6 +738,7 @@ def explain_quality_routing(
                     top_slice_keep=keep_n,
                     gate_percentile=gate_percentile,
                     percentile_scope=scope,
+                    **labels,
                 )
             )
     return decisions
@@ -671,6 +753,7 @@ def quality_selection_reason_map(
     percentile_scope: str = ROUTER_PERCENTILE_SCOPE,
     apply_judge_effective: bool = True,
     product_slice_pct: float | None = None,
+    score_all_survivors: bool | None = None,
 ) -> dict[int, QualityRoutingDecision]:
     return {
         d.content_item_id: d
@@ -682,6 +765,7 @@ def quality_selection_reason_map(
             percentile_scope=percentile_scope,
             apply_judge_effective=apply_judge_effective,
             product_slice_pct=product_slice_pct,
+            score_all_survivors=score_all_survivors,
         )
     }
 
@@ -766,6 +850,18 @@ def run_window(
     dry_run: bool = False,
     max_cost_usd: float | None = None,
 ) -> BatchStats:
+    if QUALITY_ENGINE == "jev_glm":
+        from paper_intelligence.quality.jev_glm_engine import run_jev_glm_window
+
+        return run_jev_glm_window(
+            conn,
+            content_item_ids,
+            run_id=run_id,
+            stage_run_id=stage_run_id,
+            dry_run=dry_run,
+            max_cost_usd=max_cost_usd,
+        )
+
     budget = BudgetCap(max_cost_usd) if max_cost_usd is not None else None
     stats = BatchStats(papers_requested=len(content_item_ids), budget=budget)
     if not content_item_ids:
