@@ -114,6 +114,18 @@ def parse_results(content: str, n: int, version: str = "v001") -> dict[int, dict
     return out
 
 
+def apply_trial_prose(rows: list[dict[str, Any]], trial: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+    """Keep only papers in the trial file, with their prose swapped for the trial prose."""
+    out = []
+    for r in rows:
+        cell = trial.get(str(r["content_item_id"]))
+        if not cell:
+            continue
+        rj = {**r["result_json"], "so_what": cell["so_what"], "reason_not_higher": cell["reason_not_higher"]}
+        out.append({**r, "result_json": rj})
+    return out
+
+
 def project_cost(rows: list[dict[str, Any]], system_prompt: str, version: str) -> tuple[int, int, int, float]:
     """(calls, input_tokens, output_tokens, usd) at table price, one call per batch."""
     batches = [rows[i : i + BATCH_SIZE] for i in range(0, len(rows), BATCH_SIZE)]
@@ -172,6 +184,9 @@ def main() -> int:
     ap.add_argument("--prompt-version", choices=PROMPT_VERSIONS, default="v001",
                     help="v002 judges so_what and reason_not_higher separately")
     ap.add_argument("--dry-run", action="store_true", help="project cost only; no API calls")
+    ap.add_argument("--prose-from", type=Path,
+                    help="prose_prompt_trial.py output: audit that prose instead of the stored prose, "
+                         "for the papers it contains")
     args = ap.parse_args()
     version = args.prompt_version
     prompt_version = f"prose_audit_{version}"
@@ -189,6 +204,10 @@ def main() -> int:
     for r in rows:
         if isinstance(r["result_json"], str):
             r["result_json"] = json.loads(r["result_json"])
+    if args.prose_from:
+        rows = apply_trial_prose(rows, json.loads(args.prose_from.read_text())["results"])
+        if not args.out:
+            out_path = out_path.with_name(f"{out_path.stem}_{args.prose_from.stem}.json")
     if args.limit:
         rows = rows[: args.limit]
     batches = [rows[i : i + BATCH_SIZE] for i in range(0, len(rows), BATCH_SIZE)]
