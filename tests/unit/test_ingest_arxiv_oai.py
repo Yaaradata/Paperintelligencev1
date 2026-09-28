@@ -82,8 +82,10 @@ def _first_record(xml_body: str):
     return root.find("oai:ListRecords/oai:record", ingest.OAI_NS)
 
 
-def test_parse_record_keeps_created_for_published_at():
+def test_record_to_item_uses_v1_date_not_created():
     rec = ingest.parse_record(_first_record(RECORD_CS))
+    assert ingest.record_to_item(rec)["published_at"] is None
+    rec["v1_date"] = parse_iso_datetime("2025-12-20T10:00:00Z")
     assert rec["deleted"] is False
     assert rec["arxiv_id"] == "2601.00099"
     assert rec["authors"] == ["Ada Smith", "Bob Jones"]
@@ -94,7 +96,7 @@ def test_parse_record_keeps_created_for_published_at():
     ]
     assert rec["categories"] == ["cs.AI", "cs.LG"]
     item = ingest.record_to_item(rec)
-    assert item["published_at"] == parse_iso_datetime("2026-01-05")
+    assert item["published_at"] == parse_iso_datetime("2025-12-20T10:00:00Z")
     assert item["canonical_url"] == "https://arxiv.org/abs/2601.00099"
     assert item["source"] == "arxiv_oai"
     assert item["raw_metadata"]["authors_structured"][0]["name"] == "Ada Smith"

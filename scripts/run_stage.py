@@ -72,6 +72,9 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="adjudication: allow quality rows whose model ≠ date mapping",
     )
+    from paper_intelligence.common.v1_floor import add_v1_floor_argument, apply_v1_floor
+
+    add_v1_floor_argument(parser)
     args = parser.parse_args(argv)
 
     # Brief name is audience_domain; classify kept as alias.
@@ -80,6 +83,10 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.stage == "ingest":
         return _run_ingest(args)
+
+    if args.content_item_id is None and not apply_v1_floor(args):
+        print("nothing to do (window before v1 floor)")
+        return 0
 
     if args.stage == "relevance":
         return _run_relevance(args)
@@ -257,7 +264,10 @@ def _run_ingest(args: argparse.Namespace) -> int:
 
     if args.dry_run:
         summary = run_window(args.date_from, args.date_until, dry_run=True)
-        print(f"PROJECTION ingest: windows={summary.get('total_windows')}")
+        print(
+            f"PROJECTION ingest: v1_in_window={summary.get('v1_in_window_unique')} "
+            f"oai_requests~{summary.get('projected_oai_requests')}"
+        )
         return 0
 
     with connect() as conn:

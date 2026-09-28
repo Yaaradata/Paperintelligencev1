@@ -92,7 +92,12 @@ def main() -> int:
     ap.add_argument("--allow-paid", action="store_true")
     ap.add_argument("--max-cost-usd", type=float)
     ap.add_argument("--limit", type=int)
+    from paper_intelligence.common.v1_floor import add_v1_floor_argument, apply_v1_floor
+
+    add_v1_floor_argument(ap)
     args = ap.parse_args()
+    if not apply_v1_floor(args):
+        return 0
 
     require_model_priced(PROSE_MODEL)
     targets = load_targets(args.date_from, args.date_until)

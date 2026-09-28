@@ -202,7 +202,7 @@ def upsert_paper_metadata(conn: Any, content_id: int, rec: dict[str, Any]) -> No
                 THEN %s::jsonb
                 ELSE affiliation_text
             END,
-            submission_date = COALESCE(submission_date, %s),
+            submission_date = COALESCE(%s, submission_date),
             latest_revision_date = COALESCE(latest_revision_date, %s),
             journal_reference = COALESCE(journal_reference, %s),
             paper_url = COALESCE(paper_url, %s),
@@ -220,7 +220,7 @@ def upsert_paper_metadata(conn: Any, content_id: int, rec: dict[str, Any]) -> No
             json.dumps(rec.get("authors") or []),
             json.dumps(affiliation_lines),
             json.dumps(affiliation_lines),
-            parse_iso_datetime(rec["created"]),
+            parse_iso_datetime(rec.get("v1_date")),
             parse_iso_datetime(rec["updated"]) if rec.get("updated") else None,
             rec.get("journal_ref"),
             f"https://arxiv.org/abs/{arxiv_id}",

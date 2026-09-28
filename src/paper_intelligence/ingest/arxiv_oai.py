@@ -7,7 +7,13 @@ and uses PI ingest checkpoints. Radar dual-write is best-effort when
 When catalog mode is off, preserves the legacy Radar-first path.
 
 Does not run relevance, screen, affiliation, or any LLM stage.
-`published_at` always comes from OAI `<created>`, never `<datestamp>`.
+
+`published_at` is the arXiv v1 submission date, taken from the ``arXivRaw``
+version history. OAI ``<created>`` in the ``arXiv`` format is the latest
+version's date and ``<datestamp>`` is last-modified, so neither is used.
+A window harvest covers datestamps from the window start through today
+(datestamp >= v1 date always) and keeps only records whose v1 date falls
+inside the window.
 """
 
 from __future__ import annotations
@@ -16,7 +22,8 @@ import logging
 import time
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
-from datetime import date, datetime, timedelta, timezone
+from datetime import date, datetime, timezone
+from email.utils import parsedate_to_datetime
 from os import getenv
 from typing import Any, Iterator
 
@@ -40,8 +47,10 @@ OAI_DELAY_SECONDS = float(getenv("ARXIV_OAI_DELAY", "5"))
 OAI_SETS = ("cs", "stat")
 OAI_TIMEOUT_SECONDS = int(getenv("ARXIV_OAI_TIMEOUT_SECONDS", "60"))
 OAI_DEFAULT_RETRY_AFTER = float(getenv("ARXIV_OAI_DEFAULT_RETRY_AFTER", "20"))
-WINDOW_DAYS = 7
 SOURCE = "arxiv_oai"
+# Checkpoints written before the v1 fix were datestamp windows; a separate
+# key keeps them from suppressing v1-window harvests.
+CHECKPOINT_SOURCE = "arxiv_oai_v1"
 
 BACKFILL_CATEGORIES = getenv(
     "ARXIV_BACKFILL_CATEGORIES",
@@ -51,6 +60,7 @@ BACKFILL_CATEGORIES = getenv(
 OAI_NS = {
     "oai": "http://www.openarchives.org/OAI/2.0/",
     "arxiv": "http://arxiv.org/OAI/arXiv/",
+    "raw": "http://arxiv.org/OAI/arXivRaw/",
 }
 
 SESSION = requests.Session()
@@ -190,6 +200,7 @@ def parse_record(record_elem: ET.Element) -> dict[str, Any]:
 def fetch_window_records(
     set_spec: str, window_from: date, window_until: date
 ) -> Iterator[dict[str, Any]]:
+    """``arXiv``-format records whose OAI *datestamp* is in the range."""
     params = {
         "verb": "ListRecords",
         "set": set_spec,
@@ -197,6 +208,95 @@ def fetch_window_records(
         "from": window_from.isoformat(),
         "until": window_until.isoformat(),
     }
+    for record_elem in _iter_list_records(params):
+        yield parse_record(record_elem)
+
+
+def parse_version_date(text: str | None) -> datetime | None:
+    """arXivRaw version dates are RFC 2822, e.g. ``Wed, 25 Dec 2024 05:19:52 GMT``."""
+    if not text:
+        return None
+    try:
+        dt = parsedate_to_datetime(text.strip())
+    except (TypeError, ValueError):
+        return None
+    return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+
+
+def parse_raw_record(record_elem: ET.Element) -> dict[str, Any]:
+    """Parse an ``arXivRaw`` record into its per-version history."""
+    header = record_elem.find("oai:header", OAI_NS)
+    identifier = _text(header, "oai:identifier")
+    datestamp = _text(header, "oai:datestamp")
+    raw_elem = record_elem.find("oai:metadata/raw:arXivRaw", OAI_NS)
+    if (header is not None and header.get("status") == "deleted") or raw_elem is None:
+        return {"identifier": identifier, "datestamp": datestamp, "deleted": True}
+    versions: dict[int, datetime] = {}
+    for ver in raw_elem.findall("raw:version", OAI_NS):
+        label = (ver.get("version") or "").lstrip("v")
+        dt = parse_version_date(_text(ver, "raw:date"))
+        if label.isdigit() and dt is not None:
+            versions[int(label)] = dt
+    categories_text = _text(raw_elem, "raw:categories") or ""
+    return {
+        "identifier": identifier,
+        "datestamp": datestamp,
+        "deleted": False,
+        "arxiv_id": _text(raw_elem, "raw:id"),
+        "categories": categories_text.split(),
+        "versions": versions,
+        "v1_date": versions.get(1),
+    }
+
+
+def fetch_v1_dates(
+    set_spec: str, harvest_from: date, harvest_until: date
+) -> dict[str, dict[str, Any]]:
+    """Map arxiv_id -> {v1_date, categories} for datestamps in the range."""
+    params = {
+        "verb": "ListRecords",
+        "set": set_spec,
+        "metadataPrefix": "arXivRaw",
+        "from": harvest_from.isoformat(),
+        "until": harvest_until.isoformat(),
+    }
+    out: dict[str, dict[str, Any]] = {}
+    for record_elem in _iter_list_records(params):
+        rec = parse_raw_record(record_elem)
+        if rec["deleted"] or not rec.get("arxiv_id") or rec["v1_date"] is None:
+            continue
+        out[rec["arxiv_id"]] = {
+            "v1_date": rec["v1_date"],
+            "categories": rec["categories"],
+        }
+    return out
+
+
+def get_v1_date(arxiv_id: str) -> datetime | None:
+    """Single-record arXivRaw lookup (GetRecord)."""
+    xml_text = _fetch_page(
+        {
+            "verb": "GetRecord",
+            "identifier": f"oai:arXiv.org:{arxiv_id}",
+            "metadataPrefix": "arXivRaw",
+        }
+    )
+    root = ET.fromstring(xml_text)
+    if root.find("oai:error", OAI_NS) is not None:
+        return None
+    record_elem = root.find("oai:GetRecord/oai:record", OAI_NS)
+    if record_elem is None:
+        return None
+    return parse_raw_record(record_elem).get("v1_date")
+
+
+def v1_in_window(v1_date: datetime | None, window_from: date, window_until: date) -> bool:
+    if v1_date is None:
+        return False
+    return window_from <= v1_date.astimezone(timezone.utc).date() <= window_until
+
+
+def _iter_list_records(params: dict[str, str]) -> Iterator[ET.Element]:
     while True:
         xml_text = _fetch_page(params)
         root = ET.fromstring(xml_text)
@@ -210,8 +310,7 @@ def fetch_window_records(
         list_records = root.find("oai:ListRecords", OAI_NS)
         if list_records is None:
             return
-        for record_elem in list_records.findall("oai:record", OAI_NS):
-            yield parse_record(record_elem)
+        yield from list_records.findall("oai:record", OAI_NS)
 
         token_elem = list_records.find("oai:resumptionToken", OAI_NS)
         token = (
@@ -234,7 +333,7 @@ def record_to_item(rec: dict[str, Any]) -> dict[str, Any]:
         "canonical_url": normalize_url(f"https://arxiv.org/abs/{arxiv_id}"),
         "title": rec["title"] or "(untitled)",
         "summary": rec["abstract"],
-        "published_at": parse_iso_datetime(rec["created"]),
+        "published_at": parse_iso_datetime(rec.get("v1_date")),
         "source_seen_at": datetime.now(timezone.utc),
         "updated_at": parse_iso_datetime(rec["updated"]) if rec.get("updated") else None,
         "authors_raw": rec["authors"],
@@ -245,6 +344,7 @@ def record_to_item(rec: dict[str, Any]) -> dict[str, Any]:
             "datestamp": rec["datestamp"],
             "created": rec["created"],
             "updated": rec["updated"],
+            "v1_date": rec.get("v1_date"),
             "categories": rec["categories"],
             "authors": rec["authors"],
             "authors_structured": authors_structured,
@@ -255,19 +355,6 @@ def record_to_item(rec: dict[str, Any]) -> dict[str, Any]:
             "ingested_by": "paper_intelligence.ingest",
         },
     }
-
-
-def _iter_windows(date_from: date, date_until: date):
-    cur = date_from
-    while cur <= date_until:
-        end = min(cur + timedelta(days=WINDOW_DAYS - 1), date_until)
-        yield cur, end
-        cur = end + timedelta(days=1)
-
-
-def _created_year(created_str: str | None) -> int | None:
-    dt = parse_iso_datetime(created_str) if created_str else None
-    return dt.year if dt else None
 
 
 def checkpoint_status(
@@ -339,6 +426,7 @@ class WindowStats:
     records_new: int = 0
     records_dupe: int = 0
     records_deleted: int = 0
+    # Records harvested by datestamp whose v1 date is outside the window.
     records_revision: int = 0
 
 
@@ -399,6 +487,45 @@ def _radar_compat_write(conn: Any, rec: dict[str, Any], paper_id: int) -> bool:
         return False
 
 
+def _today_utc() -> date:
+    return datetime.now(timezone.utc).date()
+
+
+def iter_v1_window_records(
+    set_spec: str,
+    window_from: date,
+    window_until: date,
+    stats: "WindowStats",
+    *,
+    harvest_until: date | None = None,
+) -> Iterator[dict[str, Any]]:
+    """Yield category-matching records whose arXiv v1 date is in the window.
+
+    Harvests datestamps ``window_from .. harvest_until`` (default today) so
+    that a paper first submitted in the window is found even if it was
+    revised later. Records with v1 outside the window are counted in
+    ``stats.records_revision`` and not yielded.
+    """
+    harvest_until = harvest_until or _today_utc()
+    v1_map = fetch_v1_dates(set_spec, window_from, harvest_until)
+    for rec in fetch_window_records(set_spec, window_from, harvest_until):
+        stats.records_seen += 1
+        if rec["deleted"] or not rec.get("arxiv_id"):
+            stats.records_deleted += 1
+            continue
+        if not category_matches(rec["categories"]):
+            continue
+        entry = v1_map.get(rec["arxiv_id"])
+        v1_date = entry["v1_date"] if entry else get_v1_date(rec["arxiv_id"])
+        if not v1_in_window(v1_date, window_from, window_until):
+            stats.records_revision += 1
+            continue
+        stats.records_kept += 1
+        rec["v1_date"] = v1_date
+        rec["_set_spec"] = set_spec
+        yield rec
+
+
 def _run_one_window_radar(
     conn: Any, set_spec: str, window_from: date, window_until: date
 ) -> WindowStats:
@@ -408,26 +535,13 @@ def _run_one_window_radar(
     production rollback after final cutover — Radar may be stale.
     """
     stats = WindowStats()
-    for rec in fetch_window_records(set_spec, window_from, window_until):
-        stats.records_seen += 1
-        if rec["deleted"] or not rec.get("arxiv_id"):
-            stats.records_deleted += 1
-            continue
-        if not category_matches(rec["categories"]):
-            continue
-        stats.records_kept += 1
-
-        created_year = _created_year(rec.get("created"))
-        if created_year is not None and created_year < window_from.year:
-            stats.records_revision += 1
-
+    for rec in iter_v1_window_records(set_spec, window_from, window_until, stats):
         item = record_to_item(rec)
         content_id, is_new = upsert_item(conn, item)
         if is_new:
             stats.records_new += 1
         else:
             stats.records_dupe += 1
-        rec["_set_spec"] = set_spec
         upsert_paper_metadata(conn, content_id, rec)
     return stats
 
@@ -440,20 +554,7 @@ def _run_one_window_pi(
 
     stats = WindowStats()
     compat_failures = 0
-    for rec in fetch_window_records(set_spec, window_from, window_until):
-        stats.records_seen += 1
-        if rec["deleted"] or not rec.get("arxiv_id"):
-            stats.records_deleted += 1
-            continue
-        if not category_matches(rec["categories"]):
-            continue
-        stats.records_kept += 1
-
-        created_year = _created_year(rec.get("created"))
-        if created_year is not None and created_year < window_from.year:
-            stats.records_revision += 1
-
-        rec["_set_spec"] = set_spec
+    for rec in iter_v1_window_records(set_spec, window_from, window_until, stats):
         paper_id, is_new = upsert_paper_from_oai(conn, rec, set_spec=set_spec)
         if is_new:
             stats.records_new += 1
@@ -511,220 +612,200 @@ def run_ingest(
 
     totals = IngestTotals()
     use_pi = PI_USE_PAPERS_CATALOG
+    # One harvest per set covers the whole v1 range: each harvest already
+    # reads datestamps through today, so chunking would re-read the tail.
+    window_from, window_until = date_from, date_until
     for set_spec in OAI_SETS:
-        for window_from, window_until in _iter_windows(date_from, date_until):
-            if use_pi:
-                done = checkpoint_status_pi(
-                    conn, SOURCE, set_spec, window_from, window_until
+        if use_pi:
+            done = checkpoint_status_pi(
+                conn, CHECKPOINT_SOURCE, set_spec, window_from, window_until
+            )
+        else:
+            done = checkpoint_status(
+                conn, CHECKPOINT_SOURCE, set_spec, window_from, window_until
+            )
+        if not force and done == "COMPLETE":
+            log.info(
+                "ingest set=%s window=%s..%s SKIP (checkpoint COMPLETE)",
+                set_spec,
+                window_from,
+                window_until,
+            )
+            totals.windows_skipped += 1
+            continue
+
+        pi_ckpt_id: int | None = None
+        if use_pi:
+            pi_ckpt_id = start_checkpoint_pi(
+                conn, CHECKPOINT_SOURCE, set_spec, window_from, window_until
+            )
+            # Optional Radar checkpoint mirror (does not control resume).
+            if PI_WRITE_RADAR_COMPAT:
+                try:
+                    start_checkpoint(
+                        conn, CHECKPOINT_SOURCE, set_spec, window_from, window_until
+                    )
+                except Exception:  # noqa: BLE001
+                    log.exception("Radar compat start_checkpoint failed")
+        else:
+            start_checkpoint(conn, CHECKPOINT_SOURCE, set_spec, window_from, window_until)
+        conn.commit()
+        started = time.monotonic()
+        try:
+            stats = _run_one_window(conn, set_spec, window_from, window_until)
+            if use_pi and pi_ckpt_id is not None:
+                finish_checkpoint_pi(
+                    conn,
+                    pi_ckpt_id,
+                    status="COMPLETE",
+                    records_seen=stats.records_seen,
+                    records_kept=stats.records_kept,
+                    records_new=stats.records_new,
+                    records_dupe=stats.records_dupe,
                 )
+                if PI_WRITE_RADAR_COMPAT:
+                    try:
+                        finish_checkpoint(
+                            conn,
+                            CHECKPOINT_SOURCE,
+                            set_spec,
+                            window_from,
+                            window_until,
+                            status="COMPLETE",
+                            stats=stats,
+                        )
+                    except Exception:  # noqa: BLE001
+                        log.exception("Radar compat finish_checkpoint failed")
             else:
-                done = checkpoint_status(
-                    conn, SOURCE, set_spec, window_from, window_until
-                )
-            if not force and done == "COMPLETE":
-                log.info(
-                    "ingest set=%s window=%s..%s SKIP (checkpoint COMPLETE)",
+                finish_checkpoint(
+                    conn,
+                    CHECKPOINT_SOURCE,
                     set_spec,
                     window_from,
                     window_until,
+                    status="COMPLETE",
+                    stats=stats,
                 )
-                totals.windows_skipped += 1
-                continue
-
-            pi_ckpt_id: int | None = None
-            if use_pi:
-                pi_ckpt_id = start_checkpoint_pi(
-                    conn, SOURCE, set_spec, window_from, window_until
-                )
-                # Optional Radar checkpoint mirror (does not control resume).
-                if PI_WRITE_RADAR_COMPAT:
-                    try:
-                        start_checkpoint(
-                            conn, SOURCE, set_spec, window_from, window_until
-                        )
-                    except Exception:  # noqa: BLE001
-                        log.exception("Radar compat start_checkpoint failed")
-            else:
-                start_checkpoint(conn, SOURCE, set_spec, window_from, window_until)
             conn.commit()
-            started = time.monotonic()
-            try:
-                stats = _run_one_window(conn, set_spec, window_from, window_until)
-                if use_pi and pi_ckpt_id is not None:
+            totals.add(stats)
+            totals.windows_run += 1
+            log.info(
+                "ingest set=%s window=%s..%s seen=%d kept=%d new=%d dupe=%d elapsed=%ds catalog=%s",
+                set_spec,
+                window_from,
+                window_until,
+                stats.records_seen,
+                stats.records_kept,
+                stats.records_new,
+                stats.records_dupe,
+                int(time.monotonic() - started),
+                use_pi,
+            )
+        except Exception as exc:  # noqa: BLE001 — window isolation
+            conn.rollback()
+            if use_pi and pi_ckpt_id is not None:
+                try:
                     finish_checkpoint_pi(
                         conn,
                         pi_ckpt_id,
-                        status="COMPLETE",
-                        records_seen=stats.records_seen,
-                        records_kept=stats.records_kept,
-                        records_new=stats.records_new,
-                        records_dupe=stats.records_dupe,
-                    )
-                    if PI_WRITE_RADAR_COMPAT:
-                        try:
-                            finish_checkpoint(
-                                conn,
-                                SOURCE,
-                                set_spec,
-                                window_from,
-                                window_until,
-                                status="COMPLETE",
-                                stats=stats,
-                            )
-                        except Exception:  # noqa: BLE001
-                            log.exception("Radar compat finish_checkpoint failed")
-                else:
-                    finish_checkpoint(
-                        conn,
-                        SOURCE,
-                        set_spec,
-                        window_from,
-                        window_until,
-                        status="COMPLETE",
-                        stats=stats,
-                    )
-                conn.commit()
-                totals.add(stats)
-                totals.windows_run += 1
-                log.info(
-                    "ingest set=%s window=%s..%s seen=%d kept=%d new=%d dupe=%d elapsed=%ds catalog=%s",
-                    set_spec,
-                    window_from,
-                    window_until,
-                    stats.records_seen,
-                    stats.records_kept,
-                    stats.records_new,
-                    stats.records_dupe,
-                    int(time.monotonic() - started),
-                    use_pi,
-                )
-            except Exception as exc:  # noqa: BLE001 — window isolation
-                conn.rollback()
-                if use_pi and pi_ckpt_id is not None:
-                    try:
-                        finish_checkpoint_pi(
-                            conn,
-                            pi_ckpt_id,
-                            status="FAILED",
-                            error=str(exc)[:2000],
-                        )
-                        conn.commit()
-                    except Exception:  # noqa: BLE001
-                        log.exception("PI finish_checkpoint FAILED write failed")
-                else:
-                    finish_checkpoint(
-                        conn,
-                        SOURCE,
-                        set_spec,
-                        window_from,
-                        window_until,
                         status="FAILED",
-                        stats=WindowStats(),
                         error=str(exc)[:2000],
                     )
                     conn.commit()
-                totals.windows_failed += 1
-                totals.failures.append(
-                    (set_spec, str(window_from), str(window_until), str(exc))
-                )
-                log.exception(
-                    "ingest set=%s window=%s..%s FAILED",
+                except Exception:  # noqa: BLE001
+                    log.exception("PI finish_checkpoint FAILED write failed")
+            else:
+                finish_checkpoint(
+                    conn,
+                    CHECKPOINT_SOURCE,
                     set_spec,
                     window_from,
                     window_until,
+                    status="FAILED",
+                    stats=WindowStats(),
+                    error=str(exc)[:2000],
                 )
+                conn.commit()
+            totals.windows_failed += 1
+            totals.failures.append(
+                (set_spec, str(window_from), str(window_until), str(exc))
+            )
+            log.exception(
+                "ingest set=%s window=%s..%s FAILED",
+                set_spec,
+                window_from,
+                window_until,
+            )
     return totals
 
 
-def dry_run_projection(date_from: date, date_until: date) -> dict[str, Any]:
-    windows = list(_iter_windows(date_from, date_until))
-    total_windows = len(windows)
-    first_from, first_until = windows[0]
+def count_v1_window(
+    date_from: date, date_until: date, *, harvest_until: date | None = None
+) -> dict[str, Any]:
+    """Live arXivRaw count of category-matching papers with v1 in the window.
 
+    Harvests datestamps ``date_from .. harvest_until`` (default today); zero
+    DB writes. ``arxiv_ids`` is the union across sets.
+    """
+    harvest_until = harvest_until or _today_utc()
     per_set: dict[str, Any] = {}
-    kept_arxiv_ids: set[str] = set()
-    seen_total = deleted_total = kept_total = revision_total = 0
+    kept_ids: set[str] = set()
     requests_total = 0
-
     for set_spec in OAI_SETS:
-        seen = deleted = kept = revision = 0
         requests_before = _request_count
-        for rec in fetch_window_records(set_spec, first_from, first_until):
-            seen += 1
-            if rec["deleted"] or not rec.get("arxiv_id"):
-                deleted += 1
-                continue
-            if not category_matches(rec["categories"]):
-                continue
-            kept += 1
-            kept_arxiv_ids.add(rec["arxiv_id"])
-            created_year = _created_year(rec.get("created"))
-            if created_year is not None and created_year < first_from.year:
-                revision += 1
+        v1_map = fetch_v1_dates(set_spec, date_from, harvest_until)
+        in_window = {
+            arxiv_id
+            for arxiv_id, entry in v1_map.items()
+            if category_matches(entry["categories"])
+            and v1_in_window(entry["v1_date"], date_from, date_until)
+        }
         requests_this_set = _request_count - requests_before
         requests_total += requests_this_set
         per_set[set_spec] = {
-            "records_seen": seen,
-            "records_deleted": deleted,
-            "records_kept": kept,
-            "records_revision": revision,
+            "records_harvested": len(v1_map),
+            "v1_in_window": len(in_window),
             "oai_requests": requests_this_set,
         }
-        seen_total += seen
-        deleted_total += deleted
-        kept_total += kept
-        revision_total += revision
-
-    unique_kept = len(kept_arxiv_ids)
-    revision_fraction = (revision_total / kept_total) if kept_total else 0.0
-    projected_kept_unique = unique_kept * total_windows
-    projected_revisions = round(projected_kept_unique * revision_fraction)
-    projected_requests = requests_total * total_windows
-    wall_clock_seconds = projected_requests * OAI_DELAY_SECONDS
-
+        kept_ids |= in_window
     return {
-        "first_window": {"from": str(first_from), "until": str(first_until)},
-        "total_windows": total_windows,
-        "per_set_first_window": per_set,
-        "first_window_totals": {
-            "records_seen": seen_total,
-            "records_deleted": deleted_total,
-            "records_kept_raw": kept_total,
-            "records_kept_unique_across_sets": unique_kept,
-            "records_revision": revision_total,
-            "oai_requests": requests_total,
-        },
-        "projected_full_range": {
-            "date_from": str(date_from),
-            "date_until": str(date_until),
-            "records_seen": seen_total * total_windows,
-            "records_kept_unique_across_sets": projected_kept_unique,
-            "estimated_genuinely_new": projected_kept_unique - projected_revisions,
-            "estimated_revisions_of_older_papers": projected_revisions,
-            "oai_requests": projected_requests,
-            "wall_clock_seconds": wall_clock_seconds,
-            "wall_clock_hours": round(wall_clock_seconds / 3600, 1),
-        },
+        "date_from": str(date_from),
+        "date_until": str(date_until),
+        "harvest_until": str(harvest_until),
+        "per_set": per_set,
+        "v1_in_window_unique": len(kept_ids),
+        "oai_requests": requests_total,
+        "arxiv_ids": sorted(kept_ids),
+    }
+
+
+def dry_run_projection(date_from: date, date_until: date) -> dict[str, Any]:
+    counts = count_v1_window(date_from, date_until)
+    # A real run also fetches the arXiv-format pages over the same range.
+    projected_requests = counts["oai_requests"] * 2
+    return {
+        **{k: v for k, v in counts.items() if k != "arxiv_ids"},
+        "projected_oai_requests": projected_requests,
+        "wall_clock_minutes": round(projected_requests * OAI_DELAY_SECONDS / 60, 1),
     }
 
 
 def print_dry_run(projection: dict[str, Any]) -> None:
-    print("\nINGEST DRY RUN (first window live fetch, zero DB writes)")
-    fw = projection["first_window"]
+    print("\nINGEST DRY RUN (live arXivRaw harvest, zero DB writes)")
     print(
-        f"  first window: {fw['from']}..{fw['until']} "
-        f"(1 of {projection['total_windows']} windows)"
+        f"  v1 window {projection['date_from']}..{projection['date_until']} "
+        f"harvesting datestamps through {projection['harvest_until']}"
     )
-    for set_spec, stats in projection["per_set_first_window"].items():
+    for set_spec, stats in projection["per_set"].items():
         print(
-            f"  set={set_spec} seen={stats['records_seen']} "
-            f"kept={stats['records_kept']} requests={stats['oai_requests']}"
+            f"  set={set_spec} harvested={stats['records_harvested']} "
+            f"v1_in_window={stats['v1_in_window']} requests={stats['oai_requests']}"
         )
-    pr = projection["projected_full_range"]
-    print(f"\n  PROJECTION {pr['date_from']}..{pr['date_until']}:")
-    print(f"    kept unique ~{pr['records_kept_unique_across_sets']:,}")
-    print(f"    OAI requests ~{pr['oai_requests']:,}")
-    print(f"    wall-clock ~{pr['wall_clock_hours']:.1f}h at {OAI_DELAY_SECONDS}s/req")
+    print(f"  v1-in-window unique papers: {projection['v1_in_window_unique']:,}")
+    print(
+        f"  full run ~{projection['projected_oai_requests']} OAI requests, "
+        f"~{projection['wall_clock_minutes']} min at {OAI_DELAY_SECONDS}s/req"
+    )
 
 
 def run_window(

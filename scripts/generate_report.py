@@ -402,7 +402,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--until", dest="date_until", required=True)
     parser.add_argument("--top", type=int, default=25)
     parser.add_argument("--out", default=None)
+    from paper_intelligence.common.v1_floor import add_v1_floor_argument, apply_v1_floor
+
+    add_v1_floor_argument(parser)
     args = parser.parse_args(argv)
+    if not apply_v1_floor(args):
+        return 0
 
     from paper_intelligence.db import connect
 

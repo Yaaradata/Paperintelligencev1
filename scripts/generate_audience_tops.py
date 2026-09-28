@@ -709,7 +709,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--business-only", action="store_true")
     parser.add_argument("--product-only", action="store_true")
     parser.add_argument("--all", action="store_true")
+    from paper_intelligence.common.v1_floor import add_v1_floor_argument, apply_v1_floor
+
+    add_v1_floor_argument(parser)
     args = parser.parse_args(argv)
+    if not apply_v1_floor(args):
+        return 0
 
     from paper_intelligence.db import connect
 

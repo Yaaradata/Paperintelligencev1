@@ -297,7 +297,12 @@ def main() -> int:
     ap.add_argument("--until", dest="date_until", required=True, type=date.fromisoformat)
     ap.add_argument("--out", type=Path, help="write markdown here as well as stdout")
     ap.add_argument("--json", type=Path, help="write machine-readable result here")
+    from paper_intelligence.common.v1_floor import add_v1_floor_argument, apply_v1_floor
+
+    add_v1_floor_argument(ap)
     args = ap.parse_args()
+    if not apply_v1_floor(args):
+        return 0
 
     audit = run_audit(args.date_from, args.date_until)
     md = render_markdown(audit)

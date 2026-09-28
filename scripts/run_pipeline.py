@@ -29,6 +29,11 @@ SCRIPTS = ROOT / "scripts"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from paper_intelligence.common.v1_floor import (  # noqa: E402
+    add_v1_floor_argument,
+    apply_v1_floor,
+)
+
 DEFAULT_STAGES = (
     "ingest",
     "relevance",
@@ -66,10 +71,12 @@ def _run_stage_cli(
         "--stage",
         stage,
         "--from",
-        args.date_from,
+        args.ingest_from if stage == "ingest" else args.date_from,
         "--until",
         args.date_until,
     ]
+    if args.include_pre_v1_floor:
+        cmd.append("--include-pre-v1-floor")
     dry = args.dry_run if dry_run_override is None else dry_run_override
     if dry:
         cmd.append("--dry-run")
@@ -343,6 +350,8 @@ def main(argv: list[str] | None = None) -> int:
     if paid and not args.dry_run and not args.allow_paid:
         print(
             "Paid stages require --allow-paid (or pass --dry-run for projections). "
+    if not in_v1_scope:
+        stages = [s for s in stages if s == "ingest"]
             f"Paid in this run: {', '.join(paid)}",
             file=sys.stderr,
         )

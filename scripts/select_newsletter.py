@@ -584,7 +584,12 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Build pool + prompt only; do not call OpenRouter",
     )
+    from paper_intelligence.common.v1_floor import add_v1_floor_argument, apply_v1_floor
+
+    add_v1_floor_argument(parser)
     args = parser.parse_args(argv)
+    if not apply_v1_floor(args):
+        return 0
 
     date_from = _parse_day(args.date_from)
     date_until = _parse_day(args.date_until)

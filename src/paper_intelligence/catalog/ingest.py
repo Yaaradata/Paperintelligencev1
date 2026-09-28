@@ -127,8 +127,10 @@ def upsert_paper_from_oai(
     """Insert or update a PI catalog paper from an OAI record.
 
     Identity: normalized arXiv id (no vN) is canonical. Version is stored
-    separately. DOI normalized. ``published_at`` preserved on rediscovery.
-    Returns ``(paper_id, is_new)``.
+    separately. DOI normalized. ``published_at`` is the arXiv v1 submission
+    date (``rec["v1_date"]``) — never OAI ``<created>`` (latest version) nor
+    ``<datestamp>``. Without a v1 date an existing row keeps its value and a
+    new row is refused. Returns ``(paper_id, is_new)``.
     """
     raw_arxiv = rec.get("arxiv_id") or ""
     arxiv_id = normalize_arxiv_id(raw_arxiv)
@@ -138,7 +140,7 @@ def upsert_paper_from_oai(
         arxiv_version = extract_arxiv_version(rec.get("identifier"))
     doi = normalize_doi(rec.get("doi"))
     source_external_id = rec.get("identifier")
-    published_at = _parse_dt(rec.get("created"))
+    published_at = _parse_dt(rec.get("v1_date"))
     source_updated_at = _parse_dt(rec.get("updated")) if rec.get("updated") else None
     authors_structured = rec.get("authors_structured") or []
     affiliation_lines = _affiliation_lines(authors_structured)
@@ -155,6 +157,7 @@ def upsert_paper_from_oai(
         "datestamp": rec.get("datestamp"),
         "created": rec.get("created"),
         "updated": rec.get("updated"),
+        "v1_date": rec.get("v1_date"),
         "categories": categories,
         "authors": authors,
         "authors_structured": authors_structured,
@@ -227,7 +230,7 @@ def upsert_paper_from_oai(
                         THEN %s::jsonb
                         ELSE affiliation_text
                     END,
-                    published_at = COALESCE(published_at, %s),
+                    published_at = COALESCE(%s, published_at),
                     source_updated_at = COALESCE(%s, source_updated_at),
                     raw_metadata = raw_metadata || %s::jsonb,
                     content_hash = %s,
@@ -310,6 +313,10 @@ def upsert_paper_from_oai(
                     ),
                 )
         else:
+            if published_at is None:
+                raise ValueError(
+                    f"refusing to insert arxiv_id={arxiv_id} without a v1 date"
+                )
             cur.execute(
                 """
                 INSERT INTO paper_intelligence.papers (

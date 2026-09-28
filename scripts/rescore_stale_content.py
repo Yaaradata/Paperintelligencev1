@@ -139,7 +139,12 @@ def main(argv: list[str] | None = None) -> int:
         default="screen,audience_domain,quality",
         help="comma list of run_stage names to rescore (default all paid)",
     )
+    from paper_intelligence.common.v1_floor import add_v1_floor_argument, apply_v1_floor
+
+    add_v1_floor_argument(parser)
     args = parser.parse_args(argv)
+    if not apply_v1_floor(args):
+        return 0
 
     from paper_intelligence.common.budget import resolve_max_cost_usd
     from paper_intelligence.db import connect
