@@ -104,3 +104,19 @@ class TestClassifyBatchIndex:
         )
         assert problems == []
         assert 77 in parsed
+
+    def test_prompt_v002_content_item_id_key_is_the_batch_index(self):
+        # Raw AtlasCloud output 2026-09-28: prompt v002 asks for content_item_id,
+        # the model echoes the batch index under that key.
+        text = (
+            '```json\n{"papers": [\n'
+            '{"content_item_id": 1, "audience_relevance": ["practitioner"], '
+            '"domain": "natural_language_processing", "subdomains": ["language_modeling"], '
+            '"application_domain": ["general_method"], "confidence": 8.0},\n'
+            '{"content_item_id": 2, "audience_relevance": ["practitioner"], '
+            '"domain": "evaluation_benchmarking", "subdomains": ["benchmark_design"], '
+            '"application_domain": ["general_method"], "confidence": 8.5}\n]}\n```'
+        )
+        parsed, problems = classify.parse_response(text, {1: 2166, 2: 2183})
+        assert problems == []
+        assert set(parsed) == {2166, 2183}

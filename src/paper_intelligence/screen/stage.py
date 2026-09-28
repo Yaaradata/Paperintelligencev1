@@ -18,6 +18,7 @@ from paper_intelligence.common.config import (
     SCREEN_BATCH_SIZE,
     SCREEN_MIN_AI_RELEVANCE,
     SCREEN_MODEL,
+    minimal_reasoning_effort,
     read_prompt,
 )
 from paper_intelligence.common.llm_stage import (
@@ -171,7 +172,7 @@ def run_window(
                     user_prompt=user_prompt,
                     prompt_version=PROMPT_VERSION,
                     stage_name=STAGE_NAME,
-                    reasoning_effort=None,  # screen never reasons
+                    reasoning_effort=minimal_reasoning_effort(model),
                     run_id=run_id,
                     stage_run_id=stage_run_id,
                     entity=f"screen_{min(expected_ids)}",

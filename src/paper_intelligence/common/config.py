@@ -17,6 +17,15 @@ OPENROUTER_API_BASE = os.getenv("OPENROUTER_API_BASE", "https://openrouter.ai/ap
 
 SCREEN_MODEL = os.getenv("SCREEN_MODEL", "z-ai/glm-5.3-flash")
 CLASSIFY_MODEL = os.getenv("CLASSIFY_MODEL", SCREEN_MODEL)
+
+# Z.AI GLM rejects reasoning-off (HTTP 400 "Reasoning is mandatory") and at its
+# default effort spends the output on reasoning, truncating batch JSON.
+MANDATORY_REASONING_PREFIXES = ("z-ai/glm-",)
+
+
+def minimal_reasoning_effort(model: str) -> str | None:
+    """Lowest reasoning effort for non-deliberative stages; None = send nothing."""
+    return "low" if model.startswith(MANDATORY_REASONING_PREFIXES) else None
 QUALITY_MODEL = os.getenv("QUALITY_MODEL", "openai/gpt-5.6-terra")
 # Note: QUALITY_MODEL env is a one-off override. Prefer
 # policies/quality_models/v001.yaml (mapped_quality_model) for currentness.

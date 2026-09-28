@@ -23,6 +23,7 @@ from paper_intelligence.common.config import (
     CLASSIFY_BATCH_SIZE,
     CLASSIFY_MODEL,
     estimate_cost_usd,
+    minimal_reasoning_effort,
     read_prompt,
 )
 from paper_intelligence.common.content_hash import compute_content_hash
@@ -50,6 +51,9 @@ else:
 
 GENERAL_METHOD = "general_method"
 SEATS_VERSION = "v001"
+# 2026-09-28 test at reasoning effort low: 976 completion tokens for a
+# 15-paper batch (456 for 5). ~4x headroom; unbounded calls hit ~6,500.
+MAX_TOKENS = 4000
 
 
 def _valid_half_score(value: Any) -> float | None:
@@ -211,8 +215,11 @@ def parse_response(
     expected_indices = set(index_to_id)
     seen_indices: set[int] = set()
     for entry in payload.get("papers") or []:
+        # Prompt v002 names the key content_item_id, but the user prompt shows
+        # only batch indices, so its value is the batch index.
+        raw_index = entry.get("batch_index", entry.get("content_item_id"))
         try:
-            batch_index = int(entry.get("batch_index"))
+            batch_index = int(raw_index)
         except (TypeError, ValueError):
             problems.append("unparseable batch_index")
             continue
@@ -361,7 +368,8 @@ def run_window(
                     user_prompt=user_prompt,
                     prompt_version=prompt_ver,
                     stage_name=STAGE_NAME,
-                    reasoning_effort=None,  # closed-enum mapping, never deliberation
+                    reasoning_effort=minimal_reasoning_effort(model),
+                    max_tokens=MAX_TOKENS,
                     run_id=run_id,
                     stage_run_id=stage_run_id,
                     entity=f"audience_domain_{min(expected)}",

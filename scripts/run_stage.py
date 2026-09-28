@@ -644,9 +644,9 @@ def _run_paid(args: argparse.Namespace) -> int:
 
         stopped = bool(stats.stopped_budget_cap)
         if stats.stopped_runguard:
-            status = "stopped_runguard"
+            status = "cancelled"  # runguard stop; reason in metadata
         elif stopped:
-            status = "stopped_budget_cap"
+            status = "partial"  # budget stop; flagged in metadata
         elif stats.papers_failed == 0:
             status = "succeeded"
         else:
@@ -959,11 +959,11 @@ def _run_quality_paid(
         )
         group_stopped = bool(stats.stopped_budget_cap)
         if stats.stopped_runguard:
-            status = "stopped_runguard"
+            status = "cancelled"  # runguard stop; reason in metadata
             stop_reason = stats.stop_reason
             stopped = True
         elif group_stopped:
-            status = "stopped_budget_cap"
+            status = "partial"  # budget stop; flagged in metadata
             stopped = True
         elif stats.papers_failed == 0:
             status = "succeeded"
@@ -999,9 +999,9 @@ def _run_quality_paid(
             break
 
     if stop_reason:
-        pipeline_status = "stopped_runguard"
+        pipeline_status = "cancelled"  # runguard stop; reason in metadata
     elif stopped:
-        pipeline_status = "stopped_budget_cap"
+        pipeline_status = "partial"  # budget stop; flagged in metadata
     elif total_failed == 0:
         pipeline_status = "succeeded"
     else:
