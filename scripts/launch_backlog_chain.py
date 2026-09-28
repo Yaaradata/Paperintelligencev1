@@ -132,9 +132,15 @@ def completeness(week: tuple[str, str]) -> dict[str, Any]:
 
 
 def parse_projection(output: str) -> dict[str, Any]:
+    """Per-stage projection and pipeline total from the pre-run projection block.
+
+    A dry run then walks every stage and prints more budget lines, so only the
+    part before the first ``=== pipeline stage:`` header is read.
+    """
+    head = output.split("=== pipeline stage:", 1)[0]
     stages: dict[str, dict[str, Any]] = {}
     total = None
-    for line in output.splitlines():
+    for line in head.splitlines():
         m = PROJECTION_RE.match(line)
         if m:
             stages[m.group(1)] = {"papers": int(m.group(2)), "usd": float(m.group(3))}

@@ -138,6 +138,12 @@ def test_parse_projection_reads_top_level_lines_and_last_budget():
         "  PROJECTION quality model=typesafe/jev-1.13: 183 papers, ~366 calls, ~$0.0962",
         "PROJECTION quality: 183 papers, ~366 calls, ~369086 in / ~128100 out tokens, ~$0.10",
         "budget: projected=$0.2600 actual=$0.0000 cap=$3.0000 status=ok",
+        "",
+        "=== pipeline stage: screen ===",
+        "PROJECTION screen: 205 papers, ~14 calls, ~86459 in / ~8200 out tokens, ~$0.02",
+        "budget: projected=$0.0171 actual=$0.0000 cap=$3.0000 status=ok",
+        "=== pipeline stage: quality ===",
+        "budget: projected=$0.0962 actual=$0.0000 cap=$3.0000 status=ok",
     ])
     p = mod.parse_projection(out)
     assert p["stages"] == {"screen": {"papers": 205, "usd": 0.02}, "quality": {"papers": 183, "usd": 0.10}}
