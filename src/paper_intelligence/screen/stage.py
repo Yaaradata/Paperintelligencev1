@@ -23,6 +23,7 @@ from paper_intelligence.common.config import (
 )
 from paper_intelligence.common.llm_stage import (
     call_llm_logged,
+    call_until_parsed,
     indexed_paper_blocks,
     paper_block,
     parse_json_object,
@@ -165,19 +166,23 @@ def run_window(
         try:
             with connect() as batch_conn:
                 user_prompt, index_to_id = build_user_prompt(batch)
-                result = call_llm_logged(
-                    batch_conn,
-                    model=model,
-                    system_prompt=system_prompt,
-                    user_prompt=user_prompt,
-                    prompt_version=PROMPT_VERSION,
-                    stage_name=STAGE_NAME,
-                    reasoning_effort=minimal_reasoning_effort(model),
-                    run_id=run_id,
-                    stage_run_id=stage_run_id,
-                    entity=f"screen_{min(expected_ids)}",
+                result, (parsed, problems), retries = call_until_parsed(
+                    lambda: call_llm_logged(
+                        batch_conn,
+                        model=model,
+                        system_prompt=system_prompt,
+                        user_prompt=user_prompt,
+                        prompt_version=PROMPT_VERSION,
+                        stage_name=STAGE_NAME,
+                        reasoning_effort=minimal_reasoning_effort(model),
+                        run_id=run_id,
+                        stage_run_id=stage_run_id,
+                        entity=f"screen_{min(expected_ids)}",
+                    ),
+                    lambda text: parse_response(text, index_to_id),
                 )
-                parsed, problems = parse_response(result["content"], index_to_id)
+                if retries:
+                    problems = [*problems, f"malformed JSON reply, retried {retries}x"]
                 rows = []
                 for content_id, scores in parsed.items():
                     paper = next(p for p in batch if int(p["content_item_id"]) == content_id)

@@ -5,7 +5,11 @@ Parent: inserts a ``paper_intelligence.backlog_chain`` pipeline_runs row,
 writes reports/run_status/backlog_<run_id>.json, starts the detached
 supervisor, prints run_id / status file / log, and exits.
 
-Supervisor, for each week in order (never in parallel):
+With --foreground the supervisor runs in the calling process (e.g. a tmux
+pane) instead. Chains over disjoint weeks may run side by side; each counts
+only stage runs whose date window starts on its own week.
+
+Supervisor, for each week in order (never in parallel within a chain):
   1. Key credit (OpenRouter /api/v1/key limit_remaining) >= --min-key-credit.
   2. v1 completeness: reports/ingest_status/v1_completeness_<from>_<until>.json
      must say complete (OAI v1 ids all in the DB; OAI is the ingest source, so
@@ -82,6 +86,8 @@ CHILD_RUNS_SQL = """
 SELECT run_id::text, pipeline_name, status, items_input, items_succeeded, items_failed, items_skipped
 FROM paper_intelligence.pipeline_runs
 WHERE started_at >= %s AND started_at <= %s AND run_id <> ALL(%s::uuid[])
+  AND pipeline_name NOT IN ('paper_intelligence.pipeline_detached', 'paper_intelligence.backlog_chain')
+  AND coalesce(metadata->>'date_from', metadata->>'start', metadata->'window'->>0, %s) = %s
 ORDER BY started_at
 """
 CHILD_COST_SQL = """
@@ -100,6 +106,21 @@ def _write(path: Path, data: dict) -> None:
     tmp = path.with_suffix(".tmp")
     tmp.write_text(json.dumps(data, indent=2, default=str))
     tmp.replace(path)
+
+
+class _Tee:
+    def __init__(self, *streams: Any) -> None:
+        self.streams = streams
+
+    def write(self, text: str) -> int:
+        for s in self.streams:
+            s.write(text)
+            s.flush()
+        return len(text)
+
+    def flush(self) -> None:
+        for s in self.streams:
+            s.flush()
 
 
 def parse_weeks(value: str) -> list[tuple[str, str]]:
@@ -195,7 +216,7 @@ def run_week(chain_run_id: str, week: tuple[str, str], env: dict[str, str], cap:
     budget = BUDGET_RE.search(status.get("last_budget_line") or "")
     with connect() as conn:
         children = [dict(r) for r in conn.execute(
-            CHILD_RUNS_SQL, (started, ended, [run_id, chain_run_id])).fetchall()]
+            CHILD_RUNS_SQL, (started, ended, [run_id, chain_run_id], week[0], week[0])).fetchall()]
         child_ids = [c["run_id"] for c in children]
         db_cost = dict(conn.execute(CHILD_COST_SQL, (child_ids,)).fetchone())
     return {
@@ -341,6 +362,14 @@ def launch(args: argparse.Namespace) -> int:
     log_path = STATUS_DIR / f"backlog_{run_id}.log"
     _write(status_path, {"run_id": run_id, "state": "launching", "config": cfg, "log": str(log_path),
                          "started_at": _now()})
+    if args.foreground:
+        print(f"run_id={run_id}\nstatus_file={status_path}\nlog={log_path}", flush=True)
+        with open(log_path, "a", encoding="utf-8") as log:
+            sys.stdout = _Tee(sys.__stdout__, log)
+            try:
+                return supervise(run_id)
+            finally:
+                sys.stdout = sys.__stdout__
     with open(log_path, "ab") as log:
         proc = subprocess.Popen(
             [sys.executable, "-u", str(Path(__file__).resolve()), "--supervise", run_id],
@@ -363,6 +392,8 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--cumulative-stop", type=float, default=7.0)
     ap.add_argument("--min-key-credit", type=float, default=2.0)
     ap.add_argument("--env", action="append", default=[], help="KEY=VALUE for every week run")
+    ap.add_argument("--foreground", action="store_true",
+                    help="run the supervisor in this process (e.g. inside tmux), also writing the log file")
     args = ap.parse_args(argv)
     if args.supervise:
         return supervise(args.supervise)

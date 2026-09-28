@@ -29,6 +29,7 @@ from paper_intelligence.common.config import (
 from paper_intelligence.common.content_hash import compute_content_hash
 from paper_intelligence.common.llm_stage import (
     call_llm_logged,
+    call_until_parsed,
     indexed_paper_blocks,
     paper_block,
     parse_json_object,
@@ -361,22 +362,24 @@ def run_window(
         try:
             with connect() as batch_conn:
                 user_prompt, index_to_id = build_user_prompt(batch, policy_version=policy)
-                result = call_llm_logged(
-                    batch_conn,
-                    model=model,
-                    system_prompt=system_prompt,
-                    user_prompt=user_prompt,
-                    prompt_version=prompt_ver,
-                    stage_name=STAGE_NAME,
-                    reasoning_effort=minimal_reasoning_effort(model),
-                    max_tokens=MAX_TOKENS,
-                    run_id=run_id,
-                    stage_run_id=stage_run_id,
-                    entity=f"audience_domain_{min(expected)}",
+                result, (parsed, problems), retries = call_until_parsed(
+                    lambda: call_llm_logged(
+                        batch_conn,
+                        model=model,
+                        system_prompt=system_prompt,
+                        user_prompt=user_prompt,
+                        prompt_version=prompt_ver,
+                        stage_name=STAGE_NAME,
+                        reasoning_effort=minimal_reasoning_effort(model),
+                        max_tokens=MAX_TOKENS,
+                        run_id=run_id,
+                        stage_run_id=stage_run_id,
+                        entity=f"audience_domain_{min(expected)}",
+                    ),
+                    lambda text: parse_response(text, index_to_id, policy_version=policy),
                 )
-                parsed, problems = parse_response(
-                    result["content"], index_to_id, policy_version=policy
-                )
+                if retries:
+                    problems = [*problems, f"malformed JSON reply, retried {retries}x"]
                 rows: list[dict[str, Any]] = []
                 by_id = {p["content_item_id"]: p for p in batch}
                 for content_id, values in parsed.items():

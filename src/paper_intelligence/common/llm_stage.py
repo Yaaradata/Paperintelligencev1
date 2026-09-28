@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import random
 from datetime import datetime, timezone
-from typing import Any, Sequence
+from typing import Any, Callable, Sequence, TypeVar
 
 from psycopg import Connection
 
@@ -21,6 +21,7 @@ from paper_intelligence.openrouter import (
 
 
 MAX_ABSTRACT_CHARS = 2000
+T = TypeVar("T")
 
 
 def paper_block(
@@ -105,6 +106,40 @@ def parse_json_object(text: str) -> dict[str, Any]:
     if start == -1 or end == -1:
         raise ValueError(f"no JSON object in model output: {body[:200]!r}")
     return json.loads(body[start : end + 1])
+
+
+MALFORMED_REPLY_ATTEMPTS = 2
+_SUMMED_FIELDS = ("input_tokens", "output_tokens", "estimated_cost", "estimated_cost_usd", "actual_cost_usd")
+
+
+def call_until_parsed(
+    call: Callable[[], dict[str, Any]],
+    parse: Callable[[str], T],
+    *,
+    attempts: int = MALFORMED_REPLY_ATTEMPTS,
+) -> tuple[dict[str, Any], T, int]:
+    """Call the model and parse its reply, calling again when the reply is not valid JSON.
+
+    Returns ``(result, parsed, retries)``. Token and cost fields of ``result``
+    are summed over every attempt. A reply still malformed after the last
+    attempt raises, so the batch is failed and counted by the RunGuard.
+    """
+    totals: dict[str, Any] = {k: 0 for k in _SUMMED_FIELDS}
+    totals["actual_cost_usd"] = None
+    for attempt in range(max(1, attempts)):
+        result = call()
+        for key in _SUMMED_FIELDS:
+            value = result.get(key)
+            if value is not None:
+                totals[key] = (totals[key] or 0) + value
+        try:
+            parsed = parse(result["content"])
+        except ValueError:
+            if attempt + 1 >= attempts:
+                raise
+            continue
+        return {**result, **totals}, parsed, attempt
+    raise AssertionError("unreachable")
 
 
 def call_llm_logged(
