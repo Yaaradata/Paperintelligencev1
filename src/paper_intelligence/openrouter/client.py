@@ -115,13 +115,13 @@ def complete(request: LLMRequest) -> LLMResponse:
             )
             if response.status_code == 429 or response.status_code >= 500:
                 raise OpenRouterError(
-                    f"HTTP {response.status_code}: {response.text[:300]}",
+                    f"HTTP {response.status_code}: {response.text[:2000]}",
                     status=response.status_code,
                     retryable=True,
                 )
             if response.status_code >= 400:
                 raise OpenRouterError(
-                    f"HTTP {response.status_code}: {response.text[:300]}",
+                    f"HTTP {response.status_code}: {response.text[:2000]}",
                     status=response.status_code,
                 )
             data = response.json()
@@ -153,4 +153,6 @@ def complete(request: LLMRequest) -> LLMResponse:
                 continue
             break
 
+    if isinstance(last_error, OpenRouterError):
+        raise last_error
     raise OpenRouterError(str(last_error or "OpenRouter call failed"))

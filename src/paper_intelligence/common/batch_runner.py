@@ -153,6 +153,18 @@ def run_batches(
 
         unsubmitted = batch_list[next_i:] if next_i < total else []
 
+    # Always emit a final line — progress_every skips e.g. 1033 when total % 10 != 0.
+    submitted = done
+    if total:
+        if unsubmitted:
+            print(
+                f"  {label}: {submitted}/{total} batches done "
+                f"({len(unsubmitted)} unsubmitted — budget/stop)",
+                flush=True,
+            )
+        else:
+            print(f"  {label}: {submitted}/{total} batches complete", flush=True)
+
     if unsubmitted and stats is not None:
         skipped = sum(len(b) for b in unsubmitted)
         stats.stopped_budget_cap = True

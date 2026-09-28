@@ -118,6 +118,8 @@ def call_llm_logged(
     reasoning_effort: str | None = None,
     temperature: float | None = 0.2,
     max_tokens: int | None = None,
+    response_format: dict[str, Any] | None = None,
+    extra_body: dict[str, Any] | None = None,
     run_id: str | None = None,
     stage_run_id: str | None = None,
     entity: str = "batch",
@@ -137,7 +139,13 @@ def call_llm_logged(
     req_hash = request_hash(
         "openrouter",
         "chat/completions",
-        {"model": model, "messages": messages, "reasoning": reasoning_effort},
+        {
+            "model": model,
+            "messages": messages,
+            "reasoning": reasoning_effort,
+            "response_format": response_format,
+            "extra_body": extra_body,
+        },
     )
 
     try:
@@ -149,7 +157,9 @@ def call_llm_logged(
                 temperature=temperature,
                 max_tokens=max_tokens,
                 reasoning_effort=reasoning_effort,
+                response_format=response_format,
                 timeout=timeout,
+                extra=dict(extra_body or {}),
             )
         )
     except OpenRouterError as exc:
@@ -203,8 +213,12 @@ def call_llm_logged(
         )
         conn.commit()
 
+    raw = response.raw or {}
+    choice = (raw.get("choices") or [{}])[0] if isinstance(raw, dict) else {}
     return {
         "content": response.content,
+        "finish_reason": choice.get("finish_reason"),
+        "served_provider": raw.get("provider") if isinstance(raw, dict) else None,
         "input_tokens": response.input_tokens or 0,
         "output_tokens": response.output_tokens or 0,
         "estimated_cost": billable,  # preferred billable for legacy callers
