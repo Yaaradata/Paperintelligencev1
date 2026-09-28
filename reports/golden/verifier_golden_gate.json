@@ -1,0 +1,633 @@
+{
+  "run_id": "750f86d6-fc86-445a-b6bb-7a57e9bcae35",
+  "labeller": "subha",
+  "label_round": "v1",
+  "n_humans": 200,
+  "n_candidate_rows_scored": 200,
+  "candidate_stamps": [
+    [
+      "typesafe/jev-1.13",
+      "prose_v001",
+      "systemone_v001",
+      "jev"
+    ]
+  ],
+  "n_intersection": 151,
+  "intersection_missing_candidate": [],
+  "determinable": true,
+  "baseline_rederived": {
+    "terra": {
+      "n_papers": 151,
+      "dims": {
+        "technical_significance": {
+          "n": 151,
+          "spearman": 0.43198911990328587,
+          "mae": 0.7019867549668874
+        },
+        "apparent_novelty": {
+          "n": 151,
+          "spearman": 0.4260752051899319,
+          "mae": 0.6754966887417219
+        },
+        "practical_applicability": {
+          "n": 151,
+          "spearman": 0.5877880093166914,
+          "mae": 1.2019867549668874
+        },
+        "professional_value": {
+          "n": 151,
+          "spearman": 0.30203638509739683,
+          "mae": 1.2086092715231789
+        },
+        "learning_value": {
+          "n": 151,
+          "spearman": 0.2316093317731074,
+          "mae": 0.7748344370860927
+        },
+        "evidence_strength": {
+          "n": 151,
+          "spearman": 0.5167674180205356,
+          "mae": 0.9900662251655629
+        }
+      },
+      "composite_vs_human_composite": {
+        "n": 151,
+        "spearman": 0.21899653524830404,
+        "mae": 1.2349668874172184
+      },
+      "composite_vs_h_final_score": {
+        "n": 151,
+        "spearman": 0.21899653524830404,
+        "mae": 1.2349668874172184
+      },
+      "n_winners": 22,
+      "recall_at_20": {
+        "hits": 4,
+        "recall": 0.18181818181818182
+      },
+      "recall_at_50": {
+        "hits": 11,
+        "recall": 0.5
+      }
+    },
+    "jev_v001": {
+      "n_papers": 151,
+      "dims": {
+        "technical_significance": {
+          "n": 151,
+          "spearman": 0.24771755437247997,
+          "mae": 0.6589403973509934
+        },
+        "apparent_novelty": {
+          "n": 151,
+          "spearman": 0.3207905378089703,
+          "mae": 0.6059602649006622
+        },
+        "practical_applicability": {
+          "n": 151,
+          "spearman": 0.5392918018614411,
+          "mae": 1.1158940397350994
+        },
+        "professional_value": {
+          "n": 151,
+          "spearman": 0.6151158869050639,
+          "mae": 0.9503311258278145
+        },
+        "learning_value": {
+          "n": 151,
+          "spearman": 0.1871156508623656,
+          "mae": 0.7450331125827815
+        },
+        "evidence_strength": {
+          "n": 151,
+          "spearman": 0.3938160513586011,
+          "mae": 1.8940397350993377
+        }
+      },
+      "composite_vs_human_composite": {
+        "n": 151,
+        "spearman": 0.3675380712552829,
+        "mae": 1.3118072847682118
+      },
+      "composite_vs_h_final_score": {
+        "n": 151,
+        "spearman": 0.3675380712552829,
+        "mae": 1.3118072847682118
+      },
+      "n_winners": 22,
+      "recall_at_20": {
+        "hits": 4,
+        "recall": 0.18181818181818182
+      },
+      "recall_at_50": {
+        "hits": 13,
+        "recall": 0.5909090909090909
+      }
+    },
+    "jev_v002": {
+      "n_papers": 151,
+      "dims": {
+        "technical_significance": {
+          "n": 151,
+          "spearman": 0.28880779394594186,
+          "mae": 1.2582781456953642
+        },
+        "apparent_novelty": {
+          "n": 151,
+          "spearman": 0.28035907443150015,
+          "mae": 1.5927152317880795
+        },
+        "practical_applicability": {
+          "n": 151,
+          "spearman": 0.412576541625637,
+          "mae": 2.2450331125827816
+        },
+        "professional_value": {
+          "n": 151,
+          "spearman": 0.6955201135192338,
+          "mae": 2.066225165562914
+        },
+        "learning_value": {
+          "n": 151,
+          "spearman": 0.3087260473461007,
+          "mae": 2.443708609271523
+        },
+        "evidence_strength": {
+          "n": 151,
+          "spearman": 0.3699609643729143,
+          "mae": 1.695364238410596
+        }
+      },
+      "composite_vs_human_composite": {
+        "n": 151,
+        "spearman": 0.42697626060842947,
+        "mae": 2.1228251655629142
+      },
+      "composite_vs_h_final_score": {
+        "n": 151,
+        "spearman": 0.42697626060842947,
+        "mae": 2.1228251655629142
+      },
+      "n_winners": 22,
+      "recall_at_20": {
+        "hits": 8,
+        "recall": 0.36363636363636365
+      },
+      "recall_at_50": {
+        "hits": 17,
+        "recall": 0.7727272727272727
+      }
+    }
+  },
+  "baseline_check": {
+    "terra": {
+      "technical_significance": {
+        "baseline_v1_md": 0.432,
+        "rederived": 0.43198911990328587,
+        "match": true
+      },
+      "apparent_novelty": {
+        "baseline_v1_md": 0.426,
+        "rederived": 0.4260752051899319,
+        "match": true
+      },
+      "practical_applicability": {
+        "baseline_v1_md": 0.588,
+        "rederived": 0.5877880093166914,
+        "match": true
+      },
+      "professional_value": {
+        "baseline_v1_md": 0.302,
+        "rederived": 0.30203638509739683,
+        "match": true
+      },
+      "learning_value": {
+        "baseline_v1_md": 0.232,
+        "rederived": 0.2316093317731074,
+        "match": true
+      },
+      "evidence_strength": {
+        "baseline_v1_md": 0.517,
+        "rederived": 0.5167674180205356,
+        "match": true
+      },
+      "composite": {
+        "baseline_v1_md": 0.219,
+        "rederived": 0.21899653524830404,
+        "match": true
+      },
+      "recall_at_50": {
+        "baseline_v1_md": 0.5,
+        "rederived": 0.5,
+        "match": true
+      }
+    },
+    "jev_v001": {
+      "technical_significance": {
+        "baseline_v1_md": 0.248,
+        "rederived": 0.24771755437247997,
+        "match": true
+      },
+      "apparent_novelty": {
+        "baseline_v1_md": 0.321,
+        "rederived": 0.3207905378089703,
+        "match": true
+      },
+      "practical_applicability": {
+        "baseline_v1_md": 0.539,
+        "rederived": 0.5392918018614411,
+        "match": true
+      },
+      "professional_value": {
+        "baseline_v1_md": 0.615,
+        "rederived": 0.6151158869050639,
+        "match": true
+      },
+      "learning_value": {
+        "baseline_v1_md": 0.187,
+        "rederived": 0.1871156508623656,
+        "match": true
+      },
+      "evidence_strength": {
+        "baseline_v1_md": 0.394,
+        "rederived": 0.3938160513586011,
+        "match": true
+      },
+      "composite": {
+        "baseline_v1_md": 0.367,
+        "rederived": 0.3675380712552829,
+        "match": true
+      },
+      "recall_at_50": {
+        "baseline_v1_md": 0.591,
+        "rederived": 0.5909090909090909,
+        "match": true
+      }
+    },
+    "jev_v002": {
+      "technical_significance": {
+        "baseline_v1_md": 0.289,
+        "rederived": 0.28880779394594186,
+        "match": true
+      },
+      "apparent_novelty": {
+        "baseline_v1_md": 0.28,
+        "rederived": 0.28035907443150015,
+        "match": true
+      },
+      "practical_applicability": {
+        "baseline_v1_md": 0.413,
+        "rederived": 0.412576541625637,
+        "match": true
+      },
+      "professional_value": {
+        "baseline_v1_md": 0.696,
+        "rederived": 0.6955201135192338,
+        "match": true
+      },
+      "learning_value": {
+        "baseline_v1_md": 0.309,
+        "rederived": 0.3087260473461007,
+        "match": true
+      },
+      "evidence_strength": {
+        "baseline_v1_md": 0.37,
+        "rederived": 0.3699609643729143,
+        "match": true
+      },
+      "composite": {
+        "baseline_v1_md": 0.427,
+        "rederived": 0.42697626060842947,
+        "match": true
+      },
+      "recall_at_50": {
+        "baseline_v1_md": 0.773,
+        "rederived": 0.7727272727272727,
+        "match": true
+      }
+    }
+  },
+  "candidate_intersection": {
+    "n_papers": 151,
+    "dims": {
+      "technical_significance": {
+        "n": 151,
+        "spearman": 0.21433321804323813,
+        "mae": 0.6788079470198676
+      },
+      "apparent_novelty": {
+        "n": 151,
+        "spearman": 0.30138236569183907,
+        "mae": 0.609271523178808
+      },
+      "practical_applicability": {
+        "n": 151,
+        "spearman": 0.5434070263759141,
+        "mae": 1.1324503311258278
+      },
+      "professional_value": {
+        "n": 151,
+        "spearman": 0.6139846259077671,
+        "mae": 0.9503311258278145
+      },
+      "learning_value": {
+        "n": 151,
+        "spearman": 0.2308904096119465,
+        "mae": 0.7417218543046358
+      },
+      "evidence_strength": {
+        "n": 151,
+        "spearman": 0.3786302908673209,
+        "mae": 1.8973509933774835
+      }
+    },
+    "composite_vs_human_composite": {
+      "n": 151,
+      "spearman": 0.4205017638963317,
+      "mae": 1.124503311258278
+    },
+    "composite_vs_h_final_score": {
+      "n": 151,
+      "spearman": 0.4205017638963317,
+      "mae": 1.124503311258278
+    },
+    "n_winners": 22,
+    "recall_at_20": {
+      "hits": 6,
+      "recall": 0.2727272727272727
+    },
+    "recall_at_50": {
+      "hits": 13,
+      "recall": 0.5909090909090909
+    }
+  },
+  "candidate_full_200": {
+    "n_papers": 200,
+    "dims": {
+      "technical_significance": {
+        "n": 200,
+        "spearman": 0.35759538795379536,
+        "mae": 0.67
+      },
+      "apparent_novelty": {
+        "n": 200,
+        "spearman": 0.4031794925276866,
+        "mae": 0.655
+      },
+      "practical_applicability": {
+        "n": 200,
+        "spearman": 0.5716920226282836,
+        "mae": 1.1325
+      },
+      "professional_value": {
+        "n": 200,
+        "spearman": 0.6517909814289824,
+        "mae": 0.93
+      },
+      "learning_value": {
+        "n": 200,
+        "spearman": 0.30555619916237076,
+        "mae": 0.7225
+      },
+      "evidence_strength": {
+        "n": 200,
+        "spearman": 0.3828448466153217,
+        "mae": 1.855
+      }
+    },
+    "composite_vs_human_composite": {
+      "n": 200,
+      "spearman": 0.48215244173861566,
+      "mae": 1.1431
+    },
+    "composite_vs_h_final_score": {
+      "n": 200,
+      "spearman": 0.48215244173861566,
+      "mae": 1.1431
+    },
+    "n_winners": 33,
+    "recall_at_20": {
+      "hits": 9,
+      "recall": 0.2727272727272727
+    },
+    "recall_at_50": {
+      "hits": 16,
+      "recall": 0.48484848484848486
+    }
+  },
+  "gates": {
+    "terra": {
+      "dims": {
+        "technical_significance": {
+          "candidate": 0.21433321804323813,
+          "baseline": 0.43198911990328587,
+          "floor": 0.3819891199032859,
+          "pass": false
+        },
+        "apparent_novelty": {
+          "candidate": 0.30138236569183907,
+          "baseline": 0.4260752051899319,
+          "floor": 0.3760752051899319,
+          "pass": false
+        },
+        "practical_applicability": {
+          "candidate": 0.5434070263759141,
+          "baseline": 0.5877880093166914,
+          "floor": 0.5377880093166914,
+          "pass": true
+        },
+        "professional_value": {
+          "candidate": 0.6139846259077671,
+          "baseline": 0.30203638509739683,
+          "floor": 0.25203638509739684,
+          "pass": true
+        },
+        "learning_value": {
+          "candidate": 0.2308904096119465,
+          "baseline": 0.2316093317731074,
+          "floor": 0.1816093317731074,
+          "pass": true
+        },
+        "evidence_strength": {
+          "candidate": 0.3786302908673209,
+          "baseline": 0.5167674180205356,
+          "floor": 0.4667674180205356,
+          "pass": false
+        }
+      },
+      "recall_at_50": {
+        "candidate": 0.5909090909090909,
+        "candidate_hits": 13,
+        "baseline": 0.5,
+        "baseline_hits": 11,
+        "n_winners": 22,
+        "pass": true
+      },
+      "verdict": "Does not hold"
+    },
+    "jev_v001": {
+      "dims": {
+        "technical_significance": {
+          "candidate": 0.21433321804323813,
+          "baseline": 0.24771755437247997,
+          "floor": 0.19771755437247995,
+          "pass": true
+        },
+        "apparent_novelty": {
+          "candidate": 0.30138236569183907,
+          "baseline": 0.3207905378089703,
+          "floor": 0.27079053780897033,
+          "pass": true
+        },
+        "practical_applicability": {
+          "candidate": 0.5434070263759141,
+          "baseline": 0.5392918018614411,
+          "floor": 0.4892918018614411,
+          "pass": true
+        },
+        "professional_value": {
+          "candidate": 0.6139846259077671,
+          "baseline": 0.6151158869050639,
+          "floor": 0.5651158869050639,
+          "pass": true
+        },
+        "learning_value": {
+          "candidate": 0.2308904096119465,
+          "baseline": 0.1871156508623656,
+          "floor": 0.1371156508623656,
+          "pass": true
+        },
+        "evidence_strength": {
+          "candidate": 0.3786302908673209,
+          "baseline": 0.3938160513586011,
+          "floor": 0.3438160513586011,
+          "pass": true
+        }
+      },
+      "recall_at_50": {
+        "candidate": 0.5909090909090909,
+        "candidate_hits": 13,
+        "baseline": 0.5909090909090909,
+        "baseline_hits": 13,
+        "n_winners": 22,
+        "pass": true
+      },
+      "verdict": "Holds"
+    },
+    "jev_v002": {
+      "dims": {
+        "technical_significance": {
+          "candidate": 0.21433321804323813,
+          "baseline": 0.28880779394594186,
+          "floor": 0.23880779394594187,
+          "pass": false
+        },
+        "apparent_novelty": {
+          "candidate": 0.30138236569183907,
+          "baseline": 0.28035907443150015,
+          "floor": 0.23035907443150017,
+          "pass": true
+        },
+        "practical_applicability": {
+          "candidate": 0.5434070263759141,
+          "baseline": 0.412576541625637,
+          "floor": 0.362576541625637,
+          "pass": true
+        },
+        "professional_value": {
+          "candidate": 0.6139846259077671,
+          "baseline": 0.6955201135192338,
+          "floor": 0.6455201135192338,
+          "pass": false
+        },
+        "learning_value": {
+          "candidate": 0.2308904096119465,
+          "baseline": 0.3087260473461007,
+          "floor": 0.2587260473461007,
+          "pass": false
+        },
+        "evidence_strength": {
+          "candidate": 0.3786302908673209,
+          "baseline": 0.3699609643729143,
+          "floor": 0.3199609643729143,
+          "pass": true
+        }
+      },
+      "recall_at_50": {
+        "candidate": 0.5909090909090909,
+        "candidate_hits": 13,
+        "baseline": 0.7727272727272727,
+        "baseline_hits": 17,
+        "n_winners": 22,
+        "pass": false
+      },
+      "verdict": "Does not hold"
+    }
+  },
+  "g3c": {
+    "coefs": {
+      "technical_significance": -0.949147760150421,
+      "apparent_novelty": 0.0405834084475216,
+      "practical_applicability": 0.722084363777735,
+      "professional_value": 1.2236112881168795,
+      "learning_value": -0.2746695807623889,
+      "evidence_strength": -0.20473094001209977
+    },
+    "intercept": 2.715815639319996,
+    "intersection": {
+      "n_papers": 151,
+      "dims": {
+        "technical_significance": {
+          "n": 151,
+          "spearman": 0.21433321804323813,
+          "mae": 0.6788079470198676
+        },
+        "apparent_novelty": {
+          "n": 151,
+          "spearman": 0.30138236569183907,
+          "mae": 0.609271523178808
+        },
+        "practical_applicability": {
+          "n": 151,
+          "spearman": 0.5434070263759141,
+          "mae": 1.1324503311258278
+        },
+        "professional_value": {
+          "n": 151,
+          "spearman": 0.6139846259077671,
+          "mae": 0.9503311258278145
+        },
+        "learning_value": {
+          "n": 151,
+          "spearman": 0.2308904096119465,
+          "mae": 0.7417218543046358
+        },
+        "evidence_strength": {
+          "n": 151,
+          "spearman": 0.3786302908673209,
+          "mae": 1.8973509933774835
+        }
+      },
+      "composite_vs_human_composite": {
+        "n": 151,
+        "spearman": 0.573569137507177,
+        "mae": 1.6956818829274154
+      },
+      "composite_vs_h_final_score": {
+        "n": 151,
+        "spearman": 0.573569137507177,
+        "mae": 1.6956818829274154
+      },
+      "n_winners": 22,
+      "recall_at_20": {
+        "hits": 10,
+        "recall": 0.45454545454545453
+      },
+      "recall_at_50": {
+        "hits": 17,
+        "recall": 0.7727272727272727
+      }
+    },
+    "note": "G3c option (a) ridge, fitted on Terra dims; applied to jev_glm dims. Reported, not stored."
+  }
+}

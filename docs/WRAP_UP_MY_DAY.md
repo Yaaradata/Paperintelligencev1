@@ -25,7 +25,23 @@ Scan today's work (commits, reports, chat, agent files, migrations, flags). Upda
 
 ---
 
-### 2. STATE → `State.md`
+### 2. WINDOW COMPLETENESS AUDIT (required, SQL only, $0)
+
+For **every window processed today**, run:
+
+```bash
+PYTHONPATH=src python scripts/audit_window_completeness.py --from YYYY-MM-DD --until YYYY-MM-DD \
+  --out reports/golden/audit_window_<from>_<until>.md
+```
+
+- Paste the defect table (defect · count · % of window · example ids) into the report.
+- Every count above 0 is **reported, not explained away**.
+- State the verdict the script prints (exit code 0 = publishable, 2 = not). If prose is missing on more than 10% of scored papers, the window is **not** publishable; say so in `State.md`.
+- Never mark a window "done" or "published" in `State.md` / `Backlog.md` while its audit says NO.
+
+---
+
+### 3. STATE → `State.md`
 
 Update **`State.md`** so the next agent can act without re-discovery:
 
@@ -38,7 +54,7 @@ Update **`State.md`** so the next agent can act without re-discovery:
 
 ---
 
-### 3. PROJECT.md
+### 4. PROJECT.md
 
 Update **`PROJECT.md`** only if a **settled** decision changed pipeline shape, ownership, or locked defaults.
 
@@ -46,7 +62,7 @@ If `PROJECT.md` is behind the repo (stale stage order, missing engines, outdated
 
 ---
 
-### 4. BACKLOG
+### 5. BACKLOG
 
 - Move finished items to **`BacklogClosed.md`** with **verifier evidence** (report path, gate numbers, or Verifier note).  
   **Never** mark an item closed without that evidence.
@@ -54,7 +70,7 @@ If `PROJECT.md` is behind the repo (stale stage order, missing engines, outdated
 
 ---
 
-### 5. FLOW DIAGRAM → `docs/pipeline_flow.md`
+### 6. FLOW DIAGRAM → `docs/pipeline_flow.md`
 
 If any stage order, model, engine flag, or affiliation evidence path changed today, update **`docs/pipeline_flow.md`** (Mermaid). It must show:
 
@@ -66,7 +82,7 @@ If nothing in those areas changed, leave the diagram unchanged and note that in 
 
 ---
 
-### 6. UNCOMMITTED CHECK
+### 7. UNCOMMITTED CHECK
 
 Run `git status` (and `git status -u` if needed). **List every uncommitted file** — code, markdown, SQL, configs, golden assets. Nothing is omitted because it is "just an `.md`".
 
@@ -74,7 +90,7 @@ Classify each path for the report: commit / leave uncommitted (with reason).
 
 ---
 
-### 7. COMMIT AND PUSH
+### 8. COMMIT AND PUSH
 
 - Group changes into **logical conventional commits** (e.g. `feat(…)`, `docs(…)`, `fix(…)`, `chore(…)`).
 - Commit only what belongs in the repo (no secrets, prefer not to commit huge runtime dumps / `.log` if gitignored).
@@ -89,7 +105,7 @@ A commit that exists only locally is **not** durable. If push fails, stop and re
 
 ---
 
-### 8. REPORT (print to the user)
+### 9. REPORT (print to the user)
 
 Print:
 
@@ -99,6 +115,7 @@ Print:
 4. **Open questions** carried forward
 5. Anything that **did not** get committed, and **why**
 6. **Migrations:** if a migration was written but **not applied**, say so explicitly. **Never apply DDL** during wrap-up.
+7. **Window completeness:** the audit table and YES/NO verdict for each window from step 2.
 
 ---
 
@@ -111,6 +128,7 @@ Print:
 | No DDL | Agents write migrations; humans/ops apply |
 | No paid calls | Unless the wrap-up message explicitly authorises them |
 | Push is mandatory | Local-only commits fail the wrap-up |
+| Audit before publish | A window whose completeness audit says NO is never reported as done |
 | Honesty over tidiness | Prefer "still open" / "uncommitted because …" over a clean-looking lie |
 
 ---

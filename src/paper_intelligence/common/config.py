@@ -101,6 +101,9 @@ _DEFAULT_PRICES: dict[str, tuple[float, float]] = {
     # output free. Verified 2026-09-23 against OpenRouter/TypeSafe docs.
     # Pin typesafe/jev-1.13 only — never ~typesafe/jev-latest in runs.
     "typesafe/jev-1.13": (0.042, 0.00),
+    # https://openrouter.ai/openai/gpt-6-luna — list $0.10 / $0.50. Verified 2026-09-25.
+    # Verifier prose audit only. Pin openai/gpt-6-luna — never a -latest alias.
+    "openai/gpt-6-luna": (0.10, 0.50),
 }
 
 
