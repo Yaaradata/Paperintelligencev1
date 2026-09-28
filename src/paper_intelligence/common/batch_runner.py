@@ -9,6 +9,7 @@ from typing import Any, Callable, Sequence
 
 from paper_intelligence.common.budget import BudgetCap
 from paper_intelligence.common.config import STAGE_CONCURRENCY
+from paper_intelligence.common.runguard import RunGuard
 
 
 @dataclass
@@ -27,6 +28,8 @@ class BatchStats:
     warnings: list[str] = field(default_factory=list)
     stopped_budget_cap: bool = False
     papers_skipped_budget: int = 0
+    stopped_runguard: bool = False
+    stop_reason: str | None = None
     budget: BudgetCap | None = field(default=None, repr=False)
     _lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
 
@@ -106,18 +109,40 @@ def run_batches(
     label: str = "batch",
     budget: BudgetCap | None = None,
     stats: BatchStats | None = None,
+    guard: RunGuard | None = None,
 ) -> None:
     """Run `handler` over batches concurrently; handler owns its own error capture.
 
     When ``budget`` is set, new batches are only submitted while
     ``budget.allow_new_batch()`` is true. In-flight work may finish after the
     cap is reached. Unsubmitted batches are counted on ``stats`` when provided.
+
+    With ``stats``, a ``RunGuard`` (default: >10% of the last 100 papers
+    failed, evaluated from paper 20) is fed the per-paper outcomes after each
+    batch. Once tripped, no new batches are submitted and, after in-flight
+    batches finish, ``stats.stopped_runguard`` / ``stats.stop_reason`` are set.
     """
     workers = max(1, concurrency or STAGE_CONCURRENCY)
     batch_list = list(batches)
     total = len(batch_list)
     if total == 0:
         return
+    if guard is None and stats is not None:
+        guard = RunGuard()
+    seen_ok = stats.papers_succeeded if stats is not None else 0
+    seen_failed = stats.papers_failed if stats is not None else 0
+
+    def _feed_guard() -> None:
+        nonlocal seen_ok, seen_failed
+        if guard is None or stats is None:
+            return
+        with stats._lock:
+            ok, failed = stats.papers_succeeded, stats.papers_failed
+        for _ in range(ok - seen_ok):
+            guard.record(True)
+        for _ in range(failed - seen_failed):
+            guard.record(False)
+        seen_ok, seen_failed = ok, failed
 
     done = 0
     next_i = 0
@@ -130,6 +155,8 @@ def run_batches(
             if next_i >= total:
                 return False
             if budget is not None and not budget.allow_new_batch():
+                return False
+            if guard is not None and guard.tripped:
                 return False
             batch = batch_list[next_i]
             next_i += 1
@@ -145,6 +172,7 @@ def run_batches(
             for future in completed:
                 future.result()
                 done += 1
+                _feed_guard()
                 if progress_every and done % progress_every == 0:
                     print(f"  {label}: {done}/{total} batches", flush=True)
             while len(futures) < workers:
@@ -165,6 +193,17 @@ def run_batches(
         else:
             print(f"  {label}: {submitted}/{total} batches complete", flush=True)
 
+    if guard is not None and guard.tripped:
+        reason = (
+            f"{label}: {guard.reason}; {submitted}/{total} batches done, "
+            f"{len(unsubmitted)} not submitted"
+        )
+        print(f"  STOP {reason}", flush=True)
+        if stats is not None:
+            stats.stopped_runguard = True
+            stats.stop_reason = reason
+            stats.errors.append(reason[:300])
+        return
     if unsubmitted and stats is not None:
         skipped = sum(len(b) for b in unsubmitted)
         stats.stopped_budget_cap = True

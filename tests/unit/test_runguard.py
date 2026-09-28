@@ -43,3 +43,42 @@ def test_not_evaluated_before_min_items():
 def test_invalid_config():
     with pytest.raises(ValueError):
         RunGuard(window=10, min_items=20)
+
+
+def _run_stage_like(outcomes: list[bool], batch_size: int = 5):
+    """Drive run_batches the way screen/audience_domain/quality handlers do."""
+    from paper_intelligence.common.batch_runner import BatchStats, run_batches
+
+    stats = BatchStats()
+    handled = []
+    batches = [outcomes[i : i + batch_size] for i in range(0, len(outcomes), batch_size)]
+
+    def handle(batch):
+        handled.append(len(batch))
+        ok = sum(batch)
+        stats.add_call(succeeded=ok, failed=len(batch) - ok,
+                       input_tokens=0, output_tokens=0, cost=0.0)
+
+    run_batches(batches, handle, concurrency=1, stats=stats, label="screen")
+    return stats, sum(handled)
+
+
+def test_batch_runner_guard_stops_failing_paid_stage():
+    stats, handled = _run_stage_like([False] * 500)
+    assert stats.stopped_runguard is True
+    assert "runguard tripped" in stats.stop_reason
+    assert handled == 20  # stops submitting once 20 papers have all failed
+
+
+def test_batch_runner_guard_quiet_on_healthy_stage():
+    stats, handled = _run_stage_like(([True] * 19 + [False]) * 25)
+    assert stats.stopped_runguard is False
+    assert handled == 500
+
+
+def test_batch_runner_without_stats_has_no_guard():
+    from paper_intelligence.common.batch_runner import run_batches
+
+    seen = []
+    run_batches([[1]] * 30, lambda b: seen.append(b), concurrency=1)
+    assert len(seen) == 30

@@ -19,6 +19,8 @@ if str(SRC) not in sys.path:
 
 
 PAID_STAGES = frozenset({"screen", "audience_domain", "classify", "quality"})
+# Distinct exit so run_pipeline hard-stops instead of continuing past the stage.
+RUNGUARD_EXIT_CODE = 3
 FREE_STAGES = frozenset(
     {"ingest", "relevance", "normalize_authors", "hf_signals", "adjudication"}
 )
@@ -641,7 +643,9 @@ def _run_paid(args: argparse.Namespace) -> int:
         )
 
         stopped = bool(stats.stopped_budget_cap)
-        if stopped:
+        if stats.stopped_runguard:
+            status = "stopped_runguard"
+        elif stopped:
             status = "stopped_budget_cap"
         elif stats.papers_failed == 0:
             status = "succeeded"
@@ -675,6 +679,8 @@ def _run_paid(args: argparse.Namespace) -> int:
                 "calls": stats.calls,
                 "stopped_budget_cap": stopped,
                 "papers_skipped_budget": stats.papers_skipped_budget,
+                "stopped_runguard": stats.stopped_runguard,
+                "stop_reason": stats.stop_reason,
             },
         )
 
@@ -713,6 +719,9 @@ def _run_paid(args: argparse.Namespace) -> int:
             print(f"  WARN {warning}")
         for error in stats.errors[:10]:
             print(f"  ERROR {error}", file=sys.stderr)
+        if stats.stopped_runguard:
+            print(f"STOPPED_RUNGUARD {stats.stop_reason}", file=sys.stderr)
+            return RUNGUARD_EXIT_CODE
         if stopped:
             return 1
         return 0 if stats.papers_failed == 0 else 1
@@ -920,6 +929,7 @@ def _run_quality_paid(
     total_calls = 0
     calls_with_actual = 0
     stopped = False
+    stop_reason: str | None = None
     papers_skipped_budget = 0
     all_warnings: list[str] = []
     all_errors: list[str] = []
@@ -948,7 +958,11 @@ def _run_quality_paid(
             max_cost_usd=remaining_cap,
         )
         group_stopped = bool(stats.stopped_budget_cap)
-        if group_stopped:
+        if stats.stopped_runguard:
+            status = "stopped_runguard"
+            stop_reason = stats.stop_reason
+            stopped = True
+        elif group_stopped:
             status = "stopped_budget_cap"
             stopped = True
         elif stats.papers_failed == 0:
@@ -984,7 +998,9 @@ def _run_quality_paid(
         if stopped:
             break
 
-    if stopped:
+    if stop_reason:
+        pipeline_status = "stopped_runguard"
+    elif stopped:
         pipeline_status = "stopped_budget_cap"
     elif total_failed == 0:
         pipeline_status = "succeeded"
@@ -1006,8 +1022,10 @@ def _run_quality_paid(
             "calls_with_actual_cost": calls_with_actual,
             "max_cost_usd": max_cost,
             "calls": total_calls,
-            "stopped_budget_cap": stopped,
+            "stopped_budget_cap": stopped and not stop_reason,
             "papers_skipped_budget": papers_skipped_budget,
+            "stopped_runguard": bool(stop_reason),
+            "stop_reason": stop_reason,
             "quality_engine": QUALITY_ENGINE,
             "quality_models": {m: len(ids) for m, ids in pending_by_model.items()},
         },
@@ -1018,7 +1036,7 @@ def _run_quality_paid(
         stage="quality",
         actual_usd=total_cost,
         projected_usd=projected_cost,
-        stopped_budget_cap=stopped,
+        stopped_budget_cap=stopped and not stop_reason,
     )
 
     div_warn = None
@@ -1050,6 +1068,9 @@ def _run_quality_paid(
         print(f"  WARN {warning}")
     for error in all_errors[:10]:
         print(f"  ERROR {error}", file=sys.stderr)
+    if stop_reason:
+        print(f"STOPPED_RUNGUARD {stop_reason}", file=sys.stderr)
+        return RUNGUARD_EXIT_CODE
     if stopped:
         return 1
     return 0 if total_failed == 0 else 1

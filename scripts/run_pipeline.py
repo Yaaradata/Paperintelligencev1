@@ -55,6 +55,7 @@ STAGE_ALIASES = {
 }
 
 PAID_STAGES = frozenset({"screen", "audience_domain", "quality"})
+RUNGUARD_EXIT_CODE = 3  # must match scripts/run_stage.py
 
 
 def _run_stage_cli(
@@ -247,6 +248,8 @@ def _project_paid_total(args: argparse.Namespace, paid_stages: list[str]) -> flo
             args.date_until,
             "--dry-run",
         ]
+        if args.include_pre_v1_floor:
+            cmd.append("--include-pre-v1-floor")
         if args.limit is not None:
             cmd.extend(["--limit", str(args.limit)])
         if args.reprocess:
@@ -313,7 +316,10 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help="start at this stage (inclusive), skipping earlier ones",
     )
+    add_v1_floor_argument(parser)
     args = parser.parse_args(argv)
+    args.ingest_from = args.date_from
+    in_v1_scope = apply_v1_floor(args)
 
     from paper_intelligence.common.budget import (
         format_budget_line,
@@ -345,13 +351,13 @@ def main(argv: list[str] | None = None) -> int:
             print(f"--from-stage {args.from_stage} not in --stages", file=sys.stderr)
             return 2
         stages = stages[stages.index(from_stage) :]
+    if not in_v1_scope:
+        stages = [s for s in stages if s == "ingest"]
 
     paid = [s for s in stages if s in PAID_STAGES]
     if paid and not args.dry_run and not args.allow_paid:
         print(
             "Paid stages require --allow-paid (or pass --dry-run for projections). "
-    if not in_v1_scope:
-        stages = [s for s in stages if s == "ingest"]
             f"Paid in this run: {', '.join(paid)}",
             file=sys.stderr,
         )
@@ -463,6 +469,13 @@ def main(argv: list[str] | None = None) -> int:
                 max_cost_usd=float(remaining) if remaining is not None else max_cost,
                 budget_state=budget_state_path,
             )
+        if code == RUNGUARD_EXIT_CODE and stage in PAID_STAGES:
+            print(
+                f"STOP: stage {stage} tripped the runguard (exit {code}); "
+                "not running later stages",
+                flush=True,
+            )
+            return code
         if code != 0:
             failures.append(f"{stage}={code}")
             if budget_state_path and stage in PAID_STAGES:

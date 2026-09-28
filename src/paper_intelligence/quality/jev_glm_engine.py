@@ -857,15 +857,25 @@ def run_jev_glm_window(
         stage_run_id=stage_run_id,
     )
     print(f"  jev_glm: scores persisted rows={n_persisted}", flush=True)
+    if stats.stopped_runguard:
+        return stats
 
     # Prose for successfully scored papers (best-effort; scores already durable)
     scored_papers = [p for p in papers if int(p["content_item_id"]) in scored]
-    run_prose_for_papers(
-        papers=scored_papers,
-        scored=scored,
-        run_id=run_id,
-        stage_run_id=stage_run_id,
-        stats=stats,
-        budget=budget,
-    )
+    try:
+        run_prose_for_papers(
+            papers=scored_papers,
+            scored=scored,
+            run_id=run_id,
+            stage_run_id=stage_run_id,
+            stats=stats,
+            budget=budget,
+            guard=RunGuard(),
+        )
+    except (RunGuardTripped, ProseConfigError) as exc:
+        reason = f"glm_prose: {exc}"
+        print(f"  STOP {reason}", flush=True)
+        stats.stopped_runguard = True
+        stats.stop_reason = reason
+        stats.errors.append(reason[:300])
     return stats
