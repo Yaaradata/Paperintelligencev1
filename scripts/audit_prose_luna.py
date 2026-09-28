@@ -24,15 +24,19 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from paper_intelligence.common.config import read_prompt, require_model_priced
+from paper_intelligence.common.config import estimate_cost_usd, read_prompt, require_model_priced
 from paper_intelligence.common.llm_stage import call_llm_logged, parse_json_object
 from paper_intelligence.db import connect
 
 MODEL = "openai/gpt-6-luna"
 PROMPT_VERSION = "prose_audit_v001"
+PROMPT_VERSIONS = ("v001", "v002")
 BATCH_SIZE = 8
 CONCURRENCY = 4
 MAX_TOKENS = 1500
+# Luna's reasoning counts against max_tokens; at 1500 most 8-paper v001 batches
+# came back empty and fell through to per-paper retries (708 calls for 727 papers).
+MAX_TOKENS_BY_VERSION = {"v001": MAX_TOKENS, "v002": 4000}
 DIMS = (
     "technical_significance",
     "apparent_novelty",
@@ -62,36 +66,61 @@ ORDER BY q.content_item_id
 """
 
 
-def user_prompt(batch: list[dict[str, Any]]) -> str:
+def user_prompt(batch: list[dict[str, Any]], version: str = "v001") -> str:
     blocks = []
     for i, p in enumerate(batch, 1):
         rj = p["result_json"]
-        scores = ", ".join(f"{d}={rj.get(d)}" for d in DIMS)
-        blocks.append(
-            f"### Paper {i}\n"
-            f"Title: {p['title']}\n"
-            f"Abstract: {p['abstract']}\n"
-            f"Scores: {scores}\n"
-            f"so_what: {rj.get('so_what')}\n"
-            f"reason_not_higher: {rj.get('reason_not_higher')}"
-        )
+        lines = [f"### Paper {i}", f"Title: {p['title']}", f"Abstract: {p['abstract']}"]
+        if version == "v001":
+            lines.append("Scores: " + ", ".join(f"{d}={rj.get(d)}" for d in DIMS))
+        lines += [f"so_what: {rj.get('so_what')}", f"reason_not_higher: {rj.get('reason_not_higher')}"]
+        blocks.append("\n".join(lines))
     return "\n\n".join(blocks)
 
 
-def parse_results(content: str, n: int) -> dict[int, dict[str, str]]:
+def _parse_v001(item: dict[str, Any]) -> dict[str, str] | None:
+    rec = {k: str(item.get(k, "")).strip().lower() for k in
+           ("so_what_specific", "unsupported_claim", "contradicts_scores", "reason_not_higher")}
+    if (rec["so_what_specific"] in YES_NO and rec["unsupported_claim"] in YES_NO
+            and rec["contradicts_scores"] in YES_NO and rec["reason_not_higher"] in REAL_HEDGE):
+        return rec
+    return None
+
+
+def _parse_v002(item: dict[str, Any]) -> dict[str, str] | None:
+    rec = {k: str(item.get(k, "")).strip().lower() for k in
+           ("so_what_unsupported", "reason_not_higher_unsupported")}
+    if not (rec["so_what_unsupported"] in YES_NO and rec["reason_not_higher_unsupported"] in YES_NO):
+        return None
+    phrase = str(item.get("so_what_unsupported_phrase") or "").strip()
+    rec["so_what_unsupported_phrase"] = phrase if rec["so_what_unsupported"] == "yes" else ""
+    return rec
+
+
+def parse_results(content: str, n: int, version: str = "v001") -> dict[int, dict[str, str]]:
     data = parse_json_object(content)
+    parse_item = _parse_v002 if version == "v002" else _parse_v001
     out: dict[int, dict[str, str]] = {}
     for item in data.get("results") or []:
+        if not isinstance(item, dict):
+            continue
         try:
             i = int(item.get("i"))
         except (TypeError, ValueError):
             continue
-        rec = {k: str(item.get(k, "")).strip().lower() for k in
-               ("so_what_specific", "unsupported_claim", "contradicts_scores", "reason_not_higher")}
-        if (1 <= i <= n and rec["so_what_specific"] in YES_NO and rec["unsupported_claim"] in YES_NO
-                and rec["contradicts_scores"] in YES_NO and rec["reason_not_higher"] in REAL_HEDGE):
+        rec = parse_item(item)
+        if 1 <= i <= n and rec is not None:
             out[i] = rec
     return out
+
+
+def project_cost(rows: list[dict[str, Any]], system_prompt: str, version: str) -> tuple[int, int, int, float]:
+    """(calls, input_tokens, output_tokens, usd) at table price, one call per batch."""
+    batches = [rows[i : i + BATCH_SIZE] for i in range(0, len(rows), BATCH_SIZE)]
+    out_per_paper = 45 if version == "v002" else 40
+    tin = sum((len(system_prompt) + len(user_prompt(b, version))) // 4 for b in batches)
+    tout = out_per_paper * len(rows)
+    return len(batches), tin, tout, estimate_cost_usd(MODEL, tin, tout)
 
 
 def _served_model(raw_path: str | None) -> str | None:
@@ -140,13 +169,19 @@ def main() -> int:
     ap.add_argument("--max-cost-usd", type=float, required=True)
     ap.add_argument("--limit", type=int)
     ap.add_argument("--out", type=Path)
+    ap.add_argument("--prompt-version", choices=PROMPT_VERSIONS, default="v001",
+                    help="v002 judges so_what and reason_not_higher separately")
+    ap.add_argument("--dry-run", action="store_true", help="project cost only; no API calls")
     args = ap.parse_args()
+    version = args.prompt_version
+    prompt_version = f"prose_audit_{version}"
+    suffix = "" if version == "v001" else f"_{version}"
     out_path = args.out or Path(
-        f"reports/golden/prose_audit_luna_{args.date_from}_{args.date_until}.json"
+        f"reports/golden/prose_audit_luna_{args.date_from}_{args.date_until}{suffix}.json"
     )
 
     require_model_priced(MODEL)
-    system_prompt = read_prompt("prose_audit", "v001")
+    system_prompt = read_prompt("prose_audit", version)
     with connect() as conn:
         rows = [dict(r) for r in conn.execute(
             POPULATION_SQL, {"from": args.date_from, "until": args.date_until}
@@ -157,8 +192,13 @@ def main() -> int:
     if args.limit:
         rows = rows[: args.limit]
     batches = [rows[i : i + BATCH_SIZE] for i in range(0, len(rows), BATCH_SIZE)]
-    print(f"prose_audit: papers={len(rows)} batches={len(batches)} model={MODEL} cap=${args.max_cost_usd}",
-          flush=True)
+    print(f"prose_audit: papers={len(rows)} batches={len(batches)} model={MODEL} prompt={prompt_version} "
+          f"cap=${args.max_cost_usd}", flush=True)
+    if args.dry_run:
+        calls, tin, tout, usd = project_cost(rows, system_prompt, version)
+        print(f"PROJECTION prose_audit: {calls} calls, ~{tin} in / ~{tout} out tokens, "
+              f"~${usd:.4f} (table price, no retries)", flush=True)
+        return 0
 
     spend = Spend(args.max_cost_usd)
     results: dict[int, dict[str, Any]] = {}
@@ -170,16 +210,16 @@ def main() -> int:
     def call(batch: list[dict[str, Any]]) -> dict[int, dict[str, str]]:
         with connect() as conn:
             resp = call_llm_logged(
-                conn, model=MODEL, system_prompt=system_prompt, user_prompt=user_prompt(batch),
-                prompt_version=PROMPT_VERSION, stage_name="prose_audit", temperature=0.0,
-                max_tokens=MAX_TOKENS, response_format={"type": "json_object"}, entity="prose_audit",
+                conn, model=MODEL, system_prompt=system_prompt, user_prompt=user_prompt(batch, version),
+                prompt_version=prompt_version, stage_name="prose_audit", temperature=0.0,
+                max_tokens=MAX_TOKENS_BY_VERSION[version], response_format={"type": "json_object"}, entity="prose_audit",
             )
         spend.add(resp["actual_cost_usd"], resp["estimated_cost_usd"])
         served = _served_model(resp.get("raw_path"))
         if served:
             with res_lock:
                 served_models.add(served)
-        return parse_results(resp["content"], len(batch))
+        return parse_results(resp["content"], len(batch), version)
 
     def run(batch: list[dict[str, Any]]) -> None:
         if not spend.may_start():
@@ -221,7 +261,7 @@ def main() -> int:
         "window": [args.date_from.isoformat(), args.date_until.isoformat()],
         "model": MODEL,
         "served_models": sorted(served_models),
-        "prompt_version": PROMPT_VERSION,
+        "prompt_version": prompt_version,
         "n_population": len(rows),
         "n_judged": len(results),
         "spend": {
