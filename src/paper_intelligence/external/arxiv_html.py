@@ -21,6 +21,7 @@ from bs4 import BeautifulSoup
 
 from paper_intelligence.cache.raw_store import find_cached, read_cached, request_hash, write_raw
 from paper_intelligence.observability.runs import record_external_request
+from paper_intelligence.external import throttle_guard
 
 PROVIDER = "arxiv"
 REQUEST_SLEEP = float(os.getenv("ARXIV_HTML_REQUEST_SLEEP", "0.3"))
@@ -208,14 +209,22 @@ def fetch_affiliations(
         status = None
         error = None
         for attempt in range(1, MAX_RETRIES + 1):
+            if throttle_guard.tripped():
+                error = f"throttle_guard_tripped: {throttle_guard.reason()}"
+                break
             try:
                 _throttle()
-                response = requests.get(
-                    endpoint,
-                    timeout=TIMEOUT,
-                    headers={"User-Agent": "paper-intelligence/1.0 (affiliation)"},
-                )
+                try:
+                    response = requests.get(
+                        endpoint,
+                        timeout=TIMEOUT,
+                        headers={"User-Agent": "paper-intelligence/1.0 (affiliation)"},
+                    )
+                except Exception as exc:
+                    throttle_guard.record(PROVIDER, exception=exc)
+                    raise
                 status = response.status_code
+                throttle_guard.record(PROVIDER, status=status)
                 if status == 404:
                     error = "not_found"
                     break

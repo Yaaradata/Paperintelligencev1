@@ -55,6 +55,8 @@ STAGE_ALIASES = {
 }
 
 PAID_STAGES = frozenset({"screen", "audience_domain", "quality"})
+# Free stages whose provider throttling (429/503/timeouts) stops the pipeline.
+GUARDED_FREE_STAGES = frozenset({"affiliation_fast", "affiliation_deep"})
 RUNGUARD_EXIT_CODE = 3  # must match scripts/run_stage.py
 
 
@@ -183,9 +185,13 @@ def _run_affiliation(args: argparse.Namespace, *, mode: str) -> int:
     print(
         f"{label}: items={summary.get('items')} "
         f"by_outcome={summary.get('by_outcome')} "
-        f"rows_written={summary.get('rows_written')}",
+        f"rows_written={summary.get('rows_written')} "
+        f"requests={summary.get('throttle_counts')}",
         flush=True,
     )
+    if summary.get("stopped_runguard"):
+        print(f"STOP {label}: {summary.get('stop_reason')}", flush=True)
+        return RUNGUARD_EXIT_CODE
     return 0
 
 
@@ -469,7 +475,7 @@ def main(argv: list[str] | None = None) -> int:
                 max_cost_usd=float(remaining) if remaining is not None else max_cost,
                 budget_state=budget_state_path,
             )
-        if code == RUNGUARD_EXIT_CODE and stage in PAID_STAGES:
+        if code == RUNGUARD_EXIT_CODE and stage in PAID_STAGES | GUARDED_FREE_STAGES:
             print(
                 f"STOP: stage {stage} tripped the runguard (exit {code}); "
                 "not running later stages",

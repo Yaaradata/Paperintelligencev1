@@ -10,6 +10,7 @@ from paper_intelligence.author_affiliation.policy import DEFAULT_POLICY_VERSION,
 from paper_intelligence.common import RunContext
 from paper_intelligence.common.config import PI_USE_PAPERS_CATALOG
 from paper_intelligence.db import connect
+from paper_intelligence.external import throttle_guard
 from paper_intelligence.observability.runs import (
     code_commit_sha,
     finish_pipeline_run,
@@ -140,7 +141,12 @@ def run_window(
             "results": [],
         }
 
+        throttle_guard.reset()
         for content_item_id in item_ids:
+            if throttle_guard.tripped():
+                summary["stopped_runguard"] = True
+                summary["stop_reason"] = f"throttle: {throttle_guard.reason()}"
+                break
             started_at = datetime.now().astimezone()
             result = stage.process(content_item_id, run_context)
             summary["by_status"][result.status] = summary["by_status"].get(result.status, 0) + 1
@@ -170,8 +176,11 @@ def run_window(
             )
             conn.commit()
 
+        summary["throttle_counts"] = throttle_guard.counts()
         failed = summary["by_status"].get("failed", 0)
-        if not failed:
+        if summary.get("stopped_runguard"):
+            run_status = "cancelled"
+        elif not failed:
             run_status = "succeeded"
         elif failed < len(item_ids):
             run_status = "partial"

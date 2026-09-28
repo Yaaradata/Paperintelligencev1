@@ -15,6 +15,7 @@ import requests
 
 from paper_intelligence.cache.raw_store import find_cached, read_cached, request_hash, write_raw
 from paper_intelligence.observability.runs import record_external_request
+from paper_intelligence.external import throttle_guard
 
 PROVIDER = "openalex"
 API_BASE = os.getenv("OPENALEX_API_BASE", "https://api.openalex.org")
@@ -304,6 +305,8 @@ def _get(endpoint: str, params: dict[str, str]) -> tuple[Any | None, int | None,
     status: int | None = None
     error: str | None = None
     for attempt in range(MAX_RETRIES):
+        if throttle_guard.tripped():
+            return None, status, f"throttle_guard_tripped: {throttle_guard.reason()}"
         _throttle()
         try:
             response = requests.get(
@@ -314,10 +317,12 @@ def _get(endpoint: str, params: dict[str, str]) -> tuple[Any | None, int | None,
             )
         except Exception as exc:  # noqa: BLE001 — network failure is data, not a crash
             error = f"{type(exc).__name__}: {exc}"
+            throttle_guard.record(PROVIDER, exception=exc)
             time.sleep(min(8.0, 2**attempt))
             continue
 
         status = response.status_code
+        throttle_guard.record(PROVIDER, status=status)
         if status == 200:
             try:
                 return response.json(), status, None

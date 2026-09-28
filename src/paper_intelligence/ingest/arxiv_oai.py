@@ -750,6 +750,7 @@ def count_v1_window(
     harvest_until = harvest_until or _today_utc()
     per_set: dict[str, Any] = {}
     kept_ids: set[str] = set()
+    v1_by_id: dict[str, str] = {}
     requests_total = 0
     for set_spec in OAI_SETS:
         requests_before = _request_count
@@ -768,6 +769,8 @@ def count_v1_window(
             "oai_requests": requests_this_set,
         }
         kept_ids |= in_window
+        for arxiv_id in in_window:
+            v1_by_id[arxiv_id] = v1_map[arxiv_id]["v1_date"].astimezone(timezone.utc).date().isoformat()
     return {
         "date_from": str(date_from),
         "date_until": str(date_until),
@@ -776,6 +779,7 @@ def count_v1_window(
         "v1_in_window_unique": len(kept_ids),
         "oai_requests": requests_total,
         "arxiv_ids": sorted(kept_ids),
+        "v1_by_id": v1_by_id,
     }
 
 
@@ -784,7 +788,7 @@ def dry_run_projection(date_from: date, date_until: date) -> dict[str, Any]:
     # A real run also fetches the arXiv-format pages over the same range.
     projected_requests = counts["oai_requests"] * 2
     return {
-        **{k: v for k, v in counts.items() if k != "arxiv_ids"},
+        **{k: v for k, v in counts.items() if k not in {"arxiv_ids", "v1_by_id"}},
         "projected_oai_requests": projected_requests,
         "wall_clock_minutes": round(projected_requests * OAI_DELAY_SECONDS / 60, 1),
     }
