@@ -16,10 +16,12 @@ import json
 import re
 import threading
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timezone
 from typing import Any, Sequence
 
 from psycopg import Connection
 
+from paper_intelligence.cache.raw_store import request_hash, write_raw
 from paper_intelligence.common.batch_runner import BatchStats, run_batches
 from paper_intelligence.common.budget import BudgetCap
 from paper_intelligence.common.runguard import RunGuard, RunGuardTripped
@@ -51,9 +53,11 @@ from paper_intelligence.quality.stage import (
     WEIGHTS,
     composite_score,
 )
+from paper_intelligence.observability.runs import record_external_request
 from paper_intelligence.systemone.client import (
     JEV_MODEL_PINNED,
     SystemOneRequest,
+    SystemOneResponse,
     system_one,
 )
 from paper_intelligence.systemone.policy import (
@@ -69,6 +73,7 @@ SCORING_MODEL = JEV_MODEL_PINNED
 PROSE_MODEL = QUALITY_PROSE_MODEL
 SYSTEMONE_POLICY_NAME = "quality"
 SYSTEMONE_POLICY_VERSION = "v001"
+JEV_ENDPOINT = "systemone:quality_jev"
 # Distinct from Terra's prompt/policy versions so skip-done / currentness
 # do not collide with Terra rows.
 JEV_GLM_PROMPT_VERSION = "prose_v001"
@@ -275,18 +280,94 @@ def _mean_confidence(parsed: dict[str, Any]) -> float | None:
     return mean if mean <= 1.0 else mean / 10.0
 
 
-def score_paper_with_jev(paper: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None, float]:
+def log_jev_request(
+    *,
+    paper: dict[str, Any],
+    resp: SystemOneResponse,
+    req_hash: str,
+    started_at: datetime,
+    run_id: str | None,
+    stage_run_id: str | None,
+) -> str:
+    """external_requests + llm_requests row for one System One call.
+
+    actual_cost is provider ``usage.cost`` so DB run-cost totals include Jev.
+    """
+    cid = int(paper["content_item_id"])
+    raw_path = raw_sha = None
+    if resp.raw:
+        raw_path, raw_sha = write_raw("openrouter", req_hash, f"quality_jev_{cid}", resp.raw)
+    with connect() as conn:
+        request_id = record_external_request(
+            conn,
+            run_id=run_id,
+            stage_run_id=stage_run_id,
+            content_item_id=cid,
+            provider="openrouter",
+            endpoint=JEV_ENDPOINT,
+            request_hash=req_hash,
+            started_at=started_at,
+            http_status=None if resp.error else 200,
+            success=resp.error is None,
+            response_path=raw_path,
+            response_sha256=raw_sha,
+            error_type="SystemOneError" if resp.error else None,
+            error_message=(resp.error or "")[:1000] or None,
+            llm={
+                "model": SCORING_MODEL,
+                "prompt_version": JEV_GLM_POLICY_VERSION,
+                "input_tokens": resp.input_tokens,
+                "output_tokens": resp.output_tokens,
+                "estimated_cost": float(resp.estimated_cost or 0.0),
+                "actual_cost": resp.actual_cost,
+            },
+        )
+        conn.commit()
+    return request_id
+
+
+def score_paper_with_jev(
+    paper: dict[str, Any],
+    *,
+    run_id: str | None = None,
+    stage_run_id: str | None = None,
+    stats: BatchStats | None = None,
+) -> tuple[dict[str, Any] | None, str | None, float]:
     """Return (scores_dict, error, billable_cost). scores include dims only."""
     policy = load_systemone_policy(SYSTEMONE_POLICY_NAME, SYSTEMONE_POLICY_VERSION)
     questions = build_questions(policy)
+    state = state_from_paper(paper)
+    req_hash = request_hash(
+        "openrouter",
+        JEV_ENDPOINT,
+        {"model": SCORING_MODEL, "state": state, "questions": questions},
+    )
+    started = datetime.now(timezone.utc)
     resp = system_one(
         SystemOneRequest(
             model=SCORING_MODEL,
-            state=state_from_paper(paper),
+            state=state,
             questions=questions,
             timeout=90.0,
         )
     )
+    try:
+        log_jev_request(
+            paper=paper,
+            resp=resp,
+            req_hash=req_hash,
+            started_at=started,
+            run_id=run_id,
+            stage_run_id=stage_run_id,
+        )
+    except Exception as exc:  # noqa: BLE001
+        msg = (
+            f"jev_cost_log_failed content_item_id={paper.get('content_item_id')} "
+            f"cost={resp.billable_cost} error={exc}"
+        )
+        print(f"  WARN {msg[:300]}", flush=True)
+        if stats is not None:
+            stats.add_warning(msg[:300])
     cost = float(resp.billable_cost or resp.estimated_cost or 0.0)
     if resp.error:
         return None, resp.error, cost
@@ -649,6 +730,14 @@ def run_prose_for_papers(
             )
         except ProseConfigError as exc:
             with lock:
+                failures.append(
+                    {
+                        "content_item_id": cid,
+                        "error": f"prose_config_error: {exc}"[:2000],
+                        "raw_output": "",
+                        "attempts": 1,
+                    }
+                )
                 if not config_error:
                     config_error.append(f"content_item_id={cid}: {exc}")
             abort.set()
@@ -793,7 +882,9 @@ def run_jev_glm_window(
             with lock:
                 stats.papers_skipped_budget += 1
             return
-        dims, err, cost = score_paper_with_jev(paper)
+        dims, err, cost = score_paper_with_jev(
+            paper, run_id=run_id, stage_run_id=stage_run_id, stats=stats
+        )
         stats.add_call(
             succeeded=1 if dims else 0,
             failed=0 if dims else 1,
