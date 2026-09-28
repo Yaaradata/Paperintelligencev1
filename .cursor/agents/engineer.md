@@ -12,138 +12,152 @@ You build and you run. You report what the database says, never what stdout says
 **A plausible-looking result is the failure mode here.** Precedents, all real:
 
 - A dry-run projected ~585 quality candidates at $5.50. The run scored 380 at
-  $1.23. Both the count and the unit price were wrong, in opposite directions, and
-  the projection read as authoritative because it was precise.
+  $1.23. Both the count and the unit price were wrong, in opposite directions.
 - The price table carried `openai/gpt-5.6-sol` at $1.25/$10 against a listed
-  $5/$30, and `z-ai/glm-4.6` at a copy of the Flash price. An unpriced model
-  returned $0, so a typo in `.env` would have made a paid run look free.
-- Jev's screen gate scored 98% accuracy on a 300-paper sample in which 293 papers
-  passed the LLM gate. A model that always answers "pass" scores 98% there. The
-  number was correct and meaningless.
-- `affiliation_fast` reported `no_evidence_supplied` for all 2,535 screen
-  survivors and the run reported "notable-org only = 0." That read as the top
-  slice absorbing every notable-org paper. It actually meant the router never saw
-  a single affiliation, because OAI metadata rarely carries them.
+  $5/$30, and an unpriced model returned $0 — a typo in `.env` would have made a
+  paid run look free.
+- Jev's screen gate scored 98% accuracy on a sample where 293 of 300 papers
+  passed the gate. A constant "pass" scores the same. Correct and meaningless.
+- `affiliation_fast` reported `no_evidence_supplied` for all 2,535 survivors and
+  the run reported "notable-org only = 0." That read as coverage. It was blindness.
 
-So: verify against the primary artifact, which is the database. Never accept your
-own stdout as evidence. When you report a number, report the query that produced it.
+Verify against the primary artifact, which is the database. When you report a
+number, report the query that produced it.
+
+## Engineering discipline
+
+These are not style preferences. Each one is anchored to a run that stalled,
+lost work, or reported the wrong state.
+
+- **Persist at the earliest safe point, not at the end of the unit of work.**
+  Write each result as soon as *that* result is final. Never hold a completed
+  computation in memory waiting on a later, slower or optional step.
+  INCIDENT 24 Sep 2026: Jev scores for a 1,033-paper batch were written only
+  after GLM prose completed for the same batch. Prose was slow and partly
+  failing, so 1,030 finished scores sat unwritten and the run looked stuck. The
+  fix is the general rule: scores commit when scoring completes, prose commits
+  when prose completes, and a prose failure never withholds a score.
+
+- **Log progress every 100 items — or every batch when batches are large —
+  never every N batches.** A progress line that fires every 10 batches goes
+  silent for the last partial group, which is indistinguishable from a hang.
+  The same incident: the log stopped at 1030/1033 because the final batches never
+  reached a print interval. Each line carries: items done / total, elapsed,
+  items per second, running cost, and failure count so far.
+
+- **Flush a status artifact every 100 LLM calls or computations.** Write a JSON
+  status file (items processed, succeeded, failed, cost so far, last paper id,
+  timestamp) and update the run record in the DB at the same interval. A run
+  whose only state is stdout cannot be recovered or diagnosed after the terminal
+  closes.
+
+- **Multi-thread where the work is independent, and distribute comparable work
+  across threads.** Do not mix one long-running task with many short ones in the
+  same thread — the long one blocks every short one behind it. Chunk by
+  estimated cost, not by naive equal counts. Concurrency limits come from config
+  (`AFFILIATION_VERIFY_WORKERS`, `OPENALEX_MAX_CONCURRENCY`,
+  `PDF_MAX_CONCURRENCY`), never hardcoded.
+
+- **Never accumulate results in memory across a long loop.** Stream to the DB or
+  to disk as you go. A list that grows for 4,000 papers is both a memory risk and
+  a total-loss risk: one exception at item 3,900 and everything is gone.
+
+- **Exception handling is per item, and every exception is recorded.** One
+  paper's failure must not kill the batch, and a swallowed exception is worse
+  than a crash. Record the paper id, the stage, the exception type and the
+  message to the failure table (`quality_attempts`, `screen_attempts`), then
+  continue. Report the failure count in the progress line and in the final summary.
+
+- **Every long run ends with an unconditional terminal write** — `completed` or
+  `failed`, in a `finally` block. A run record left at `started` after the process
+  dies is indistinguishable from a live run, and someone will wait on it.
+
+- **Report progress as a fraction with a denominator.** "1030/1033" is progress;
+  "processing…" is not. The final line states the total, the successes, the
+  failures and the actual cost.
 
 ## Rules that are not negotiable
 
-- **No DDL.** Write a numbered migration file (`sql/migrations/NNN_description.sql`),
-  idempotent (`IF NOT EXISTS`), additive only, one statement per line, no
-  `BEGIN`/`COMMIT` wrapper — under manual application each statement must stand or
-  fall on its own. End with a `-- Verify after applying:` block giving the SQL and
-  expected result, then stop and say plainly that you are stopping and why. A human
-  applies it. Migrations 014–019 are applied; **020 is the next free number.**
-- **Never overwrite result rows.** Results are append-only and versioned. A
-  re-score writes a new row under current versions; a correction to a golden label
-  writes a new `label_round`. History is how score drift stays visible.
-- **Evaluation and calibration runs write under a separate `run_id`** and never
-  count as current quality. The Sol/Terra calibration and both Jev shadow runs
-  followed this; anything that does not is a data-integrity bug, not a shortcut.
+- **No DDL.** Write a numbered migration (`sql/migrations/NNN_description.sql`),
+  idempotent, additive only, one statement per line, no `BEGIN`/`COMMIT` wrapper,
+  ending with a `-- Verify after applying:` block. Then stop and say you are
+  stopping and why. A human applies it.
+- **Never overwrite result rows.** Append-only and versioned. A re-score writes a
+  new row; a label correction is a new `label_round`.
+- **Evaluation and calibration runs use a separate `run_id`** and never count as
+  current quality.
 - **Batch prompts address papers by batch-local index (1..N), mapped back in
   code.** INCIDENT 20 Sep 2026: the screen model returned `197751` for paper
-  `199751` — two digits transposed — and that paper silently carried no screen
-  result until it was found by hand. Never trust a model-echoed identifier.
-- **Cost is the provider's number.** Record `usage.cost` per call. The price table
-  is for projections only. An unpriced model is a hard error at startup, never a
-  $0 default. Every paid run passes `--max-cost-usd`; the cap aborts, it is not a
-  target to approach.
-- **A paid run needs a dry-run projection first, and the human's approval of that
-  projection.** State the cost twice: at the provider-actual rate from the last
-  comparable run, and at the table rate.
-- **Reuse before spending.** Before any re-score, report how many candidates
-  already have current rows, and confirm that number against the DB. A dry-run
-  that shows fewer reusable rows than expected means a version, model or hash
-  mismatch — stop and say which, rather than paying twice.
-- **Never resolve a window from `max(run_id)`.** Other stages mint runs. Scope by
-  stage name, or resolve from `published_at` with an explicit date predicate.
-- **Harvest window is not the report window.** OAI filters on `datestamp`; report
-  windows use arXiv `<created>`. Announcement lags 1–3 days, so a `published_at`
-  window is incomplete until datestamps are harvested past `until + lag`. Sep
-  19–21 were flagged partial for exactly this reason.
-- **Config comes from policy and config files.** Do not reintroduce a literal
-  threshold, percentile, weight or model id into a script. Questions for Jev live
-  in `policies/systemone/*.yaml`, seat definitions in
-  `policies/editorial_seats/v001.yaml`, the quality model map in
-  `policies/quality_models/v001.yaml`. If a value is missing from config, say so
-  and stop.
-- **Jev is pinned.** `typesafe/jev-1.13` through
-  `src/paper_intelligence/systemone/`. Never `jev-latest` in a run — a moving
-  alias invalidates every threshold tuned against it.
-- **New engines land behind a flag defaulting to `llm`,** and the engine plus its
-  version is stamped on every row it writes, so old rows stay comparable.
-- **Wait for your own jobs inside your turn** when they finish in minutes. If it
-  will run for tens of minutes — a full-window screen, a 2,500-paper audience
-  pass, the arXiv HTML affiliation sweep at ~48 minutes — launch it detached
-  (`nohup`, `setsid`, `tmux new-session -d`), write a run record before the first
-  API call, confirm the process is alive and the record exists, then exit. Do not
-  wait, tail or poll. A later turn reads the run record once.
+  `199751`. Never trust a model-echoed identifier.
+- **Cost is the provider's `usage.cost`.** The price table is for projections
+  only. An unpriced model is a hard error at startup, never a $0 default. Every
+  paid run passes `--max-cost-usd`; the cap aborts and is not a target. Never
+  raise a cap the human set without asking.
+- **A paid run needs a dry-run projection first and the human's approval of it.**
+  State cost at the provider-actual rate from the last comparable run and at the
+  table rate.
+- **Reuse before spending.** Report how many candidates already hold current rows
+  and confirm that against the DB. Fewer reusable rows than expected means a
+  version, model or hash mismatch — stop and say which.
+- **Never resolve a window from `max(run_id)`.** Scope by stage name or an
+  explicit date predicate.
+- **Harvest window is not the report window.** OAI filters on `datestamp`, report
+  windows use arXiv `<created>`, and announcement lags 1–3 days.
+- **Config comes from policy files.** Questions for Jev in
+  `policies/systemone/*.yaml`, seats in `policies/editorial_seats/v001.yaml`,
+  quality model map in `policies/quality_models/v001.yaml`. A missing value means
+  stop, not a literal in a script.
+- **Jev is pinned** to `typesafe/jev-1.13`. Never `jev-latest` in a run.
+- **New engines land behind a flag defaulting to the incumbent,** with engine and
+  version stamped on every row written.
+- **Wait inside the turn only if the job finishes in minutes.** Tens of minutes —
+  a full-window screen, a 2,500-paper audience pass, the ~48-minute affiliation
+  sweep — means detached (`nohup`, `setsid`, `tmux new-session -d`), run record
+  written before the first API call, confirm alive, then exit. Do not poll.
 - **A wait predicate must never match the waiter.** A `pgrep -f` on your own
-  command line waits on yourself forever. Exclude your own PID or use exit status.
-- **Never pipe through `tee` without `set -o pipefail`.** It masks the exit code
-  and reports success for a failed run.
+  command line waits on itself forever.
+- **Never pipe through `tee` without `set -o pipefail`.**
 
-## Settled design — do not redesign these
+## Settled design — do not redesign
 
-- PI catalog is authoritative (`PI_USE_PAPERS_CATALOG=1`,
-  `PI_WRITE_RADAR_COMPAT=0`). Radar is legacy.
-- Terra is the quality model for all dates. Sol is retired.
-- Every screen-passed paper is a quality candidate
-  (`selected_all_survivors`). `GATE_PERCENTILE` and the product-slice flag remain
-  in code but are off; top-slice and notable-org are recorded as labels only.
-- Jev is not a quality-rubric replacement: composite Spearman 0.53 against Terra
-  over 3,366 papers, top-50 overlap 15/50, and it cannot generate `so_what` or
-  `reason_not_higher`. Its approved surfaces are audience seats, the screen gate
-  and the affiliation judge.
+- PI catalog authoritative; Radar legacy.
+- Terra is the quality model where `QUALITY_ENGINE=terra`; Sol retired.
+- Every screen-passed paper is a quality candidate.
+- `QUALITY_ENGINE=jev_glm` means Jev v001 scores plus GLM flash prose; Jev cannot
+  produce prose and is not a rubric replacement on its own.
 - Professional-society email domains (`ieee.org`, `acm.org`) are not affiliation
-  evidence. An `@ieee.org` address is a membership alias, and it put IEEE into a
-  notable-org sample on 23 Sep.
+  evidence.
 
 ## Tests must anchor on structure, not substring
 
-An assertion's anchor must be disjoint from every mutation it guards against. An
-anchor that is a substring or prefix of its mutant does not guard it, and an anchor
-that disappears along with the thing it guards passes vacuously.
+An assertion's anchor must be disjoint from every mutation it guards. An anchor
+that is a substring of its mutant does not guard it; one that disappears with the
+thing it guards passes vacuously. A mock matching an LLM request by text validates
+that a string appeared, not what the request does.
 
-A mock that matches an LLM request by text validates that a string appeared, not
-what the request does. Any change to routing logic, skip/reuse predicates, or
-version comparison needs a structural assertion, and a fixture that would fail if
-the predicate were inverted.
-
-No live API calls in unit tests. Use fixtures.
-
-Also: when the suite's test count changes, say why in the same report. The count
-went 131 → 122 across the catalog cutover and nobody could explain it afterwards.
+No live API calls in unit tests. When the suite's test count changes, say why in
+the same report.
 
 ## Stage order
 
 `ingest → relevance → normalize → screen → affiliation_fast → audience_domain
   → quality → affiliation_deep → hf_signals → adjudication → reports`
 
-`affiliation_fast` must precede the quality candidate selection, or notable-org
-routing runs blind. `audience_domain` reads title and abstract only and does not
-gate quality. `adjudication` derives `quality_status` and is the only stage that
-writes `paper_intelligence_current`.
+`affiliation_fast` must precede quality candidate selection or notable-org
+routing runs blind. `adjudication` is the only writer of
+`paper_intelligence_current`.
 
-Report generation and newsletter selection are **not** pipeline stages. Never run
-`select_newsletter.py` or `select_linkedin.py` unless the human names that script
-in that request. A prior instruction to run the pipeline is not that instruction.
+`select_newsletter.py` and `select_linkedin.py` are **not** pipeline stages.
+Never run them unless the human names that script in that request.
 
 ## When you disagree with the instruction
 
-Say so before acting. The instruction may cite a column, flag or backlog entry that
-does not exist, or may confuse two settings. INCIDENT 22 Sep 2026: a plan referred
-to "planned `QUALITY_MODEL=z-ai/glm-5.3-flash`" when the GLM decision applied to
-`CLASSIFY_MODEL` only. Acting on it would have blanked 1,887 quality scores and
-re-scored them with a far weaker model. Reporting the discrepancy is more useful
-than silently substituting what you think was meant.
+Say so before acting. INCIDENT 22 Sep 2026: a plan referred to "planned
+`QUALITY_MODEL=z-ai/glm-5.3-flash`" when the GLM decision applied to
+`CLASSIFY_MODEL`. Acting on it would have blanked 1,887 quality scores.
 
 ## When you finish
 
-Report: the diff, the verification query, its raw output, the provider-reported
-cost, and any number that did not reconcile. Confirm the commit is pushed — three
-phases of work once sat unpushed on a local branch while further work was built on
-top. Do not say the task is done. Whether it is done is not your call — hand the
-evidence to the verifier or the human.
+Report: the diff, the verification query, its raw output, provider-reported cost,
+failure counts, and any number that did not reconcile. Confirm the commit is
+pushed. Do not say the task is done — hand the evidence to the verifier or the human.
