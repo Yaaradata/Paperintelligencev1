@@ -1,0 +1,39 @@
+{
+  "run_id": "1e6ef6af-cbf6-4a86-8033-c5a68e55ab84",
+  "state": "succeeded",
+  "args": [
+    "--from",
+    "2026-08-25",
+    "--until",
+    "2026-08-31",
+    "--allow-paid",
+    "--max-cost-usd",
+    "4"
+  ],
+  "env": {
+    "QUALITY_ENGINE": "jev_glm",
+    "SCREEN_MODEL": "z-ai/glm-5.3-flash",
+    "CLASSIFY_MODEL": "z-ai/glm-5.3-flash"
+  },
+  "log": "/home/ubuntu/Paperintelligencev1/worktrees/subha/reports/run_status/pipeline_1e6ef6af-cbf6-4a86-8033-c5a68e55ab84.log",
+  "started_at": "2026-09-28T07:38:42.526143+00:00",
+  "updated_at": "2026-09-28T08:53:58.697612+00:00",
+  "supervisor_pid": 1976802,
+  "pipeline_pid": 1976822,
+  "stage": "reports",
+  "stages_done": [
+    "ingest",
+    "relevance",
+    "normalize_authors",
+    "screen",
+    "affiliation_fast",
+    "audience_domain",
+    "quality",
+    "affiliation_deep",
+    "hf_signals",
+    "adjudication"
+  ],
+  "last_budget_line": "budget: projected=$0.2600 actual=$0.1872 cap=$4.0000 status=ok",
+  "exit_code": 0,
+  "finished_at": "2026-09-28T08:53:58.697590+00:00"
+}
