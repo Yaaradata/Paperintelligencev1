@@ -87,6 +87,35 @@ def test_handlabel_scoring_precision_recall_and_weighting():
     assert r["luna_unsupported_rate"] == round(40 / 60, 3)
 
 
+def test_v003_parse_adds_specific_flag():
+    mod = _load()
+    item = {"i": 1, "so_what_unsupported": "no", "so_what_unsupported_phrase": "",
+            "reason_not_higher_unsupported": "no", "so_what_specific": "No"}
+    out = mod.parse_results(json.dumps({"results": [item]}), 1, "v003")
+    assert out[1]["so_what_specific"] == "no"
+    del item["so_what_specific"]
+    assert mod.parse_results(json.dumps({"results": [item]}), 1, "v003") == {}
+
+
+def test_compare_verdict_requires_no_rise_in_generic():
+    path = SCRIPT.parent / "compare_prose_audits.py"
+    spec = importlib.util.spec_from_file_location("compare_prose_audits", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    def rec(unsup, specific):
+        return {"so_what_unsupported": unsup, "so_what_specific": specific,
+                "reason_not_higher_unsupported": "no"}
+
+    base = {"1": rec("yes", "yes"), "2": rec("yes", "yes")}
+    better = {"1": rec("no", "yes"), "2": rec("yes", "yes")}
+    flatter = {"1": rec("no", "no"), "2": rec("no", "yes")}
+    ids = ["1", "2"]
+    assert mod.verdict(mod.rates(base, ids), mod.rates(better, ids)).startswith("TRIAL BETTER")
+    assert mod.verdict(mod.rates(base, ids), mod.rates(flatter, ids)).startswith("TRADE-OFF")
+    assert mod.verdict(mod.rates(base, ids), mod.rates(base, ids)).startswith("TRIAL NOT BETTER")
+
+
 def test_v002_gets_room_for_reasoning():
     mod = _load()
     assert mod.MAX_TOKENS_BY_VERSION["v002"] > mod.MAX_TOKENS_BY_VERSION["v001"]

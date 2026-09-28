@@ -30,13 +30,13 @@ from paper_intelligence.db import connect
 
 MODEL = "openai/gpt-6-luna"
 PROMPT_VERSION = "prose_audit_v001"
-PROMPT_VERSIONS = ("v001", "v002")
+PROMPT_VERSIONS = ("v001", "v002", "v003")
 BATCH_SIZE = 8
 CONCURRENCY = 4
 MAX_TOKENS = 1500
 # Luna's reasoning counts against max_tokens; at 1500 most 8-paper v001 batches
 # came back empty and fell through to per-paper retries (708 calls for 727 papers).
-MAX_TOKENS_BY_VERSION = {"v001": MAX_TOKENS, "v002": 4000}
+MAX_TOKENS_BY_VERSION = {"v001": MAX_TOKENS, "v002": 4000, "v003": 4000}
 DIMS = (
     "technical_significance",
     "apparent_novelty",
@@ -97,9 +97,20 @@ def _parse_v002(item: dict[str, Any]) -> dict[str, str] | None:
     return rec
 
 
+def _parse_v003(item: dict[str, Any]) -> dict[str, str] | None:
+    rec = _parse_v002(item)
+    specific = str(item.get("so_what_specific", "")).strip().lower()
+    if rec is None or specific not in YES_NO:
+        return None
+    return {**rec, "so_what_specific": specific}
+
+
+_PARSERS = {"v001": _parse_v001, "v002": _parse_v002, "v003": _parse_v003}
+
+
 def parse_results(content: str, n: int, version: str = "v001") -> dict[int, dict[str, str]]:
     data = parse_json_object(content)
-    parse_item = _parse_v002 if version == "v002" else _parse_v001
+    parse_item = _PARSERS[version]
     out: dict[int, dict[str, str]] = {}
     for item in data.get("results") or []:
         if not isinstance(item, dict):
@@ -129,7 +140,7 @@ def apply_trial_prose(rows: list[dict[str, Any]], trial: dict[str, dict[str, Any
 def project_cost(rows: list[dict[str, Any]], system_prompt: str, version: str) -> tuple[int, int, int, float]:
     """(calls, input_tokens, output_tokens, usd) at table price, one call per batch."""
     batches = [rows[i : i + BATCH_SIZE] for i in range(0, len(rows), BATCH_SIZE)]
-    out_per_paper = 45 if version == "v002" else 40
+    out_per_paper = {"v001": 40, "v002": 45, "v003": 55}[version]
     tin = sum((len(system_prompt) + len(user_prompt(b, version))) // 4 for b in batches)
     tout = out_per_paper * len(rows)
     return len(batches), tin, tout, estimate_cost_usd(MODEL, tin, tout)
