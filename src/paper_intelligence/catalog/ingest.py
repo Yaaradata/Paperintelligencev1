@@ -92,13 +92,16 @@ def find_existing_paper_id(
             if row:
                 return int(row["paper_id"])
         if doi:
+            # A different arXiv id sharing the DOI is a different paper (one of
+            # them mis-entered the DOI); never merge them.
             cur.execute(
                 """
                 SELECT paper_id FROM paper_intelligence.papers
                 WHERE doi = %s
+                  AND (%s::text IS NULL OR arxiv_id IS NULL OR arxiv_id = %s)
                 LIMIT 1
                 """,
-                (doi,),
+                (doi, arxiv_id, arxiv_id),
             )
             row = cur.fetchone()
             if row:
@@ -116,6 +119,23 @@ def find_existing_paper_id(
             if row:
                 return int(row["paper_id"])
     return None
+
+
+def doi_holder(conn: Any, doi: str | None, *, exclude_paper_id: int | None) -> int | None:
+    """paper_id of another paper already holding ``doi`` (ux_papers_doi), if any."""
+    if not doi:
+        return None
+    with conn.cursor() as cur:
+        cur.execute(
+            """
+            SELECT paper_id FROM paper_intelligence.papers
+            WHERE doi = %s AND (%s::bigint IS NULL OR paper_id <> %s)
+            LIMIT 1
+            """,
+            (doi, exclude_paper_id, exclude_paper_id),
+        )
+        row = cur.fetchone()
+    return int(row["paper_id"]) if row else None
 
 
 def upsert_paper_from_oai(
@@ -176,6 +196,14 @@ def upsert_paper_from_oai(
         source=SOURCE_ARXIV_OAI,
         source_external_id=source_external_id,
     )
+    holder = doi_holder(conn, doi, exclude_paper_id=existing_id)
+    if holder is not None:
+        log.warning(
+            "doi %s claimed by arxiv_id=%s is already held by paper_id=%s; stored without doi",
+            doi, arxiv_id, holder,
+        )
+        raw_metadata["doi_conflict"] = {"doi": doi, "held_by_paper_id": holder}
+        doi = None
 
     with conn.cursor() as cur:
         if existing_id is not None:
