@@ -681,6 +681,7 @@ def _run_paid(args: argparse.Namespace) -> int:
                 "papers_skipped_budget": stats.papers_skipped_budget,
                 "stopped_runguard": stats.stopped_runguard,
                 "stop_reason": stats.stop_reason,
+                "oov_papers": stats.oov_papers,
             },
         )
 

@@ -26,6 +26,7 @@ class BatchStats:
     calls_with_actual_cost: int = 0
     errors: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
+    oov_papers: int = 0
     stopped_budget_cap: bool = False
     papers_skipped_budget: int = 0
     stopped_runguard: bool = False

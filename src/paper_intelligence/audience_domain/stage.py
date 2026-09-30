@@ -403,6 +403,10 @@ def run_window(
                 batch_conn.commit()
             if problems:
                 stats.add_warning("; ".join(problems))
+                oov = sum(1 for p in problems if "out-of-vocabulary" in p)
+                if oov:
+                    with stats._lock:
+                        stats.oov_papers += oov
             stats.add_call(
                 succeeded=len(parsed),
                 failed=len(expected) - len(parsed),
