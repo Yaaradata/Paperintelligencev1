@@ -13,6 +13,9 @@ every 30 s, and closes the run record from the exit code (0 succeeded,
 Usage:
   PYTHONPATH=src python scripts/launch_pipeline_run.py -- \\
       --from 2026-08-25 --until 2026-08-31 --allow-paid --max-cost-usd 4
+
+--foreground (before ``--``) supervises in this process instead (e.g. in a
+tmux pane), still writing the run record, status file and log.
 """
 
 from __future__ import annotations
@@ -54,7 +57,22 @@ def _write(path: Path, data: dict) -> None:
     tmp.replace(path)
 
 
-def launch(pipeline_args: list[str]) -> int:
+class _Tee:
+    def __init__(self, *streams) -> None:
+        self.streams = streams
+
+    def write(self, text: str) -> int:
+        for s in self.streams:
+            s.write(text)
+            s.flush()
+        return len(text)
+
+    def flush(self) -> None:
+        for s in self.streams:
+            s.flush()
+
+
+def launch(pipeline_args: list[str], *, foreground: bool = False) -> int:
     STATUS_DIR.mkdir(parents=True, exist_ok=True)
     env_flags = {k: os.environ[k] for k in ENV_KEYS if k in os.environ}
     with connect() as conn:
@@ -75,6 +93,16 @@ def launch(pipeline_args: list[str]) -> int:
         "started_at": _now(),
     }
     _write(status_path, status)
+    if foreground:
+        print(f"run_id={run_id}\nstatus_file={status_path}\nlog={log_path}")
+        status.update(state="running", supervisor_pid=os.getpid())
+        _write(status_path, status)
+        with open(log_path, "a", encoding="utf-8") as log:
+            sys.stdout = _Tee(sys.__stdout__, log)
+            try:
+                return supervise(run_id, pipeline_args)
+            finally:
+                sys.stdout = sys.__stdout__
     with open(log_path, "ab") as log:
         proc = subprocess.Popen(
             [sys.executable, str(Path(__file__).resolve()), "--supervise", run_id, "--",
@@ -147,7 +175,7 @@ def main(argv: list[str]) -> int:
     head, pipeline_args = argv[:split], argv[split + 1:]
     if head[:1] == ["--supervise"]:
         return supervise(head[1], pipeline_args)
-    return launch(pipeline_args)
+    return launch(pipeline_args, foreground=head[:1] == ["--foreground"])
 
 
 if __name__ == "__main__":
