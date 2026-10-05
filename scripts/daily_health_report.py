@@ -160,7 +160,8 @@ def gather(conn, *, now: datetime, with_tests: bool, with_audit: bool) -> dict[s
         "SELECT table_name FROM information_schema.tables WHERE table_schema = 'paper_intelligence'"
     ).fetchall()}
     facts["missing_tables"] = [t for t in KEY_TABLES if t not in present]
-    facts["audit"] = run_audit(run["date_from"], run["date_until"]) if with_audit and run and run["date_from"] else None
+    scored = any(s["pipeline_name"].endswith("quality") for s in facts["stages"])
+    facts["audit"] = run_audit(run["date_from"], run["date_until"]) if with_audit and scored else None
     facts["tests"] = run_unit_tests() if with_tests else None
     return facts
 
@@ -260,7 +261,7 @@ def build_checks(f: dict[str, Any]) -> list[Check]:
     def audit() -> Check:
         a = f["audit"]
         if a is None:
-            return Check("window audit: complete enough to publish", True, "skipped")
+            return Check("window audit: complete enough to publish", True, "skipped (no quality stage in last run)")
         ok = bool(a.get("publishable")) and a["exit_code"] == 0
         reasons = a.get("blocking_reasons") or []
         return Check("window audit: complete enough to publish", ok,
