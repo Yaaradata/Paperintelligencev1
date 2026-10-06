@@ -186,6 +186,50 @@ Rules:
 """
 
 
+PROMPT_FILE_OUTPUT_FORMAT = """\
+<output_format>
+Return one JSON object only, with exactly these keys. Each seat node uses the
+content_item_id from the candidates.
+{
+  "tech": {"content_item_id": 0, "title": "", "organisation": null, "why_this_paper": "",
+           "action_for_reader": "", "talking_point": "", "caveat": "", "why_not_runner_up": ""},
+  "tech_runner_up": {"content_item_id": 0, "title": "", "organisation": null},
+  "product": {"content_item_id": 0, "title": "", "organisation": null, "why_this_paper": "",
+              "action_for_reader": "", "talking_point": "", "caveat": "", "why_not_runner_up": ""},
+  "product_runner_up": {"content_item_id": 0, "title": "", "organisation": null},
+  "editor_warning": ""
+}
+</output_format>
+"""
+
+
+def load_export_shortlist(
+    candidates: list[dict[str, Any]], *, tech_csv: Path | None, product_csv: Path | None,
+    date_from: date, date_until: date, per_seat: int,
+) -> list[dict[str, Any]]:
+    """Top ``per_seat`` rows per export CSV published in the window, in export rank order."""
+    by_arxiv = {c.get("arxiv_id"): c for c in candidates if c.get("arxiv_id")}
+    picked: list[dict[str, Any]] = []
+    for seat, path in (("tech", tech_csv), ("product", product_csv)):
+        if not path:
+            continue
+        taken = 0
+        with path.open(encoding="utf-8") as fh:
+            for row in csv.DictReader(fh):
+                if taken >= per_seat:
+                    break
+                if not (date_from.isoformat() <= (row.get("published") or "")[:10] <= date_until.isoformat()):
+                    continue
+                cand = by_arxiv.get((row.get("arxiv_url") or "").rsplit("/", 1)[-1])
+                if cand is None:
+                    continue
+                picked.append({**cand, "shortlist_pool": seat,
+                               "outcome_category": row.get("outcome_category") or None,
+                               "outcome_evidence": row.get("outcome_evidence") or None})
+                taken += 1
+    return picked
+
+
 CANDIDATE_SQL_RADAR = """
 WITH window_papers AS (
   SELECT ci.id AS content_item_id, ci.title, ci.summary AS abstract, ci.status,
@@ -464,6 +508,7 @@ def shortlist_for_prompt(candidates: list[dict[str, Any]]) -> list[dict[str, Any
                 ],
                 "top_organisation": c.get("top_organisation"),
                 "hf_featured": c.get("hf_featured"),
+                **{k: c[k] for k in ("shortlist_pool", "outcome_category", "outcome_evidence") if c.get(k)},
             }
         )
     return out
@@ -506,29 +551,28 @@ def write_pool_files(
     return json_path, csv_path
 
 
-def render_markdown(selection: dict[str, Any], *, model: str, stats: dict[str, Any]) -> str:
+def render_markdown(selection: dict[str, Any], *, model: str, stats: dict[str, Any],
+                    prompt_version: str = PROMPT_VERSION) -> str:
     def block(label: str, node: dict[str, Any]) -> str:
         return (
             f"### {label}\n"
             f"- **{node.get('title')}**\n"
             f"- ID `{node.get('content_item_id')}` · arXiv `{node.get('arxiv_id')}` · "
             f"[link]({node.get('canonical_url')})\n"
-            f"- **Why:** {node.get('why_this_paper')}\n"
-            f"- **Decision:** {node.get('decision_it_changes')}\n"
-            f"- **Action:** {node.get('action_for_reader')}\n"
-            f"- **Talking point:** {node.get('talking_point')}\n"
-            f"- **Caveat:** {node.get('caveat')}\n"
-            + (
-                f"- **Why not runner-up:** {node.get('why_not_runner_up')}\n"
-                if node.get("why_not_runner_up")
-                else ""
+            + "".join(
+                f"- **{name}:** {node[key]}\n"
+                for key, name in (("organisation", "Organisation"), ("why_this_paper", "Why"),
+                                  ("decision_it_changes", "Decision"), ("action_for_reader", "Action"),
+                                  ("talking_point", "Talking point"), ("caveat", "Caveat"),
+                                  ("why_not_runner_up", "Why not runner-up"))
+                if node.get(key)
             )
         )
 
     return (
         f"# Newsletter selection (LLM)\n\n"
         f"- model: `{model}`\n"
-        f"- prompt_version: `{PROMPT_VERSION}`\n"
+        f"- prompt_version: `{prompt_version}`\n"
         f"- eligible: {stats.get('papers_eligible_for_editorial_selection')}\n"
         f"- window: {stats.get('date_from')} → {stats.get('date_until')}\n"
         f"- editor_warning: `{selection.get('editor_warning') or '(none)'}`\n\n"
@@ -579,6 +623,11 @@ def main(argv: list[str] | None = None) -> int:
         help="Optional existing candidate pool JSON (skip DB rebuild)",
     )
     parser.add_argument("--output-dir", default=str(ROOT / "reports" / "editorial"))
+    parser.add_argument("--prompt-file", default=None,
+                        help="Full prompt with a {{CANDIDATE_DATA}} placeholder (sent as the user message)")
+    parser.add_argument("--tech-csv", default=None, help="export_top_papers tech CSV to shortlist from")
+    parser.add_argument("--product-csv", default=None, help="export_top_papers product CSV to shortlist from")
+    parser.add_argument("--per-seat", type=int, default=20, help="rows per export CSV within the window")
     parser.add_argument(
         "--dry-run",
         action="store_true",
@@ -617,6 +666,16 @@ def main(argv: list[str] | None = None) -> int:
                 conn, date_from, date_until, limit=args.limit
             )
 
+    if args.tech_csv or args.product_csv:
+        candidates = load_export_shortlist(
+            candidates, tech_csv=Path(args.tech_csv) if args.tech_csv else None,
+            product_csv=Path(args.product_csv) if args.product_csv else None,
+            date_from=date_from, date_until=date_until, per_seat=args.per_seat,
+        )
+        stats["papers_eligible_for_editorial_selection"] = len(candidates)
+        stats["shortlist_source"] = {"tech_csv": args.tech_csv, "product_csv": args.product_csv,
+                                     "per_seat": args.per_seat}
+
     pool_json, pool_csv = write_pool_files(output_dir, stats, candidates, label=label)
 
     print("=== CANDIDATE POOL ===", flush=True)
@@ -637,36 +696,48 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     shortlist = shortlist_for_prompt(candidates)
-    user_prompt = (
-        f"<selection_window>\n"
-        f"date_from: {date_from.isoformat()}\n"
-        f"date_until: {date_until.isoformat()}\n"
-        f"Select from papers published in this inclusive window only.\n"
-        f"</selection_window>\n\n"
-        + build_user_rubric()
-        + "\n"
-        + OUTPUT_SCHEMA
-        + "\n\n<shortlist>\n"
-        + json.dumps(shortlist, indent=2, default=str)
-        + "\n</shortlist>\n"
-    )
+    prompt_version = PROMPT_VERSION
+    if args.prompt_file:
+        prompt_path_in = Path(args.prompt_file)
+        template = prompt_path_in.read_text(encoding="utf-8")
+        if "{{CANDIDATE_DATA}}" not in template:
+            print("--prompt-file has no {{CANDIDATE_DATA}} placeholder", file=sys.stderr)
+            return 2
+        prompt_version = f"{prompt_path_in.parent.name}_{prompt_path_in.stem}"
+        user_prompt = (
+            template.replace("{{CANDIDATE_DATA}}", json.dumps(shortlist, indent=2, default=str))
+            + "\n" + PROMPT_FILE_OUTPUT_FORMAT
+        )
+        messages = [{"role": "user", "content": user_prompt}]
+    else:
+        user_prompt = (
+            f"<selection_window>\n"
+            f"date_from: {date_from.isoformat()}\n"
+            f"date_until: {date_until.isoformat()}\n"
+            f"Select from papers published in this inclusive window only.\n"
+            f"</selection_window>\n\n"
+            + build_user_rubric()
+            + "\n"
+            + OUTPUT_SCHEMA
+            + "\n\n<shortlist>\n"
+            + json.dumps(shortlist, indent=2, default=str)
+            + "\n</shortlist>\n"
+        )
+        messages = [{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": user_prompt}]
     prompt_path = output_dir / f"{label}_newsletter_prompt_user.txt"
     prompt_path.write_text(user_prompt, encoding="utf-8")
 
     if args.dry_run:
         print(f"dry-run: wrote pool + prompt under {output_dir}", flush=True)
-        print(f"wrote {prompt_path}", flush=True)
+        print(f"wrote {prompt_path} ({len(user_prompt)} chars, ~{len(user_prompt) // 4} tokens)", flush=True)
         return 0
 
     print(f"calling OpenRouter model={args.model} reasoning={args.reasoning_effort}", flush=True)
     response = complete(
         LLMRequest(
             model=args.model,
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user_prompt},
-            ],
-            prompt_version=PROMPT_VERSION,
+            messages=messages,
+            prompt_version=prompt_version,
             temperature=args.temperature,
             max_tokens=args.max_tokens,
             reasoning_effort=args.reasoning_effort or None,
@@ -680,7 +751,7 @@ def main(argv: list[str] | None = None) -> int:
     errors = validate_selection(selection, {int(c["content_item_id"]) for c in candidates})
     selection["_meta"] = {
         "model": response.model,
-        "prompt_version": PROMPT_VERSION,
+        "prompt_version": prompt_version,
         "date_from": date_from.isoformat(),
         "date_until": date_until.isoformat(),
         "window_label": label,
@@ -695,7 +766,8 @@ def main(argv: list[str] | None = None) -> int:
     json_path = output_dir / f"{label}_newsletter_selection.json"
     json_path.write_text(json.dumps(selection, indent=2, default=str) + "\n", encoding="utf-8")
     md_path = output_dir / f"{label}_newsletter_selection.md"
-    md_path.write_text(render_markdown(selection, model=args.model, stats=stats), encoding="utf-8")
+    md_path.write_text(render_markdown(selection, model=args.model, stats=stats, prompt_version=prompt_version),
+                       encoding="utf-8")
 
     print(f"estimated_cost=${response.estimated_cost}", flush=True)
     print(f"wrote {json_path}", flush=True)
