@@ -113,6 +113,9 @@ _DEFAULT_PRICES: dict[str, tuple[float, float]] = {
     # https://openrouter.ai/openai/gpt-6-luna — list $0.10 / $0.50. Verified 2026-09-25.
     # Verifier prose audit only. Pin openai/gpt-6-luna — never a -latest alias.
     "openai/gpt-6-luna": (0.10, 0.50),
+    # https://openrouter.ai/anthropic/claude-opus-5 — list $5 / $25. Verified 2026-10-06
+    # against the OpenRouter models API. Editorial selection only (select_newsletter.py).
+    "anthropic/claude-opus-5": (5.00, 25.00),
 }
 
 
