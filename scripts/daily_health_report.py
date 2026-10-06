@@ -150,11 +150,16 @@ def gather(conn, *, now: datetime, with_tests: bool, with_audit: bool) -> dict[s
     facts["spend_month"] = spend(conn, day_start.replace(day=1))
     facts["stuck"] = [dict(r) for r in conn.execute(
         """
-        SELECT run_id::text, pipeline_name, started_at FROM paper_intelligence.pipeline_runs
-        WHERE status = 'running' AND started_at < now() - make_interval(secs => %s)
-        ORDER BY started_at
+        SELECT r.run_id::text, r.pipeline_name, r.started_at FROM paper_intelligence.pipeline_runs r
+        WHERE r.status = 'running' AND r.started_at < now() - make_interval(secs => %s)
+          AND NOT EXISTS (
+            SELECT 1 FROM paper_intelligence.pipeline_runs d
+            WHERE d.pipeline_name = 'paper_intelligence.pipeline_detached' AND d.status = 'running'
+              AND d.started_at <= r.started_at AND d.started_at > now() - interval '24 hours'
+              AND r.pipeline_name <> ALL(%s))
+        ORDER BY r.started_at
         """,
-        (STUCK_RUN_HOURS * 3600,),
+        (STUCK_RUN_HOURS * 3600, list(WRAPPER_RUNS)),
     ).fetchall()]
     present = {r["table_name"] for r in conn.execute(
         "SELECT table_name FROM information_schema.tables WHERE table_schema = 'paper_intelligence'"
