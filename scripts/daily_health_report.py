@@ -41,6 +41,7 @@ if str(SRC) not in sys.path:
 
 IST = ZoneInfo("Asia/Kolkata")
 HEALTH_DIR = ROOT / "reports" / "health"
+STATUS_DIR = ROOT / "reports" / "run_status"
 DAILY_SPEND_CAP = float(os.getenv("DAILY_SPEND_CAP", "3"))
 MONTHLY_SPEND_CAP = float(os.getenv("MONTHLY_SPEND_CAP", "50"))
 LAST_RUN_MAX_HOURS = float(os.getenv("HEALTH_LAST_RUN_MAX_HOURS", "24"))
@@ -101,6 +102,41 @@ def stage_runs(conn, run: dict[str, Any]) -> list[dict[str, Any]]:
     return [dict(r) for r in rows]
 
 
+def _pid_alive(pid: Any) -> bool:
+    try:
+        os.kill(int(pid), 0)
+    except (TypeError, ValueError, ProcessLookupError):
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
+def live_wrapper_runs(conn) -> dict[str, datetime]:
+    """Wrapper runs (detached pipeline / backlog chain) whose supervisor process is alive."""
+    live: dict[str, datetime] = {}
+    for path in list(STATUS_DIR.glob("pipeline_*.json")) + list(STATUS_DIR.glob("backlog_*.json")):
+        try:
+            status = json.loads(path.read_text())
+        except (OSError, ValueError):
+            continue
+        if status.get("state") in ("running", "launching") and _pid_alive(status.get("supervisor_pid")):
+            live[str(status.get("run_id"))] = None
+    if live:
+        for row in conn.execute(
+            "SELECT run_id::text, started_at FROM paper_intelligence.pipeline_runs WHERE run_id::text = ANY(%s)",
+            (list(live),),
+        ).fetchall():
+            live[row["run_id"]] = row["started_at"]
+    return {k: v for k, v in live.items() if v is not None}
+
+
+def _belongs_to_live_run(row: dict[str, Any], live: dict[str, datetime]) -> bool:
+    if row["run_id"] in live:
+        return True
+    return row["pipeline_name"] not in WRAPPER_RUNS and any(row["started_at"] >= t for t in live.values())
+
+
 def spend(conn, since: datetime) -> float:
     row = conn.execute(
         """
@@ -150,17 +186,14 @@ def gather(conn, *, now: datetime, with_tests: bool, with_audit: bool) -> dict[s
     facts["spend_month"] = spend(conn, day_start.replace(day=1))
     facts["stuck"] = [dict(r) for r in conn.execute(
         """
-        SELECT r.run_id::text, r.pipeline_name, r.started_at FROM paper_intelligence.pipeline_runs r
-        WHERE r.status = 'running' AND r.started_at < now() - make_interval(secs => %s)
-          AND NOT EXISTS (
-            SELECT 1 FROM paper_intelligence.pipeline_runs d
-            WHERE d.pipeline_name = 'paper_intelligence.pipeline_detached' AND d.status = 'running'
-              AND d.started_at <= r.started_at AND d.started_at > now() - interval '24 hours'
-              AND r.pipeline_name <> ALL(%s))
-        ORDER BY r.started_at
+        SELECT run_id::text, pipeline_name, started_at FROM paper_intelligence.pipeline_runs
+        WHERE status = 'running' AND started_at < now() - make_interval(secs => %s)
+        ORDER BY started_at
         """,
-        (STUCK_RUN_HOURS * 3600, list(WRAPPER_RUNS)),
+        (STUCK_RUN_HOURS * 3600,),
     ).fetchall()]
+    live = live_wrapper_runs(conn)
+    facts["stuck"] = [r for r in facts["stuck"] if not _belongs_to_live_run(r, live)]
     present = {r["table_name"] for r in conn.execute(
         "SELECT table_name FROM information_schema.tables WHERE table_schema = 'paper_intelligence'"
     ).fetchall()}

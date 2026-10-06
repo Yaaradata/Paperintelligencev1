@@ -89,6 +89,21 @@ def test_stuck_runs_summarised():
     assert not c.ok and c.attention.startswith("8 run(s) stuck") and "+3 more" in c.attention
 
 
+def test_runs_under_a_live_pipeline_are_not_stuck():
+    started = NOW - timedelta(hours=3)
+    live = {"w1": started}
+    wrapper = {"run_id": "w1", "pipeline_name": "paper_intelligence.pipeline_detached", "started_at": started}
+    stage = {"run_id": "s1", "pipeline_name": "affiliation_fast", "started_at": started + timedelta(minutes=30)}
+    old = {"run_id": "s0", "pipeline_name": "affiliation_fast", "started_at": started - timedelta(days=5)}
+    dead_chain = {"run_id": "c1", "pipeline_name": "paper_intelligence.backlog_chain",
+                  "started_at": started + timedelta(minutes=5)}
+    assert dhr._belongs_to_live_run(wrapper, live)
+    assert dhr._belongs_to_live_run(stage, live)
+    assert not dhr._belongs_to_live_run(old, live)
+    assert not dhr._belongs_to_live_run(dead_chain, live)
+    assert not dhr._belongs_to_live_run(stage, {})
+
+
 def test_a_check_that_throws_is_reported_not_raised():
     f = _facts(newest_paper="not a datetime")
     c = next(c for c in dhr.build_checks(f) if "errored" in c.name)
